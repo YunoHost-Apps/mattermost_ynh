@@ -53,6 +53,7 @@ sudo cp -af $root_path/sources/.        $final_path
 # Change variables in Mattermost config
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
+
 sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
 sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
 sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"    $final_path/config/config.json
@@ -60,6 +61,9 @@ sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"mattermost\"|g"       
 sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${smtp_password}\"|g"        $final_path/config/config.json
 sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                   $final_path/config/config.json
 sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                              $final_path/config/config.json
+
+sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
+sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"/var/log/mattermost.log\"|g" $final_path/config/config.json
 
 # Set permissions to app directory
 sudo chown -R www-data: $final_path
