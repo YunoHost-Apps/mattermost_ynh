@@ -1,6 +1,6 @@
 ## Description
 
-A Yunohost package for [Mattermost](https://sdelements.github.io/lets-chat/), an open-source, self-hosted alternative to Slack.
+A Yunohost package for [Mattermost](https://mattermost.org), an open-source, self-hosted alternative to Slack.
 
 ## Requirements
 
@@ -23,5 +23,4 @@ You can either :
 ## TODO
 
 * Allow installation in sub-directory (only root-domains work for now)
-* LDAP intergation
-
+* LDAP integration
