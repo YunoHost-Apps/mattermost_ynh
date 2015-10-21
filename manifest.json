@@ -1,0 +1,35 @@
+{
+    "name": "Mattermost",
+    "id": "mattermost",
+    "description": {
+        "en": "An open-source, self-hosted alternative to Slack",
+        "fr": "Une alternative open-source et self-hostée à Slack"
+    },
+    "license": "free",
+    "developer": {
+        "name": "pmorinerie",
+        "email": "kemenaran@gmail.com"
+    },
+    "multi_instance": "false",
+    "arguments": {
+        "install" : [
+            {
+                "name": "domain",
+                "ask": {
+                    "en": "Choose a domain for Mattermost",
+                    "fr": "Choisissez un domaine pour Mattermost"
+                },
+                "example": "domain.org"
+            },
+            {
+                "name": "public_site",
+                "ask": {
+                    "en": "Can guest users access this chat?",
+                    "fr": "Les utilisateurs non-enregistrés peuvent-ils accéder à ce chat ?"
+                },
+                "choices": ["Yes", "No"],
+                "default": "Yes"
+            }
+        ]
+    }
+}

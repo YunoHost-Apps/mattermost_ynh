@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e # Exit on error
+
+domain=$(sudo yunohost app setting mattermost domain)
+db_name="mattermost"
+db_user="mmuser"
+db_root_pwd=$(sudo cat /etc/yunohost/mysql)
+
+# Stop service
+sudo supervisorctl stop mattermost
+
+# Remove sources
+sudo rm -rf /var/www/mattermost
+
+# Remove database
+mysql -u root -p$db_root_pwd -e "DROP DATABASE $db_name ; DROP USER $db_user@localhost ;"
+
+# Remove configuration files
+sudo rm -f /etc/nginx/conf.d/$domain.d/mattermost.conf
+sudo rm /etc/supervisor/conf.d/mattermost.conf
