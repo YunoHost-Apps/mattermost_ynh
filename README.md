@@ -1,6 +1,6 @@
 ## Description
 
-A Yunohost package for [Mattermost](https://mattermost.org), an open-source, self-hosted alternative to Slack.
+A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source, self-hosted alternative to Slack.
 
 ## Requirements
 
