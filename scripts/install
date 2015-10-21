@@ -6,18 +6,35 @@ domain=$1
 is_public=$2
 path=""
 
+# Check for 64 bits support
+arch="$(uname -m)"
+if [[ "$arch" != "x86_64" ]]; then
+    echo "Mattermost requires an x86_64 machine, but this one is '${arch}'."
+    exit 1
+fi
+
+# Check for MySQL version (ugly, to be improved)
+mysql_version=$(mysql --version)
+if    [[ "$mysql_version" == *"Distrib 4."* ]]  \
+   || [[ "$mysql_version" == *"Distrib 5.0"* ]] \
+   || [[ "$mysql_version" == *"Distrib 5.1"* ]] \
+   || [[ "$mysql_version" == *"Distrib 5.2"* ]] \
+   || [[ "$mysql_version" == *"Distrib 5.3"* ]] \
+   || [[ "$mysql_version" == *"Distrib 5.4"* ]] \
+   || [[ "$mysql_version" == *"Distrib 5.5"* ]];
+then
+    echo "Mattermost requires MySQL 5.6 or higher."
+    exit 1
+fi
+
 # Check domain availability
 sudo yunohost app checkurl $domain$path -a mattermost
 if [[ ! $? -eq 0 ]]; then
     exit 1
 fi
 
-# TODO: check 64 bits support
-
-# TODO: check for MySQL 5.6
-
 # Install dependencies
-sudo apt-get install -y supervisor
+command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
 
 # Initialize database and store mysql password for upgrade
 db_name="mattermost"
@@ -86,4 +103,4 @@ sudo service nginx reload
 sudo yunohost app ssowatconf
 
 # Start app
-sudo supervisorctl start mattermost
+sudo supervisorctl reload
