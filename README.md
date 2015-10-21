@@ -19,8 +19,10 @@ You can either :
 ## What works
 
 * Installation on domain's root
+* Notification emails
 
 ## TODO
 
 * Allow installation in sub-directory (only root-domains work for now)
 * LDAP integration
+* Configuring lov level on install

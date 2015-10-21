@@ -20,24 +20,46 @@ fi
 sudo apt-get install -y supervisor
 
 # Initialize database and store mysql password for upgrade
+db_name="mattermost"
 db_user="mmuser"
-db_password="mmuser_password" # TODO: stronger password
-sudo yunohost app initdb $db_user -p $db_password -d mattermost
+db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+sudo yunohost app initdb $db_user -p $db_password -d $db_name
+sudo yunohost app setting mattermost mysqlpwd  -v $db_password
 
-# Save specific settings
-sudo yunohost app setting mattermost is_public -v $is_public
-sudo yunohost app setting mattermost mysqlpwd -v $db_password
-if [ "$is_public" = "Yes" ];
-then
-    sudo yunohost app setting mattermost unprotected_uris -v "/"
-fi
+# Delete db and user if exit with an error
+function exit_properly
+{
+    set +e
+    root_pwd=$(sudo cat /etc/yunohost/mysql)
+    mysql -u root -p$root_pwd -e "DROP DATABASE mattermost ; DROP USER mmuser@localhost ;"
+
+    sudo userdel mattermost
+    sudo rm -Rf /var/www/mattermost
+    exit 1
+}
+trap exit_properly ERR
+
+# Create user for email notifications
+smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "mattermost"
+sudo yunohost app setting mattermost smtppwd -v $smtp_password
 
 # Install sources
 root_path=$(pwd)/..
 final_path=/var/www/mattermost
 sudo mkdir -p $final_path
 sudo cp -af $root_path/sources/.        $final_path
-sudo cp     $root_path/conf/config.json $final_path/config/config.json
+
+# Change variables in Mattermost config
+db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
+sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
+sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
+sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
+sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"    $final_path/config/config.json
+sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"mattermost\"|g"              $final_path/config/config.json
+sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${smtp_password}\"|g"        $final_path/config/config.json
+sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                   $final_path/config/config.json
+sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                              $final_path/config/config.json
 
 # Set permissions to app directory
 sudo chown -R www-data: $final_path
@@ -47,6 +69,13 @@ sudo cp $root_path/conf/nginx.conf-nosub /etc/nginx/conf.d/$domain.d/mattermost.
 
 # Copy supervisor script
 sudo cp $root_path/conf/supervisor.conf /etc/supervisor/conf.d/mattermost.conf
+
+# Enable public access if needed
+sudo yunohost app setting mattermost is_public -v $is_public
+if [ "$is_public" = "Yes" ];
+then
+    sudo yunohost app setting mattermost unprotected_uris -v "/"
+fi
 
 # Reload Nginx and regenerate SSOwat conf
 sudo service nginx reload
