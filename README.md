@@ -25,4 +25,3 @@ You can either :
 
 * Allow installation in sub-directory (only root-domains work for now)
 * LDAP integration
-* Configuring lov level on install
