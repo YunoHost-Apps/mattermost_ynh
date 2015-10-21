@@ -13,7 +13,7 @@ Mattermost requires:
 
 You can either :
 
-* Install from the Admin web interface, by providing this URL: `https://github.com/kemenaran/yunohost-mattermost`
+* Install from the Yunohost Admin web interface, by providing this URL: `https://github.com/kemenaran/yunohost-mattermost`
 * Install from the command-line: `yunohost app install https://github.com/kemenaran/yunohost-mattermost`
 
 ## What works
