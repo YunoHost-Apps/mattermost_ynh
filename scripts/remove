@@ -9,11 +9,14 @@ db_root_pwd=$(sudo cat /etc/yunohost/mysql)
 # Stop service
 sudo supervisorctl stop mattermost
 
-# Remove sources
+# Remove sources and data
 sudo rm -rf /var/www/mattermost
+sudo rm -rf /home/yunohost.app/mattermost
 
 # Remove database
 mysql -u root -p$db_root_pwd -e "DROP DATABASE $db_name ; DROP USER $db_user@localhost ;"
+
+# Remove uploaded files
 
 # Delete SMTP user
 sudo userdel mattermost

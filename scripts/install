@@ -64,12 +64,16 @@ sudo yunohost app setting mattermost smtppwd -v $smtp_password
 # Install sources
 root_path=$(pwd)/..
 final_path=/var/www/mattermost
+data_path=/home/yunohost.app/mattermost
 sudo mkdir -p $final_path
-sudo cp -af $root_path/sources/.        $final_path
+sudo mkdir -p $data_path
+sudo cp -af $root_path/sources/. $final_path
 
 # Change variables in Mattermost config
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
+
+sudo sed -i "s|\"Directory\": \"./data/\"|\"DataSource\": \"${data_path}/\"|g"         $final_path/config/config.json
 
 sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
 sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
@@ -82,8 +86,9 @@ sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                       
 sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
 sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"/var/log/mattermost.log\"|g" $final_path/config/config.json
 
-# Set permissions to app directory
+# Set permissions to app directories
 sudo chown -R www-data: $final_path
+sudo chown -R www-data: $data_path
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 sudo cp $root_path/conf/nginx.conf-nosub /etc/nginx/conf.d/$domain.d/mattermost.conf
