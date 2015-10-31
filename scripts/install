@@ -52,6 +52,7 @@ function exit_properly
 
     sudo userdel mattermost
     sudo rm -Rf /var/www/mattermost
+    rm "mattermost.tar.gz"
     exit 1
 }
 trap exit_properly ERR
@@ -61,13 +62,17 @@ smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-
 sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "mattermost"
 sudo yunohost app setting mattermost smtppwd -v $smtp_password
 
-# Install sources
+# Download and install code
 root_path=$(pwd)/..
 final_path=/var/www/mattermost
 data_path=/home/yunohost.app/mattermost
 sudo mkdir -p $final_path
 sudo mkdir -p $data_path
-sudo cp -af $root_path/sources/. $final_path
+
+version=$(cat $root_path/VERSION)
+wget -q "https://github.com/mattermost/platform/releases/download/${version}/mattermost.tar.gz"
+sudo tar -xvz --file "mattermost.tar.gz" --directory $final_path --strip-components 1
+rm -f "mattermost.tar.gz"
 
 # Change variables in Mattermost config
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
