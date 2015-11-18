@@ -32,6 +32,7 @@ sudo yunohost app checkurl $domain$path -a mattermost
 if [[ ! $? -eq 0 ]]; then
     exit 1
 fi
+sudo yunohost app setting mattermost domain -v $domain
 
 # Install dependencies
 command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
