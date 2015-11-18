@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e # Exit on error
+
+# Retrieve arguments
+domain=$(sudo yunohost app setting mattermost domain)
+is_public=$(sudo yunohost app setting mattermost is_public)
+
+# Cleanup and restart if exit with an error
+function cleanup_and_restart
+{
+    set +e
+    rm "mattermost.tar.gz"
+    sudo supervisorctl start mattermost
+    exit 0
+}
+trap exit_properly ERR
+
+# Stop server
+sudo supervisorctl stop mattermost
+
+# Download code
+root_path=$(pwd)/..
+final_path=/var/www/mattermost
+config_file=$final_path/config/config.json
+backup_config_file=/tmp/config.json
+
+version=$(cat $root_path/VERSION)
+wget -q "https://github.com/mattermost/platform/releases/download/${version}/mattermost.tar.gz"
+
+# Backup configuration file
+sudo cp -f $config_file $backup_config_file
+
+# Copy new code
+sudo rm -rf $final_path
+sudo mkdir -p $final_path
+sudo tar -xvz --file "mattermost.tar.gz" --directory $final_path --strip-components 1
+rm -f "mattermost.tar.gz"
+
+# Restore configuration file
+sudo cp -f $backup_config_file $config_file
+
+# Restore file permissions
+sudo chown -R www-data: $final_path
+
+# Start server
+sudo supervisorctl start mattermost
