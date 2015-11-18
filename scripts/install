@@ -79,7 +79,7 @@ rm -f "mattermost.tar.gz"
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
 
-sudo sed -i "s|\"Directory\": \"./data/\"|\"DataSource\": \"${data_path}/\"|g"         $final_path/config/config.json
+sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"         $final_path/config/config.json
 
 sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
 sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
