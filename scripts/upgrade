@@ -11,9 +11,9 @@ function cleanup_and_restart
     set +e
     rm "mattermost.tar.gz"
     sudo supervisorctl start mattermost
-    exit 0
+    exit 1
 }
-trap exit_properly ERR
+trap cleanup_and_restart ERR
 
 # Stop server
 sudo supervisorctl stop mattermost
