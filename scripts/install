@@ -6,6 +6,13 @@ domain=$1
 is_public=$2
 path=""
 
+# Set up common variables
+root_path="$(pwd)/.."
+final_path=/var/www/mattermost
+data_path=/home/yunohost.app/mattermost
+version=$(cat "$root_path/VERSION")
+archive_filename="mattermost-$version.tar.gz"
+
 # Check for 64 bits support
 arch="$(uname -m)"
 if [[ "$arch" != "x86_64" ]]; then
@@ -52,8 +59,8 @@ function exit_properly
     mysql -u root -p$root_pwd -e "DROP DATABASE mattermost ; DROP USER mmuser@localhost ;"
 
     sudo userdel mattermost
-    sudo rm -Rf /var/www/mattermost
-    rm "mattermost.tar.gz"
+    sudo rm -Rf "$final_path"
+    rm "$archive_filename"
     exit 1
 }
 trap exit_properly ERR
@@ -61,25 +68,23 @@ trap exit_properly ERR
 # Create user for email notifications
 smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
 sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "mattermost"
-sudo yunohost app setting mattermost smtppwd -v $smtp_password
-
+sudo yunohost app setting mattermost smtppwd -v "$smtp_password"
+/
 # Download and install code
-root_path=$(pwd)/..
-final_path=/var/www/mattermost
-data_path=/home/yunohost.app/mattermost
-sudo mkdir -p $final_path
-sudo mkdir -p $data_path
+archive_url="https://releases.mattermost.com/${version}/mattermost-team-${version}-linux-amd64.tar.gz"
 
-version=$(cat $root_path/VERSION)
-wget -q "https://github.com/mattermost/platform/releases/download/${version}/mattermost.tar.gz"
-sudo tar -xvz --file "mattermost.tar.gz" --directory $final_path --strip-components 1
-rm -f "mattermost.tar.gz"
+sudo mkdir -p "$final_path"
+sudo mkdir -p "$data_path"
+
+wget --quiet --output-document "$archive_filename" "$archive_url"
+sudo tar -xvz --file "$archive_filename" --directory "$final_path" --strip-components 1
+rm -f "$archive_filename"
 
 # Change variables in Mattermost config
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
 
-sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"         $final_path/config/config.json
+sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"          $final_path/config/config.json
 
 sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
 sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
