@@ -14,7 +14,7 @@
     "multi_instance": "false",
     "services": [
         "nginx",
-        "mysql"
+        "mysql-server"
     ],
     "requirements": {
         "mysql": ">= 5.6"
