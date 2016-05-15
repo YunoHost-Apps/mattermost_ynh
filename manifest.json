@@ -14,10 +14,10 @@
     "multi_instance": "false",
     "services": [
         "nginx",
-        "mysql"
+        "mariadb-server"
     ],
     "requirements": {
-        "mysql": ">= 5.6"
+        "mariadb-server": ">= 5.6"
     },
     "arguments": {
         "install" : [
