@@ -32,7 +32,6 @@
             },
             {
                 "name": "public_site",
-                "type": "boolean",
                 "ask": {
                     "en": "Can guest users access this chat?",
                     "fr": "Les utilisateurs non-enregistrés peuvent-ils accéder à ce chat ?"
