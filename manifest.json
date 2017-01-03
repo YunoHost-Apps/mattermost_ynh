@@ -13,12 +13,8 @@
     },
     "multi_instance": "false",
     "services": [
-        "nginx",
-        "mysql-common"
+        "nginx"
     ],
-    "requirements": {
-        "mysql-common": ">= 5.6"
-    },
     "arguments": {
         "install" : [
             {

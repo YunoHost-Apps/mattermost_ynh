@@ -30,7 +30,7 @@ if    [[ "$mysql_version" == *"Distrib 4."* ]]  \
    || [[ "$mysql_version" == *"Distrib 5.4"* ]] \
    || [[ "$mysql_version" == *"Distrib 5.5"* ]];
 then
-    echo "Mattermost requires MySQL 5.6 or higher."
+    echo "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
     exit 1
 fi
 
