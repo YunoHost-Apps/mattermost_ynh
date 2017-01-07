@@ -1,4 +1,5 @@
 {
+    "packaging_format": 1,
     "name": "Mattermost",
     "id": "mattermost",
     "description": {
@@ -11,10 +12,13 @@
         "name": "pmorinerie",
         "email": "kemenaran@gmail.com"
     },
-    "multi_instance": "false",
+    "multi_instance": false,
     "services": [
         "nginx"
     ],
+    "requirements": {
+      "yunohost": ">= 2.4.0"
+    },
     "arguments": {
         "install" : [
             {
