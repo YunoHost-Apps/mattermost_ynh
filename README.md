@@ -2,6 +2,10 @@
 
 A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source, self-hosted alternative to Slack.
 
+## Build status
+
+See https://jenkins-ci-arm.noho.st/jenkins/job/mattermost%20(Community)/ for checking current build status.
+
 ## Requirements
 
 Mattermost requires:
