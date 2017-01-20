@@ -7,7 +7,7 @@ A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source,
 Mattermost requires:
 
 * A x86_64 system (check with `uname -m`),
-* MySQL 5.6 or higher (check with `mysql --version`).
+* MySQL 5.6 or higher, or MariaDB 10 or higher (check with `mysql --version`).
 
 ## Installing
 
