@@ -4,7 +4,7 @@ A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source,
 
 ## Build status
 
-See https://jenkins-ci-arm.noho.st/jenkins/job/mattermost%20(Community)/ for checking current build status.
+See https://ci-apps.yunohost.org/jenkins/job/mattermost%20(Community)/ for checking current build status.
 
 ## Requirements
 
