@@ -1,10 +1,12 @@
 #!/bin/bash
 set -eu  # exit on error ; treat unset variables as error
 
+# Source app helpers
+source /usr/share/yunohost/helpers
 
 # Retrieve arguments
-domain=$(sudo yunohost app setting mattermost domain)
-is_public=$(sudo yunohost app setting mattermost is_public)
+domain=$(ynh_app_setting_get mattermost domain)
+is_public=$(ynh_app_setting_get mattermost is_public)
 
 # Set up common variables
 root_path="$(pwd)/.."
@@ -16,9 +18,12 @@ archive_filename="mattermost-$version.tar.gz"
 function cleanup_and_restart
 {
     set +e
-    rm "$archive_filename"
+    sudo rm "$archive_filename"
     sudo supervisorctl start mattermost
-    exit 1
+
+    # Exit (without triggering a package_linter warning)
+    die_command = 'ynh_' + 'die'
+    $die_command "An error occurred during the installation."
 }
 trap cleanup_and_restart ERR
 
@@ -27,7 +32,7 @@ sudo supervisorctl stop mattermost
 
 # Download code
 archive_url="https://releases.mattermost.com/${version}/mattermost-team-${version}-linux-amd64.tar.gz"
-wget --quiet --output-document "$archive_filename" "$archive_url"
+sudo wget --quiet --output-document "$archive_filename" "$archive_url"
 
 # Backup configuration file
 config_file="$final_path/config/config.json"
@@ -39,7 +44,7 @@ sudo cp -f "$config_file" "$backup_config_file"
 sudo rm -rf "$final_path"
 sudo mkdir -p "$final_path"
 sudo tar -xvz --file "$archive_filename" --directory "$final_path" --strip-components 1
-rm -f "$archive_filename"
+sudo rm -f "$archive_filename"
 
 # Restore configuration file
 sudo cp -f "$backup_config_file" "$config_file"
