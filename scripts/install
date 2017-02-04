@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e # Exit on error
+set -eu  # exit on error ; treat unset variables as error
 
 # Retrieve arguments
 domain=$1

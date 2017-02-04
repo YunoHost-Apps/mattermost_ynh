@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e # Exit on error
+set -u  # treat unset variables as an error
 
 domain=$(sudo yunohost app setting mattermost domain)
 db_name="mattermost"
