@@ -96,6 +96,7 @@ sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                       
 
 sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
 sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"/var/log/mattermost.log\"|g" $final_path/config/config.json
+sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
 
 # Set permissions to app directories
 sudo chown -R www-data: $final_path
