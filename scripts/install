@@ -4,6 +4,7 @@ set -e # Exit on error
 # Retrieve arguments
 domain=$1
 is_public=$2
+analytics=$YNH_APP_ARG_ANALYTICS
 path=""
 
 # Set up common variables
@@ -96,7 +97,9 @@ sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                       
 
 sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
 sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"/var/log/mattermost.log\"|g" $final_path/config/config.json
-sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
+if [ $analytics -eq 0 ]; then
+    sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
+fi
 
 # Set permissions to app directories
 sudo chown -R www-data: $final_path
