@@ -100,6 +100,7 @@ sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"/var/log/mattermost.lo
 if [ $analytics -eq 0 ]; then
     sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
 fi
+sudo yunohost app setting mattermost analytics -v $analytics
 
 # Set permissions to app directories
 sudo chown -R www-data: $final_path
