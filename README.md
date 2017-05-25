@@ -36,3 +36,10 @@ Run the upgrade from Yunohost, then follow [this guide](https://docs.mattermost.
 
 * Allow installation in sub-directory (only root-domains work for now)
 * LDAP integration
+
+## About telemetrics
+Mattermost is used to send some telemetrics about your usage of it.
+But this data doesn't send to mattermost, but to a third party site named [segment.com](https://segment.com/).
+You can find more information about his behavior on the [mattermost documentation](https://docs.mattermost.com/administration/telemetry.html).
+
+This behavior can be turn on or off when you install this app.
