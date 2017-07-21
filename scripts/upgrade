@@ -46,5 +46,8 @@ sudo cp -f "$backup_config_file" "$config_file"
 # Restore file permissions
 sudo chown -R www-data: "$final_path"
 
+# Update Nginx configuration file
+sudo cp -f $root_path/conf/nginx.conf-nosub /etc/nginx/conf.d/$domain.d/mattermost.conf
+
 # Start server
 sudo supervisorctl start mattermost
