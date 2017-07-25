@@ -34,6 +34,15 @@
                 },
                 "choices": ["Yes", "No"],
                 "default": "Yes"
+            },
+            {
+                "name": "analytics",
+                "type": "boolean",                
+                "ask": {
+                    "en": "Do you want to allow Mattermost to send some telemetrics about your usage of this app?",
+                    "fr": "Autorisez-vous Mattermost à envoyer des informations anonymes sur votre usage de l’application ?"
+                },
+                "default": false
             }
         ]
     }
