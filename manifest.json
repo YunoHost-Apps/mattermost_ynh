@@ -40,7 +40,7 @@
                 "type": "boolean",                
                 "ask": {
                     "en": "Do you want to allow Mattermost to send some telemetrics about your usage of this app?",
-                    "fr": "Souhaitez-vous autoriser Mattermost à envoyer des informations sur votre usage de cette application?"
+                    "fr": "Autorisez-vous Mattermost à envoyer des informations anonymes sur votre usage de l’application ?"
                 },
                 "default": false
             }
