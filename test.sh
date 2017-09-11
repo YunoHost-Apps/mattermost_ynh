@@ -129,10 +129,8 @@ function test_simple_restore() {
 }
 
 function test_package_check() {
-  #echo "--- Running package_check ---"
-  #_vagrant_ssh "package_check/package_check.sh --bash-mode '$APP_DIR'"
-  echo "--- Skipping package_check ---"
-  echo "(Our custom Vagrant box is not able to run LXC containers yet)"
+  echo "--- Running package_check ---"
+  _vagrant_ssh "package_check/package_check.sh --bash-mode '$APP_DIR'"
 }
 
 function teardown() {
