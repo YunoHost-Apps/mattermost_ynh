@@ -26,7 +26,7 @@ sudo userdel mattermost
 
 # Remove configuration files
 sudo rm -f /etc/nginx/conf.d/$domain.d/mattermost.conf
-sudo rm /etc/supervisor/conf.d/mattermost.conf
+sudo rm -f /etc/supervisor/conf.d/mattermost.conf
 
 # Remove log files
 sudo rm -f /var/log/mattermost.log
