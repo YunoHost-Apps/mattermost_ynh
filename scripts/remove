@@ -1,10 +1,13 @@
 #!/bin/bash
-set -e # Exit on error
+set -u  # treat unset variables as an error
 
-domain=$(sudo yunohost app setting mattermost domain)
+# Source app helpers
+source /usr/share/yunohost/helpers
+
+# Read configuration
+domain=$(ynh_app_setting_get mattermost domain)
 db_name="mattermost"
 db_user="mmuser"
-db_root_pwd=$(sudo cat /etc/yunohost/mysql)
 
 # Stop service
 sudo supervisorctl stop mattermost
@@ -14,7 +17,7 @@ sudo rm -rf /var/www/mattermost
 sudo rm -rf /home/yunohost.app/mattermost
 
 # Remove database
-mysql -u root -p$db_root_pwd -e "DROP DATABASE $db_name ; DROP USER $db_user@localhost ;"
+ynh_mysql_execute_as_root "DROP DATABASE $db_name ; DROP USER $db_user@localhost ;"
 
 # Remove uploaded files
 
@@ -27,4 +30,3 @@ sudo rm /etc/supervisor/conf.d/mattermost.conf
 
 # Remove log files
 sudo rm -f /var/log/mattermost.log
-
