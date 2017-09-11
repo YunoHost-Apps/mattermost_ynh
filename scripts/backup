@@ -10,6 +10,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
+
 app=$YNH_APP_INSTANCE_NAME
 
 final_path="/var/www/$app"

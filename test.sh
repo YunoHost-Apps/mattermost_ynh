@@ -114,8 +114,18 @@ function test_simple_upgrade() {
 
 function test_simple_backup() {
   echo "--- Running simple backup test ---"
-  local BACKUP_DIR="$TESTS_DIR/backups"
-  _vagrant_ssh "sudo yunohost backup create --ignore-hooks --no-compress --apps $APP_NAME --output-directory $BACKUP_DIR $VERBOSE_OPT"
+  _vagrant_ssh "sudo yunohost backup create --ignore-hooks --apps $APP_NAME $VERBOSE_OPT"
+}
+
+function test_simple_remove() {
+  echo "--- Running simple remove test ---"
+  _vagrant_ssh "sudo yunohost app remove $APP_NAME"
+}
+
+function test_simple_restore() {
+  echo "--- Running simple restore test ---"
+  _vagrant_ssh "sudo yunohost backup list | cut -d ' ' -f 2 > backup_name"
+  _vagrant_ssh "sudo yunohost backup restore \$(cat backup_name) --force --ignore-hooks --apps $APP_NAME $VERBOSE_OPT"
 }
 
 function test_package_check() {
@@ -134,5 +144,7 @@ setup
 test_simple_install
 test_simple_upgrade
 test_simple_backup
+test_simple_remove
+test_simple_restore
 test_package_check
 teardown
