@@ -1,29 +1,46 @@
 #!/bin/bash
 set -eu  # exit on error ; treat unset variables as error
 
-app=mattermost
-db_name="$app"
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
 
-# The parameter $1 is the backup directory location
-# which will be compressed afterward
-backup_dir=${1}apps/$app
-sudo mkdir -p $backup_dir
+source /usr/share/yunohost/helpers
 
-# Backup sources
-echo "Backup sources from /var/www/$app…"
-sudo cp -a /var/www/$app/. $backup_dir/sources
+#=================================================
+# LOAD SETTINGS
+#=================================================
+app=$YNH_APP_INSTANCE_NAME
 
-# Backup database
-echo "Backup database…"
-root_pwd=$(sudo cat /etc/yunohost/mysql)
-ynh_mysql_dump_db $db_name > $backup_dir/mattermost.sql
-
-# Backup uploaded files
-echo "Backup uploaded files…"
-sudo cp -a /home/yunohost.app/mattermost/. $backup_dir/data
-
-# Copy Nginx and YunoHost parameters to make the script "standalone"
-echo "Backup Yunohost configuration…"
-sudo cp -a /etc/yunohost/apps/$app/. $backup_dir/yunohost
+final_path="/var/www/$app"
 domain=$(ynh_app_setting_get $app domain)
-sudo cp -a /etc/nginx/conf.d/$domain.d/$app.conf $backup_dir/nginx.conf
+db_name="$app"
+default_backup_dir="${1}apps/$app"
+backup_dir=${backup_dir:-"$default_backup_dir"}
+
+#=================================================
+# STANDARD BACKUP STEPS
+#=================================================
+# BACKUP THE APP MAIN DIR
+#=================================================
+
+ynh_backup "$final_path" "${backup_dir}$final_path"
+
+#=================================================
+# BACKUP THE DATABASE
+#=================================================
+
+ynh_mysql_dump_db "$db_name" > db.sql
+ynh_backup "db.sql" "${backup_dir}/db.sql"
+
+#=================================================
+# BACKUP THE NGINX CONFIGURATION
+#=================================================
+
+ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf" "${backup_dir}/etc/nginx/conf.d/$domain.d/$app.conf"
+
+#=================================================
+# BACKUP SUPERVISOR CONFIG
+#=================================================
+
+ynh_backup "/etc/supervisor/conf.d/$app.conf" "${backup_dir}/etc/supervisor/conf.d/$app.conf"
