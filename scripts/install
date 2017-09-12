@@ -62,7 +62,7 @@ ynh_webpath_available $domain $path_url
 # Register (book) web path
 ynh_webpath_register $app $domain $path_url
 # Store setting
-ynh_app_setting_set mattermost domain "$domain"
+ynh_app_setting_set "$app" domain "$domain"
 
 #=================================================
 # REGISTER ERROR HANDLER
@@ -136,11 +136,12 @@ sudo rm -f "$archive_filename"
 # EDIT MATTERMOST CONFIG
 #=================================================
 
+# Configure the database connection
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
-
+# Configure uploaded files directory
 sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"          $final_path/config/config.json
-
+# Configure SMTP account for sending email notifications
 sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
 sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
 sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"    $final_path/config/config.json
@@ -148,13 +149,15 @@ sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"mattermost\"|g"       
 sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${smtp_password}\"|g"        $final_path/config/config.json
 sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                   $final_path/config/config.json
 sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                              $final_path/config/config.json
-
+# Disable Mattermost debug console by default
 sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
+# Configure log file location
 sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"/var/log\"|g"                $final_path/config/config.json
+# Configure analytics according to user choice
 if [ $analytics -eq 0 ]; then
     sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
 fi
-ynh_app_setting_set mattermost analytics "$analytics"
+ynh_app_setting_set "$app" analytics "$analytics"
 
 #=================================================
 # SECURE FILES AND DIRECTORIES
@@ -179,10 +182,10 @@ sudo cp $root_path/conf/supervisor.conf /etc/supervisor/conf.d/mattermost.conf
 # SETUP SSOWAT
 #=================================================
 
-ynh_app_setting_set mattermost is_public "$is_public"
+ynh_app_setting_set "$app" is_public "$is_public"
 if [ "$is_public" = "Yes" ];
 then
-    ynh_app_setting_set mattermost unprotected_uris "/"
+    ynh_app_setting_set "$app" unprotected_uris "/"
 fi
 
 #=================================================
