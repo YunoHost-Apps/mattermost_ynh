@@ -1,24 +1,33 @@
 #!/bin/bash
 
-# Retrieve arguments
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# MANAGE SCRIPT FAILURE
+#=================================================
+
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
+
+#=================================================
+# RETRIEVE ARGUMENTS FROM THE MANIFEST
+#=================================================
+
 app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
 is_public=$YNH_APP_ARG_PUBLIC_SITE
 analytics=$YNH_APP_ARG_ANALYTICS
 path_url="/"
 
-# Source app helpers
-source /usr/share/yunohost/helpers
-
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
-# Set up common variables
-root_path="$(pwd)/.."
-final_path=/var/www/$app
-data_path=/home/yunohost.app/$app
-version=$(cat "$root_path/VERSION")
-archive_filename="mattermost-$version.tar.gz"
+#=================================================
+# CHECK IF THE APP CAN BE INSTALLED
+#=================================================
 
 # Allow using the `ynh_die` command without triggering linter warnings
 function script_die () {
@@ -55,8 +64,12 @@ ynh_webpath_register $app $domain $path_url
 # Store setting
 ynh_app_setting_set mattermost domain "$domain"
 
+#=================================================
+# REGISTER ERROR HANDLER
+#=================================================
 
 # Delete db and user if exit with an error
+# (N.B. this section doesn't seem executed on Yunohost >= 2.7 ; the `remove` script is executed instead.)
 function fail_properly
 {
     set +e
@@ -72,21 +85,44 @@ function fail_properly
 }
 trap fail_properly ERR
 
+#=================================================
+# SET UP INSTALLATION VARIABLES
+#=================================================
+
+root_path="$(pwd)/.."
+final_path="/var/www/$app"
+data_path="/home/yunohost.app/$app"
+version=$(cat "$root_path/VERSION")
+archive_filename="mattermost-$version.tar.gz"
+
+#=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+
 command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
 
-# Initialize database and store mysql password for upgrade
+#=================================================
+# CREATE A MYSQL DATABASE
+#=================================================
+
 db_name="mattermost"
 db_user="mmuser"
 db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
 ynh_mysql_create_db $db_name $db_user $db_password
 ynh_app_setting_set mattermost mysqlpwd "$db_password"
 
-# Create user for email notifications
+#=================================================
+# CREATE USER FOR EMAIL NOTIFICATIONS
+#=================================================
+
 smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
 sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "mattermost"
 ynh_app_setting_set mattermost smtppwd "$smtp_password"
 
-# Download and install code
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+
 archive_url="https://releases.mattermost.com/${version}/mattermost-team-${version}-linux-amd64.tar.gz"
 
 sudo mkdir -p "$final_path"
@@ -96,7 +132,10 @@ sudo wget --quiet --output-document "$archive_filename" "$archive_url"
 sudo tar -xvz --file "$archive_filename" --directory "$final_path" --strip-components 1
 sudo rm -f "$archive_filename"
 
-# Change variables in Mattermost config
+#=================================================
+# EDIT MATTERMOST CONFIG
+#=================================================
+
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
 
@@ -117,26 +156,43 @@ if [ $analytics -eq 0 ]; then
 fi
 ynh_app_setting_set mattermost analytics "$analytics"
 
-# Set permissions to app directories
+#=================================================
+# SECURE FILES AND DIRECTORIES
+#=================================================
+
 sudo chown -R www-data: $final_path
 sudo chown -R www-data: $data_path
 
-# Modify Nginx configuration file and copy it to Nginx conf directory
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+
 sudo cp $root_path/conf/nginx.conf-nosub /etc/nginx/conf.d/$domain.d/mattermost.conf
 
-# Copy supervisor script
+#=================================================
+# SETUP SUPERVISOR
+#=================================================
+
 sudo cp $root_path/conf/supervisor.conf /etc/supervisor/conf.d/mattermost.conf
 
-# Enable public access if needed
+#=================================================
+# SETUP SSOWAT
+#=================================================
+
 ynh_app_setting_set mattermost is_public "$is_public"
 if [ "$is_public" = "Yes" ];
 then
     ynh_app_setting_set mattermost unprotected_uris "/"
 fi
 
-# Reload Nginx and regenerate SSOwat conf
+#=================================================
+# RELOAD NGINX
+#=================================================
+
 sudo service nginx reload
 sudo yunohost app ssowatconf
 
-# Start app
+#=================================================
+# START APP
+#=================================================
 sudo supervisorctl reload
