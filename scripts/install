@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Retrieve arguments
+app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
 is_public=$YNH_APP_ARG_PUBLIC_SITE
 analytics=$YNH_APP_ARG_ANALYTICS
@@ -14,8 +15,8 @@ ynh_abort_if_errors
 
 # Set up common variables
 root_path="$(pwd)/.."
-final_path=/var/www/mattermost
-data_path=/home/yunohost.app/mattermost
+final_path=/var/www/$app
+data_path=/home/yunohost.app/$app
 version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
