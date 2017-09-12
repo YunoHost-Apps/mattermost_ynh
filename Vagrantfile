@@ -10,8 +10,8 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  config.vm.define :mattermost_ynh
-  config.vm.box = "debian/contrib-jessie64"
+  config.vm.define :ynh_tests
+  config.vm.box = "yunohost/jessie-stable"
 
   # Disable auto updates checks. Run `vagrant outdated` to perform manual updates.
   config.vm.box_check_update = false
@@ -36,36 +36,27 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, keep_color: true, inline: <<-SHELL
-    TESTS_DIR="/home/vagrant/tests"
-    APP_DIR="$TESTS_DIR/mattermost_ynh"
-    VM_ROOT_PASSWORD="alpine"
+    DOMAIN=ynh-tests.local
     YUNOHOST_ADMIN_PASSWORD="alpine"
 
     # Stop on first error
     set -e
 
-    # Upgrade the system packages
-    #DEBIAN_FRONTEND=noninteractive sudo apt-get update
-    #DEBIAN_FRONTEND=noninteractive sudo apt-get upgrade --yes -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold'
+    # Upgrade Yunohost and the system packages (disabled)
+    sudo apt-get update
+    sudo apt-get upgrade --yes
+    sudo apt-get dist-upgrade --yes
 
-    # Install git
-    hash git 2>/dev/null || sudo apt-get install git --yes
-
-    # Install Yunohost
-    if ! hash yunohost 2>/dev/null; then
-      git clone https://github.com/YunoHost/install_script /tmp/install_script
-      yes ${VM_ROOT_PASSWORD} | sudo passwd
-      cd /tmp/install_script
-      echo "Running Yunohost install script…"
-      sudo ./install_yunohost -a
-      sudo yunohost tools postinstall --domain mattermost-ynh.local --password ${YUNOHOST_ADMIN_PASSWORD}
+    # Finish Yunohost installation
+    if ! [[ -f /etc/yunohost/installed ]]; then
+      sudo yunohost tools postinstall --domain ${DOMAIN} --password ${YUNOHOST_ADMIN_PASSWORD} --ignore-dyndns
     fi
 
     # Install lxc
-    if ! hash lxc-start 2>/dev/null; then
-      DEBIAN_FRONTEND=noninteractive sudo apt-get update
-      DEBIAN_FRONTEND=noninteractive sudo apt-get install --yes --fix-missing lxc
-    fi
+    # if ! hash lxc-start 2>/dev/null; then
+    #   DEBIAN_FRONTEND=noninteractive sudo apt-get update
+    #   DEBIAN_FRONTEND=noninteractive sudo apt-get install --yes --fix-missing lxc
+    # fi
 
     # Install package_check
     if ! [ -f "$HOME/package_check/package_check.sh" ]; then

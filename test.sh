@@ -10,7 +10,8 @@ set -e
 # Configuration constants
 APP_NAME="mattermost"
 TESTS_DIR="/home/vagrant/tests"
-APP_DIR="$TESTS_DIR/mattermost_ynh"
+APP_DIR="$TESTS_DIR/app"
+DOMAIN="ynh-tests.local"
 VM_ROOT_PASSWORD="alpine"
 YUNOHOST_ADMIN_PASSWORD="alpine"
 
@@ -76,21 +77,24 @@ function _assert_success() {
 function setup() {
   if $SKIP_SNAPSHOT; then
     echo "--- Starting Vagrant box ---"
-    vagrant up
+    vagrant up --no-provision
     echo "--- (Skipping snapshot restore) ---"
     return
   fi
 
-  if (vagrant snapshot list | grep 'yunohost-2.4-pristine' > /dev/null); then
+  if (vagrant snapshot list | grep 'yunohost-jessie-pristine' > /dev/null); then
     echo "--- Restoring Vagrant snapshot ---"
-    vagrant snapshot restore yunohost-2.4-pristine
+    vagrant snapshot restore --no-provision yunohost-jessie-pristine
   else
     echo "--- Provisioning Vagrant box ---"
     vagrant up --provision
     echo "--- Saving Vagrant snapshot ---"
-    vagrant snapshot save yunohost-2.4-pristine
+    vagrant snapshot save yunohost-jessie-pristine
   fi
 
+  # Copy the files inside the VM, rather than using the mounted
+  # files directly.
+  # This avoids tests screwing up our files if something goes wrong.
   echo "--- Copying app content into the box ---"
   if ! [ -d "$APP_DIR" ]; then
     _vagrant_ssh "mkdir -p '$TESTS_DIR'"
@@ -100,7 +104,7 @@ function setup() {
 
 function test_simple_install() {
   echo "--- Running simple installation test ---"
-  _vagrant_ssh "sudo yunohost app install '$APP_DIR' --args 'domain=mattermost-ynh.local&public_site=Yes&analytics=0' $VERBOSE_OPT"
+  _vagrant_ssh "sudo yunohost app install '$APP_DIR' --args 'domain=${DOMAIN}&public_site=Yes&analytics=0' $VERBOSE_OPT"
 }
 
 function test_simple_upgrade() {
@@ -110,8 +114,18 @@ function test_simple_upgrade() {
 
 function test_simple_backup() {
   echo "--- Running simple backup test ---"
-  local BACKUP_DIR="$TESTS_DIR/backups"
-  _vagrant_ssh "sudo yunohost backup create --ignore-hooks --no-compress --apps $APP_NAME --output-directory $BACKUP_DIR $VERBOSE_OPT"
+  _vagrant_ssh "sudo yunohost backup create --ignore-hooks --apps $APP_NAME $VERBOSE_OPT"
+}
+
+function test_simple_remove() {
+  echo "--- Running simple remove test ---"
+  _vagrant_ssh "sudo yunohost app remove $APP_NAME"
+}
+
+function test_simple_restore() {
+  echo "--- Running simple restore test ---"
+  _vagrant_ssh "sudo yunohost backup list | cut -d ' ' -f 2 > backup_name"
+  _vagrant_ssh "sudo yunohost backup restore \$(cat backup_name) --force --ignore-hooks --apps $APP_NAME $VERBOSE_OPT"
 }
 
 function test_package_check() {
@@ -130,5 +144,7 @@ setup
 test_simple_install
 test_simple_upgrade
 test_simple_backup
+test_simple_remove
+test_simple_restore
 test_package_check
 teardown

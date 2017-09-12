@@ -1,0 +1,96 @@
+#!/bin/bash
+set -eu  # exit on error ; treat unset variables as error
+
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
+source /usr/share/yunohost/helpers
+
+#=================================================
+# LOAD SETTINGS
+#=================================================
+
+app=$YNH_APP_INSTANCE_NAME
+
+domain=$(ynh_app_setting_get $app domain)
+final_path="/var/www/$app"
+data_path="/home/yunohost.app/$app"
+db_name="$app"
+db_user="mmuser"
+
+#=================================================
+# CHECK IF THE APP CAN BE RESTORED
+#=================================================
+
+yunohost app checkurl "${domain}" -a "$app" \
+  || ynh_die "Path not available: ${domain}"
+test ! -d $final_path \
+  || ynh_die "There is already a directory: $final_path "
+
+#=================================================
+# STANDARD RESTORATION STEPS
+#=================================================
+# RESTORE THE NGINX CONFIGURATION
+#=================================================
+
+ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
+
+#=================================================
+# RESTORE THE APP MAIN DIR
+#=================================================
+
+ynh_restore_file "$final_path"
+
+#=================================================
+# RESTORE THE MYSQL DATABASE
+#=================================================
+
+db_pwd=$(ynh_app_setting_get $app mysqlpwd)
+ynh_mysql_setup_db $db_user $db_name $db_pwd
+ynh_mysql_connect_as $db_user $db_pwd $db_name < ./db.sql
+
+#=================================================
+# RECREATE THE DEDICATED USER
+#=================================================
+
+# Create the dedicated user (if not existing)
+smtp_user="$app"
+if ! ynh_system_user_exists "$smtp_user"; then
+  smtp_password=$(ynh_app_setting_get $app smtp_password)
+  useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "$smtp_user"
+fi
+
+#=================================================
+# RESTORE USER RIGHTS
+#=================================================
+
+# Restore permissions on app files
+chown -R www-data: $final_path
+mkdir -p $data_path
+chown -R www-data: $data_path
+
+#=================================================
+# SPECIFIC RESTORATION
+#=================================================
+# REINSTALL DEPENDENCIES
+#=================================================
+
+# Define and install dependencies
+# TODO: use ynh_install_app_dependencies once we'll stop supporting Yunohost < 2.6.4
+command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
+
+#=================================================
+# RESTORE SUPERVISOR CONF
+#=================================================
+
+ynh_restore_file "/etc/supervisor/conf.d/$app.conf"
+
+#=================================================
+# GENERIC FINALIZATION
+#=================================================
+# RELOAD NGINX AND START THE APP
+#=================================================
+
+sudo service nginx reload
+sudo supervisorctl reload
