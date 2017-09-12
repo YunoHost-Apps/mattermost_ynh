@@ -55,15 +55,6 @@ ynh_webpath_register $app $domain $path_url
 # Store setting
 ynh_app_setting_set mattermost domain "$domain"
 
-# Install dependencies
-command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
-
-# Initialize database and store mysql password for upgrade
-db_name="mattermost"
-db_user="mmuser"
-db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
-ynh_mysql_create_db $db_name $db_user $db_password
-ynh_app_setting_set mattermost mysqlpwd "$db_password"
 
 # Delete db and user if exit with an error
 function fail_properly
@@ -79,6 +70,15 @@ function fail_properly
     script_die "An error occurred during the installation."
 }
 trap fail_properly ERR
+
+command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
+
+# Initialize database and store mysql password for upgrade
+db_name="mattermost"
+db_user="mmuser"
+db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+ynh_mysql_create_db $db_name $db_user $db_password
+ynh_app_setting_set mattermost mysqlpwd "$db_password"
 
 # Create user for email notifications
 smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
