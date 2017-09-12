@@ -64,7 +64,7 @@ function fail_properly
 
     sudo userdel mattermost
     sudo rm -Rf "$final_path"
-    sudo rm "$archive_filename"
+    sudo rm -f "$archive_filename"
 
     # Exit (without triggering a package_linter warning)
     script_die "An error occurred during the installation."
