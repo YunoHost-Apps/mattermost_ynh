@@ -17,8 +17,8 @@ Mattermost requires:
 
 You can either :
 
-* Install from the Yunohost Admin web interface, by providing this URL: `https://github.com/kemenaran/mattermost_ynh`
-* Install from the command-line: `yunohost app install https://github.com/kemenaran/mattermost_ynh`
+* Install from the Yunohost Admin web interface, by providing this URL: `https://github.com/YunoHost-Apps/mattermost_ynh`
+* Install from the command-line: `yunohost app install https://github.com/YunoHost-Apps/mattermost_ynh`
 
 ## Upgrading
 
