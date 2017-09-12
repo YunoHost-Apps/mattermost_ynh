@@ -4,7 +4,7 @@
 domain=$YNH_APP_ARG_DOMAIN
 is_public=$YNH_APP_ARG_PUBLIC_SITE
 analytics=$YNH_APP_ARG_ANALYTICS
-path=""
+path_url="/"
 
 # Source app helpers
 source /usr/share/yunohost/helpers
@@ -45,11 +45,13 @@ then
     script_die "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
 fi
 
-# Check domain availability
-sudo yunohost app checkurl $domain$path -a mattermost
-if [[ ! $? -eq 0 ]]; then
-    script_die "The app cannot be installed at '$domain$path': this location is already used."
-fi
+# Normalize the url path syntax
+path_url=$(ynh_normalize_url_path $path_url)
+# Check web path availability
+ynh_webpath_available $domain $path_url
+# Register (book) web path
+ynh_webpath_register $app $domain $path_url
+# Store setting
 ynh_app_setting_set mattermost domain "$domain"
 
 # Install dependencies
