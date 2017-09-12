@@ -17,7 +17,8 @@ sudo rm -rf /var/www/mattermost
 sudo rm -rf /home/yunohost.app/mattermost
 
 # Remove database
-ynh_mysql_execute_as_root "DROP DATABASE $db_name ; DROP USER $db_user@localhost ;"
+# (DROP USER IF EXISTS is only available on MySQL >= 5.7, so we don't use it for now)
+ynh_mysql_execute_as_root "DROP DATABASE IF EXISTS $db_name ; DROP USER $db_user@localhost ;"
 
 # Remove uploaded files
 

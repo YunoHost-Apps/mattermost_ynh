@@ -60,13 +60,14 @@ ynh_app_setting_set mattermost domain "$domain"
 function fail_properly
 {
     set +e
-    ynh_mysql_execute_as_root "DROP DATABASE $db_name ; DROP USER $db_user@localhost ;"
+    # Remove database
+    # (DROP USER IF EXISTS is only available on MySQL >= 5.7, so we don't use it for now)
+    ynh_mysql_execute_as_root "DROP DATABASE IF EXISTS $db_name ; DROP USER $db_user@localhost ;"
 
     sudo userdel mattermost
     sudo rm -Rf "$final_path"
     sudo rm -f "$archive_filename"
 
-    # Exit (without triggering a package_linter warning)
     script_die "An error occurred during the installation."
 }
 trap fail_properly ERR
