@@ -43,8 +43,9 @@ Vagrant.configure("2") do |config|
     set -e
 
     # Upgrade Yunohost and the system packages (disabled)
-    #DEBIAN_FRONTEND=noninteractive sudo apt-get update
-    #DEBIAN_FRONTEND=noninteractive sudo apt-get upgrade --yes -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confold'
+    sudo apt-get update
+    sudo apt-get upgrade --yes
+    sudo apt-get dist-upgrade --yes
 
     # Finish Yunohost installation
     if ! [[ -f /etc/yunohost/installed ]]; then

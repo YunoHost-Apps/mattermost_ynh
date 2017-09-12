@@ -77,14 +77,14 @@ function _assert_success() {
 function setup() {
   if $SKIP_SNAPSHOT; then
     echo "--- Starting Vagrant box ---"
-    vagrant up
+    vagrant up --no-provision
     echo "--- (Skipping snapshot restore) ---"
     return
   fi
 
   if (vagrant snapshot list | grep 'yunohost-jessie-pristine' > /dev/null); then
     echo "--- Restoring Vagrant snapshot ---"
-    vagrant snapshot restore yunohost-jessie-pristine
+    vagrant snapshot restore --no-provision yunohost-jessie-pristine
   else
     echo "--- Provisioning Vagrant box ---"
     vagrant up --provision
