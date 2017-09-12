@@ -18,7 +18,7 @@ archive_filename="mattermost-$version.tar.gz"
 function cleanup_and_restart
 {
     set +e
-    sudo rm "$archive_filename"
+    sudo rm -f "$archive_filename"
     sudo supervisorctl start mattermost
 
     # Exit (without triggering a package_linter warning)
