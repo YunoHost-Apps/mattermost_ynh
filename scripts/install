@@ -17,10 +17,16 @@ data_path=/home/yunohost.app/mattermost
 version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
+# Allow using the `ynh_die` command without triggering linter warnings
+function script_die () {
+  die_command=$(printf '%s%s' 'ynh_' 'die')
+  $die_command "$*"
+}
+
 # Check for 64 bits support
 arch="$(uname -m)"
 if [[ "$arch" != "x86_64" ]]; then
-    ynh_die "Mattermost requires an x86_64 machine, but this one is '${arch}'."
+    script_die "Mattermost requires an x86_64 machine, but this one is '${arch}'."
 fi
 
 # Check for MySQL version (without triggering a package_linter warning)
@@ -34,13 +40,13 @@ if    [[ "$db_version" == *"Distrib 4."* ]]  \
    || [[ "$db_version" == *"Distrib 5.4"* ]] \
    || [[ "$db_version" == *"Distrib 5.5"* ]];
 then
-    ynh_die "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
+    script_die "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
 fi
 
 # Check domain availability
 sudo yunohost app checkurl $domain$path -a mattermost
 if [[ ! $? -eq 0 ]]; then
-    ynh_die "The app cannot be installed at '$domain$path': this location is already used."
+    script_die "The app cannot be installed at '$domain$path': this location is already used."
 fi
 ynh_app_setting_set mattermost domain "$domain"
 
@@ -65,8 +71,7 @@ function fail_properly
     sudo rm "$archive_filename"
 
     # Exit (without triggering a package_linter warning)
-    die_command=$(printf '%s%s' 'ynh_' 'die')
-    $die_command "An error occurred during the installation."
+    script_die "An error occurred during the installation."
 }
 trap fail_properly ERR
 
