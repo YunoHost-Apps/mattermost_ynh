@@ -13,9 +13,12 @@ source /usr/share/yunohost/helpers
 # LOAD SETTINGS
 #=================================================
 
+app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get mattermost domain)
 db_name="mattermost"
 db_user="mmuser"
+final_path="/var/www/$app"
+data_path="/home/yunohost.app/$app"
 
 #=================================================
 # STANDARD REMOVE
@@ -23,8 +26,8 @@ db_user="mmuser"
 # STOP AND REMOVE SERVICE
 #=================================================
 
-sudo supervisorctl stop mattermost
-sudo rm -f /etc/supervisor/conf.d/mattermost.conf
+sudo supervisorctl stop "$app"
+sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
 
 #=================================================
 # REMOVE THE MYSQL DATABASE
@@ -37,23 +40,23 @@ ynh_mysql_execute_as_root "DROP DATABASE IF EXISTS $db_name ; DROP USER $db_user
 # REMOVE APP MAIN DIR
 #=================================================
 
-sudo rm -rf /var/www/mattermost
-sudo rm -rf /home/yunohost.app/mattermost
+sudo rm -rf "$final_path"
+sudo rm -rf "$data_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
 
-sudo rm -f /etc/nginx/conf.d/$domain.d/mattermost.conf
+sudo rm -f "/etc/nginx/conf.d/${domain}.d/${app}.conf"
 
 #=================================================
 # REMOVE LOG FILE
 #=================================================
 
-sudo rm -f "/var/log/mattermost.log"
+sudo rm -f "/var/log/${app}.log"
 
 #=================================================
 # REMOVE DEDICATED USER
 #=================================================
 
-sudo userdel mattermost
+sudo userdel "$app"
