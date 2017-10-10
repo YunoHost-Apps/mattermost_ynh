@@ -51,6 +51,10 @@ sudo rm -f "$archive_filename"
 # Restore configuration file
 sudo cp -f "$backup_config_file" "$config_file"
 
+# Fix log FileLocation path (changed in Mattermost 3.8, makes Mattermost >= 4.2 crash)
+# https://docs.mattermost.com/administration/changelog.html#release-v3-8-3
+sudo sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \"/var/log\"|g" "$config_file"
+
 # Restore file permissions
 sudo chown -R www-data: "$final_path"
 
