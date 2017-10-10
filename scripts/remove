@@ -1,33 +1,59 @@
 #!/bin/bash
 set -u  # treat unset variables as an error
 
-# Source app helpers
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source /usr/share/yunohost/helpers
 
-# Read configuration
+#=================================================
+# LOAD SETTINGS
+#=================================================
+
 domain=$(ynh_app_setting_get mattermost domain)
 db_name="mattermost"
 db_user="mmuser"
 
-# Stop service
+#=================================================
+# STANDARD REMOVE
+#=================================================
+# STOP AND REMOVE SERVICE
+#=================================================
+
 sudo supervisorctl stop mattermost
+sudo rm -f /etc/supervisor/conf.d/mattermost.conf
 
-# Remove sources and data
-sudo rm -rf /var/www/mattermost
-sudo rm -rf /home/yunohost.app/mattermost
+#=================================================
+# REMOVE THE MYSQL DATABASE
+#=================================================
 
-# Remove database
 # (DROP USER IF EXISTS is only available on MySQL >= 5.7, so we don't use it for now)
 ynh_mysql_execute_as_root "DROP DATABASE IF EXISTS $db_name ; DROP USER $db_user@localhost ;"
 
-# Remove uploaded files
+#=================================================
+# REMOVE APP MAIN DIR
+#=================================================
 
-# Delete SMTP user
-sudo userdel mattermost
+sudo rm -rf /var/www/mattermost
+sudo rm -rf /home/yunohost.app/mattermost
 
-# Remove configuration files
+#=================================================
+# REMOVE NGINX CONFIGURATION
+#=================================================
+
 sudo rm -f /etc/nginx/conf.d/$domain.d/mattermost.conf
-sudo rm -f /etc/supervisor/conf.d/mattermost.conf
 
-# Remove log files
-sudo rm -f /var/log/mattermost.log
+#=================================================
+# REMOVE LOG FILE
+#=================================================
+
+sudo rm -f "/var/log/mattermost.log"
+
+#=================================================
+# REMOVE DEDICATED USER
+#=================================================
+
+sudo userdel mattermost
