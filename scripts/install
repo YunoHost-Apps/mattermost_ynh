@@ -65,27 +65,6 @@ ynh_webpath_register $app $domain $path_url
 ynh_app_setting_set "$app" domain "$domain"
 
 #=================================================
-# REGISTER ERROR HANDLER
-#=================================================
-
-# Delete db and user if exit with an error
-# (N.B. this section doesn't seem executed on Yunohost >= 2.7 ; the `remove` script is executed instead.)
-function fail_properly
-{
-    set +e
-    # Remove database
-    # (DROP USER IF EXISTS is only available on MySQL >= 5.7, so we don't use it for now)
-    ynh_mysql_execute_as_root "DROP DATABASE IF EXISTS $db_name ; DROP USER $db_user@localhost ;"
-
-    sudo userdel mattermost
-    sudo rm -Rf "$final_path"
-    sudo rm -f "$archive_filename"
-
-    script_die "An error occurred during the installation."
-}
-trap fail_properly ERR
-
-#=================================================
 # SET UP INSTALLATION VARIABLES
 #=================================================
 
