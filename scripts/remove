@@ -33,8 +33,7 @@ sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
 # REMOVE THE MYSQL DATABASE
 #=================================================
 
-# (DROP USER IF EXISTS is only available on MySQL >= 5.7, so we don't use it for now)
-ynh_mysql_execute_as_root "DROP DATABASE IF EXISTS $db_name ; DROP USER $db_user@localhost ;"
+ynh_mysql_remove_db "$db_user" "$db_name"
 
 #=================================================
 # REMOVE APP MAIN DIR
