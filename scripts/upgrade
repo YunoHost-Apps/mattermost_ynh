@@ -1,8 +1,10 @@
 #!/bin/bash
-set -eu  # exit on error ; treat unset variables as error
 
 # Source app helpers
 source /usr/share/yunohost/helpers
+
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
 
 # Retrieve arguments
 domain=$(ynh_app_setting_get mattermost domain)
