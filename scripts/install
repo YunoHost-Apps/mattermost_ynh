@@ -1,5 +1,4 @@
 #!/bin/bash
-set -eu  # exit on error ; treat unset variables as error
 
 # Retrieve arguments
 domain=$YNH_APP_ARG_DOMAIN
@@ -9,6 +8,9 @@ path=""
 
 # Source app helpers
 source /usr/share/yunohost/helpers
+
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
 
 # Set up common variables
 root_path="$(pwd)/.."
