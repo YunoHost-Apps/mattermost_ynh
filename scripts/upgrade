@@ -7,6 +7,7 @@ source /usr/share/yunohost/helpers
 ynh_abort_if_errors
 
 # Retrieve arguments
+app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get mattermost domain)
 is_public=$(ynh_app_setting_get mattermost is_public)
 
@@ -58,8 +59,8 @@ sudo sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \
 # Restore file permissions
 sudo chown -R www-data: "$final_path"
 
-# Update Nginx configuration file
-sudo cp -f $root_path/conf/nginx.conf-nosub /etc/nginx/conf.d/$domain.d/mattermost.conf
+# Update Nginx configuration
+ynh_add_nginx_config
 
 # Start server
 sudo supervisorctl start mattermost

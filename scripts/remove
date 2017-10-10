@@ -39,14 +39,14 @@ ynh_mysql_remove_db "$db_user" "$db_name"
 # REMOVE APP MAIN DIR
 #=================================================
 
-sudo rm -rf "$final_path"
-sudo rm -rf "$data_path"
+ynh_secure_remove "$final_path"
+ynh_secure_remove "$data_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
 
-sudo rm -f "/etc/nginx/conf.d/${domain}.d/${app}.conf"
+ynh_remove_nginx_config
 
 #=================================================
 # REMOVE LOG FILE

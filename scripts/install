@@ -149,7 +149,8 @@ sudo chown -R www-data: $data_path
 # NGINX CONFIGURATION
 #=================================================
 
-sudo cp $root_path/conf/nginx.conf-nosub /etc/nginx/conf.d/$domain.d/mattermost.conf
+# Copy conf/nginx.conf to the correct location
+ynh_add_nginx_config
 
 #=================================================
 # SETUP SUPERVISOR
@@ -177,4 +178,5 @@ sudo yunohost app ssowatconf
 #=================================================
 # START APP
 #=================================================
+
 sudo supervisorctl reload
