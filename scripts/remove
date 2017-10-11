@@ -58,4 +58,4 @@ sudo rm -f "/var/log/${app}.log"
 # REMOVE DEDICATED USER
 #=================================================
 
-sudo userdel "$app"
+ynh_system_user_delete "$app"
