@@ -29,25 +29,25 @@ version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
 #=================================================
-# ACTIVE TRAP
+# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
 
-function cleanup_and_restart
-{
-    set +e
-    sudo rm -f "$archive_filename"
-    sudo supervisorctl start mattermost
-
-    # Exit (without triggering a package_linter warning)
-    die_command='ynh_' + 'die'
-    $die_command "An error occurred during the installation."
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+  # Restore the backup if the upgrade fails
+  ynh_restore_upgradebackup
+  # Remove the temporary archive
+  sudo rm -f "$archive_filename"
+  # Restart the server
+  sudo supervisorctl restart mattermost
 }
-trap cleanup_and_restart ERR
+
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
 
 #=================================================
-# STANDARD UPGRADE STEPS
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
+# DOWNLOAD SOURCE
 #=================================================
 
 archive_url="https://releases.mattermost.com/${version}/mattermost-team-${version}-linux-amd64.tar.gz"
