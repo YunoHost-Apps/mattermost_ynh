@@ -1,23 +1,37 @@
 #!/bin/bash
 
-# Source app helpers
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source /usr/share/yunohost/helpers
+
+#=================================================
+# MANAGE SCRIPT FAILURE
+#=================================================
 
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
-# Retrieve arguments
+#=================================================
+# LOAD SETTINGS
+#=================================================
+
 app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get mattermost domain)
 is_public=$(ynh_app_setting_get mattermost is_public)
 
-# Set up common variables
 root_path="$(pwd)/.."
 final_path=/var/www/mattermost
 version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
-# Cleanup and restart if exit with an error
+#=================================================
+# ACTIVE TRAP
+#=================================================
+
 function cleanup_and_restart
 {
     set +e
@@ -30,37 +44,67 @@ function cleanup_and_restart
 }
 trap cleanup_and_restart ERR
 
-# Download code
+#=================================================
+# STANDARD UPGRADE STEPS
+#=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+
 archive_url="https://releases.mattermost.com/${version}/mattermost-team-${version}-linux-amd64.tar.gz"
 sudo wget --quiet --output-document "$archive_filename" "$archive_url"
 
-# Stop server
+#=================================================
+# STOP SERVER
+#=================================================
+
 sudo supervisorctl stop mattermost
 
-# Backup configuration file
+#=================================================
+# BACKUP CONFIGURATION FILE
+#=================================================
+
 config_file="$final_path/config/config.json"
 backup_config_file="/tmp/config.json"
 
 sudo cp -f "$config_file" "$backup_config_file"
 
-# Copy new code
+#=================================================
+# COPY NEW CODE
+#=================================================
+
 sudo rm -rf "$final_path"
 sudo mkdir -p "$final_path"
 sudo tar -xvz --file "$archive_filename" --directory "$final_path" --strip-components 1
 sudo rm -f "$archive_filename"
 
-# Restore configuration file
+#=================================================
+# RESTORE CONFIGURATION FILE
+#=================================================
+
 sudo cp -f "$backup_config_file" "$config_file"
+
+#=================================================
+# SPECIFIC UPGRADE STEPS
+#=================================================
 
 # Fix log FileLocation path (changed in Mattermost 3.8, makes Mattermost >= 4.2 crash)
 # https://docs.mattermost.com/administration/changelog.html#release-v3-8-3
 sudo sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \"/var/log\"|g" "$config_file"
 
-# Restore file permissions
+#=================================================
+# RESTORE FILE PERMISSIONS
+#=================================================
+
 sudo chown -R www-data: "$final_path"
 
-# Update Nginx configuration
-ynh_add_nginx_config
+#=================================================
+# RELOAD NGINX
+#=================================================
 
-# Start server
+sudo service nginx reload
+
+#=================================================
+# START SERVER
+#=================================================
+
 sudo supervisorctl start mattermost
