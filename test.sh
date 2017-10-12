@@ -136,7 +136,7 @@ function test_simple_upgrade() {
 
 function test_simple_backup() {
   echo "--- Running simple backup test ---"
-  _vagrant_ssh "sudo yunohost backup create --name mattermost-test-backup --ignore-system --apps $APP_NAME $VERBOSE_OPT"
+  _vagrant_ssh "sudo yunohost backup create --name mattermost-test-backup --ignore-system $VERBOSE_OPT --apps $APP_NAME"
 }
 
 function test_simple_remove() {
@@ -146,7 +146,7 @@ function test_simple_remove() {
 
 function test_simple_restore() {
   echo "--- Running simple restore test ---"
-  _vagrant_ssh "sudo yunohost backup restore mattermost-test-backup --force --ignore-system --apps $APP_NAME $VERBOSE_OPT"
+  _vagrant_ssh "sudo yunohost backup restore mattermost-test-backup --force --ignore-system $VERBOSE_OPT --apps $APP_NAME"
   _assert_mattermost_frontpage_up "$DOMAIN"
 }
 
