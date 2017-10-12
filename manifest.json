@@ -17,7 +17,7 @@
         "nginx"
     ],
     "requirements": {
-      "yunohost": ">= 2.4.0"
+      "yunohost": ">= 2.6.4"
     },
     "arguments": {
         "install" : [
@@ -41,7 +41,7 @@
             },
             {
                 "name": "analytics",
-                "type": "boolean",                
+                "type": "boolean",
                 "ask": {
                     "en": "Do you want to allow Mattermost to send some telemetrics about your usage of this app?",
                     "fr": "Autorisez-vous Mattermost à envoyer des informations anonymes sur votre usage de l’application ?"

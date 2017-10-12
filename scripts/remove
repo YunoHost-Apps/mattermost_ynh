@@ -1,32 +1,61 @@
 #!/bin/bash
 set -u  # treat unset variables as an error
 
-# Source app helpers
+#=================================================
+# GENERIC START
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source /usr/share/yunohost/helpers
 
-# Read configuration
+#=================================================
+# LOAD SETTINGS
+#=================================================
+
+app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get mattermost domain)
 db_name="mattermost"
 db_user="mmuser"
+final_path="/var/www/$app"
+data_path="/home/yunohost.app/$app"
 
-# Stop service
-sudo supervisorctl stop mattermost
+#=================================================
+# STANDARD REMOVE
+#=================================================
+# STOP AND REMOVE SERVICE
+#=================================================
 
-# Remove sources and data
-sudo rm -rf /var/www/mattermost
-sudo rm -rf /home/yunohost.app/mattermost
+sudo supervisorctl stop "$app"
+sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
 
-# Remove database
-ynh_mysql_execute_as_root "DROP DATABASE $db_name ; DROP USER $db_user@localhost ;"
+#=================================================
+# REMOVE THE MYSQL DATABASE
+#=================================================
 
-# Remove uploaded files
+ynh_mysql_remove_db "$db_user" "$db_name"
 
-# Delete SMTP user
-sudo userdel mattermost
+#=================================================
+# REMOVE APP MAIN DIR
+#=================================================
 
-# Remove configuration files
-sudo rm -f /etc/nginx/conf.d/$domain.d/mattermost.conf
-sudo rm -f /etc/supervisor/conf.d/mattermost.conf
+ynh_secure_remove "$final_path"
+ynh_secure_remove "$data_path"
 
-# Remove log files
-sudo rm -f /var/log/mattermost.log
+#=================================================
+# REMOVE NGINX CONFIGURATION
+#=================================================
+
+ynh_remove_nginx_config
+
+#=================================================
+# REMOVE LOG FILE
+#=================================================
+
+sudo rm -f "/var/log/${app}.log"
+
+#=================================================
+# REMOVE DEDICATED USER
+#=================================================
+
+ynh_system_user_delete "$app"
