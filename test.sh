@@ -9,8 +9,7 @@ set -e
 
 # Configuration constants
 APP_NAME="mattermost"
-TESTS_DIR="/home/vagrant/tests"
-APP_DIR="$TESTS_DIR/app"
+APP_DIR="/vagrant"
 DOMAIN="ynh-tests.local"
 VM_ROOT_PASSWORD="alpine"
 YUNOHOST_ADMIN_PASSWORD="alpine"
@@ -110,15 +109,6 @@ function setup() {
     vagrant up --provision
     echo "--- Saving Vagrant snapshot ---"
     vagrant snapshot save yunohost-jessie-pristine
-  fi
-
-  # Copy the files inside the VM, rather than using the mounted
-  # files directly.
-  # This avoids tests screwing up our files if something goes wrong.
-  echo "--- Copying app content into the box ---"
-  if ! [ -d "$APP_DIR" ]; then
-    _vagrant_ssh "mkdir -p '$TESTS_DIR'"
-    _vagrant_ssh "cp -R '/vagrant' '$APP_DIR'"
   fi
 }
 
