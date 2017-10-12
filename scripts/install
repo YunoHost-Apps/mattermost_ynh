@@ -115,6 +115,8 @@ sudo rm -f "$archive_filename"
 # EDIT MATTERMOST CONFIG
 #=================================================
 
+# Configure Service Settings
+sudo sed -i "s|\"SiteURL\": \"\"|\"SiteURL\": \"https://${domain}${path_url}\"|g"      $final_path/config/config.json
 # Configure the database connection
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
