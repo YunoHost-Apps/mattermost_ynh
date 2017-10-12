@@ -47,7 +47,7 @@ ynh_backup "db.sql" "${backup_dir}/db.sql"
 ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf" "${backup_dir}/etc/nginx/conf.d/$domain.d/$app.conf"
 
 #=================================================
-# BACKUP SUPERVISOR CONFIG
+# BACKUP SYSTEMD
 #=================================================
 
-ynh_backup "/etc/supervisor/conf.d/$app.conf" "${backup_dir}/etc/supervisor/conf.d/$app.conf"
+ynh_backup "/etc/systemd/system/$app.service" "${backup_dir}/etc/systemd/system/$app.service"

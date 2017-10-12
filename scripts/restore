@@ -74,9 +74,12 @@ fi
 #=================================================
 
 # Restore permissions on app files
-chown -R www-data: $final_path
+chown -R mattermost:www-data $final_path
 mkdir -p $data_path
-chown -R www-data: $data_path
+chown -R mattermost:www-data $data_path
+
+sudo touch "/var/log/mattermost.log"
+sudo chown mattermost:adm "/var/log/mattermost.log"
 
 #=================================================
 # RESTORE SSOWAT
@@ -90,18 +93,11 @@ fi
 #=================================================
 # SPECIFIC RESTORATION
 #=================================================
-# REINSTALL DEPENDENCIES
+# RESTORE SYSTEMD
 #=================================================
 
-# Define and install dependencies
-# TODO: use ynh_install_app_dependencies once we'll stop supporting Yunohost < 2.6.4
-command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
-
-#=================================================
-# RESTORE SUPERVISOR CONF
-#=================================================
-
-ynh_restore_file "/etc/supervisor/conf.d/$app.conf"
+ynh_restore_file "/etc/systemd/system/$app.service"
+sudo systemctl enable "$app"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -115,4 +111,4 @@ sudo service nginx reload
 # START SERVER
 #=================================================
 
-sudo supervisorctl reload
+sudo systemctl start "$app"

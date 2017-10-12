@@ -75,12 +75,6 @@ version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
 #=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-
-command -v supervisorctl >/dev/null 2>&1 || sudo apt-get install -y supervisor
-
-#=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
 
@@ -144,8 +138,11 @@ ynh_app_setting_set "$app" analytics "$analytics"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-sudo chown -R www-data: $final_path
-sudo chown -R www-data: $data_path
+sudo chown -R mattermost:www-data "$final_path"
+sudo chown -R mattermost:www-data "$data_path"
+
+sudo touch "/var/log/mattermost.log"
+sudo chown mattermost:adm "/var/log/mattermost.log"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -155,10 +152,11 @@ sudo chown -R www-data: $data_path
 ynh_add_nginx_config
 
 #=================================================
-# SETUP SUPERVISOR
+# SETUP SYSTEMD
 #=================================================
 
-sudo cp $root_path/conf/supervisor.conf /etc/supervisor/conf.d/mattermost.conf
+# Create a dedicated systemd config
+ynh_add_systemd_config
 
 #=================================================
 # SETUP SSOWAT
@@ -169,16 +167,16 @@ if [ "$is_public" = "Yes" ];
 then
     ynh_app_setting_set "$app" unprotected_uris "/"
 fi
+sudo yunohost app ssowatconf
 
 #=================================================
 # RELOAD NGINX
 #=================================================
 
-sudo service nginx reload
-sudo yunohost app ssowatconf
+sudo systemctl reload nginx
 
 #=================================================
-# START APP
+# START SERVER
 #=================================================
 
-sudo supervisorctl reload
+sudo systemctl start mattermost

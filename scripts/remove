@@ -26,8 +26,17 @@ data_path="/home/yunohost.app/$app"
 # STOP AND REMOVE SERVICE
 #=================================================
 
-sudo supervisorctl stop "$app"
-sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
+# Remove systemd service
+if $(sudo systemctl -q is-active "$app"); then
+  sudo systemctl stop "$app"
+fi
+ynh_remove_systemd_config
+
+# Legacy, for older versions of this app which used supervisor
+if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
+  sudo supervisorctl stop "$app"
+  sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
+fi
 
 #=================================================
 # REMOVE THE MYSQL DATABASE
