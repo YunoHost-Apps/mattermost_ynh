@@ -104,7 +104,7 @@ function setup() {
 
   if (vagrant snapshot list | grep 'yunohost-jessie-pristine' > /dev/null); then
     echo "--- Restoring Vagrant snapshot ---"
-    vagrant snapshot restore --no-provision yunohost-jessie-pristine
+    vagrant snapshot restore yunohost-jessie-pristine
   else
     echo "--- Provisioning Vagrant box ---"
     vagrant up --provision
