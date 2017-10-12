@@ -105,8 +105,13 @@ ynh_restore_file "/etc/supervisor/conf.d/$app.conf"
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
-# RELOAD NGINX AND START THE APP
+# RELOAD NGINX
 #=================================================
 
 sudo service nginx reload
+
+#=================================================
+# START SERVER
+#=================================================
+
 sudo supervisorctl reload
