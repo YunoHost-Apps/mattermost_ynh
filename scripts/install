@@ -152,11 +152,17 @@ sudo chown mattermost:adm "/var/log/mattermost.log"
 ynh_add_nginx_config
 
 #=================================================
-# SETUP SYSTEMD
+# SYSTEMD CONFIGURATION
 #=================================================
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
+
+#=================================================
+# ADVERTISE SERVICE IN ADMIN PANEL
+#=================================================
+
+sudo yunohost service add "$app" --log "/var/log/${app}.log"
 
 #=================================================
 # SETUP SSOWAT

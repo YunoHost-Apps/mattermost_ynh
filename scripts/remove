@@ -39,6 +39,14 @@ if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
 fi
 
 #=================================================
+# REMOVE SERVICE FROM ADMIN PANEL
+#=================================================
+
+if sudo yunohost service status | grep -q "$app"; then
+  sudo yunohost service remove "$app"
+fi
+
+#=================================================
 # REMOVE THE MYSQL DATABASE
 #=================================================
 

@@ -100,6 +100,12 @@ ynh_restore_file "/etc/systemd/system/$app.service"
 sudo systemctl enable "$app"
 
 #=================================================
+# ADVERTISE SERVICE IN ADMIN PANEL
+#=================================================
+
+sudo yunohost service add "$app" --log "/var/log/${app}.log"
+
+#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # RELOAD NGINX

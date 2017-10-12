@@ -110,6 +110,12 @@ ynh_add_nginx_config
 ynh_add_systemd_config
 
 #=================================================
+# ADVERTISE SERVICE IN ADMIN PANEL
+#=================================================
+
+sudo yunohost service add "$app" --log "/var/log/${app}.log"
+
+#=================================================
 # SPECIFIC UPGRADE STEPS
 #=================================================
 
