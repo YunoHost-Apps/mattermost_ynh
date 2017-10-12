@@ -42,13 +42,13 @@ Vagrant.configure("2") do |config|
     # Stop on first error
     set -e
 
-    # Upgrade Yunohost and the system packages (disabled)
-    sudo apt-get update
-    sudo apt-get upgrade --yes
-    sudo apt-get dist-upgrade --yes
-
-    # Finish Yunohost installation
     if ! [[ -f /etc/yunohost/installed ]]; then
+      # Upgrade Yunohost and the system packages (disabled)
+      sudo apt-get update
+      sudo apt-get upgrade --yes
+      sudo apt-get dist-upgrade --yes
+
+      # Finish Yunohost installation
       sudo yunohost tools postinstall --domain ${DOMAIN} --password ${YUNOHOST_ADMIN_PASSWORD} --ignore-dyndns
     fi
 
