@@ -11,7 +11,7 @@ See https://ci-apps.yunohost.org/jenkins/job/mattermost%20(Community)/ for check
 Mattermost requires:
 
 * A x86_64 system (check with `uname -m`),
-* Yunohost 2.6.4 or higher (check in Yunohost Admin panel),
+* Yunohost 2.7 or higher (check in Yunohost Admin panel),
 * MySQL 5.6 or higher, or MariaDB 10 or higher (check with `mysql --version`).
 
 ## Installing
