@@ -17,7 +17,7 @@
         "nginx"
     ],
     "requirements": {
-      "yunohost": ">= 2.6.4"
+      "yunohost": ">= 2.7.0"
     },
     "arguments": {
         "install" : [

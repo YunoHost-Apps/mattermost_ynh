@@ -24,7 +24,8 @@ domain=$(ynh_app_setting_get mattermost domain)
 is_public=$(ynh_app_setting_get mattermost is_public)
 
 root_path="$(pwd)/.."
-final_path=/var/www/mattermost
+final_path="/var/www/$app"
+data_path="/home/yunohost.app/$app"
 version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
@@ -34,13 +35,17 @@ archive_filename="mattermost-$version.tar.gz"
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
+
+# If the upgrade fails…
 ynh_clean_setup () {
-  # Restore the backup if the upgrade fails
+  # Stop attempting to restart the app
+  if $(sudo systemctl -q is-active "$app"); then
+    sudo systemctl stop "$app"
+  fi
+  # Restore the backup
   ynh_restore_upgradebackup
   # Remove the temporary archive
   sudo rm -f "$archive_filename"
-  # Restart the server
-  sudo supervisorctl restart mattermost
 }
 
 # Exit if an error occurs during the execution of the script
@@ -57,7 +62,16 @@ sudo wget --quiet --output-document "$archive_filename" "$archive_url"
 # STOP SERVER
 #=================================================
 
-sudo supervisorctl stop mattermost
+# Stop the server (if the app is already using systemd)
+if $(sudo systemctl -q is-active "$app"); then
+  sudo systemctl stop "$app"
+fi
+
+# Legacy, for older versions of this app which used supervisor
+if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
+  sudo supervisorctl stop "$app"
+  sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
+fi
 
 #=================================================
 # BACKUP CONFIGURATION FILE
@@ -84,6 +98,24 @@ sudo rm -f "$archive_filename"
 sudo cp -f "$backup_config_file" "$config_file"
 
 #=================================================
+# NGINX CONFIGURATION
+#=================================================
+
+ynh_add_nginx_config
+
+#=================================================
+# SYSTEMD CONFIGURATION
+#=================================================
+
+ynh_add_systemd_config
+
+#=================================================
+# ADVERTISE SERVICE IN ADMIN PANEL
+#=================================================
+
+sudo yunohost service add "$app" --log "/var/log/${app}.log"
+
+#=================================================
 # SPECIFIC UPGRADE STEPS
 #=================================================
 
@@ -95,7 +127,11 @@ sudo sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \
 # RESTORE FILE PERMISSIONS
 #=================================================
 
-sudo chown -R www-data: "$final_path"
+sudo chown -R mattermost:www-data "$final_path"
+sudo chown -R mattermost:www-data "$data_path"
+
+sudo touch "/var/log/mattermost.log"
+sudo chown mattermost:adm "/var/log/mattermost.log"
 
 #=================================================
 # RELOAD NGINX
@@ -107,4 +143,4 @@ sudo service nginx reload
 # START SERVER
 #=================================================
 
-sudo supervisorctl start mattermost
+sudo systemctl start "$app"

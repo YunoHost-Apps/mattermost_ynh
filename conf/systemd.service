@@ -1,0 +1,24 @@
+[Unit]
+Description=Mattermost
+After=network.target
+After=mysql.service
+Requires=mysql.service
+
+[Service]
+Type=simple
+ExecStart=__FINALPATH__/bin/platform
+# HACK: Wait for Mattermost port to be open before declaring the service to be launched successfully.
+# This avoids to report the service as launched even when it crashes a few milliseconds after start.
+#
+# TODO: improve mattermost to send a STARTED notification, and
+# switch the service to 'Type=notify' instead.
+ExecStartPost=/usr/bin/timeout 10 /bin/sh -c 'while ! nc -z localhost 8065; do sleep 0.2; done'
+Restart=always
+RestartSec=10
+WorkingDirectory=__FINALPATH__
+User=__APP__
+Group=www-data
+LimitNOFILE=49152
+
+[Install]
+WantedBy=multi-user.target
