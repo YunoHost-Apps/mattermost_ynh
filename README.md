@@ -41,8 +41,8 @@ Run the upgrade from Yunohost, then follow [this guide](https://docs.mattermost.
 * LDAP integration (only paid Entreprise Edition, see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## About telemetrics
-Mattermost is used to send some telemetrics about your usage of it.
-But this data doesn't send to mattermost, but to a third party site named [segment.com](https://segment.com/).
-You can find more information about his behavior on the [mattermost documentation](https://docs.mattermost.com/administration/telemetry.html).
 
-This behavior can be turn on or off when you install this app.
+Mattermost can collect some anonymous telemetrics about your usage of the software. These data are sent to a third-party service named [segment.com](https://segment.com/).
+You can find more information about this behavior in the [Mattermost documentation](https://docs.mattermost.com/administration/telemetry.html).
+
+In this Yunohost package telemetrics collection is strictly opt-in, and can be turned on or off before the app is installed.
