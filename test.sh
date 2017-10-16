@@ -151,10 +151,10 @@ function teardown() {
 
 _parse_args $*
 setup
+test_package_check
 test_simple_install
-#test_simple_upgrade
-#test_simple_backup
-#test_simple_remove
-#test_simple_restore
-#test_package_check
+test_simple_upgrade
+test_simple_backup
+test_simple_remove
+test_simple_restore
 teardown
