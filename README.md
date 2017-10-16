@@ -19,7 +19,7 @@ Mattermost requires:
 You can either :
 
 * Install from the Yunohost Admin web interface, by providing this URL: `https://github.com/YunoHost-Apps/mattermost_ynh`
-* Install from the command-line: `yunohost app install https://github.com/YunoHost-Apps/mattermost_ynh`
+* Install from the command-line: `sudo yunohost app install https://github.com/YunoHost-Apps/mattermost_ynh`
 
 ## Upgrading
 
@@ -32,11 +32,13 @@ Run the upgrade from Yunohost, then follow [this guide](https://docs.mattermost.
 
 * Installation on domain's root
 * Notification emails
+* Push notifications
+* Service control in Yunohost Services panel
 
 ## TODO
 
-* Allow installation in sub-directory (only root-domains work for now)
-* LDAP integration
+* Allow installation in sub-directory (only root-domains for now, see [#8](https://github.com/YunoHost-Apps/mattermost_ynh/issues/8))
+* LDAP integration (only paid Entreprise Edition, see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## About telemetrics
 Mattermost is used to send some telemetrics about your usage of it.
