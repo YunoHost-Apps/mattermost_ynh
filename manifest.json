@@ -4,7 +4,7 @@
     "id": "mattermost",
     "description": {
         "en": "An open-source, self-hosted alternative to Slack",
-        "fr": "Une alternative open-source et self-hostée à Slack"
+        "fr": "Une alternative open-source et auto-hébergée à Slack"
     },
     "url": "http://www.mattermost.org/",
     "license": "free",
