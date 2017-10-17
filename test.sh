@@ -151,7 +151,8 @@ function teardown() {
 
 _parse_args $*
 setup
-test_package_check
+# Package_check is disabled until LXC containers work properly inside the Vagrant VM
+#test_package_check
 test_simple_install
 test_simple_upgrade
 test_simple_backup
