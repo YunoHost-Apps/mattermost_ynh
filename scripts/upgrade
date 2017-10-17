@@ -26,6 +26,7 @@ is_public=$(ynh_app_setting_get mattermost is_public)
 root_path="$(pwd)/.."
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
+logs_path="/var/log/$app"
 version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
@@ -113,7 +114,7 @@ ynh_add_systemd_config
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 
-sudo yunohost service add "$app" --log "/var/log/${app}.log"
+sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 #=================================================
 # SPECIFIC UPGRADE STEPS
@@ -123,15 +124,21 @@ sudo yunohost service add "$app" --log "/var/log/${app}.log"
 # https://docs.mattermost.com/administration/changelog.html#release-v3-8-3
 sudo sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \"/var/log\"|g" "$config_file"
 
+# Move log files to a directory (rather than directly in /var/log)
+# See https://github.com/YunoHost-Apps/mattermost_ynh/issues/61
+sudo mkdir -p "$logs_path"
+sudo sed -i "s|\"FileLocation\": \"/var/log\"|\"FileLocation\": \"$logs_path\"|g" "$config_file"
+if [ -f "/var/log/${app}.log" ]; then
+  sudo mv "/var/log/${app}.log" "$logs_path/"
+fi
+
 #=================================================
 # RESTORE FILE PERMISSIONS
 #=================================================
 
 sudo chown -R mattermost:www-data "$final_path"
 sudo chown -R mattermost:www-data "$data_path"
-
-sudo touch "/var/log/mattermost.log"
-sudo chown mattermost:adm "/var/log/mattermost.log"
+sudo chown -R mattermost:adm      "$logs_path"
 
 #=================================================
 # RELOAD NGINX

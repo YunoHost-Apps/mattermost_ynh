@@ -19,6 +19,7 @@ db_name="mattermost"
 db_user="mmuser"
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
+logs_path="/var/log/$app"
 
 #=================================================
 # STANDARD REMOVE
@@ -69,7 +70,7 @@ ynh_remove_nginx_config
 # REMOVE LOG FILE
 #=================================================
 
-sudo rm -f "/var/log/${app}.log"
+sudo rm -rf "$logs_path"
 
 #=================================================
 # REMOVE DEDICATED USER

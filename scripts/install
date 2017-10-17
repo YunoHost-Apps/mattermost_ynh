@@ -71,6 +71,7 @@ ynh_app_setting_set "$app" domain "$domain"
 root_path="$(pwd)/.."
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
+logs_path="/var/log/$app"
 version=$(cat "$root_path/VERSION")
 archive_filename="mattermost-$version.tar.gz"
 
@@ -100,6 +101,7 @@ archive_url="https://releases.mattermost.com/${version}/mattermost-team-${versio
 
 sudo mkdir -p "$final_path"
 sudo mkdir -p "$data_path"
+sudo mkdir -p "$logs_path"
 
 sudo wget --quiet --output-document "$archive_filename" "$archive_url"
 sudo tar -xvz --file "$archive_filename" --directory "$final_path" --strip-components 1
@@ -127,7 +129,7 @@ sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                       
 # Disable Mattermost debug console by default
 sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
 # Configure log file location
-sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"/var/log\"|g"                $final_path/config/config.json
+sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"$logs_path\"|g"              $final_path/config/config.json
 # Configure analytics according to user choice
 if [ $analytics -eq 0 ]; then
     sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
@@ -140,9 +142,7 @@ ynh_app_setting_set "$app" analytics "$analytics"
 
 sudo chown -R mattermost:www-data "$final_path"
 sudo chown -R mattermost:www-data "$data_path"
-
-sudo touch "/var/log/mattermost.log"
-sudo chown mattermost:adm "/var/log/mattermost.log"
+sudo chown -R mattermost:adm      "$logs_path"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -162,7 +162,7 @@ ynh_add_systemd_config
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 
-sudo yunohost service add "$app" --log "/var/log/${app}.log"
+sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 #=================================================
 # SETUP SSOWAT
