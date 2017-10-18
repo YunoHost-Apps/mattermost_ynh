@@ -24,6 +24,7 @@ is_public=$(ynh_app_setting_get $app is_public)
 path_url="/"
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
+logs_path="/var/log/$app"
 db_name="$app"
 db_user="mmuser"
 
@@ -74,12 +75,13 @@ fi
 #=================================================
 
 # Restore permissions on app files
-chown -R mattermost:www-data $final_path
-mkdir -p $data_path
-chown -R mattermost:www-data $data_path
+sudo chown -R mattermost:www-data "$final_path"
 
-sudo touch "/var/log/mattermost.log"
-sudo chown mattermost:adm "/var/log/mattermost.log"
+mkdir -p "$data_path"
+sudo chown -R mattermost:www-data "$data_path"
+
+mkdir -p "$logs_path"
+sudo chown -R mattermost:adm "$logs_path"
 
 #=================================================
 # RESTORE SSOWAT
@@ -103,7 +105,7 @@ sudo systemctl enable "$app"
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 
-sudo yunohost service add "$app" --log "/var/log/${app}.log"
+sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 #=================================================
 # GENERIC FINALIZATION
