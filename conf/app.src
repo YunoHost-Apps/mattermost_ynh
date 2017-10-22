@@ -1,0 +1,6 @@
+SOURCE_URL=https://releases.mattermost.com/4.3.0/mattermost-4.3.0-linux-amd64.tar.gz
+SOURCE_SUM=c21eefaa87fca836e17d874296e67baf181ab5594f705090247614faae219d01
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=
