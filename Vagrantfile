@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  config.vm.define :ynh_tests
+  config.vm.define :ynhtests
   config.vm.box = "yunohost/jessie-stable"
 
   # Disable auto updates checks. Run `vagrant outdated` to perform manual updates.
@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, keep_color: true, inline: <<-SHELL
-    DOMAIN=ynh-tests.local
+    DOMAIN=ynhtests.local
     YUNOHOST_ADMIN_PASSWORD="alpine"
 
     # Stop on first error

@@ -10,7 +10,7 @@ set -e
 # Configuration constants
 APP_NAME="mattermost"
 APP_DIR="/vagrant"
-DOMAIN="ynh-tests.local"
+DOMAIN="ynhtests.local"
 VM_ROOT_PASSWORD="alpine"
 YUNOHOST_ADMIN_PASSWORD="alpine"
 

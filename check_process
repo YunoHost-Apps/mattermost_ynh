@@ -1,6 +1,6 @@
 ;; Mattermost
     ; Manifest
-        domain="ynh-tests.local"    (DOMAIN)
+        domain="ynhtests.local"    (DOMAIN)
         path="" (PATH)
         language="fr"
         is_public=1 (PUBLIC|public=1|private=0)
