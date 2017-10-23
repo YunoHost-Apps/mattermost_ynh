@@ -38,7 +38,10 @@ Vagrant.configure("2") do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./", "/vagrant"
+  config.vm.synced_folder "./", "/vagrant",
+    owner: "root",
+    group: "sudo",
+    mount_options: ["dmode=775,fmode=774"]
 
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
@@ -51,24 +54,40 @@ Vagrant.configure("2") do |config|
     set -e
 
     if ! [[ -f /etc/yunohost/installed ]]; then
-      # Upgrade Yunohost and the system packages (disabled)
+      # Upgrade Yunohost and the system packages
       sudo apt-get update
       sudo apt-get upgrade --yes
-      sudo apt-get dist-upgrade --yes
+      # Run dist-upgrade twice, as the first Yunohost upgrade may fail
+      sudo apt-get dist-upgrade --yes || sudo apt-get dist-upgrade --yes
 
       # Finish Yunohost installation
       sudo yunohost tools postinstall --domain ${DOMAIN} --password ${YUNOHOST_ADMIN_PASSWORD} --ignore-dyndns
     fi
 
-    # Install lxc
-    # if ! hash lxc-start 2>/dev/null; then
-    #   DEBIAN_FRONTEND=noninteractive sudo apt-get update
-    #   DEBIAN_FRONTEND=noninteractive sudo apt-get install --yes --fix-missing lxc
-    # fi
-
     # Install package_check
     if ! [ -f "$HOME/package_check/package_check.sh" ]; then
       git clone https://github.com/YunoHost/package_check
+      # Checkout our custom patches (until they get merged upstream)
+      cd package_check
+      git remote add kemenaran https://github.com/kemenaran/package_check.git
+      git fetch kemenaran
+      git checkout --track kemenaran/fixes
+
+      # Fix LXC containers not being able to reach outside internet.
+      # The default configuration is to detect the default gateway used
+      # by the Vagrant machine to configure LXC containers.
+      # Unfortunately this results in the LXC containers not being able
+      # to connect to the Internet.
+      echo "dns=8.8.8.8" > $HOME/package_check/config
+    fi
+
+    # Build the initial LXC container
+    if ! hash lxc-start 2>/dev/null || [ "$(sudo lxc-ls | wc -l)" == "0" ]; then
+      # Build the default LXC container
+      $HOME/package_check/sub_scripts/lxc_build.sh
+
+      # Ensure the LXC container is correctly configured
+      $HOME/package_check/sub_scripts/lxc_check.sh
     fi
   SHELL
 end
