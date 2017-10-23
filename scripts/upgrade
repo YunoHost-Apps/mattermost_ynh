@@ -27,8 +27,6 @@ root_path="$(pwd)/.."
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
-version=$(cat "$root_path/VERSION")
-archive_filename="mattermost-$version.tar.gz"
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
@@ -45,19 +43,10 @@ ynh_clean_setup () {
   fi
   # Restore the backup
   ynh_restore_upgradebackup
-  # Remove the temporary archive
-  sudo rm -f "$archive_filename"
 }
 
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
-
-#=================================================
-# DOWNLOAD SOURCE
-#=================================================
-
-archive_url="https://releases.mattermost.com/${version}/mattermost-team-${version}-linux-amd64.tar.gz"
-sudo wget --quiet --output-document "$archive_filename" "$archive_url"
 
 #=================================================
 # STOP SERVER
@@ -84,13 +73,11 @@ backup_config_file="/tmp/config.json"
 sudo cp -f "$config_file" "$backup_config_file"
 
 #=================================================
-# COPY NEW CODE
+# DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-sudo rm -rf "$final_path"
-sudo mkdir -p "$final_path"
-sudo tar -xvz --file "$archive_filename" --directory "$final_path" --strip-components 1
-sudo rm -f "$archive_filename"
+ynh_app_setting_set "$app" final_path "$final_path"
+ynh_setup_source "$final_path"
 
 #=================================================
 # RESTORE CONFIGURATION FILE

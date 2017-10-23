@@ -72,8 +72,6 @@ root_path="$(pwd)/.."
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
-version=$(cat "$root_path/VERSION")
-archive_filename="mattermost-$version.tar.gz"
 
 #=================================================
 # CREATE A MYSQL DATABASE
@@ -97,15 +95,11 @@ ynh_app_setting_set mattermost smtppwd "$smtp_password"
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-archive_url="https://releases.mattermost.com/${version}/mattermost-team-${version}-linux-amd64.tar.gz"
+ynh_app_setting_set "$app" final_path "$final_path"
+ynh_setup_source "$final_path"
 
-sudo mkdir -p "$final_path"
 sudo mkdir -p "$data_path"
 sudo mkdir -p "$logs_path"
-
-sudo wget --quiet --output-document "$archive_filename" "$archive_url"
-sudo tar -xvz --file "$archive_filename" --directory "$final_path" --strip-components 1
-sudo rm -f "$archive_filename"
 
 #=================================================
 # EDIT MATTERMOST CONFIG
