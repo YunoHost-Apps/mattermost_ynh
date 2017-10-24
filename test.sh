@@ -10,7 +10,7 @@ set -e
 # Configuration constants
 APP_NAME="mattermost"
 APP_DIR="/vagrant"
-DOMAIN="ynh-tests.local"
+DOMAIN="ynhtests.local"
 VM_ROOT_PASSWORD="alpine"
 YUNOHOST_ADMIN_PASSWORD="alpine"
 
@@ -142,7 +142,7 @@ function test_simple_restore() {
 
 function test_package_check() {
   echo "--- Running package_check ---"
-  _vagrant_ssh "package_check/package_check.sh --bash-mode '$APP_DIR'"
+  _vagrant_ssh "package_check/package_check.sh --build-lxc --bash-mode '$APP_DIR'"
 }
 
 function teardown() {
@@ -151,8 +151,7 @@ function teardown() {
 
 _parse_args $*
 setup
-# Package_check is disabled until LXC containers work properly inside the Vagrant VM
-#test_package_check
+test_package_check
 test_simple_install
 test_simple_upgrade
 test_simple_backup
