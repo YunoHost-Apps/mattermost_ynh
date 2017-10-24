@@ -5,11 +5,7 @@
 set -e
 
 # Configuration constants
-APP_NAME="mattermost"
 APP_DIR="/vagrant"
-DOMAIN="ynhtests.local"
-VM_ROOT_PASSWORD="alpine"
-YUNOHOST_ADMIN_PASSWORD="alpine"
 
 function _usage() {
   echo "Run package_check tests against the app in the working directory on a Vagrant virtual machine."
