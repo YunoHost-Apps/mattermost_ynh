@@ -57,7 +57,7 @@ function setup() {
 
 function test_package_check() {
   echo "--- Running package_check ---"
-  _vagrant_ssh "package_check/package_check.sh --build-lxc --bash-mode '$APP_DIR'"
+  _vagrant_ssh "package_check/package_check.sh --bash-mode '$APP_DIR'"
 }
 
 function teardown() {
