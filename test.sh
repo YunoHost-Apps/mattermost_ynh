@@ -1,8 +1,5 @@
 #!/bin/bash
-# Run tests against Mattermost installation on a Vagrant virtual machine.
-#
-# The VM is provisioned with a fresh Yunohost install, then snapshotted
-# for subsequent runs.
+# Run package_check tests against the app in the working directory on a Vagrant virtual machine.
 
 # Fail on first error
 set -e
@@ -15,24 +12,20 @@ VM_ROOT_PASSWORD="alpine"
 YUNOHOST_ADMIN_PASSWORD="alpine"
 
 function _usage() {
-  echo "Run tests against ${APP_NAME} installation on a Vagrant virtual machine."
-  echo "Usage: test.sh [--skip-snapshot] [--verbose] [--help]"
+  echo "Run package_check tests against the app in the working directory on a Vagrant virtual machine."
+  echo "Usage: test.sh [--verbose] [--help]"
 }
 
 # Configuration arguments
 function _parse_args() {
   VERBOSE=false
   VERBOSE_OPT=''
-  SKIP_SNAPSHOT=false
   while [ "$1" != "" ]; do
     case $1 in
       "-v" | "--verbose")
         shift
         VERBOSE=true
         VERBOSE_OPT='--verbose';;
-      "-s" | "--skip-snapshot")
-        shift
-        SKIP_SNAPSHOT=true;;
       "--help")
         _usage
         exit;;
@@ -58,22 +51,8 @@ function _vagrant_ssh() {
 }
 
 function setup() {
-  if $SKIP_SNAPSHOT; then
-    echo "--- Starting Vagrant box ---"
-    vagrant up --no-provision
-    echo "--- (Skipping snapshot restore) ---"
-    return
-  fi
-
-  if (vagrant snapshot list | grep 'yunohost-jessie-pristine' > /dev/null); then
-    echo "--- Restoring Vagrant snapshot ---"
-    vagrant snapshot restore yunohost-jessie-pristine
-  else
-    echo "--- Provisioning Vagrant box ---"
-    vagrant up --provision
-    echo "--- Saving Vagrant snapshot ---"
-    vagrant snapshot save yunohost-jessie-pristine
-  fi
+  echo "--- Setting up Vagrant VM ---"
+  vagrant up --provision
 }
 
 function test_package_check() {
