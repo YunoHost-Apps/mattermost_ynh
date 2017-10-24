@@ -56,6 +56,17 @@ function test_package_check() {
   _vagrant_ssh "package_check/package_check.sh --bash-mode '$APP_DIR'"
 }
 
+function abort() {
+  trap - SIGINT SIGTERM
+  echo "--- Aborting ---"
+  if (vagrant status | grep -q "running"); then
+    echo "Removing package_check lock…"
+    _vagrant_ssh "rm -f package_check/pcheck.lock"
+  fi
+  teardown
+}
+trap abort SIGINT SIGTERM
+
 function teardown() {
   echo "--- Cleaning up ---"
 }
