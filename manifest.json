@@ -8,6 +8,7 @@
     },
     "url": "http://www.mattermost.org/",
     "license": "free",
+    "version": "4.6.0-1",
     "maintainer": {
         "name": "pmorinerie",
         "email": "kemenaran@gmail.com"
