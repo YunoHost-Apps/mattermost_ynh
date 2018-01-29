@@ -20,6 +20,7 @@ ynh_abort_if_errors
 app=$YNH_APP_INSTANCE_NAME
 
 final_path="/var/www/$app"
+data_path="/home/yunohost.app/$app"
 domain=$(ynh_app_setting_get $app domain)
 db_name="$app"
 default_backup_dir="${1}apps/$app"
@@ -32,6 +33,12 @@ backup_dir=${backup_dir:-"$default_backup_dir"}
 #=================================================
 
 ynh_backup "$final_path" "${backup_dir}$final_path"
+
+#=================================================
+# BACKUP THE APP DATA
+#=================================================
+
+ynh_backup "$data_path" "${backup_dir}$data_path"
 
 #=================================================
 # BACKUP THE DATABASE
