@@ -23,8 +23,6 @@ final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 domain=$(ynh_app_setting_get $app domain)
 db_name="$app"
-default_backup_dir="${1}apps/$app"
-backup_dir=${backup_dir:-"$default_backup_dir"}
 
 #=================================================
 # STANDARD BACKUP STEPS
@@ -32,29 +30,29 @@ backup_dir=${backup_dir:-"$default_backup_dir"}
 # BACKUP THE APP MAIN DIR
 #=================================================
 
-ynh_backup "$final_path" "${backup_dir}$final_path"
+ynh_backup "$final_path"
 
 #=================================================
 # BACKUP THE APP DATA
 #=================================================
 
-ynh_backup "$data_path" "${backup_dir}$data_path"
+ynh_backup "$data_path"
 
 #=================================================
 # BACKUP THE DATABASE
 #=================================================
 
 ynh_mysql_dump_db "$db_name" > db.sql
-ynh_backup "db.sql" "${backup_dir}/db.sql"
+ynh_backup "db.sql"
 
 #=================================================
 # BACKUP THE NGINX CONFIGURATION
 #=================================================
 
-ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf" "${backup_dir}/etc/nginx/conf.d/$domain.d/$app.conf"
+ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf"
 
 #=================================================
 # BACKUP SYSTEMD
 #=================================================
 
-ynh_backup "/etc/systemd/system/$app.service" "${backup_dir}/etc/systemd/system/$app.service"
+ynh_backup "/etc/systemd/system/$app.service"
