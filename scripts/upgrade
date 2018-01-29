@@ -6,6 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -22,6 +23,7 @@ ynh_abort_if_errors
 app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get mattermost domain)
 is_public=$(ynh_app_setting_get mattermost is_public)
+port=$(ynh_app_setting_get mattermost port)
 
 root_path="$(pwd)/.."
 final_path="/var/www/$app"
@@ -57,7 +59,7 @@ if $(sudo systemctl -q is-active "$app"); then
   sudo systemctl stop "$app"
 fi
 
-# Legacy, for older versions of this app which used supervisor
+# Legacy, for previous versions of this app which used supervisor
 if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
   sudo supervisorctl stop "$app"
   sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
@@ -84,6 +86,12 @@ elif [[ $is_public == "No" ]]; then
 fi
 ynh_app_setting_set "$app" is_public "$is_public"
 
+# Save the port used if not present
+if ! [[ "$port" ]]; then
+  port=8065
+  ynh_app_setting_set "$app" port "$port"
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -107,7 +115,7 @@ ynh_add_nginx_config
 # SYSTEMD CONFIGURATION
 #=================================================
 
-ynh_add_systemd_config
+mattermost_add_systemd_config
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL

@@ -6,6 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -55,14 +56,27 @@ then
     script_die "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
 fi
 
+#=================================================
+# FIND AN AVAILABLE PATH
+#=================================================
+
 # Normalize the url path syntax
 path_url=$(ynh_normalize_url_path $path_url)
 # Check web path availability
-ynh_webpath_available $domain $path_url
+ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
-ynh_webpath_register $app $domain $path_url
+ynh_webpath_register "$app" "$domain" "$path_url"
 # Store setting
 ynh_app_setting_set "$app" domain "$domain"
+
+#=================================================
+# FIND AN AVAILABLE PORT
+#=================================================
+
+# Find an available port
+port=$(ynh_find_port 8065)
+# Store setting
+ynh_app_setting_set "$app" port "$port"
 
 #=================================================
 # SET UP INSTALLATION VARIABLES
@@ -107,6 +121,7 @@ sudo mkdir -p "$logs_path"
 
 # Configure Service Settings
 sudo sed -i "s|\"SiteURL\": \"\"|\"SiteURL\": \"https://${domain}${path_url}\"|g"      $final_path/config/config.json
+sudo sed -i "s|\"ListenAddress\": \".*\"|\"ListenAddress\": \"127.0.0.1:${port}\"|g"   $final_path/config/config.json
 # Configure the database connection
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
 sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
@@ -142,15 +157,13 @@ sudo chown -R mattermost:adm      "$logs_path"
 # NGINX CONFIGURATION
 #=================================================
 
-# Copy conf/nginx.conf to the correct location
 ynh_add_nginx_config
 
 #=================================================
 # SYSTEMD CONFIGURATION
 #=================================================
 
-# Create a dedicated systemd config
-ynh_add_systemd_config
+mattermost_add_systemd_config
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL

@@ -6,7 +6,6 @@
         language="fr"
         is_public=1 (PUBLIC|public=1|private=0)
         password="alpine"
-        port="8065" (PORT)
     ; Checks
         pkg_linter=1
         setup_root=1
@@ -15,9 +14,10 @@
         upgrade=1
         backup_restore=1
         multi_instance=0
-        port_already_use=0 (XXXX)
+        port_already_use=1 (8085)
+        # Checks not supported yet
         change_url=0
-        # Tests not applicable
+        # Checks not applicable
         setup_sub_dir=0
         setup_nourl=0
         incorrect_path=0

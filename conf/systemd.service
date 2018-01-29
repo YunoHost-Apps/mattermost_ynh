@@ -12,7 +12,7 @@ ExecStart=__FINALPATH__/bin/platform
 #
 # TODO: improve mattermost to send a STARTED notification, and
 # switch the service to 'Type=notify' instead.
-ExecStartPost=/usr/bin/timeout 10 /bin/sh -c 'while ! nc -z localhost 8065; do sleep 0.2; done'
+ExecStartPost=/usr/bin/timeout 10 /bin/sh -c 'while ! nc -z localhost __PORT__; do sleep 0.2; done'
 Restart=always
 RestartSec=10
 WorkingDirectory=__FINALPATH__
