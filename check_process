@@ -1,10 +1,12 @@
 ;; Mattermost
     ; Manifest
-        domain="ynhtests.local"    (DOMAIN)
+        domain="ynhtests.local" (DOMAIN)
         path="" (PATH)
+        user="admin" (USER)
         language="fr"
         is_public=1 (PUBLIC|public=1|private=0)
-        password="alpine"    (PASSWORD)
+        password="alpine"
+        port="8065" (PORT)
     ; Checks
         pkg_linter=1
         setup_root=1
