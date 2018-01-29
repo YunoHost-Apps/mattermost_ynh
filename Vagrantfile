@@ -67,11 +67,6 @@ Vagrant.configure("2") do |config|
     # Install package_check
     if ! [ -f "$HOME/package_check/package_check.sh" ]; then
       git clone https://github.com/YunoHost/package_check
-      # Checkout our custom patches (until they get merged upstream)
-      cd package_check
-      git remote add kemenaran https://github.com/kemenaran/package_check.git
-      git fetch kemenaran
-      git checkout --track kemenaran/fixes
 
       # Fix LXC containers not being able to reach outside internet.
       # The default configuration is to detect the default gateway used
