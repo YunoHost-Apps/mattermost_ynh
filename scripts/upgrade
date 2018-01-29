@@ -73,6 +73,18 @@ backup_config_file="/tmp/config.json"
 sudo cp -f "$config_file" "$backup_config_file"
 
 #=================================================
+# MIGRATE SETTINGS FROM PREVIOUS VERSIONS
+#=================================================
+
+# Convert is_public from "Yes"/"No" to 1 / 0
+if [[ $is_public == "Yes" ]]; then
+  is_public=1
+elif [[ $is_public == "No" ]]; then
+  is_public=0
+fi
+ynh_app_setting_set "$app" is_public "$is_public"
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 

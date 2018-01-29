@@ -93,9 +93,12 @@ sudo chown -R mattermost:adm "$logs_path"
 # RESTORE SSOWAT
 #=================================================
 
-if [ "$is_public" = "Yes" ];
-then
+if [[ $is_public == "1" ]]; then
+  # Make the app accessible to the public
   ynh_app_setting_set "$app" unprotected_uris "/"
+else
+  # Remove the public access
+  ynh_app_setting_delete "$app" skipped_uris
 fi
 
 #=================================================

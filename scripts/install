@@ -21,7 +21,7 @@ ynh_abort_if_errors
 
 app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
-is_public=$YNH_APP_ARG_PUBLIC_SITE
+is_public=$YNH_APP_ARG_IS_PUBLIC
 analytics=$YNH_APP_ARG_ANALYTICS
 path_url="/"
 
@@ -163,11 +163,11 @@ sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
 #=================================================
 
 ynh_app_setting_set "$app" is_public "$is_public"
-if [ "$is_public" = "Yes" ];
-then
+
+if [[ $is_public == "1" ]]; then
+    # Make the app accessible to the public
     ynh_app_setting_set "$app" unprotected_uris "/"
 fi
-sudo yunohost app ssowatconf
 
 #=================================================
 # RELOAD NGINX
