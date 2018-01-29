@@ -52,6 +52,12 @@ ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore_file "$final_path"
 
 #=================================================
+# RESTORE THE APP DATA
+#=================================================
+
+ynh_restore_file "$data_path"
+
+#=================================================
 # RESTORE THE MYSQL DATABASE
 #=================================================
 
