@@ -13,7 +13,7 @@
         "name": "pmorinerie",
         "email": "kemenaran@gmail.com"
     },
-    "multi_instance": false,
+    "multi_instance": true,
     "services": [
         "nginx"
     ],

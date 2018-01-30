@@ -14,9 +14,10 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 app=$YNH_APP_INSTANCE_NAME
-domain=$(ynh_app_setting_get mattermost domain)
-db_name="mattermost"
+domain=$(ynh_app_setting_get $app domain)
+db_name="$app"
 db_user="mmuser"
+smtp_user="$app"
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
@@ -76,4 +77,4 @@ sudo rm -rf "$logs_path"
 # REMOVE DEDICATED USER
 #=================================================
 
-ynh_system_user_delete "$app"
+ynh_system_user_delete "$smtp_user"

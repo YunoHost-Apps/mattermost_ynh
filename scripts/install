@@ -91,19 +91,20 @@ logs_path="/var/log/$app"
 # CREATE A MYSQL DATABASE
 #=================================================
 
-db_name="mattermost"
+db_name="$app"
 db_user="mmuser"
 db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
-ynh_mysql_create_db $db_name $db_user $db_password
-ynh_app_setting_set mattermost mysqlpwd "$db_password"
+ynh_mysql_create_db "$db_name" "$db_user" "$db_password"
+ynh_app_setting_set "$app" mysqlpwd "$db_password"
 
 #=================================================
 # CREATE USER FOR EMAIL NOTIFICATIONS
 #=================================================
 
+smtp_user="$app"
 smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
-sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "mattermost"
-ynh_app_setting_set mattermost smtppwd "$smtp_password"
+sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "$smtp_user"
+ynh_app_setting_set "$app" smtppwd "$smtp_password"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -131,7 +132,7 @@ sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"   
 sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
 sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
 sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"    $final_path/config/config.json
-sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"mattermost\"|g"              $final_path/config/config.json
+sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"${smtp_user}\"|g"            $final_path/config/config.json
 sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${smtp_password}\"|g"        $final_path/config/config.json
 sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                   $final_path/config/config.json
 sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                              $final_path/config/config.json
@@ -149,9 +150,9 @@ ynh_app_setting_set "$app" analytics "$analytics"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-sudo chown -R mattermost:www-data "$final_path"
-sudo chown -R mattermost:www-data "$data_path"
-sudo chown -R mattermost:adm      "$logs_path"
+sudo chown -R "$smtp_user:www-data" "$final_path"
+sudo chown -R "$smtp_user:www-data" "$data_path"
+sudo chown -R "$smtp_user:adm"      "$logs_path"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -192,4 +193,4 @@ sudo systemctl reload nginx
 # START SERVER
 #=================================================
 
-sudo systemctl start mattermost
+sudo systemctl start "$app"

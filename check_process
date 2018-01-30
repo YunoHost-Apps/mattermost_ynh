@@ -13,7 +13,7 @@
         setup_public=1
         upgrade=1
         backup_restore=1
-        multi_instance=0
+        multi_instance=1
         port_already_use=1 (8085)
         # Checks not supported yet
         change_url=0

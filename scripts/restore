@@ -27,6 +27,7 @@ data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 db_name="$app"
 db_user="mmuser"
+smtp_user="$app"
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
@@ -62,8 +63,8 @@ ynh_restore_file "$data_path"
 #=================================================
 
 db_pwd=$(ynh_app_setting_get $app mysqlpwd)
-ynh_mysql_setup_db $db_user $db_name $db_pwd
-ynh_mysql_connect_as $db_user $db_pwd $db_name < ./db.sql
+ynh_mysql_setup_db "$db_user" "$db_name" "$db_pwd"
+ynh_mysql_connect_as "$db_user" "$db_pwd" "$db_name" < ./db.sql
 
 #=================================================
 # RECREATE THE DEDICATED USER
@@ -81,13 +82,13 @@ fi
 #=================================================
 
 # Restore permissions on app files
-sudo chown -R mattermost:www-data "$final_path"
+sudo chown -R "$smtp_user:www-data" "$final_path"
 
 mkdir -p "$data_path"
-sudo chown -R mattermost:www-data "$data_path"
+sudo chown -R "$smtp_user:www-data" "$data_path"
 
 mkdir -p "$logs_path"
-sudo chown -R mattermost:adm "$logs_path"
+sudo chown -R "$smtp_user:adm" "$logs_path"
 
 #=================================================
 # RESTORE SSOWAT
