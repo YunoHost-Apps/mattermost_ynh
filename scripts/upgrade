@@ -24,7 +24,7 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get $app domain)
 is_public=$(ynh_app_setting_get $app is_public)
 port=$(ynh_app_setting_get $app port)
-smtp_user="$app"
+mattermost_user="$app"
 
 root_path="$(pwd)/.."
 final_path="/var/www/$app"
@@ -144,9 +144,9 @@ fi
 # RESTORE FILE PERMISSIONS
 #=================================================
 
-sudo chown -R "$smtp_user:www-data" "$final_path"
-sudo chown -R "$smtp_user:www-data" "$data_path"
-sudo chown -R "$smtp_user:adm"      "$logs_path"
+sudo chown -R "$mattermost_user:www-data" "$final_path"
+sudo chown -R "$mattermost_user:www-data" "$data_path"
+sudo chown -R "$mattermost_user:adm"      "$logs_path"
 
 #=================================================
 # RELOAD NGINX

@@ -101,10 +101,10 @@ ynh_app_setting_set "$app" mysqlpwd "$db_password"
 # CREATE USER FOR EMAIL NOTIFICATIONS
 #=================================================
 
-smtp_user="$app"
-smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
-sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "$smtp_user"
-ynh_app_setting_set "$app" smtppwd "$smtp_password"
+mattermost_user="$app"
+mattermost_user_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
+ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -121,25 +121,25 @@ sudo mkdir -p "$logs_path"
 #=================================================
 
 # Configure Service Settings
-sudo sed -i "s|\"SiteURL\": \"\"|\"SiteURL\": \"https://${domain}${path_url}\"|g"      $final_path/config/config.json
-sudo sed -i "s|\"ListenAddress\": \".*\"|\"ListenAddress\": \"127.0.0.1:${port}\"|g"   $final_path/config/config.json
+sudo sed -i "s|\"SiteURL\": \"\"|\"SiteURL\": \"https://${domain}${path_url}\"|g"          $final_path/config/config.json
+sudo sed -i "s|\"ListenAddress\": \".*\"|\"ListenAddress\": \"127.0.0.1:${port}\"|g"       $final_path/config/config.json
 # Configure the database connection
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
-sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
+sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"          $final_path/config/config.json
 # Configure uploaded files directory
-sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"          $final_path/config/config.json
+sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"              $final_path/config/config.json
 # Configure SMTP account for sending email notifications
-sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
-sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
-sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"    $final_path/config/config.json
-sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"${smtp_user}\"|g"            $final_path/config/config.json
-sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${smtp_password}\"|g"        $final_path/config/config.json
-sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                   $final_path/config/config.json
-sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                              $final_path/config/config.json
+sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"       $final_path/config/config.json
+sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g"     $final_path/config/config.json
+sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"        $final_path/config/config.json
+sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"${mattermost_user}\"|g"          $final_path/config/config.json
+sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${mattermost_user_password}\"|g" $final_path/config/config.json
+sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                       $final_path/config/config.json
+sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                                  $final_path/config/config.json
 # Disable Mattermost debug console by default
-sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
+sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                         $final_path/config/config.json
 # Configure log file location
-sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"$logs_path\"|g"              $final_path/config/config.json
+sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"$logs_path\"|g"                  $final_path/config/config.json
 # Configure analytics according to user choice
 if [ $analytics -eq 0 ]; then
     sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
@@ -150,9 +150,9 @@ ynh_app_setting_set "$app" analytics "$analytics"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-sudo chown -R "$smtp_user:www-data" "$final_path"
-sudo chown -R "$smtp_user:www-data" "$data_path"
-sudo chown -R "$smtp_user:adm"      "$logs_path"
+sudo chown -R "$mattermost_user:www-data" "$final_path"
+sudo chown -R "$mattermost_user:www-data" "$data_path"
+sudo chown -R "$mattermost_user:adm"      "$logs_path"
 
 #=================================================
 # NGINX CONFIGURATION

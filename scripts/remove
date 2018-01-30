@@ -17,7 +17,7 @@ app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get $app domain)
 db_name="$app"
 db_user="mmuser"
-smtp_user="$app"
+mattermost_user="$app"
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
@@ -77,4 +77,4 @@ sudo rm -rf "$logs_path"
 # REMOVE DEDICATED USER
 #=================================================
 
-ynh_system_user_delete "$smtp_user"
+ynh_system_user_delete "$mattermost_user"
