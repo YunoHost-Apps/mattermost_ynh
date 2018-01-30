@@ -72,7 +72,7 @@ ynh_mysql_connect_as $db_user $db_pwd $db_name < ./db.sql
 # Create the dedicated user (if not existing)
 smtp_user="$app"
 if ! ynh_system_user_exists "$smtp_user"; then
-  smtp_password=$(ynh_app_setting_get $app smtp_password)
+  smtp_password=$(ynh_app_setting_get $app smtppwd)
   useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "$smtp_user"
 fi
 
