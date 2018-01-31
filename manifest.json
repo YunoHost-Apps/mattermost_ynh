@@ -13,7 +13,7 @@
         "name": "pmorinerie",
         "email": "kemenaran@gmail.com"
     },
-    "multi_instance": false,
+    "multi_instance": true,
     "services": [
         "nginx"
     ],
@@ -32,13 +32,13 @@
                 "example": "domain.org"
             },
             {
-                "name": "public_site",
+                "name": "is_public",
+                "type": "boolean",
                 "ask": {
                     "en": "Can guest users access this chat?",
                     "fr": "Les utilisateurs non-enregistrés peuvent-ils accéder à ce chat ?"
                 },
-                "choices": ["Yes", "No"],
-                "default": "Yes"
+                "default": true
             },
             {
                 "name": "analytics",

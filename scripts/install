@@ -6,6 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -21,7 +22,7 @@ ynh_abort_if_errors
 
 app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
-is_public=$YNH_APP_ARG_PUBLIC_SITE
+is_public=$YNH_APP_ARG_IS_PUBLIC
 analytics=$YNH_APP_ARG_ANALYTICS
 path_url="/"
 
@@ -55,14 +56,27 @@ then
     script_die "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
 fi
 
+#=================================================
+# FIND AN AVAILABLE PATH
+#=================================================
+
 # Normalize the url path syntax
 path_url=$(ynh_normalize_url_path $path_url)
 # Check web path availability
-ynh_webpath_available $domain $path_url
+ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
-ynh_webpath_register $app $domain $path_url
+ynh_webpath_register "$app" "$domain" "$path_url"
 # Store setting
 ynh_app_setting_set "$app" domain "$domain"
+
+#=================================================
+# FIND AN AVAILABLE PORT
+#=================================================
+
+# Find an available port
+port=$(ynh_find_port 8065)
+# Store setting
+ynh_app_setting_set "$app" port "$port"
 
 #=================================================
 # SET UP INSTALLATION VARIABLES
@@ -77,19 +91,20 @@ logs_path="/var/log/$app"
 # CREATE A MYSQL DATABASE
 #=================================================
 
-db_name="mattermost"
+db_name="$app"
 db_user="mmuser"
 db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
-ynh_mysql_create_db $db_name $db_user $db_password
-ynh_app_setting_set mattermost mysqlpwd "$db_password"
+ynh_mysql_create_db "$db_name" "$db_user" "$db_password"
+ynh_app_setting_set "$app" mysqlpwd "$db_password"
 
 #=================================================
 # CREATE USER FOR EMAIL NOTIFICATIONS
 #=================================================
 
-smtp_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
-sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "mattermost"
-ynh_app_setting_set mattermost smtppwd "$smtp_password"
+mattermost_user="$app"
+mattermost_user_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+sudo useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
+ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -106,24 +121,25 @@ sudo mkdir -p "$logs_path"
 #=================================================
 
 # Configure Service Settings
-sudo sed -i "s|\"SiteURL\": \"\"|\"SiteURL\": \"https://${domain}${path_url}\"|g"      $final_path/config/config.json
+sudo sed -i "s|\"SiteURL\": \"\"|\"SiteURL\": \"https://${domain}${path_url}\"|g"          $final_path/config/config.json
+sudo sed -i "s|\"ListenAddress\": \".*\"|\"ListenAddress\": \"127.0.0.1:${port}\"|g"       $final_path/config/config.json
 # Configure the database connection
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
-sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"      $final_path/config/config.json
+sudo sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"          $final_path/config/config.json
 # Configure uploaded files directory
-sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"          $final_path/config/config.json
+sudo sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"              $final_path/config/config.json
 # Configure SMTP account for sending email notifications
-sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"   $final_path/config/config.json
-sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g" $final_path/config/config.json
-sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"    $final_path/config/config.json
-sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"mattermost\"|g"              $final_path/config/config.json
-sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${smtp_password}\"|g"        $final_path/config/config.json
-sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                   $final_path/config/config.json
-sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                              $final_path/config/config.json
+sudo sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"       $final_path/config/config.json
+sudo sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g"     $final_path/config/config.json
+sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"        $final_path/config/config.json
+sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"${mattermost_user}\"|g"          $final_path/config/config.json
+sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${mattermost_user_password}\"|g" $final_path/config/config.json
+sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                       $final_path/config/config.json
+sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                                  $final_path/config/config.json
 # Disable Mattermost debug console by default
-sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                     $final_path/config/config.json
+sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                         $final_path/config/config.json
 # Configure log file location
-sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"$logs_path\"|g"              $final_path/config/config.json
+sudo sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"$logs_path\"|g"                  $final_path/config/config.json
 # Configure analytics according to user choice
 if [ $analytics -eq 0 ]; then
     sudo sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
@@ -134,23 +150,21 @@ ynh_app_setting_set "$app" analytics "$analytics"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-sudo chown -R mattermost:www-data "$final_path"
-sudo chown -R mattermost:www-data "$data_path"
-sudo chown -R mattermost:adm      "$logs_path"
+sudo chown -R "$mattermost_user:www-data" "$final_path"
+sudo chown -R "$mattermost_user:www-data" "$data_path"
+sudo chown -R "$mattermost_user:adm"      "$logs_path"
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
 
-# Copy conf/nginx.conf to the correct location
 ynh_add_nginx_config
 
 #=================================================
 # SYSTEMD CONFIGURATION
 #=================================================
 
-# Create a dedicated systemd config
-ynh_add_systemd_config
+mattermost_add_systemd_config
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
@@ -163,11 +177,11 @@ sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
 #=================================================
 
 ynh_app_setting_set "$app" is_public "$is_public"
-if [ "$is_public" = "Yes" ];
-then
+
+if [[ $is_public == "1" ]]; then
+    # Make the app accessible to the public
     ynh_app_setting_set "$app" unprotected_uris "/"
 fi
-sudo yunohost app ssowatconf
 
 #=================================================
 # RELOAD NGINX
@@ -179,4 +193,4 @@ sudo systemctl reload nginx
 # START SERVER
 #=================================================
 
-sudo systemctl start mattermost
+sudo systemctl start "$app"
