@@ -23,6 +23,10 @@ ynh_abort_if_errors
 app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
+admin_email=$YNH_APP_ARG_ADMIN_EMAIL
+admin_password=$YNH_APP_ARG_ADMIN_PASSWORD
+admin_locale=$YNH_APP_ARG_ADMIN_LOCALE
+team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
 analytics=$YNH_APP_ARG_ANALYTICS
 path_url="/"
 
@@ -194,3 +198,20 @@ sudo systemctl reload nginx
 #=================================================
 
 sudo systemctl start "$app"
+
+#=================================================
+# CREATE ADMIN AND FIRST TEAM
+#=================================================
+
+admin_username=$(cut -d @ -f 1 <<< "$admin_email")
+team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+
+cd "$final_path/bin"
+sudo ./platform user create --username "$admin_username" --email "$admin_email" --password "$admin_password" --locale "$admin_locale" --system_admin
+sudo ./platform user verify "$admin_username"
+sudo ./platform team create --name "$team_name" --display_name "$team_display_name" --email "$admin_email"
+sudo ./platform team add "$team_name" "$admin_username"
+
+ynh_app_setting_set "$app" admin_email "$admin_email"
+ynh_app_setting_set "$app" admin_locale "$admin_locale"
+ynh_app_setting_set "$app" team_name "$team_name"

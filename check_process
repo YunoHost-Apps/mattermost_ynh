@@ -2,10 +2,12 @@
     ; Manifest
         domain="ynhtests.local" (DOMAIN)
         path="" (PATH)
-        user="admin" (USER)
-        language="fr"
+        admin_email="john@gmail.com"
+        admin_password="mattermost_password"
+        admin_locale="fr"
+        team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)
-        password="alpine"
+        analytics=0
     ; Checks
         pkg_linter=1
         setup_root=1
