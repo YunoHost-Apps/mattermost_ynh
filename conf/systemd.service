@@ -1,3 +1,6 @@
+# This file is managed by the Yunohost Mattermost package,
+# and will be overwritten on upgrade.
+
 [Unit]
 Description=Mattermost
 After=network.target
