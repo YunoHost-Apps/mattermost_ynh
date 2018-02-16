@@ -41,6 +41,42 @@
                 "default": true
             },
             {
+                "name": "admin_email",
+                "ask": {
+                    "en": "Login email for the chat admin",
+                    "fr": "Adresse email de login pour l’administrateur du chat"
+                },
+                "example": "john@gmail.com",
+                "optional": false
+            },
+            {
+                "name": "admin_password",
+                "type": "password",
+                "ask": {
+                    "en": "Password for the chat admin",
+                    "fr": "Mot de passe pour l’administrateur du chat"
+                },
+                "optional": false
+            },
+            {
+                "name": "admin_locale",
+                "ask": {
+                    "en": "Choose the language of the chat for the admin",
+                    "fr": "Choissisez la langue utilisée pour l'administrateur"
+                },
+                "choices": ["en", "fr"],
+                "default": "en"
+            },
+            {
+                "name": "team_display_name",
+                "ask": {
+                    "en": "Choose a Team name",
+                    "fr": "Choisissez le nom de l’équipe"
+                },
+                "example": "Super Groupe",
+                "optional": false
+            },
+            {
                 "name": "analytics",
                 "type": "boolean",
                 "ask": {
