@@ -10,7 +10,7 @@ Requires=mysql.service
 [Service]
 Type=notify
 ExecStart=__FINALPATH__/bin/platform
-TimeoutStartSec=90
+TimeoutStartSec=3600
 Restart=always
 RestartSec=10
 WorkingDirectory=__FINALPATH__
