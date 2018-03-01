@@ -1,6 +1,6 @@
-SOURCE_URL=https://releases.mattermost.com/4.7.0/mattermost-4.7.0-linux-amd64.tar.gz
-SOURCE_SUM=ff53968ef8ac0a44f9a2d21fde719930b8042801f22866bc25bad53503819abd
+SOURCE_URL=https://releases.mattermost.com/4.7.2/mattermost-4.7.2-linux-amd64.tar.gz
+SOURCE_SUM=947577631a94a003d660b4eb08f07585e0e1f93c3e5b63a8c30a72e0abcde9c1
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mattermost-4.7.0-linux-amd64.tar.gz
+SOURCE_FILENAME=mattermost-4.7.2-linux-amd64.tar.gz
