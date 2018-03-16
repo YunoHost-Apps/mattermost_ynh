@@ -6,7 +6,6 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -132,7 +131,7 @@ ynh_add_nginx_config
 # SYSTEMD CONFIGURATION
 #=================================================
 
-mattermost_add_systemd_config
+ynh_add_systemd_config
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
