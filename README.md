@@ -2,9 +2,7 @@
 
 A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source, self-hosted alternative to Slack.
 
-## Build status
-
-See https://ci-apps.yunohost.org/jenkins/job/mattermost%20(Community)/ for checking current build status.
+[![Yunohost Build status](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost)
 
 ## Requirements
 
@@ -16,17 +14,13 @@ Mattermost requires:
 
 ## Installing
 
+[![Install Mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=mattermost)
+
 You can either :
 
-* Install from the Yunohost Admin web interface, by providing this URL: `https://github.com/YunoHost-Apps/mattermost_ynh`
-* Install from the command-line: `sudo yunohost app install https://github.com/YunoHost-Apps/mattermost_ynh`
-
-## Upgrading
-
-Mattermost upgrades tend to work only from one minor version to the other (3.0 to 3.1, 3.1 to 3.2, etc).
-
-**Important**: to upgrade from Mattermost 2.2, you will need an extra manual step.
-Run the upgrade from Yunohost, then follow [this guide](https://docs.mattermost.com/administration/upgrade.html).
+* Install by clicking the button above;
+* Install from the Yunohost Admin web interface, from the Community Apps list;
+* Install from the command-line: `sudo yunohost app install https://github.com/YunoHost-Apps/mattermost_ynh`.
 
 ## What works
 

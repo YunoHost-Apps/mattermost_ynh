@@ -27,6 +27,7 @@ data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 db_name="$app"
 db_user="mmuser"
+mattermost_user="$app"
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
@@ -52,22 +53,28 @@ ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore_file "$final_path"
 
 #=================================================
+# RESTORE THE APP DATA
+#=================================================
+
+ynh_restore_file "$data_path"
+
+#=================================================
 # RESTORE THE MYSQL DATABASE
 #=================================================
 
 db_pwd=$(ynh_app_setting_get $app mysqlpwd)
-ynh_mysql_setup_db $db_user $db_name $db_pwd
-ynh_mysql_connect_as $db_user $db_pwd $db_name < ./db.sql
+ynh_mysql_setup_db "$db_user" "$db_name" "$db_pwd"
+ynh_mysql_connect_as "$db_user" "$db_pwd" "$db_name" < ./db.sql
 
 #=================================================
 # RECREATE THE DEDICATED USER
 #=================================================
 
 # Create the dedicated user (if not existing)
-smtp_user="$app"
-if ! ynh_system_user_exists "$smtp_user"; then
-  smtp_password=$(ynh_app_setting_get $app smtp_password)
-  useradd -M --shell /bin/false -p $(openssl passwd -1 "$smtp_password") "$smtp_user"
+mattermost_user="$app"
+if ! ynh_system_user_exists "$mattermost_user"; then
+  mattermost_user_password=$(ynh_app_setting_get $app smtppwd)
+  useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
 fi
 
 #=================================================
@@ -75,21 +82,24 @@ fi
 #=================================================
 
 # Restore permissions on app files
-sudo chown -R mattermost:www-data "$final_path"
+sudo chown -R "$mattermost_user:www-data" "$final_path"
 
 mkdir -p "$data_path"
-sudo chown -R mattermost:www-data "$data_path"
+sudo chown -R "$mattermost_user:www-data" "$data_path"
 
 mkdir -p "$logs_path"
-sudo chown -R mattermost:adm "$logs_path"
+sudo chown -R "$mattermost_user:adm" "$logs_path"
 
 #=================================================
 # RESTORE SSOWAT
 #=================================================
 
-if [ "$is_public" = "Yes" ];
-then
+if [[ $is_public == "1" ]]; then
+  # Make the app accessible to the public
   ynh_app_setting_set "$app" unprotected_uris "/"
+else
+  # Remove the public access
+  ynh_app_setting_delete "$app" skipped_uris
 fi
 
 #=================================================

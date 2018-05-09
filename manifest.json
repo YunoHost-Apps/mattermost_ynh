@@ -7,12 +7,13 @@
         "fr": "Une alternative open-source et auto-hébergée à Slack"
     },
     "url": "http://www.mattermost.org/",
-    "license": "free",
+    "license": "GPL-3.0-only",
+    "version": "4.6.0-1",
     "maintainer": {
         "name": "pmorinerie",
         "email": "kemenaran@gmail.com"
     },
-    "multi_instance": false,
+    "multi_instance": true,
     "services": [
         "nginx"
     ],
@@ -31,19 +32,55 @@
                 "example": "domain.org"
             },
             {
-                "name": "public_site",
+                "name": "is_public",
+                "type": "boolean",
                 "ask": {
                     "en": "Can guest users access this chat?",
                     "fr": "Les utilisateurs non-enregistrés peuvent-ils accéder à ce chat ?"
                 },
-                "choices": ["Yes", "No"],
-                "default": "Yes"
+                "default": true
+            },
+            {
+                "name": "admin_email",
+                "ask": {
+                    "en": "Login email for the chat admin",
+                    "fr": "Adresse email de login pour l’administrateur du chat"
+                },
+                "example": "john@gmail.com",
+                "optional": false
+            },
+            {
+                "name": "admin_password",
+                "type": "password",
+                "ask": {
+                    "en": "Password for the chat admin",
+                    "fr": "Mot de passe pour l’administrateur du chat"
+                },
+                "optional": false
+            },
+            {
+                "name": "admin_locale",
+                "ask": {
+                    "en": "Choose the language of the chat for the admin",
+                    "fr": "Choissisez la langue utilisée pour l'administrateur"
+                },
+                "choices": ["en", "fr"],
+                "default": "en"
+            },
+            {
+                "name": "team_display_name",
+                "ask": {
+                    "en": "Choose a Team name",
+                    "fr": "Choisissez le nom de l’équipe"
+                },
+                "example": "Super Groupe",
+                "optional": false
             },
             {
                 "name": "analytics",
                 "type": "boolean",
                 "ask": {
-                    "en": "Do you want to allow Mattermost to send some telemetrics about your usage of this app?",
+                    "en": "Allow Mattermost to send some telemetrics about your usage of this app?",
                     "fr": "Autorisez-vous Mattermost à envoyer des informations anonymes sur votre usage de l’application ?"
                 },
                 "default": false

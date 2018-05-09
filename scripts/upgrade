@@ -20,8 +20,10 @@ ynh_abort_if_errors
 #=================================================
 
 app=$YNH_APP_INSTANCE_NAME
-domain=$(ynh_app_setting_get mattermost domain)
-is_public=$(ynh_app_setting_get mattermost is_public)
+domain=$(ynh_app_setting_get $app domain)
+is_public=$(ynh_app_setting_get $app is_public)
+port=$(ynh_app_setting_get $app port)
+mattermost_user="$app"
 
 root_path="$(pwd)/.."
 final_path="/var/www/$app"
@@ -33,16 +35,32 @@ logs_path="/var/log/$app"
 #=================================================
 
 # Backup the current version of the app
-ynh_backup_before_upgrade
+# (NB: `tee` uses process substitution rather than a pipe,
+# to avoid spawning a subshell that would not save global
+# variables defined by `ynh_backup_before_upgrade`.)
+ynh_backup_before_upgrade > >(tee "upgrade.log")
+# Ensure the backup can be restored
+if grep -q "mattermost: Warning$" "upgrade.log"; then
+  can_restore_backup=false
+else
+  can_restore_backup=true
+fi
 
 # If the upgrade fails…
 ynh_clean_setup () {
-  # Stop attempting to restart the app
-  if $(sudo systemctl -q is-active "$app"); then
-    sudo systemctl stop "$app"
+  if [ "$can_restore_backup" = true ]; then
+    # Stop attempting to restart the app
+    if $(sudo systemctl -q is-active "$app"); then
+      sudo systemctl stop "$app"
+    fi
+    # Restore the backup
+    ynh_restore_upgradebackup
+  
+  else
+    # Backup restoration is not available:
+    # let's try at least to restart the server.
+    sudo systemctl start "$app"
   fi
-  # Restore the backup
-  ynh_restore_upgradebackup
 }
 
 # Exit if an error occurs during the execution of the script
@@ -57,7 +75,7 @@ if $(sudo systemctl -q is-active "$app"); then
   sudo systemctl stop "$app"
 fi
 
-# Legacy, for older versions of this app which used supervisor
+# Legacy, for previous versions of this app which used supervisor
 if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
   sudo supervisorctl stop "$app"
   sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
@@ -71,6 +89,24 @@ config_file="$final_path/config/config.json"
 backup_config_file="/tmp/config.json"
 
 sudo cp -f "$config_file" "$backup_config_file"
+
+#=================================================
+# MIGRATE SETTINGS FROM PREVIOUS VERSIONS
+#=================================================
+
+# Convert is_public from "Yes"/"No" to 1 / 0
+if [[ $is_public == "Yes" ]]; then
+  is_public=1
+elif [[ $is_public == "No" ]]; then
+  is_public=0
+fi
+ynh_app_setting_set "$app" is_public "$is_public"
+
+# Save the port used if not present
+if ! [[ "$port" ]]; then
+  port=8065
+  ynh_app_setting_set "$app" port "$port"
+fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -123,9 +159,9 @@ fi
 # RESTORE FILE PERMISSIONS
 #=================================================
 
-sudo chown -R mattermost:www-data "$final_path"
-sudo chown -R mattermost:www-data "$data_path"
-sudo chown -R mattermost:adm      "$logs_path"
+sudo chown -R "$mattermost_user:www-data" "$final_path"
+sudo chown -R "$mattermost_user:www-data" "$data_path"
+sudo chown -R "$mattermost_user:adm"      "$logs_path"
 
 #=================================================
 # RELOAD NGINX
