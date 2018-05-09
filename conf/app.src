@@ -1,5 +1,5 @@
 SOURCE_URL=https://releases.mattermost.com/4.9.2/mattermost-4.9.2-linux-amd64.tar.gz
-SOURCE_SUM=d22a76d79484cbbe37c1de7f682a83e4e83b256d5517dfbc19a3c2836e66bd48
+SOURCE_SUM=51cc30502eb1ae84742098db26c22bdfb464849bfdd8b3597d950e389f090839
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
