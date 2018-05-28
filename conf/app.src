@@ -1,6 +1,6 @@
-SOURCE_URL=https://releases.mattermost.com/4.8.1/mattermost-4.8.1-linux-amd64.tar.gz
-SOURCE_SUM=3dac9f9bb4884cd83b8274c2bd7c32418f2535d3f9911cea845ac047ee2c7a82
+SOURCE_URL=https://releases.mattermost.com/4.10.0/mattermost-4.10.0-linux-amd64.tar.gz
+SOURCE_SUM=85baf856b10af2ac80866ace921ea38e2807b82d6800e90d273b63427b13d25d
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mattermost-4.8.1-linux-amd64.tar.gz
+SOURCE_FILENAME=mattermost-4.10.0-linux-amd64.tar.gz
