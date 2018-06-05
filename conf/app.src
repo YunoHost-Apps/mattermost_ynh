@@ -1,6 +1,6 @@
-SOURCE_URL=https://releases.mattermost.com/4.10.1/mattermost-4.10.1-linux-amd64.tar.gz
-SOURCE_SUM=cef8a706d6da1d8756d70d06a9e9444ba078fb107a194ce91ea2e6beae9726f7
+SOURCE_URL=https://releases.mattermost.com/4.10.1/mattermost-team-4.10.1-linux-amd64.tar.gz
+SOURCE_SUM=c690a65cc6998d900fe4500d41bd2baa1df92190badd8bdf2f94ed07510dcd00
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mattermost-4.10.1-linux-amd64.tar.gz
+SOURCE_FILENAME=mattermost-team-4.10.1-linux-amd64.tar.gz
