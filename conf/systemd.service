@@ -9,7 +9,7 @@ Requires=mysql.service
 
 [Service]
 Type=notify
-ExecStart=__FINALPATH__/bin/platform
+ExecStart=__FINALPATH__/bin/mattermost
 TimeoutStartSec=3600
 Restart=always
 RestartSec=10
