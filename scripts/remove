@@ -37,7 +37,7 @@ ynh_remove_systemd_config
 # Legacy, for older versions of this app which used supervisor
 if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
   sudo supervisorctl stop "$app"
-  sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
+  sudo ynh_secure_remove --file="/etc/supervisor/conf.d/${app}.conf"
 fi
 
 #=================================================
@@ -71,7 +71,7 @@ ynh_remove_nginx_config
 # REMOVE LOG FILE
 #=================================================
 
-sudo rm -rf "$logs_path"
+sudo ynh_secure_remove --file="$logs_path"
 
 #=================================================
 # REMOVE DEDICATED USER
