@@ -53,8 +53,8 @@
                 "name": "admin_password",
                 "type": "password",
                 "ask": {
-                    "en": "Password for the chat admin",
-                    "fr": "Mot de passe pour l’administrateur du chat"
+                    "en": "Password for the chat admin. Must contain at least 10 characters, one lowercase letter, one uppercase letter, one number, and one symbol (e.g. '~!@#$%^&*()').",
+                    "fr": "Mot de passe pour l’administrateur du chat. Doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre, et une ponctuation (ex. '~!@#$%^&*()')."
                 },
                 "optional": false
             },
