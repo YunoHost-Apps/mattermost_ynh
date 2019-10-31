@@ -1,6 +1,6 @@
-SOURCE_URL=https://releases.mattermost.com/5.16.1/mattermost-5.16.1-linux-amd64.tar.gz
-SOURCE_SUM=1ca1c334607bb089737357c3ec79384e79f0c47480966e5794e32e0742472983
+SOURCE_URL=https://releases.mattermost.com/5.16.2/mattermost-5.16.2-linux-amd64.tar.gz
+SOURCE_SUM=dceae9bbbfb9609d1f6a6c9ca141748196860239ea1a9e8ef1888949951f2c8c
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mattermost-5.16.1-linux-amd64.tar.gz
+SOURCE_FILENAME=mattermost-5.16.2-linux-amd64.tar.gz
