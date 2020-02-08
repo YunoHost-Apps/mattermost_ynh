@@ -25,6 +25,15 @@ logs_path="/var/log/$app"
 #=================================================
 # STANDARD REMOVE
 #=================================================
+#=================================================
+# REMOVE SERVICE FROM ADMIN PANEL
+#=================================================
+
+if sudo yunohost service status | grep -q "$app"; then
+  sudo yunohost service remove "$app"
+fi
+
+#=================================================
 # STOP AND REMOVE SERVICE
 #=================================================
 
@@ -38,14 +47,6 @@ ynh_remove_systemd_config
 if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
   sudo supervisorctl stop "$app"
   sudo ynh_secure_remove --file="/etc/supervisor/conf.d/${app}.conf"
-fi
-
-#=================================================
-# REMOVE SERVICE FROM ADMIN PANEL
-#=================================================
-
-if sudo yunohost service status | grep -q "$app"; then
-  sudo yunohost service remove "$app"
 fi
 
 #=================================================
