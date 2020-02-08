@@ -21,6 +21,7 @@ ynh_abort_if_errors
 
 app=$YNH_APP_INSTANCE_NAME
 domain=$(ynh_app_setting_get $app domain)
+path_url=$(ynh_app_setting_get $app path) # used during nginx configuration
 is_public=$(ynh_app_setting_get $app is_public)
 port=$(ynh_app_setting_get $app port)
 mattermost_user="$app"
@@ -55,7 +56,7 @@ ynh_clean_setup () {
     fi
     # Restore the backup
     ynh_restore_upgradebackup
-  
+
   else
     # Backup restoration is not available:
     # let's try at least to restart the server.

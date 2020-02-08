@@ -32,6 +32,16 @@
                 "example": "domain.org"
             },
             {
+                "name": "path",
+                "type": "path",
+                "ask": {
+                    "en": "Choose a path for Mattermost",
+                    "fr": "Choisissez un chemin pour Mattermost"
+                },
+                "example": "/chat",
+                "default": "/chat"
+            },
+            {
                 "name": "is_public",
                 "type": "boolean",
                 "ask": {

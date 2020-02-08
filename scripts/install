@@ -21,13 +21,13 @@ ynh_abort_if_errors
 
 app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
+path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
 admin_email=$YNH_APP_ARG_ADMIN_EMAIL
 admin_password=$YNH_APP_ARG_ADMIN_PASSWORD
 admin_locale=$YNH_APP_ARG_ADMIN_LOCALE
 team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
 analytics=$YNH_APP_ARG_ANALYTICS
-path_url="/"
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED
@@ -71,6 +71,7 @@ ynh_webpath_available "$domain" "$path_url"
 ynh_webpath_register "$app" "$domain" "$path_url"
 # Store setting
 ynh_app_setting_set "$app" domain "$domain"
+ynh_app_setting_set "$app" path "$path_url"
 
 #=================================================
 # FIND AN AVAILABLE PORT
