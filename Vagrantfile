@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, keep_color: true, inline: <<-SHELL
     DOMAIN=ynhtests.local
-    YUNOHOST_ADMIN_PASSWORD="alpine"
+    YUNOHOST_ADMIN_PASSWORD="ynhadminpwd"
 
     # Stop on first error
     set -e
