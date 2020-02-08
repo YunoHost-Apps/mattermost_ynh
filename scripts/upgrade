@@ -51,8 +51,8 @@ fi
 ynh_clean_setup () {
   if [ "$can_restore_backup" = true ]; then
     # Stop attempting to restart the app
-    if $(sudo systemctl -q is-active "$app"); then
-      sudo systemctl stop "$app"
+    if $(systemctl -q is-active "$app"); then
+      systemctl stop "$app"
     fi
     # Restore the backup
     ynh_restore_upgradebackup
@@ -60,7 +60,7 @@ ynh_clean_setup () {
   else
     # Backup restoration is not available:
     # let's try at least to restart the server.
-    sudo systemctl start "$app"
+    systemctl start "$app"
   fi
 }
 
@@ -72,14 +72,14 @@ ynh_abort_if_errors
 #=================================================
 
 # Stop the server (if the app is already using systemd)
-if $(sudo systemctl -q is-active "$app"); then
-  sudo systemctl stop "$app"
+if $(systemctl -q is-active "$app"); then
+  systemctl stop "$app"
 fi
 
 # Legacy, for previous versions of this app which used supervisor
 if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
-  sudo supervisorctl stop "$app"
-  sudo rm -f "/etc/supervisor/conf.d/${app}.conf"
+  supervisorctl stop "$app"
+  rm -f "/etc/supervisor/conf.d/${app}.conf"
 fi
 
 #=================================================
@@ -89,7 +89,7 @@ fi
 config_file="$final_path/config/config.json"
 backup_config_file="/tmp/config.json"
 
-sudo cp -f "$config_file" "$backup_config_file"
+cp -f "$config_file" "$backup_config_file"
 
 #=================================================
 # MIGRATE SETTINGS FROM PREVIOUS VERSIONS
@@ -120,7 +120,7 @@ ynh_setup_source "$final_path"
 # RESTORE CONFIGURATION FILE
 #=================================================
 
-sudo cp -f "$backup_config_file" "$config_file"
+cp -f "$backup_config_file" "$config_file"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -138,7 +138,7 @@ ynh_add_systemd_config
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 
-sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
+yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 #=================================================
 # SPECIFIC UPGRADE STEPS
@@ -146,32 +146,32 @@ sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 # Fix log FileLocation path (changed in Mattermost 3.8, makes Mattermost >= 4.2 crash)
 # https://docs.mattermost.com/administration/changelog.html#release-v3-8-3
-sudo sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \"/var/log\"|g" "$config_file"
+sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \"/var/log\"|g" "$config_file"
 
 # Move log files to a directory (rather than directly in /var/log)
 # See https://github.com/YunoHost-Apps/mattermost_ynh/issues/61
-sudo mkdir -p "$logs_path"
-sudo sed -i "s|\"FileLocation\": \"/var/log\"|\"FileLocation\": \"$logs_path\"|g" "$config_file"
+mkdir -p "$logs_path"
+sed -i "s|\"FileLocation\": \"/var/log\"|\"FileLocation\": \"$logs_path\"|g" "$config_file"
 if [ -f "/var/log/${app}.log" ]; then
-  sudo mv "/var/log/${app}.log" "$logs_path/"
+  mv "/var/log/${app}.log" "$logs_path/"
 fi
 
 #=================================================
 # RESTORE FILE PERMISSIONS
 #=================================================
 
-sudo chown -R "$mattermost_user:www-data" "$final_path"
-sudo chown -R "$mattermost_user:www-data" "$data_path"
-sudo chown -R "$mattermost_user:adm"      "$logs_path"
+chown -R "$mattermost_user:www-data" "$final_path"
+chown -R "$mattermost_user:www-data" "$data_path"
+chown -R "$mattermost_user:adm"      "$logs_path"
 
 #=================================================
 # RELOAD NGINX
 #=================================================
 
-sudo service nginx reload
+service nginx reload
 
 #=================================================
 # START SERVER
 #=================================================
 
-sudo systemctl start "$app"
+systemctl start "$app"

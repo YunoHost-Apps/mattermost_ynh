@@ -29,8 +29,8 @@ logs_path="/var/log/$app"
 # REMOVE SERVICE FROM ADMIN PANEL
 #=================================================
 
-if sudo yunohost service status | grep -q "$app"; then
-  sudo yunohost service remove "$app"
+if yunohost service status | grep -q "$app"; then
+  yunohost service remove "$app"
 fi
 
 #=================================================
@@ -38,15 +38,15 @@ fi
 #=================================================
 
 # Remove systemd service
-if $(sudo systemctl -q is-active "$app"); then
-  sudo systemctl stop "$app"
+if $(systemctl -q is-active "$app"); then
+  systemctl stop "$app"
 fi
 ynh_remove_systemd_config
 
 # Legacy, for older versions of this app which used supervisor
 if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
-  sudo supervisorctl stop "$app"
-  sudo ynh_secure_remove --file="/etc/supervisor/conf.d/${app}.conf"
+  supervisorctl stop "$app"
+  ynh_secure_remove --file="/etc/supervisor/conf.d/${app}.conf"
 fi
 
 #=================================================
@@ -72,7 +72,7 @@ ynh_remove_nginx_config
 # REMOVE LOG FILE
 #=================================================
 
-sudo ynh_secure_remove --file="$logs_path"
+ynh_secure_remove --file="$logs_path"
 
 #=================================================
 # REMOVE DEDICATED USER
