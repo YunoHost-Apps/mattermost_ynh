@@ -11,10 +11,22 @@ Vagrant.configure("2") do |config|
   # https://docs.vagrantup.com.
 
   config.vm.define :ynhtests
-  config.vm.box = "yunohost/jessie-stable"
+  config.vm.box = "yunohost-stretch-unstable"
+  config.vm.box_url = "https://build.yunohost.org/yunohost-stretch-unstable.box"
 
   # Disable auto updates checks. Run `vagrant outdated` to perform manual updates.
   config.vm.box_check_update = false
+
+  # Configuration for the vagrant-disksize plugin.
+  # We need more space because package_check will create many LXC containers and snapshots.
+  #
+  # IMPORTANT: when re-creating the VM from scratch, the logical size of the disk will
+  # still be 10 Go.
+  # You'll need a live GParted ISO to resize partitions and fix it.
+  config.disksize.size = '20GB'
+
+  # Force guest type, because YunoHost /etc/issue can't be tuned
+  config.vm.guest = :debian
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,

@@ -1,5 +1,7 @@
 #!/bin/bash
 # Run package_check tests against the app in the working directory on a Vagrant virtual machine.
+#
+# NB: Vagrant is used because package_check uses LXC containers, and Docker doesn't support running LXC.
 
 # Fail on first error
 set -e
