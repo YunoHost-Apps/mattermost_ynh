@@ -9,7 +9,7 @@ A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source,
 Mattermost requires:
 
 * A x86_64 system (check with `uname -m`),
-* Yunohost 2.7 or higher (check in Yunohost Admin panel),
+* Yunohost 3.2 or higher (check in Yunohost Admin panel),
 * MySQL 5.6 or higher, or MariaDB 10 or higher (check with `mysql --version`).
 
 ## Installing
@@ -24,14 +24,13 @@ You can either :
 
 ## What works
 
-* Installation on domain's root
+* Installation on domain root or sub-directory
 * Notification emails
 * Push notifications
 * Service control in Yunohost Services panel
 
 ## TODO
 
-* Allow installation in sub-directory (only root-domains for now, see [#8](https://github.com/YunoHost-Apps/mattermost_ynh/issues/8))
 * LDAP integration (only paid Entreprise Edition, see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## About telemetrics

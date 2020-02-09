@@ -21,7 +21,7 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get $app domain)
 is_public=$(ynh_app_setting_get $app is_public)
-path_url="/"
+path_url=$(ynh_app_setting_get $app path)
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
@@ -82,13 +82,13 @@ fi
 #=================================================
 
 # Restore permissions on app files
-sudo chown -R "$mattermost_user:www-data" "$final_path"
+chown -R "$mattermost_user:www-data" "$final_path"
 
 mkdir -p "$data_path"
-sudo chown -R "$mattermost_user:www-data" "$data_path"
+chown -R "$mattermost_user:www-data" "$data_path"
 
 mkdir -p "$logs_path"
-sudo chown -R "$mattermost_user:adm" "$logs_path"
+chown -R "$mattermost_user:adm" "$logs_path"
 
 #=================================================
 # RESTORE SSOWAT
@@ -109,13 +109,13 @@ fi
 #=================================================
 
 ynh_restore_file "/etc/systemd/system/$app.service"
-sudo systemctl enable "$app"
+systemctl enable "$app"
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 
-sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
+yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -123,10 +123,10 @@ sudo yunohost service add "$app" --log "$logs_path/mattermost.log"
 # RELOAD NGINX
 #=================================================
 
-sudo service nginx reload
+service nginx reload
 
 #=================================================
 # START SERVER
 #=================================================
 
-sudo systemctl start "$app"
+systemctl start "$app"
