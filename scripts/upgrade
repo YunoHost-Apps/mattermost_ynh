@@ -146,12 +146,12 @@ yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 # Fix log FileLocation path (changed in Mattermost 3.8, makes Mattermost >= 4.2 crash)
 # https://docs.mattermost.com/administration/changelog.html#release-v3-8-3
-sed -i "s|\"FileLocation\": \"/var/log/mattermost.log\"|\"FileLocation\": \"/var/log\"|g" "$config_file"
+ynh_replace_string --match "\"FileLocation\": \"/var/log/mattermost.log\"" --replace "\"FileLocation\": \"/var/log\"" --target "$config_file"
 
 # Move log files to a directory (rather than directly in /var/log)
 # See https://github.com/YunoHost-Apps/mattermost_ynh/issues/61
 mkdir -p "$logs_path"
-sed -i "s|\"FileLocation\": \"/var/log\"|\"FileLocation\": \"$logs_path\"|g" "$config_file"
+ynh_replace_string --match "\"FileLocation\": \"/var/log\"" --replace "\"FileLocation\": \"$logs_path\"" --target "$config_file"
 if [ -f "/var/log/${app}.log" ]; then
   mv "/var/log/${app}.log" "$logs_path/"
 fi
