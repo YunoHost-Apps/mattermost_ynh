@@ -125,28 +125,34 @@ mkdir -p "$logs_path"
 #=================================================
 
 # Configure Service Settings
-ynh_replace_string --match "\"SiteURL\": \"\""                 --replace "\"SiteURL\": \"https://${domain}${path_url}\""     --target $final_path/config/config.json
-ynh_replace_string --match "\"ListenAddress\": \".*\""         --replace "\"ListenAddress\": \"127.0.0.1:${port}\""          --target $final_path/config/config.json
+ynh_replace_string --match_string "\"SiteURL\": \"\""                 --replace_string "\"SiteURL\": \"https://${domain}${path_url}\""     --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"ListenAddress\": \".*\""         --replace_string "\"ListenAddress\": \"127.0.0.1:${port}\""          --target_file $final_path/config/config.json
 # Configure the database connection
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
-ynh_replace_string --match "\"DataSource\": \".*\""            --replace "\"DataSource\": \"${db_connection_url}\""          --target $final_path/config/config.json
+ynh_replace_string --match_string "\"DataSource\": \".*\""            --replace_string "\"DataSource\": \"${db_connection_url}\""          --target_file $final_path/config/config.json
 # Configure uploaded files directory
-ynh_replace_string --match "\"Directory\": \"./data/\""        --replace "\"Directory\": \"${data_path}/\""                  --target $final_path/config/config.json
+ynh_replace_string --match_string "\"Directory\": \"./data/\""        --replace_string "\"Directory\": \"${data_path}/\""                  --target_file $final_path/config/config.json
 # Configure SMTP account for sending email notifications
-ynh_replace_string --match "\"SendEmailNotifications\": false" --replace "\"SendEmailNotifications\": true"                  --target $final_path/config/config.json
-ynh_replace_string --match "\"FeedbackName\": \"\""            --replace "\"FeedbackName\": \"Mattermost notification\""     --target $final_path/config/config.json
-ynh_replace_string --match "\"FeedbackEmail\": \"\""           --replace "\"FeedbackEmail\": \"no-reply@${domain}\""         --target $final_path/config/config.json
-ynh_replace_string --match "\"SMTPUsername\": \"\""            --replace "\"SMTPUsername\": \"${mattermost_user}\""          --target $final_path/config/config.json
-ynh_replace_string --match "\"SMTPPassword\": \"\""            --replace "\"SMTPPassword\": \"${mattermost_user_password}\"" --target $final_path/config/config.json
-ynh_replace_string --match "\"SMTPServer\": \"\""              --replace "\"SMTPServer\": \"localhost\""                     --target $final_path/config/config.json
-ynh_replace_string --match "\"SMTPPort\": \"\""                --replace "\"SMTPPort\": \"25\""                              --target $final_path/config/config.json
+ynh_replace_string --match_string "\"SendEmailNotifications\": false" --replace_string "\"SendEmailNotifications\": true"                  --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"FeedbackName\": \"\""            --replace_string "\"FeedbackName\": \"Mattermost notification\""     --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"FeedbackEmail\": \"\""           --replace_string "\"FeedbackEmail\": \"no-reply@${domain}\""         --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPUsername\": \"\""            --replace_string "\"SMTPUsername\": \"${mattermost_user}\""          --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPPassword\": \"\""            --replace_string "\"SMTPPassword\": \"${mattermost_user_password}\"" --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPServer\": \"\""              --replace_string "\"SMTPServer\": \"localhost\""                     --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPPort\": \"\""                --replace_string "\"SMTPPort\": \"25\""                              --target_file $final_path/config/config.json
 # Disable Mattermost debug console by default
-ynh_replace_string --match "\"EnableConsole\": true"           --replace "\"EnableConsole\": false"                          --target $final_path/config/config.json
+ynh_replace_string --match_string "\"EnableConsole\": true"           --replace_string "\"EnableConsole\": false"                          --target_file $final_path/config/config.json
 # Configure log file location
-ynh_replace_string --match "\"FileLocation\": \"\""            --replace "\"FileLocation\": \"$logs_path\""                  --target $final_path/config/config.json
+ynh_replace_string --match_string "\"FileLocation\": \"\""            --replace_string "\"FileLocation\": \"$logs_path\""                  --target_file $final_path/config/config.json
+# Disable questionable password complexity rules
+ynh_replace_string --match_string "\"MinimumLength\": 10"             --replace_string "\"MinimumLength\": 8"                              --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Lowercase\": true"               --replace_string "\"Lowercase\": false"                              --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Number\": true"                  --replace_string "\"Number\": false"                                 --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Uppercase\": true"               --replace_string "\"Uppercase\": false"                              --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Symbol\": true"                  --replace_string "\"Symbol\": false"                                 --target_file $final_path/config/config.json
 # Configure analytics according to user choice
 if [ $analytics -eq 0 ]; then
-    ynh_replace_string --match "\"EnableDiagnostics\": true"   --replace "\"EnableDiagnostics\": false"                      --target $final_path/config/config.json
+    ynh_replace_string --match_string "\"EnableDiagnostics\": true"   --replace_string "\"EnableDiagnostics\": false"                      --target_file $final_path/config/config.json
 fi
 ynh_app_setting_set "$app" analytics "$analytics"
 
