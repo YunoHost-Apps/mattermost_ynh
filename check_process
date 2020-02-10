@@ -3,7 +3,7 @@
         domain="ynhtests.local" (DOMAIN)
         path="/path" (PATH)
         admin_email="john@gmail.com"
-        admin_password="MattermostPassword!42"
+        admin_password="admin!42"
         admin_locale="fr"
         team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)

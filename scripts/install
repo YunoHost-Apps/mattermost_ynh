@@ -97,7 +97,7 @@ logs_path="/var/log/$app"
 
 db_name="$app"
 db_user="mmuser"
-db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+db_password=$(ynh_string_random --length=24)
 ynh_mysql_create_db "$db_name" "$db_user" "$db_password"
 ynh_app_setting_set "$app" mysqlpwd "$db_password"
 
@@ -106,7 +106,7 @@ ynh_app_setting_set "$app" mysqlpwd "$db_password"
 #=================================================
 
 mattermost_user="$app"
-mattermost_user_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+mattermost_user_password=$(ynh_string_random --length=24)
 useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
 ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
 
@@ -125,28 +125,34 @@ mkdir -p "$logs_path"
 #=================================================
 
 # Configure Service Settings
-sed -i "s|\"SiteURL\": \"\"|\"SiteURL\": \"https://${domain}${path_url}\"|g"          $final_path/config/config.json
-sed -i "s|\"ListenAddress\": \".*\"|\"ListenAddress\": \"127.0.0.1:${port}\"|g"       $final_path/config/config.json
+ynh_replace_string --match_string "\"SiteURL\": \"\""                 --replace_string "\"SiteURL\": \"https://${domain}${path_url}\""     --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"ListenAddress\": \".*\""         --replace_string "\"ListenAddress\": \"127.0.0.1:${port}\""          --target_file $final_path/config/config.json
 # Configure the database connection
 db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
-sed -i "s|\"DataSource\": \".*\"|\"DataSource\": \"${db_connection_url}\"|g"          $final_path/config/config.json
+ynh_replace_string --match_string "\"DataSource\": \".*\""            --replace_string "\"DataSource\": \"${db_connection_url}\""          --target_file $final_path/config/config.json
 # Configure uploaded files directory
-sed -i "s|\"Directory\": \"./data/\"|\"Directory\": \"${data_path}/\"|g"              $final_path/config/config.json
+ynh_replace_string --match_string "\"Directory\": \"./data/\""        --replace_string "\"Directory\": \"${data_path}/\""                  --target_file $final_path/config/config.json
 # Configure SMTP account for sending email notifications
-sed -i "s|\"SendEmailNotifications\": false|\"SendEmailNotifications\": true|g"       $final_path/config/config.json
-sed -i "s|\"FeedbackName\": \"\"|\"FeedbackName\": \"Mattermost notification\"|g"     $final_path/config/config.json
-sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"|g"        $final_path/config/config.json
-sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"${mattermost_user}\"|g"          $final_path/config/config.json
-sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${mattermost_user_password}\"|g" $final_path/config/config.json
-sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                       $final_path/config/config.json
-sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                                  $final_path/config/config.json
+ynh_replace_string --match_string "\"SendEmailNotifications\": false" --replace_string "\"SendEmailNotifications\": true"                  --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"FeedbackName\": \"\""            --replace_string "\"FeedbackName\": \"Mattermost notification\""     --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"FeedbackEmail\": \"\""           --replace_string "\"FeedbackEmail\": \"no-reply@${domain}\""         --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPUsername\": \"\""            --replace_string "\"SMTPUsername\": \"${mattermost_user}\""          --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPPassword\": \"\""            --replace_string "\"SMTPPassword\": \"${mattermost_user_password}\"" --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPServer\": \"\""              --replace_string "\"SMTPServer\": \"localhost\""                     --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPPort\": \"\""                --replace_string "\"SMTPPort\": \"25\""                              --target_file $final_path/config/config.json
 # Disable Mattermost debug console by default
-sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                         $final_path/config/config.json
+ynh_replace_string --match_string "\"EnableConsole\": true"           --replace_string "\"EnableConsole\": false"                          --target_file $final_path/config/config.json
 # Configure log file location
-sed -i "s|\"FileLocation\": \"\"|\"FileLocation\": \"$logs_path\"|g"                  $final_path/config/config.json
+ynh_replace_string --match_string "\"FileLocation\": \"\""            --replace_string "\"FileLocation\": \"$logs_path\""                  --target_file $final_path/config/config.json
+# Disable questionable password complexity rules
+ynh_replace_string --match_string "\"MinimumLength\": 10"             --replace_string "\"MinimumLength\": 8"                              --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Lowercase\": true"               --replace_string "\"Lowercase\": false"                              --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Number\": true"                  --replace_string "\"Number\": false"                                 --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Uppercase\": true"               --replace_string "\"Uppercase\": false"                              --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"Symbol\": true"                  --replace_string "\"Symbol\": false"                                 --target_file $final_path/config/config.json
 # Configure analytics according to user choice
 if [ $analytics -eq 0 ]; then
-    sed -i "s|\"EnableDiagnostics\": true|\"EnableDiagnostics\": false|g"             $final_path/config/config.json
+    ynh_replace_string --match_string "\"EnableDiagnostics\": true"   --replace_string "\"EnableDiagnostics\": false"                      --target_file $final_path/config/config.json
 fi
 ynh_app_setting_set "$app" analytics "$analytics"
 

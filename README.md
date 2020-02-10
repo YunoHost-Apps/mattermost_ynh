@@ -8,7 +8,7 @@ A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source,
 
 Mattermost requires:
 
-* A x86_64 system (check with `uname -m`),
+* A x86_64 system (check with `uname -m`) (ARM Raspberry Pi won’t work, sorry),
 * Yunohost 3.2 or higher (check in Yunohost Admin panel),
 * MySQL 5.6 or higher, or MariaDB 10 or higher (check with `mysql --version`).
 
