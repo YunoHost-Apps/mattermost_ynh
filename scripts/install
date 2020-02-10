@@ -97,7 +97,7 @@ logs_path="/var/log/$app"
 
 db_name="$app"
 db_user="mmuser"
-db_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+db_password=$(ynh_string_random --length=24)
 ynh_mysql_create_db "$db_name" "$db_user" "$db_password"
 ynh_app_setting_set "$app" mysqlpwd "$db_password"
 
@@ -106,7 +106,7 @@ ynh_app_setting_set "$app" mysqlpwd "$db_password"
 #=================================================
 
 mattermost_user="$app"
-mattermost_user_password=$(dd if=/dev/urandom bs=1 count=200 2> /dev/null | tr -c -d 'A-Za-z0-9' | sed -n 's/\(.\{24\}\).*/\1/p')
+mattermost_user_password=$(ynh_string_random --length=24)
 useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
 ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
 
