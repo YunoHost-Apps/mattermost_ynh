@@ -138,7 +138,7 @@ sudo sed -i "s|\"FeedbackEmail\": \"\"|\"FeedbackEmail\": \"no-reply@${domain}\"
 sudo sed -i "s|\"SMTPUsername\": \"\"|\"SMTPUsername\": \"${mattermost_user}\"|g"          $final_path/config/config.json
 sudo sed -i "s|\"SMTPPassword\": \"\"|\"SMTPPassword\": \"${mattermost_user_password}\"|g" $final_path/config/config.json
 sudo sed -i "s|\"SMTPServer\": \"\"|\"SMTPServer\": \"localhost\"|g"                       $final_path/config/config.json
-sudo sed -i "s|\"SMTPPort\": \"\"|\"SMTPPort\": \"25\"|g"                                  $final_path/config/config.json
+sudo sed -i "s|\"SMTPPort\": \".*\"|\"SMTPPort\": \"25\"|g"                                $final_path/config/config.json
 # Disable Mattermost debug console by default
 sudo sed -i "s|\"EnableConsole\": true|\"EnableConsole\": false|g"                         $final_path/config/config.json
 # Configure log file location
