@@ -139,7 +139,7 @@ ynh_replace_string --match_string "\"FeedbackEmail\": \"\""           --replace_
 ynh_replace_string --match_string "\"SMTPUsername\": \"\""            --replace_string "\"SMTPUsername\": \"${mattermost_user}\""          --target_file $final_path/config/config.json
 ynh_replace_string --match_string "\"SMTPPassword\": \"\""            --replace_string "\"SMTPPassword\": \"${mattermost_user_password}\"" --target_file $final_path/config/config.json
 ynh_replace_string --match_string "\"SMTPServer\": \"\""              --replace_string "\"SMTPServer\": \"localhost\""                     --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPPort\": \"\""                --replace_string "\"SMTPPort\": \"25\""                              --target_file $final_path/config/config.json
+ynh_replace_string --match_string "\"SMTPPort\": \".*\""              --replace_string "\"SMTPPort\": \"25\""                              --target_file $final_path/config/config.json
 # Disable Mattermost debug console by default
 ynh_replace_string --match_string "\"EnableConsole\": true"           --replace_string "\"EnableConsole\": false"                          --target_file $final_path/config/config.json
 # Configure log file location
