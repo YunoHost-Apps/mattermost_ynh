@@ -26,7 +26,8 @@ final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 db_name="$app"
-db_user="mmuser"
+db_user=$(ynh_app_setting_get $app mysqluser)
+db_user=${db_user:-"mmuser"}
 mattermost_user="$app"
 
 #=================================================

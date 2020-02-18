@@ -96,10 +96,11 @@ logs_path="/var/log/$app"
 #=================================================
 
 db_name="$app"
-db_user="mmuser"
+db_user="$YNH_APP_INSTANCE_NAME"
 db_password=$(ynh_string_random --length=24)
 ynh_mysql_create_db "$db_name" "$db_user" "$db_password"
-ynh_app_setting_set "$app" mysqlpwd "$db_password"
+ynh_app_setting_set "$app" mysqluser "$db_user"
+ynh_app_setting_set "$app" mysqlpwd  "$db_password"
 
 #=================================================
 # CREATE USER FOR EMAIL NOTIFICATIONS
