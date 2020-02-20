@@ -11,10 +11,22 @@ Vagrant.configure("2") do |config|
   # https://docs.vagrantup.com.
 
   config.vm.define :ynhtests
-  config.vm.box = "yunohost/jessie-stable"
+  config.vm.box = "yunohost-stretch-unstable"
+  config.vm.box_url = "https://build.yunohost.org/yunohost-stretch-unstable.box"
 
   # Disable auto updates checks. Run `vagrant outdated` to perform manual updates.
   config.vm.box_check_update = false
+
+  # Configuration for the vagrant-disksize plugin.
+  # We need more space because package_check will create many LXC containers and snapshots.
+  #
+  # IMPORTANT: when re-creating the VM from scratch, the logical size of the disk will
+  # still be 10 Go.
+  # You'll need a live GParted ISO to resize partitions and fix it.
+  config.disksize.size = '20GB'
+
+  # Force guest type, because YunoHost /etc/issue can't be tuned
+  config.vm.guest = :debian
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -28,11 +40,11 @@ Vagrant.configure("2") do |config|
 
   # Use the NAT hosts DNS resolver. Fixes slow network in the guest.
   # See https://serverfault.com/questions/495914/vagrant-slow-internet-connection-in-guest
-  config.vm.provider "virtualbox" do |v|
-    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-    v.customize ["modifyvm", :id, "--nictype1", "virtio"]
-  end
+  #config.vm.provider "virtualbox" do |v|
+  #  v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  #  v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  #  v.customize ["modifyvm", :id, "--nictype1", "virtio"]
+  #end
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -48,7 +60,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", privileged: false, keep_color: true, inline: <<-SHELL
     DOMAIN=ynhtests.local
-    YUNOHOST_ADMIN_PASSWORD="alpine"
+    YUNOHOST_ADMIN_PASSWORD="ynhadminpwd"
 
     # Stop on first error
     set -e

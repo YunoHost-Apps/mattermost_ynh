@@ -18,7 +18,7 @@
         "nginx"
     ],
     "requirements": {
-      "yunohost": ">= 2.7.0"
+      "yunohost": ">= 3.0.0"
     },
     "arguments": {
         "install" : [
@@ -32,16 +32,27 @@
                 "example": "domain.org"
             },
             {
+                "name": "path",
+                "type": "path",
+                "ask": {
+                    "en": "Choose a path for Mattermost",
+                    "fr": "Choisissez un chemin pour Mattermost"
+                },
+                "example": "/chat",
+                "default": "/chat"
+            },
+            {
                 "name": "is_public",
                 "type": "boolean",
-                "ask": {
-                    "en": "Can guest users access this chat?",
-                    "fr": "Les utilisateurs non-enregistrés peuvent-ils accéder à ce chat ?"
+                "help": {
+                    "en": "Can users non registered on Yunohost access this chat?",
+                    "fr": "Les invités non-enregistrés sur Yunohost peuvent-ils accéder à ce chat ?"
                 },
                 "default": true
             },
             {
                 "name": "admin_email",
+                "type": "string",
                 "ask": {
                     "en": "Login email for the chat admin",
                     "fr": "Adresse email de login pour l’administrateur du chat"
@@ -53,13 +64,14 @@
                 "name": "admin_password",
                 "type": "password",
                 "ask": {
-                    "en": "Password for the chat admin. Must contain at least 10 characters, one lowercase letter, one uppercase letter, one number, and one symbol (e.g. '~!@#$%^&*()').",
-                    "fr": "Mot de passe pour l’administrateur du chat. Doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre, et une ponctuation (ex. '~!@#$%^&*()')."
+                    "en": "Password for the chat admin. At least 8 characters.",
+                    "fr": "Mot de passe pour l’administrateur du chat. Minimum 8 caractères."
                 },
                 "optional": false
             },
             {
                 "name": "admin_locale",
+                "type": "string",
                 "ask": {
                     "en": "Choose the language of the chat for the admin",
                     "fr": "Choissisez la langue utilisée pour l'administrateur"
@@ -69,11 +81,13 @@
             },
             {
                 "name": "team_display_name",
+                "type": "string",
                 "ask": {
                     "en": "Choose a Team name",
                     "fr": "Choisissez le nom de l’équipe"
                 },
-                "example": "Super Groupe",
+                "example": "Team",
+                "default": "Team",
                 "optional": false
             },
             {
