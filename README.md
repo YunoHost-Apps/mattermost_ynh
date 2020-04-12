@@ -31,6 +31,7 @@ You can either :
 
 ## TODO
 
+* ARM compatible package for Raspberry Pi (see #124)
 * LDAP integration (only paid Entreprise Edition, see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## About telemetrics
