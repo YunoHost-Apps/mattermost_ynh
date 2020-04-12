@@ -26,7 +26,7 @@ You can either :
 
 * Installation on domain root or sub-directory
 * Notification emails
-* Push notifications
+* Push notifications (through Mattermost relay server)
 * Service control in Yunohost Services panel
 
 ## TODO
