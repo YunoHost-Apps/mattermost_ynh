@@ -8,7 +8,7 @@
     },
     "url": "http://www.mattermost.org/",
     "license": "GPL-3.0-only",
-    "version": "5.23.0~ynh1",
+    "version": "5.23.1~ynh1",
     "maintainer": {
         "name": "pmorinerie",
         "email": "kemenaran@gmail.com"
