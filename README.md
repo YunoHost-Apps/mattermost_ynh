@@ -42,7 +42,7 @@ In this Yunohost package telemetrics collection is strictly opt-in, and can be t
 
 #### Multi-users support
 
-* Are LDAP and HTTP auth supported? **Yes**
+* Are LDAP and HTTP auth supported? **No**
 * Can the app be used by multiple users? **Yes**
 
 #### Supported architectures
