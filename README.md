@@ -12,7 +12,7 @@ If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to
 
 Mattermost is a decentralized team communication software. For Slack enthusiasts, importing your data is possible, allowing a smooth transition to this free tool.
 
-**Shipped version:** 5.24.1
+**Shipped version:** 5.24.2
 
 ## Screenshots
 
