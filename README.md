@@ -1,8 +1,10 @@
-## Description
+# Mattermost for YunoHost
 
+[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)  
+[![Install Mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=mattermost)
+
+## Overview
 A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source, self-hosted alternative to Slack.
-
-[![Yunohost Build status](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost)
 
 ## Requirements
 
@@ -13,8 +15,6 @@ Mattermost requires:
 * MySQL 5.6 or higher, or MariaDB 10 or higher (check with `mysql --version`).
 
 ## Installing
-
-[![Install Mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=mattermost)
 
 You can either :
 
