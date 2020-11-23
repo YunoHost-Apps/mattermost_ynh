@@ -23,16 +23,7 @@
         # Checks not applicable
         setup_nourl=0
 ;;; Levels
-    Level 1=auto
-    Level 2=auto
-    Level 3=auto
-    Level 4=auto
     Level 5=auto
-    Level 6=auto
-    Level 7=auto
-    Level 8=0
-    Level 9=0
-    Level 10=0
 ;;; Options
 Email=kemenaran@gmail.com
 Notification=change
