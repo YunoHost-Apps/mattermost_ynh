@@ -32,7 +32,7 @@ team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --time --weight=1
+ynh_script_progression --message="Validating installation parameters..." --weight=1
 
 final_path=/var/www/$app
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
@@ -43,7 +43,7 @@ ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --time --weight=1
+ynh_script_progression --message="Storing installation settings..." --weight=6
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
@@ -56,7 +56,7 @@ ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_nam
 #=================================================
 # FIND AN AVAILABLE PORT
 #=================================================
-ynh_script_progression --message="Finding an available port..." --time --weight=1
+ynh_script_progression --message="Finding an available port..." --weight=3
 
 # Find an available port
 port=$(ynh_find_port --port=8065)
@@ -73,14 +73,14 @@ logs_path="/var/log/$app"
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=10
+ynh_script_progression --message="Installing dependencies..." --weight=2
 
 ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
-ynh_script_progression --message="Creating a PostgreSQL database..." --time --weight=1
+ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=mmuser
@@ -96,7 +96,7 @@ ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --time --weight=1
+ynh_script_progression --message="Configuring system user..." --weight=3
 
 # Create a system user
 ynh_system_user_create --username=$app
@@ -113,7 +113,7 @@ mattermost_user_password=$(ynh_string_random --length=24)
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --time --weight=1
+ynh_script_progression --message="Setting up source files..." --weight=3
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
@@ -127,7 +127,7 @@ mkdir -p "$logs_path"
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Modifying a config file..."
+ynh_script_progression --message="Modifying a config file..." --weight=3
 
 cp ../conf/config.json $final_path/config/config.json
 
@@ -159,7 +159,7 @@ chmod -R g+w $final_path
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --time --weight=1
+ynh_script_progression --message="Configuring NGINX web server..." --weight=2
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
@@ -167,7 +167,7 @@ ynh_add_nginx_config
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
+ynh_script_progression --message="Configuring a systemd service..." --weight=2
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -175,7 +175,7 @@ ynh_add_systemd_config
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
 yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log"
 
@@ -222,4 +222,4 @@ popd
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed"
+ynh_script_progression --message="Upgrade of $app completed" --last
