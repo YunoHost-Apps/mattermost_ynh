@@ -15,7 +15,7 @@ Restart=always
 RestartSec=10
 WorkingDirectory=__FINALPATH__
 User=__APP__
-Group=www-data
+Group=__APP__
 LimitNOFILE=49152
 
 [Install]
