@@ -222,4 +222,4 @@ popd
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --last
+ynh_script_progression --message="Installation of $app completed" --last
