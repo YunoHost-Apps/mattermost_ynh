@@ -6,6 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -18,8 +19,10 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_script_progression --message="Loading installation settings..." --weight=2
 
 app=$YNH_APP_INSTANCE_NAME
+
 domain=$(ynh_app_setting_get $app domain)
 path_url=$(ynh_app_setting_get $app path) # used during nginx configuration
 is_public=$(ynh_app_setting_get $app is_public)
@@ -32,67 +35,13 @@ data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 
 #=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+# CHECK VERSION
 #=================================================
 
-# Backup the current version of the app
-# (NB: `tee` uses process substitution rather than a pipe,
-# to avoid spawning a subshell that would not save global
-# variables defined by `ynh_backup_before_upgrade`.)
-ynh_backup_before_upgrade > >(tee "upgrade.log")
-# Ensure the backup can be restored
-if grep -q "mattermost: Warning$" "upgrade.log"; then
-  can_restore_backup=false
-else
-  can_restore_backup=true
-fi
-
-# If the upgrade fails…
-ynh_clean_setup () {
-  if [ "$can_restore_backup" = true ]; then
-    # Stop attempting to restart the app
-    if $(systemctl -q is-active "$app"); then
-      systemctl stop "$app"
-    fi
-    # Restore the backup
-    ynh_restore_upgradebackup
-
-  else
-    # Backup restoration is not available:
-    # let's try at least to restart the server.
-    systemctl start "$app"
-  fi
-}
-
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
-# STOP SERVER
-#=================================================
-
-# Stop the server (if the app is already using systemd)
-if $(systemctl -q is-active "$app"); then
-  systemctl stop "$app"
-fi
-
-# Legacy, for previous versions of this app which used supervisor
-if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
-  supervisorctl stop "$app"
-  rm -f "/etc/supervisor/conf.d/${app}.conf"
-fi
-
-#=================================================
-# BACKUP CONFIGURATION FILE
-#=================================================
-
-config_file="$final_path/config/config.json"
-backup_config_file="/tmp/config.json"
-
-cp -f "$config_file" "$backup_config_file"
-
-#=================================================
-# MIGRATE SETTINGS FROM PREVIOUS VERSIONS
+# ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 
 # Convert is_public from "Yes"/"No" to 1 / 0
@@ -110,35 +59,70 @@ if ! [[ "$port" ]]; then
 fi
 
 #=================================================
+# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+#=================================================
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --time --weight=1
+
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+  # Restore it if the upgrade fails
+  ynh_restore_upgradebackup
+}
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
+
+#=================================================
+# STANDARD UPGRADE STEPS
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Stopping a systemd service..." --time --weight=1
+
+ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-ynh_app_setting_set "$app" final_path "$final_path"
-ynh_setup_source "$final_path"
+if [ "$upgrade_type" == "UPGRADE_APP" ]
+then
+  ynh_script_progression --message="Upgrading source files..." --time --weight=1
 
-#=================================================
-# RESTORE CONFIGURATION FILE
-#=================================================
+  # Create a temporary directory
+  tmpdir="$(mktemp -d)"
 
-cp -f "$backup_config_file" "$config_file"
+  # Backup the config file in the temp dir
+  cp -a "$final_path/config/config.json" "$tmpdir/config.json"
+
+  # Remove the app directory securely
+  ynh_secure_remove --file="$final_path"
+
+  # Download, check integrity, uncompress and patch the source from app.src
+  ynh_setup_source --dest_dir="$final_path"
+
+  # Copy the admin saved settings from tmp directory to final path  
+  cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
+
+  # Remove the tmp directory securely
+  ynh_secure_remove --file="$tmpdir"
+fi
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --time --weight=1
 
+# Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
-# SYSTEMD CONFIGURATION
+# SETUP SYSTEMD
 #=================================================
+ynh_script_progression --message="Upgrading systemd configuration..." --time --weight=1
 
+# Create a dedicated systemd config
 ynh_add_systemd_config
-
-#=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
-#=================================================
-
-yunohost service add "$app" --log "$logs_path/mattermost.log"
 
 #=================================================
 # SPECIFIC UPGRADE STEPS
@@ -165,13 +149,29 @@ chown -R "$mattermost_user:www-data" "$data_path"
 chown -R "$mattermost_user:adm"      "$logs_path"
 
 #=================================================
+# INTEGRATE SERVICE IN YUNOHOST
+#=================================================
+ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
+
+yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" #--line_match="HTTP Server listening"
+
+#=================================================
 # RELOAD NGINX
 #=================================================
+ynh_script_progression --message="Reloading NGINX web server..." --time --weight=1
 
-service nginx reload
+ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
-# START SERVER
+# END OF SCRIPT
 #=================================================
 
-systemctl start "$app"
+ynh_script_progression --message="Upgrade of $app completed" --time --last

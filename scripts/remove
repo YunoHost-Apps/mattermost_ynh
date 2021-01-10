@@ -1,5 +1,4 @@
 #!/bin/bash
-set -u  # treat unset variables as an error
 
 #=================================================
 # GENERIC START
@@ -7,6 +6,7 @@ set -u  # treat unset variables as an error
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================

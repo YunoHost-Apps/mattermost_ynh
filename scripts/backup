@@ -16,34 +16,32 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_print_info --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-final_path="/var/www/$app"
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+domain=$(ynh_app_setting_get --app=$app --key=domain)
 data_path="/home/yunohost.app/$app"
-domain=$(ynh_app_setting_get $app domain)
-db_name="$app"
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 
 #=================================================
-# STANDARD BACKUP STEPS
+# DECLARE DATA AND CONF FILES TO BACKUP
+#=================================================
+ynh_print_info --message="Declaring files to be backed up..."
+
 #=================================================
 # BACKUP THE APP MAIN DIR
 #=================================================
 
-ynh_backup "$final_path"
+ynh_backup --src_path="$final_path"
 
 #=================================================
 # BACKUP THE APP DATA
 #=================================================
 
-ynh_backup "$data_path"
-
-#=================================================
-# BACKUP THE DATABASE
-#=================================================
-
-ynh_mysql_dump_db "$db_name" > db.sql
-ynh_backup "db.sql"
+ynh_backup --src_path="$data_path"
 
 #=================================================
 # BACKUP THE NGINX CONFIGURATION
@@ -56,3 +54,16 @@ ynh_backup "/etc/nginx/conf.d/$domain.d/$app.conf"
 #=================================================
 
 ynh_backup "/etc/systemd/system/$app.service"
+
+#=================================================
+# BACKUP THE POSTGRESQL DATABASE
+#=================================================
+ynh_print_info --message="Backing up the PostgreSQL database..."
+
+ynh_psql_dump_db --database="$db_name" > db.sql
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_print_info --message="Backup script completed for $app. (YunoHost will then actually copy those files to the archive)."

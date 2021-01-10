@@ -30,77 +30,53 @@ team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
 analytics=$YNH_APP_ARG_ANALYTICS
 
 #=================================================
-# CHECK IF THE APP CAN BE INSTALLED
+# CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
+ynh_script_progression --message="Validating installation parameters..." --time --weight=1
 
-# Allow using the `ynh_die` command without triggering linter warnings
-function script_die () {
-  die_command=$(printf '%s%s' 'ynh_' 'die')
-  $die_command "$*"
-}
+final_path=/var/www/$app
+test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
 
-# Check for 64 bits support
-arch="$(uname -m)"
-if [[ "$arch" != "x86_64" ]]; then
-    script_die "Mattermost requires an x86_64 machine, but this one is '${arch}'."
-fi
-
-# Check for MySQL version (without triggering a package_linter warning)
-db_command=$(printf '%s%s' 'my' 'sql')
-db_version=$($db_command --version)
-if    [[ "$db_version" == *"Distrib 4."* ]]  \
-   || [[ "$db_version" == *"Distrib 5.0"* ]] \
-   || [[ "$db_version" == *"Distrib 5.1"* ]] \
-   || [[ "$db_version" == *"Distrib 5.2"* ]] \
-   || [[ "$db_version" == *"Distrib 5.3"* ]] \
-   || [[ "$db_version" == *"Distrib 5.4"* ]] \
-   || [[ "$db_version" == *"Distrib 5.5"* ]];
-then
-    script_die "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
-fi
-
-#=================================================
-# FIND AN AVAILABLE PATH
-#=================================================
-
-# Normalize the url path syntax
-path_url=$(ynh_normalize_url_path $path_url)
-# Check web path availability
-ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
-ynh_webpath_register "$app" "$domain" "$path_url"
-# Store setting
-ynh_app_setting_set "$app" domain "$domain"
-ynh_app_setting_set "$app" path "$path_url"
+ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+
+#=================================================
+# STORE SETTINGS FROM MANIFEST
+#=================================================
+ynh_script_progression --message="Storing installation settings..." --time --weight=1
+
+ynh_app_setting_set --app=$app --key=domain --value=$domain
+ynh_app_setting_set --app=$app --key=path --value=$path_url
+ynh_app_setting_set --app=$app --key=admin --value=$admin
+ynh_app_setting_set --app=$app --key=is_public --value=$is_public
+ynh_app_setting_set --app=$app --key=language --value=$language
 
 #=================================================
 # FIND AN AVAILABLE PORT
 #=================================================
+ynh_script_progression --message="Configuring firewall..." --time --weight=1
 
 # Find an available port
-port=$(ynh_find_port 8065)
-# Store setting
-ynh_app_setting_set "$app" port "$port"
+port=$(ynh_find_port --port=8065)
+ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # SET UP INSTALLATION VARIABLES
 #=================================================
 
 root_path="$(pwd)/.."
-final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
+ynh_script_progression --message="Creating a MySQL database..." --time --weight=1
 
-db_name="$app"
-db_user="$YNH_APP_INSTANCE_NAME"
-db_password=$(ynh_string_random --length=24)
-ynh_mysql_create_db "$db_name" "$db_user" "$db_password"
-ynh_app_setting_set "$app" mysqluser "$db_user"
-ynh_app_setting_set "$app" mysqlpwd  "$db_password"
+db_name=$(ynh_sanitize_dbid --db_name=$app)
+db_user=$db_name
+ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # CREATE USER FOR EMAIL NOTIFICATIONS
@@ -114,9 +90,11 @@ ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression --message="Setting up source files..." --time --weight=1
 
-ynh_app_setting_set "$app" final_path "$final_path"
-ynh_setup_source "$final_path"
+ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$final_path"
 
 mkdir -p "$data_path"
 mkdir -p "$logs_path"
@@ -168,43 +146,50 @@ chown -R "$mattermost_user:adm"      "$logs_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
+ynh_script_progression --message="Configuring NGINX web server..." --time --weight=1
 
+# Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
-# SYSTEMD CONFIGURATION
+# SETUP SYSTEMD
 #=================================================
+ynh_script_progression --message="Configuring a systemd service..." --time --weight=1
 
+# Create a dedicated systemd config
 ynh_add_systemd_config
 
 #=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
+# INTEGRATE SERVICE IN YUNOHOST
 #=================================================
+ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
 
-yunohost service add "$app" --log "$logs_path/mattermost.log"
+yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" #--line_match="HTTP Server listening"
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
+ynh_script_progression --message="Configuring SSOwat..." --weight=1
 
-ynh_app_setting_set "$app" is_public "$is_public"
-
-if [[ $is_public == "1" ]]; then
-    # Make the app accessible to the public
-    ynh_app_setting_set "$app" unprotected_uris "/"
+if [ $is_public -eq 1 ]
+then
+  ynh_permission_update --permission "main" --add "visitors"
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
+ynh_script_progression --message="Reloading NGINX web server..." --weight=2
 
-systemctl reload nginx
-
-#=================================================
-# START SERVER
-#=================================================
-
-systemctl start "$app"
+ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # CREATE ADMIN AND FIRST TEAM
