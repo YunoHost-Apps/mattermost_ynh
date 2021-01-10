@@ -84,8 +84,11 @@ ynh_script_progression --message="Creating a MySQL database..." --time --weight=
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
+db_pwd=$(ynh_string_random --length=24)
+
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
+ynh_app_setting_set --app=$app --key=mysqlpwd  --value=$db_pwd
 
 #=================================================
 # CREATE DEDICATED USER
