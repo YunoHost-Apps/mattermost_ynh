@@ -113,13 +113,13 @@ fi
 #=================================================
 
 ynh_restore_file "/etc/systemd/system/$app.service"
-systemctl enable "$app"
+systemctl enable "$app" --quiet
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 
-yunohost service add "$app" --log "$logs_path/mattermost.log"
+yunohost service add $app --description=A short description of the app --log=/var/log/$app/$app.log
 
 #=================================================
 # GENERIC FINALIZATION

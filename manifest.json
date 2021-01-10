@@ -48,6 +48,10 @@
                     "en": "Can users non registered on Yunohost access this chat?",
                     "fr": "Les invités non-enregistrés sur Yunohost peuvent-ils accéder à ce chat ?"
                 },
+                "help": {
+                    "en": "If enabled, Mattermost will be accessible by people who do not have an account. This can be changed later via the webadmin.",
+                    "fr": "Si cette case est cochée, Mattermost sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
+                },
                 "default": true
             },
             {
@@ -70,7 +74,7 @@
                 "optional": false
             },
             {
-                "name": "admin_locale",
+                "name": "language",
                 "type": "string",
                 "ask": {
                     "en": "Choose the language of the chat for the admin",
@@ -89,15 +93,6 @@
                 "example": "Team",
                 "default": "Team",
                 "optional": false
-            },
-            {
-                "name": "analytics",
-                "type": "boolean",
-                "ask": {
-                    "en": "Allow Mattermost to send some telemetrics about your usage of this app?",
-                    "fr": "Autorisez-vous Mattermost à envoyer des informations anonymes sur votre usage de l’application ?"
-                },
-                "default": false
             }
         ]
     }

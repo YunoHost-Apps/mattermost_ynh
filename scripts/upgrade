@@ -24,7 +24,7 @@ ynh_script_progression --message="Loading installation settings..." --weight=2
 app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get $app domain)
-path_url=$(ynh_app_setting_get $app path) # used during nginx configuration
+path_url=$(ynh_app_setting_get $app path)
 is_public=$(ynh_app_setting_get $app is_public)
 port=$(ynh_app_setting_get $app port)
 mattermost_user="$app"

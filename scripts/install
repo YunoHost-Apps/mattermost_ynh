@@ -25,9 +25,8 @@ path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
 admin_email=$YNH_APP_ARG_ADMIN_EMAIL
 admin_password=$YNH_APP_ARG_ADMIN_PASSWORD
-admin_locale=$YNH_APP_ARG_ADMIN_LOCALE
+language=$YNH_APP_ARG_LANGUAGE
 team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
-analytics=$YNH_APP_ARG_ANALYTICS
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
@@ -47,14 +46,14 @@ ynh_script_progression --message="Storing installation settings..." --time --wei
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=admin --value=$admin
+ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 ynh_app_setting_set --app=$app --key=language --value=$language
 
 #=================================================
 # FIND AN AVAILABLE PORT
 #=================================================
-ynh_script_progression --message="Configuring firewall..." --time --weight=1
+ynh_script_progression --message="Finding an available port..." --time --weight=1
 
 # Find an available port
 port=$(ynh_find_port --port=8065)
@@ -71,12 +70,14 @@ logs_path="/var/log/$app"
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
-ynh_script_progression --message="Creating a MySQL database..." --time --weight=1
+ynh_script_progression --message="Creating a PostgreSQL database..." --time --weight=1
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
+
+ynh_psql_test_if_first_run
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # CREATE USER FOR EMAIL NOTIFICATIONS
@@ -102,46 +103,35 @@ mkdir -p "$logs_path"
 #=================================================
 # EDIT MATTERMOST CONFIG
 #=================================================
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Modifying a config file..."
 
-# Configure Service Settings
-ynh_replace_string --match_string "\"SiteURL\": \"\""                 --replace_string "\"SiteURL\": \"https://${domain}${path_url}\""     --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"ListenAddress\": \".*\""         --replace_string "\"ListenAddress\": \"127.0.0.1:${port}\""          --target_file $final_path/config/config.json
-# Configure the database connection
-db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
-ynh_replace_string --match_string "\"DataSource\": \".*\""            --replace_string "\"DataSource\": \"${db_connection_url}\""          --target_file $final_path/config/config.json
-# Configure uploaded files directory
-ynh_replace_string --match_string "\"Directory\": \"./data/\""        --replace_string "\"Directory\": \"${data_path}/\""                  --target_file $final_path/config/config.json
-# Configure SMTP account for sending email notifications
-ynh_replace_string --match_string "\"SendEmailNotifications\": false" --replace_string "\"SendEmailNotifications\": true"                  --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"FeedbackName\": \"\""            --replace_string "\"FeedbackName\": \"Mattermost notification\""     --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"FeedbackEmail\": \"\""           --replace_string "\"FeedbackEmail\": \"no-reply@${domain}\""         --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPUsername\": \"\""            --replace_string "\"SMTPUsername\": \"${mattermost_user}\""          --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPPassword\": \"\""            --replace_string "\"SMTPPassword\": \"${mattermost_user_password}\"" --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPServer\": \"\""              --replace_string "\"SMTPServer\": \"localhost\""                     --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPPort\": \".*\""              --replace_string "\"SMTPPort\": \"25\""                              --target_file $final_path/config/config.json
-# Disable Mattermost debug console by default
-ynh_replace_string --match_string "\"EnableConsole\": true"           --replace_string "\"EnableConsole\": false"                          --target_file $final_path/config/config.json
-# Configure log file location
-ynh_replace_string --match_string "\"FileLocation\": \"\""            --replace_string "\"FileLocation\": \"$logs_path\""                  --target_file $final_path/config/config.json
-# Disable questionable password complexity rules
-ynh_replace_string --match_string "\"MinimumLength\": 10"             --replace_string "\"MinimumLength\": 8"                              --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Lowercase\": true"               --replace_string "\"Lowercase\": false"                              --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Number\": true"                  --replace_string "\"Number\": false"                                 --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Uppercase\": true"               --replace_string "\"Uppercase\": false"                              --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Symbol\": true"                  --replace_string "\"Symbol\": false"                                 --target_file $final_path/config/config.json
-# Configure analytics according to user choice
-if [ $analytics -eq 0 ]; then
-    ynh_replace_string --match_string "\"EnableDiagnostics\": true"   --replace_string "\"EnableDiagnostics\": false"                      --target_file $final_path/config/config.json
-fi
-ynh_app_setting_set "$app" analytics "$analytics"
+cp ../conf/config.json "$final_path/config/config.json"
+
+# Main config File
+ynh_replace_string --match_string="__URL__" --replace_string="https://$domain$path_url" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__PORT__"  --replace_string="127.0.0.1:$port" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_NAME__" --replace_string="$db_name" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_PASS__" --replace_string="$db_pwd" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DATA__" --replace_string="$data_path" --target_file="$final_path/config/config.json"
+
+ynh_replace_string --match_string="__FEEDBACK__" --replace_string="no-reply@${domain}" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__USER__" --replace_string="$mattermost_user" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__USER_PW__" --replace_string="$mattermost_user_password" --target_file="$final_path/config/config.json"
+
+ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --target_file="$final_path/config/config.json"
+
+ynh_store_file_checksum --file="$final_path/config/config.json"
 
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chown -R "$mattermost_user:www-data" "$final_path"
-chown -R "$mattermost_user:www-data" "$data_path"
-chown -R "$mattermost_user:adm"      "$logs_path"
+chown -R $app:www-data $final_path
+chown -R $app:www-data $data_path
+chown -R $app:adm $logs_path
 
 #=================================================
 # NGINX CONFIGURATION
