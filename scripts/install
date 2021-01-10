@@ -78,14 +78,12 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
-ynh_script_progression --message="Creating a PostgreSQL database..." --time --weight=1
+ynh_script_progression --message="Creating a MySQL database..." --time --weight=1
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-
-ynh_psql_test_if_first_run
-ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
+ynh_myql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # CREATE USER FOR EMAIL NOTIFICATIONS
