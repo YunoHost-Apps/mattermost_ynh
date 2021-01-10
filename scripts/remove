@@ -14,12 +14,11 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 app=$YNH_APP_INSTANCE_NAME
+
 domain=$(ynh_app_setting_get $app domain)
-db_name="$app"
-db_user=$(ynh_app_setting_get $app mysqluser)
+db_name=$(ynh_app_setting_get $app db_name)
 db_user=${db_user:-"mmuser"}
-mattermost_user="$app"
-final_path="/var/www/$app"
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 
@@ -30,43 +29,53 @@ logs_path="/var/log/$app"
 # REMOVE SERVICE FROM ADMIN PANEL
 #=================================================
 
-if yunohost service status | grep -q "$app"; then
-  yunohost service remove "$app"
+# Remove the service from the list of services known by Yunohost (added from `yunohost service add`)
+if ynh_exec_warn_less yunohost service status $app >/dev/null
+then
+	ynh_script_progression --message="Removing $app service..." --weight=1
+	yunohost service remove $app
 fi
 
 #=================================================
 # STOP AND REMOVE SERVICE
 #=================================================
+ynh_script_progression --message="Stopping and removing the systemd service..." --weight=1
 
-# Remove systemd service
-if $(systemctl -q is-active "$app"); then
-  systemctl stop "$app"
-fi
+# Remove the dedicated systemd config
 ynh_remove_systemd_config
 
-# Legacy, for older versions of this app which used supervisor
-if [ -f "/etc/supervisor/conf.d/${app}.conf" ]; then
-  supervisorctl stop "$app"
-  ynh_secure_remove --file="/etc/supervisor/conf.d/${app}.conf"
-fi
+#=================================================
+# REMOVE THE POSTGRESQL DATABASE
+#=================================================
+ynh_script_progression --message="Removing the PostgreSQL database..." --weight=2
+
+# Remove a database if it exists, along with the associated user
+ynh_psql_remove_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
-# REMOVE THE MYSQL DATABASE
+# REMOVE DEPENDENCIES
 #=================================================
+ynh_script_progression --message="Removing dependencies..." --weight=1
 
-ynh_mysql_remove_db "$db_user" "$db_name"
+# Remove metapackage and its dependencies
+ynh_remove_app_dependencies
 
 #=================================================
 # REMOVE APP MAIN DIR
 #=================================================
+ynh_script_progression --message="Removing $app main directory..." --weight=6
 
-ynh_secure_remove "$final_path"
+# Remove the app directory securely
+ynh_secure_remove --file="$final_path"
+
 ynh_secure_remove "$data_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
+ynh_script_progression --message="Removing NGINX web server configuration..." --weight=5
 
+# Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
 #=================================================
@@ -78,5 +87,12 @@ ynh_secure_remove --file="$logs_path"
 #=================================================
 # REMOVE DEDICATED USER
 #=================================================
+ynh_script_progression --message="Removing the dedicated system user..." --weight=1
 
-ynh_system_user_delete "$mattermost_user"
+ynh_system_user_delete --username=$app
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression --message="Removal of $app completed" --last
