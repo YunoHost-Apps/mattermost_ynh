@@ -28,9 +28,6 @@ path_url=$(ynh_app_setting_get --app=$app --key=path)
 is_public=$(ynh_app_setting_get --app=$app --key=is_public)
 port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-root_path="$(pwd)/.."
-data_path="/home/yunohost.app/$app"
-logs_path="/var/log/$app"
 
 #=================================================
 # CHECK VERSION
@@ -150,8 +147,8 @@ ynh_add_systemd_config
 #=================================================
 
 chown -R $app: $final_path
-chown -R $app: $data_path
-chown -R $app: $logs_path
+chown -R $app: "/home/yunohost.app/$app"
+chown -R $app: "/var/log/$app"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
