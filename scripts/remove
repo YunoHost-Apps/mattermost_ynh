@@ -15,16 +15,14 @@ source /usr/share/yunohost/helpers
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get $app domain)
-db_name=$(ynh_app_setting_get $app db_name)
-db_user=${db_user:-"mmuser"}
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+port=$(ynh_app_setting_get --app=$app --key=port)
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-data_path="/home/yunohost.app/$app"
-logs_path="/var/log/$app"
 
 #=================================================
 # STANDARD REMOVE
-#=================================================
 #=================================================
 # REMOVE SERVICE FROM ADMIN PANEL
 #=================================================
@@ -68,7 +66,7 @@ ynh_script_progression --message="Removing $app main directory..." --weight=6
 # Remove the app directory securely
 ynh_secure_remove --file="$final_path"
 
-ynh_secure_remove --file="$data_path"
+ynh_secure_remove --file="/home/yunohost.app/$app"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
@@ -82,7 +80,7 @@ ynh_remove_nginx_config
 # REMOVE LOG FILE
 #=================================================
 
-ynh_secure_remove --file="$logs_path"
+ynh_secure_remove --file="/var/log/$app"
 
 #=================================================
 # REMOVE DEDICATED USER
