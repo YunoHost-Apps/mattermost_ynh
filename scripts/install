@@ -142,20 +142,6 @@ ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --targ
 ynh_store_file_checksum --file="$final_path/config/config.json"
 
 #=================================================
-# CREATE ADMIN AND FIRST TEAM
-#=================================================
-
-admin_username=$(cut -d @ -f 1 <<< "$admin_email")
-team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
-
-pushd "$final_path"
-	./mattermost user create --username "$admin_username" --email "$admin_email" --password "$admin_password" --locale "$language" --system_admin
-	./mattermost user verify "$admin_username"
-	./mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$admin_email"
-	./mattermost team add "$team_name" "$admin_username"
-popd
-
-#=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
@@ -211,6 +197,20 @@ fi
 ynh_script_progression --message="Reloading NGINX web server..." --weight=2
 
 ynh_systemd_action --service_name=nginx --action=reload
+
+#=================================================
+# CREATE ADMIN AND FIRST TEAM
+#=================================================
+
+admin_username=$(cut -d @ -f 1 <<< "$admin_email")
+team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+
+pushd "$final_path"
+	ynh_exec_as $app ./mattermost user create --username "$admin_username" --email "$admin_email" --password "$admin_password" --locale "$language" --system_admin
+	ynh_exec_as $app ./mattermost user verify "$admin_username"
+	ynh_exec_as $app ./mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$admin_email"
+	ynh_exec_as $app ./mattermost team add "$team_name" "$admin_username"
+popd
 
 #=================================================
 # END OF SCRIPT
