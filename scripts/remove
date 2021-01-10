@@ -68,7 +68,7 @@ ynh_script_progression --message="Removing $app main directory..." --weight=6
 # Remove the app directory securely
 ynh_secure_remove --file="$final_path"
 
-ynh_secure_remove "$data_path"
+ynh_secure_remove --file="$data_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
