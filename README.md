@@ -15,7 +15,7 @@ A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source,
 
 ## Screenshots
 
-![](Link to a screenshot of this app.)
+![](https://ucarecdn.com/8cd90d9d-8902-4845-a15b-f4664e5fcfb3/-/format/auto/-/quality/lighter/-/max_icc_size/10/-/resize/1288x/)
 
 ## Demo
 
@@ -27,15 +27,15 @@ How to configure this app: From an admin panel, a plain file with SSH, or any ot
 
 ## Documentation
 
- * Official documentation: Link to the official documentation of this app
- * YunoHost documentation: If specific documentation is needed, feel free to contribute.
+ * Official documentation: https://docs.mattermost.com/
+ * YunoHost documentation: https://yunohost.org/#/app_mattermost
 
 ## YunoHost specific features
 
 #### Multi-user support
 
- * Are LDAP and HTTP auth supported?
- * Can the app be used by multiple users?
+ * Are LDAP and HTTP auth supported? **No**
+ * Can the app be used by multiple users? **Yes**
 
 #### Supported architectures
 
@@ -54,7 +54,7 @@ How to configure this app: From an admin panel, a plain file with SSH, or any ot
 
  * Report a bug: https://github.com/YunoHost-Apps/mattermost_ynh/issues
  * App website: http://www.mattermost.org/
- * Upstream app repository: Link to the official repository of the upstream app.
+ * Upstream app repository: https://github.com/mattermost/mattermost-server
  * YunoHost website: https://yunohost.org/
 
 ---
