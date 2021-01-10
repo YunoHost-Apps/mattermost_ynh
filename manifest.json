@@ -80,7 +80,7 @@
                     "en": "Choose the language of the chat for the admin",
                     "fr": "Choissisez la langue utilisée pour l'administrateur"
                 },
-                "choices": ["en", "fr"],
+                "choices": ["de", "en", "es", "fr", "it", "pt"],
                 "default": "en"
             },
             {
