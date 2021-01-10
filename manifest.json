@@ -38,15 +38,15 @@
                     "en": "Choose a path for Mattermost",
                     "fr": "Choisissez un chemin pour Mattermost"
                 },
-                "example": "/chat",
-                "default": "/chat"
+                "example": "/mattermost",
+                "default": "/mattermost"
             },
             {
                 "name": "is_public",
                 "type": "boolean",
                 "ask": {
-                    "en": "Can users non registered on Yunohost access this chat?",
-                    "fr": "Les invités non-enregistrés sur Yunohost peuvent-ils accéder à ce chat ?"
+                    "en": "Is it a public application?",
+                    "fr": "Est-ce une application publique ?"
                 },
                 "help": {
                     "en": "If enabled, Mattermost will be accessible by people who do not have an account. This can be changed later via the webadmin.",
