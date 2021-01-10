@@ -19,28 +19,32 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_script_progression --message="Loading installation settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get $app domain)
-is_public=$(ynh_app_setting_get $app is_public)
-path_url=$(ynh_app_setting_get $app path)
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+is_public=$(ynh_app_setting_get --app=$app --key=is_public)
+path_url=$(ynh_app_setting_get --app=$app --key=path)
+port=$(ynh_app_setting_get --app=$app --key=port)
 final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
-db_name="$app"
-db_user=$(ynh_app_setting_get $app mysqluser)
-db_user=${db_user:-"mmuser"}
-mattermost_user="$app"
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$(ynh_app_setting_get --app=$app --key=db_user)
+db_pw=$(ynh_app_setting_get --app=$app --key=db_pw)
+
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
 #=================================================
+ynh_script_progression --message="Validating restoration parameters..." --weight=1
 
-ynh_webpath_available $domain $path_url \
-  || ynh_die "Path not available: ${domain}"
+ynh_webpath_available --domain=$domain --path_url=$path_url \
+	|| ynh_die --message="Path not available: ${domain}${path_url}"
 test ! -d $final_path \
-  || ynh_die "There is already a directory: $final_path "
+	|| ynh_die --message="There is already a directory: $final_path "
+
 
 #=================================================
 # STANDARD RESTORATION STEPS
@@ -48,13 +52,14 @@ test ! -d $final_path \
 # RESTORE THE NGINX CONFIGURATION
 #=================================================
 
-ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
+ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
+ynh_script_progression --message="Restoring the app main directory..." --weight=1
 
-ynh_restore_file "$final_path"
+ynh_restore_file --origin_path="$final_path"
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -67,7 +72,7 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 # RESTORE THE APP DATA
 #=================================================
 
-ynh_restore_file "$data_path"
+ynh_restore_file --origin_path="$data_path"
 
 #=================================================
 # RESTORE THE MYSQL DATABASE
@@ -81,13 +86,10 @@ ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
 #=================================================
 # RECREATE THE DEDICATED USER
 #=================================================
+ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
 
 # Create the dedicated user (if not existing)
-mattermost_user="$app"
-if ! ynh_system_user_exists "$mattermost_user"; then
-  mattermost_user_password=$(ynh_app_setting_get $app smtppwd)
-  useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
-fi
+ynh_system_user_create --username=$app
 
 #=================================================
 # RESTORE USER RIGHTS
@@ -127,18 +129,28 @@ systemctl enable "$app" --quiet
 # ADVERTISE SERVICE IN ADMIN PANEL
 #=================================================
 
-yunohost service add $app --description=A short description of the app --log=/var/log/$app/$app.log
+yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd"  --line_match="Started Mattermost"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
 # RELOAD NGINX
 #=================================================
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
-service nginx reload
+ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
-# START SERVER
+# END OF SCRIPT
 #=================================================
 
-systemctl start "$app"
+ynh_script_progression --message="Restoration completed for $app" --last
+

@@ -102,15 +102,6 @@ ynh_script_progression --message="Configuring system user..." --weight=3
 ynh_system_user_create --username=$app
 
 #=================================================
-# CREATE USER FOR EMAIL NOTIFICATIONS
-#=================================================
-
-# mattermost_user="$app"
-mattermost_user_password=$(ynh_string_random --length=24)
-# useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
-# ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
@@ -185,7 +176,7 @@ yunohost service add $app --description="A short description of the app" --log="
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" #--line_match="HTTP Server listening"
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Started Mattermost"
 
 #=================================================
 # SETUP SSOWAT
