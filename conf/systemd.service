@@ -2,7 +2,7 @@
 Description=Mattermost
 After=network.target
 After=mysql.service
-Requires=postgresql.service
+Requires=mysql.service
 
 [Service]
 Type=notify
