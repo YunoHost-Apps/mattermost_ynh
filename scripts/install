@@ -83,7 +83,7 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Creating a PostgreSQL database..." --time --weight=1
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
-db_user=$db_name
+db_user=mmuser
 db_pwd=$(ynh_string_random --length=30)
 
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
@@ -134,6 +134,7 @@ cp ../conf/config.json $final_path/config/config.json
 ynh_replace_string --match_string="__URL__" --replace_string="https://$domain$path_url" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__PORT__"  --replace_string="127.0.0.1:$port" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_USER__" --replace_string=$db_user --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__DB_PASS__" --replace_string=$db_pwd --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__DATA__" --replace_string=$data_path --target_file="$final_path/config/config.json"
 
