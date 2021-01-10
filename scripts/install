@@ -6,6 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -72,7 +73,7 @@ logs_path="/var/log/$app"
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=10
 
-ynh_install_app_dependencies $pkg_dependencies
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # CREATE A MYSQL DATABASE
