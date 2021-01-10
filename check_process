@@ -1,13 +1,15 @@
-;; Mattermost
+# See here for more information
+# https://github.com/YunoHost/package_check#syntax-check_process-file
+
+;; Test complet
     ; Manifest
-        domain="ynhtests.local" (DOMAIN)
+        domain="domain.tld" (DOMAIN)
         path="/path" (PATH)
         admin_email="john@gmail.com"
         admin_password="admin!42"
-        admin_locale="fr"
+        language="fr"
         team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)
-        analytics=0
     ; Checks
         pkg_linter=1
         setup_sub_dir=1
