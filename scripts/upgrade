@@ -117,6 +117,13 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 ynh_add_nginx_config
 
 #=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing dependencies..." --weight=10
+
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..." --time --weight=1
@@ -144,9 +151,9 @@ fi
 # RESTORE FILE PERMISSIONS
 #=================================================
 
-chown -R "$mattermost_user:www-data" "$final_path"
-chown -R "$mattermost_user:www-data" "$data_path"
-chown -R "$mattermost_user:adm"      "$logs_path"
+chown -R "$app:www-data" "$final_path"
+chown -R "$app:www-data" "$data_path"
+chown -R "$app:adm"      "$logs_path"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
