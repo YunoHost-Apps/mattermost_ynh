@@ -24,10 +24,9 @@ ynh_script_progression --message="Loading installation settings..." --weight=1
 app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
-is_public=$(ynh_app_setting_get --app=$app --key=is_public)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
-final_path="/var/www/$app"
 data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
@@ -57,7 +56,7 @@ ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
-ynh_script_progression --message="Restoring the app main directory..." --weight=1
+ynh_script_progression --message="Restoring the app main directory..." --weight=2
 
 ynh_restore_file --origin_path="$final_path"
 
@@ -96,25 +95,13 @@ ynh_system_user_create --username=$app
 #=================================================
 
 # Restore permissions on app files
-chown -R "$mattermost_user:www-data" "$final_path"
+chown -R $app: $final_path
 
-mkdir -p "$data_path"
-chown -R "$mattermost_user:www-data" "$data_path"
+mkdir -p $data_path
+chown -R $app: $data_path
 
-mkdir -p "$logs_path"
-chown -R "$mattermost_user:adm" "$logs_path"
-
-#=================================================
-# RESTORE SSOWAT
-#=================================================
-
-if [[ $is_public == "1" ]]; then
-  # Make the app accessible to the public
-  ynh_app_setting_set "$app" unprotected_uris "/"
-else
-  # Remove the public access
-  ynh_app_setting_delete "$app" skipped_uris
-fi
+mkdir -p $logs_path
+chown -R $app: $logs_path
 
 #=================================================
 # SPECIFIC RESTORATION
@@ -153,4 +140,3 @@ ynh_systemd_action --service_name=nginx --action=reload
 #=================================================
 
 ynh_script_progression --message="Restoration completed for $app" --last
-
