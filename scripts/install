@@ -135,9 +135,10 @@ ynh_store_file_checksum --file="$final_path/config/config.json"
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chown -R $app:www-data $final_path
-chown -R $app:www-data $data_path
+chown -R $app: $final_path
+chown -R $app: $data_path
 chown -R $app:adm $logs_path
+chmod -R g+w $final_path
 
 #=================================================
 # NGINX CONFIGURATION
