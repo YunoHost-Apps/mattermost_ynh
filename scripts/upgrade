@@ -45,12 +45,18 @@ if [[ $is_public == "Yes" ]]; then
 elif [[ $is_public == "No" ]]; then
   is_public=0
 fi
-ynh_app_setting_set "$app" is_public "$is_public"
+ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 
 # Save the port used if not present
 if ! [[ "$port" ]]; then
   port=8065
-  ynh_app_setting_set "$app" port "$port"
+  ynh_app_setting_set --app=$app --key=port --value=$port
+fi
+
+# Language if not present
+if ! [[ "$language" ]]; then
+  language="en"
+  ynh_app_setting_set --app=$app --key=language --value=$language
 fi
 
 #=================================================
@@ -110,13 +116,6 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-#ynh_script_progression --message="Installing dependencies..." --weight=10
-
-#ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # SETUP SYSTEMD

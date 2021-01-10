@@ -3,8 +3,8 @@
     "id": "mattermost",
     "packaging_format": 1,
     "description": {
-        "en": "An open-source, self-hosted alternative to Slack",
-        "fr": "Une alternative open-source et auto-hébergée à Slack"
+        "en": "Open source collaboration platform built for developers",
+        "fr": "Plateforme de collaboration open source conçue pour les développeurs"
     },
     "version": "5.30.1~ynh1",
     "url": "http://www.mattermost.org/",
