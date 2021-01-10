@@ -143,8 +143,8 @@
     "IosMinVersion": ""
   },
   "SqlSettings": {
-    "DriverName": "postgres",
-    "DataSource": "postgres://__DB_USER__:__DB_PASS__@localhost:5432/__DB_NAME__?sslmode=disable&connect_timeout=10",
+    "DriverName": "mysql",
+    "DataSource": "mysql://mmuser:__DB_PASS__@tcp(localhost:3306)/__DB_NAME__?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",
     "DataSourceReplicas": [],
     "DataSourceSearchReplicas": [],
     "MaxIdleConns": 20,
