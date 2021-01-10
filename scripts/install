@@ -47,9 +47,11 @@ ynh_script_progression --message="Storing installation settings..." --time --wei
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
+ynh_app_setting_set --app=$app --key=admin_email --value=$admin_email
+ynh_app_setting_set --app=$app --key=admin_password --value=$admin_password
 ynh_app_setting_set --app=$app --key=language --value=$language
+ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
 
 #=================================================
 # FIND AN AVAILABLE PORT
@@ -132,12 +134,26 @@ ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --targ
 ynh_store_file_checksum --file="$final_path/config/config.json"
 
 #=================================================
+# CREATE ADMIN AND FIRST TEAM
+#=================================================
+
+admin_username=$(cut -d @ -f 1 <<< "$admin_email")
+team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+
+pushd "$final_path"
+	ynh_exec_as $app ./mattermost user create --username "$admin_username" --email "$admin_email" --password "$admin_password" --locale "$language" --system_admin
+	ynh_exec_as $app ./mattermost user verify "$admin_username"
+	ynh_exec_as $app ./mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$admin_email"
+	ynh_exec_as $app ./mattermost team add "$team_name" "$admin_username"
+popd
+
+#=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
 chown -R $app: $final_path
 chown -R $app: $data_path
-chown -R $app:adm $logs_path
+chown -R $app: $logs_path
 chmod -R g+w $final_path
 
 #=================================================
@@ -189,18 +205,7 @@ ynh_script_progression --message="Reloading NGINX web server..." --weight=2
 ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
-# CREATE ADMIN AND FIRST TEAM
+# END OF SCRIPT
 #=================================================
 
-admin_username=$(cut -d @ -f 1 <<< "$admin_email")
-team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
-
-cd "$final_path/bin"
-./mattermost user create --username "$admin_username" --email "$admin_email" --password "$admin_password" --locale "$language" --system_admin
-./mattermost user verify "$admin_username"
-./mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$admin_email"
-./mattermost team add "$team_name" "$admin_username"
-
-ynh_app_setting_set "$app" admin_email "$admin_email"
-ynh_app_setting_set "$app" language "$language"
-ynh_app_setting_set "$app" team_name "$team_name"
+ynh_script_progression --message="Upgrade of $app completed"

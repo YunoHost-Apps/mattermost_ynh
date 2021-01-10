@@ -144,7 +144,7 @@
   },
   "SqlSettings": {
     "DriverName": "mysql",
-    "DataSource": "__DB_NAME__:__DB_PASS__@tcp(127.0.0.1:3306)/__DB_NAME__?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",
+    "DataSource": "mysql://__DB_NAME__:__DB_PASS__@tcp(127.0.0.1:3306)/__DB_NAME__?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",
     "DataSourceReplicas": [],
     "DataSourceSearchReplicas": [],
     "MaxIdleConns": 20,
