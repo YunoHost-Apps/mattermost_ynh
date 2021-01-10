@@ -88,13 +88,21 @@ ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Configuring system user..." --time --weight=1
+
+# Create a system user
+ynh_system_user_create --username=$app
+
+#=================================================
 # CREATE USER FOR EMAIL NOTIFICATIONS
 #=================================================
 
-mattermost_user="$app"
-mattermost_user_password=$(ynh_string_random --length=24)
-useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
-ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
+# mattermost_user="$app"
+# mattermost_user_password=$(ynh_string_random --length=24)
+# useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
+# ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -126,7 +134,7 @@ ynh_replace_string --match_string="__DB_PASS__" --replace_string="$db_pwd" --tar
 ynh_replace_string --match_string="__DATA__" --replace_string="$data_path" --target_file="$final_path/config/config.json"
 
 ynh_replace_string --match_string="__FEEDBACK__" --replace_string="no-reply@${domain}" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__USER__" --replace_string="$mattermost_user" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__USER__" --replace_string="$app" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__USER_PW__" --replace_string="$mattermost_user_password" --target_file="$final_path/config/config.json"
 
 ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --target_file="$final_path/config/config.json"
