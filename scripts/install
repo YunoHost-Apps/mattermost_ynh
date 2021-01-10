@@ -68,6 +68,13 @@ data_path="/home/yunohost.app/$app"
 logs_path="/var/log/$app"
 
 #=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing dependencies..." --weight=10
+
+ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
 ynh_script_progression --message="Creating a PostgreSQL database..." --time --weight=1
