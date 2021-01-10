@@ -100,7 +100,7 @@ ynh_system_user_create --username=$app
 #=================================================
 
 # mattermost_user="$app"
-# mattermost_user_password=$(ynh_string_random --length=24)
+mattermost_user_password=$(ynh_string_random --length=24)
 # useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
 # ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
 
