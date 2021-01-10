@@ -209,7 +209,7 @@ ynh_systemd_action --service_name=nginx --action=reload
 admin_username=$(cut -d @ -f 1 <<< "$admin_email")
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
-pushd "$final_path"
+pushd "$final_path/bin"
 	./mattermost user create --username "$admin_username" --email "$admin_email" --password "$admin_password" --locale "$language" --system_admin
 	./mattermost user verify "$admin_username"
 	./mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$admin_email"
