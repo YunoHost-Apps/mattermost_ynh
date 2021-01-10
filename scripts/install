@@ -73,22 +73,24 @@ logs_path="/var/log/$app"
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-# ynh_script_progression --message="Installing dependencies..." --weight=10
+ynh_script_progression --message="Installing dependencies..." --weight=10
 
-# ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
-ynh_script_progression --message="Creating a MySQL database..." --time --weight=1
+ynh_script_progression --message="Creating a PostgreSQL database..." --time --weight=1
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
-db_pwd=$(ynh_string_random --length=24)
+db_pwd=$(ynh_string_random --length=30)
 
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
-ynh_app_setting_set --app=$app --key=mysqlpwd  --value=$db_pwd
+ynh_app_setting_set --app=$app --key=db_pwd  --value=$db_pwd
+
+ynh_psql_test_if_first_run
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
 #=================================================
 # CREATE DEDICATED USER
@@ -138,7 +140,7 @@ ynh_replace_string --match_string="__DATA__" --replace_string="$data_path" --tar
 
 ynh_replace_string --match_string="__FEEDBACK__" --replace_string="no-reply@${domain}" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__USER__" --replace_string="$app" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__USER_PW__" --replace_string="$mattermost_user_password" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__USER_PW__" --replace_string="$(ynh_string_random --length=24)" --target_file="$final_path/config/config.json"
 
 ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --target_file="$final_path/config/config.json"
 
