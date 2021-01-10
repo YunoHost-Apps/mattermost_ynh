@@ -202,5 +202,5 @@ cd "$final_path/bin"
 ./mattermost team add "$team_name" "$admin_username"
 
 ynh_app_setting_set "$app" admin_email "$admin_email"
-ynh_app_setting_set "$app" admin_locale "$admin_locale"
+ynh_app_setting_set "$app" language "$language"
 ynh_app_setting_set "$app" team_name "$team_name"
