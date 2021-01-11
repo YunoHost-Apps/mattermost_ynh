@@ -62,7 +62,7 @@
                     "en": "Choose an admin user",
                     "fr": "Choisissez l'administrateur"
                 },
-                "example": "johndoe",
+                "example": "johndoe"
             },
             {
                 "name": "password",
