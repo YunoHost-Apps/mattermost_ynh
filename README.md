@@ -9,7 +9,7 @@
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
-A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source, self-hosted alternative to Slack.
+Mattermost is a self-hosted, open source instant messaging software and service. It's designed as an internal chat for organizations and businesses, and it's touted as an alternative to Slack.
 
 **Shipped version:** 5.30.1
 
@@ -23,7 +23,7 @@ A Yunohost package for [Mattermost](http://www.mattermost.org/), an open-source,
 
 ## Configuration
 
-How to configure this app: From an admin panel, a plain file with SSH, or any other way.
+ * How to configure this app: From an admin panel.
 
 ## Documentation
 
