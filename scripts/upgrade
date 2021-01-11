@@ -32,6 +32,7 @@ is_public=$(ynh_app_setting_get --app=$app --key=is_public)
 port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 
 #=================================================
 # CHECK VERSION
@@ -62,6 +63,23 @@ fi
 if ! [[ "$language" ]]; then
   language="en"
   ynh_app_setting_set --app=$app --key=language --value=$language
+fi
+
+# Cleaning legacy permissions
+if ynh_legacy_permissions_exists; then
+  ynh_legacy_permissions_delete_all
+
+  ynh_app_setting_delete --app=$app --key=is_public
+fi
+
+if ! ynh_permission_exists --permission="admin"; then
+  # Create the required permissions
+  ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin
+fi
+
+# Create a permission if needed
+if ! ynh_permission_exists --permission="api"; then
+  ynh_permission_create --permission="api" --url "/api" --allowed="visitors" --show_tile="false" --protected="true"
 fi
 
 #=================================================
@@ -123,6 +141,14 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 ynh_add_nginx_config
 
 #=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
+
+# Create a dedicated user (if not existing)
+ynh_system_user_create --username=$app
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=2
@@ -173,7 +199,7 @@ chown -R $app: "/var/log/$app"
 ynh_script_progression --message="Upgrading logrotate configuration..." --weight=1
 
 # Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate
+ynh_use_logrotate --non-append
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
@@ -188,7 +214,7 @@ yunohost service add $app --description="Collaboration platform built for develo
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Started Mattermost"
+ynh_systemd_action --service_name=$app --action=start --log_path="systemd" --line_match="Started Mattermost"
 
 #=================================================
 # RELOAD NGINX

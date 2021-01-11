@@ -31,7 +31,7 @@ path_url=$(ynh_app_setting_get --app=$app --key=path)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-db_user=$(ynh_app_setting_get --app=$app --key=db_user)
+db_user=$db_name
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
@@ -42,7 +42,6 @@ ynh_webpath_available --domain=$domain --path_url=$path_url \
 	|| ynh_die --message="Path not available: ${domain}${path_url}"
 test ! -d $final_path \
 	|| ynh_die --message="There is already a directory: $final_path "
-
 
 #=================================================
 # STANDARD RESTORATION STEPS
@@ -102,7 +101,7 @@ chown -R $app: $logs_path
 #=================================================
 
 ynh_restore_file "/etc/systemd/system/$app.service"
-systemctl enable $app --quiet
+systemctl enable $app.service --quiet
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
