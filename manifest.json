@@ -15,7 +15,8 @@
     },
     "multi_instance": true,
     "services": [
-        "nginx"
+        "nginx",
+        "mysql"
     ],
     "requirements": {
       "yunohost": ">= 3.8.1"
