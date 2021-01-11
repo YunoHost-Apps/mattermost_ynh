@@ -116,7 +116,6 @@ ynh_script_progression --message="Configuring log rotation..." --weight=1
 mkdir -p /var/log/$app
 #touch /var/log/$app/$app.log
 logs_path="/var/log/$app"
-touch $install_log
 chown $app -R $logs_path
 
 # Setup logrotate
