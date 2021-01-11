@@ -144,7 +144,7 @@
   },
   "SqlSettings": {
     "DriverName": "mysql",
-    "DataSource": "mysql://__DB_USER__:__DB_PASS__@tcp(localhost:3306)/__DB_NAME__?charset=utf8mb4,utf8",
+    "DataSource": "__DB_USER__:__DB_PASS__@tcp(localhost:3306)/__DB_NAME__?charset=utf8mb4,utf8",
     "DataSourceReplicas": [],
     "DataSourceSearchReplicas": [],
     "MaxIdleConns": 20,
@@ -361,8 +361,8 @@
     "EnableDaily": false
   },
   "LocalizationSettings": {
-    "DefaultServerLocale": "en",
-    "DefaultClientLocale": "en",
+    "DefaultServerLocale": "__LANGUAGE__",
+    "DefaultClientLocale": "__LANGUAGE__",
     "AvailableLocales": ""
   },
   "SamlSettings": {
