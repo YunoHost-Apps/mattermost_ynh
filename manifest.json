@@ -56,23 +56,22 @@
                 "default": true
             },
             {
-                "name": "admin_email",
-                "type": "string",
+                "name": "admin",
+                "type": "user",
                 "ask": {
-                    "en": "Login email for the chat admin",
-                    "fr": "Adresse email de login pour l’administrateur du chat"
+                    "en": "Choose an admin user",
+                    "fr": "Choisissez l'administrateur"
                 },
-                "example": "john@gmail.com",
-                "optional": false
+                "example": "johndoe",
             },
             {
-                "name": "admin_password",
+                "name": "password",
                 "type": "password",
                 "ask": {
-                    "en": "Password for the chat admin. At least 8 characters.",
-                    "fr": "Mot de passe pour l’administrateur du chat. Minimum 8 caractères."
+                    "en": "Set the administrator password",
+                    "fr": "Définissez le mot de passe administrateur"
                 },
-                "optional": false
+                "example": "Choose a password"
             },
             {
                 "name": "language",
@@ -92,8 +91,7 @@
                     "fr": "Choisissez le nom de l’équipe"
                 },
                 "example": "Team",
-                "default": "Team",
-                "optional": false
+                "default": "Team"
             }
         ]
     }
