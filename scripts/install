@@ -74,7 +74,6 @@ ynh_script_progression --message="Creating a MySQL database..." --weight=10
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
-#db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
@@ -134,15 +133,12 @@ cp ../conf/config.json $final_path/config/config.json
 # Main config File
 ynh_replace_string --match_string="__URL__" --replace_string="https://$domain$path_url" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__PORT__"  --replace_string="127.0.0.1:$port" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DB_USER__" --replace_string=$db_user --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DB_PASS__" --replace_string=$db_pwd --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DATA__" --replace_string=$data_path --target_file="$final_path/config/config.json"
-
+ynh_replace_string --match_string="__DB_NAME__" --replace_string="$db_name" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_USER__" --replace_string="$db_user" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_PASS__" --replace_string="$db_pwd" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DATA__" --replace_string="$data_path" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__FEEDBACK__" --replace_string="no-reply@${domain}" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__USER__" --replace_string="$app" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__USER_PW__" --replace_string="$(ynh_string_random --length=24)" --target_file="$final_path/config/config.json"
-
 ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --target_file="$final_path/config/config.json"
 ynh_replace_string --match_string="__LANGUAGE__" --replace_string="$language" --target_file="$final_path/config/config.json"
 

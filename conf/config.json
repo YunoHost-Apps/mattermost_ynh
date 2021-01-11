@@ -228,7 +228,7 @@
     "ReplyToAddress": "",
     "FeedbackOrganization": "",
     "EnableSMTPAuth": false,
-    "SMTPUsername": "__USER__",
+    "SMTPUsername": "mattermost",
     "SMTPPassword": "__USER_PW__",
     "SMTPServer": "localhost",
     "SMTPPort": "25",

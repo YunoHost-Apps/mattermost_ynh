@@ -40,7 +40,7 @@
                     "fr": "Choisissez un chemin pour Mattermost"
                 },
                 "example": "/mattermost",
-                "default": "/mattermost"
+                "default": "/chat"
             },
             {
                 "name": "is_public",

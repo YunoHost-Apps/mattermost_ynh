@@ -59,29 +59,6 @@ if ! [[ "$port" ]]; then
   ynh_app_setting_set --app=$app --key=port --value=$port
 fi
 
-# # Language if not present
-# if ! [[ "$language" ]]; then
-#   language="en"
-#   ynh_app_setting_set --app=$app --key=language --value=$language
-# fi
-
-# # Cleaning legacy permissions
-# if ynh_legacy_permissions_exists; then
-#   ynh_legacy_permissions_delete_all
-
-#   ynh_app_setting_delete --app=$app --key=is_public
-# fi
-
-# if ! ynh_permission_exists --permission="admin"; then
-#   # Create the required permissions
-#   ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin
-# fi
-
-# # Create a permission if needed
-# if ! ynh_permission_exists --permission="api"; then
-#   ynh_permission_create --permission="api" --url "/api" --allowed="visitors" --show_tile="false" --protected="true"
-# fi
-
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
