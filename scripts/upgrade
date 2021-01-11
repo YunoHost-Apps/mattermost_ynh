@@ -13,6 +13,9 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
+ynh_clean_setup () {
+  ynh_clean_check_starting
+}
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
@@ -33,6 +36,7 @@ language=$(ynh_app_setting_get --app=$app --key=language)
 #=================================================
 # CHECK VERSION
 #=================================================
+ynh_script_progression --message="Checking version..." --weight=1
 
 upgrade_type=$(ynh_check_app_version_changed)
 
@@ -81,7 +85,7 @@ ynh_abort_if_errors
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..." --weight=3
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action=stop --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -143,12 +147,33 @@ ynh_add_systemd_config
 # fi
 
 #=================================================
+# CREATE DIRECTORY FOR DATA
+#=================================================
+ynh_script_progression --message="Creating the data directory..." --weight=1
+
+# Define app's data directory
+data_path="/home/yunohost.app/$app"
+# Create datadir folder
+mkdir -p $data_path
+# Give permission to the datadir
+chown -R $app: "$data_path"
+
+#=================================================
 # RESTORE FILE PERMISSIONS
 #=================================================
 
 chown -R $app: $final_path
-chown -R $app: "/home/yunohost.app/$app"
+chmod -R g+w $final_path
+
 chown -R $app: "/var/log/$app"
+
+#=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression --message="Upgrading logrotate configuration..." --weight=1
+
+# Use logrotate to manage app-specific logfile(s)
+ynh_use_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

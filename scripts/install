@@ -67,13 +67,6 @@ port=$(ynh_find_port --port=8065)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
-# SET UP INSTALLATION VARIABLES
-#=================================================
-
-data_path="/home/yunohost.app/$app"
-logs_path="/var/log/$app"
-
-#=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
 ynh_script_progression --message="Creating a MySQL database..." --weight=10
@@ -102,8 +95,32 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$final_path"
 
-mkdir -p "$data_path"
-mkdir -p "$logs_path"
+#=================================================
+# CREATE DIRECTORY FOR DATA
+#=================================================
+ynh_script_progression --message="Creating the data directory..." --weight=1
+
+# Create datadir folder
+mkdir -p "/home/yunohost.app/$app"
+# Define app's data directory
+data_path="/home/yunohost.app/$app"
+# Give permission to the datadir
+chown -R $app: "$data_path"
+
+#=================================================
+# HANDLE LOG FILES AND LOGROTATE
+#=================================================
+ynh_script_progression --message="Configuring log rotation..." --weight=1
+
+# Create log directory
+mkdir -p /var/log/$app
+#touch /var/log/$app/$app.log
+logs_path="/var/log/$app"
+touch $install_log
+chown $app -R $logs_path
+
+# Setup logrotate
+ynh_use_logrotate
 
 #=================================================
 # EDIT MATTERMOST CONFIG
@@ -135,8 +152,6 @@ ynh_store_file_checksum --file="$final_path/config/config.json"
 #=================================================
 
 chown -R $app: $final_path
-chown -R $app: $data_path
-chown -R $app: $logs_path
 chmod -R g+w $final_path
 
 #=================================================
