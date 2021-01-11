@@ -80,7 +80,7 @@ ynh_script_progression --message="Creating a MySQL database..." --weight=10
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
-db_pwd=$(ynh_string_random --length=24)
+db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 ynh_app_setting_set --app=$app --key=mysqlpwd  --value=$db_pwd

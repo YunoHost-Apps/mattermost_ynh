@@ -29,7 +29,6 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$(ynh_app_setting_get --app=$app --key=db_user)
-db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
@@ -66,11 +65,11 @@ ynh_restore_file --origin_path="/home/yunohost.app/$app"
 #=================================================
 # RESTORE THE MYSQL DATABASE
 #=================================================
-ynh_script_progression --message="Restoring the PostgreSQL database..." --weight=6
+ynh_script_progression --message="Restoring the MySQL database..." --weight=6
 
-ynh_psql_test_if_first_run
-ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
-ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
+db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+ynh_mysql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./db.sql
 
 #=================================================
 # RECREATE THE DEDICATED USER
