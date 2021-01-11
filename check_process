@@ -4,8 +4,8 @@
 ;; Test complet
     ; Manifest
         domain="domain.tld" (DOMAIN)
-        path="/path" (PATH)
-        admin="john"
+        path="/path"    (PATH)
+        admin="john"    (USER)
         email="john@gmail.com"
         password="admin!42"
         language="fr"
