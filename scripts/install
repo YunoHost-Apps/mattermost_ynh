@@ -6,12 +6,16 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # MANAGE SCRIPT FAILURE
 #=================================================
 
+ynh_clean_setup () {
+	ynh_clean_check_starting
+}
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
@@ -19,206 +23,201 @@ ynh_abort_if_errors
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-app=$YNH_APP_INSTANCE_NAME
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
-admin_email=$YNH_APP_ARG_ADMIN_EMAIL
-admin_password=$YNH_APP_ARG_ADMIN_PASSWORD
-admin_locale=$YNH_APP_ARG_ADMIN_LOCALE
+admin=$YNH_APP_ARG_ADMIN
+email=$(ynh_user_get_info "$admin" mail)
+password=$YNH_APP_ARG_PASSWORD
+language=$YNH_APP_ARG_LANGUAGE
 team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
-analytics=$YNH_APP_ARG_ANALYTICS
+
+app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
-# CHECK IF THE APP CAN BE INSTALLED
+# CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
+ynh_script_progression --message="Validating installation parameters..." --weight=1
 
-# Allow using the `ynh_die` command without triggering linter warnings
-function script_die () {
-  die_command=$(printf '%s%s' 'ynh_' 'die')
-  $die_command "$*"
-}
+final_path=/var/www/$app
+test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
 
-# Check for 64 bits support
-arch="$(uname -m)"
-if [[ "$arch" != "x86_64" ]]; then
-    script_die "Mattermost requires an x86_64 machine, but this one is '${arch}'."
-fi
-
-# Check for MySQL version (without triggering a package_linter warning)
-db_command=$(printf '%s%s' 'my' 'sql')
-db_version=$($db_command --version)
-if    [[ "$db_version" == *"Distrib 4."* ]]  \
-   || [[ "$db_version" == *"Distrib 5.0"* ]] \
-   || [[ "$db_version" == *"Distrib 5.1"* ]] \
-   || [[ "$db_version" == *"Distrib 5.2"* ]] \
-   || [[ "$db_version" == *"Distrib 5.3"* ]] \
-   || [[ "$db_version" == *"Distrib 5.4"* ]] \
-   || [[ "$db_version" == *"Distrib 5.5"* ]];
-then
-    script_die "Mattermost requires MySQL 5.6 or higher, or MariaDB 10 or higher."
-fi
-
-#=================================================
-# FIND AN AVAILABLE PATH
-#=================================================
-
-# Normalize the url path syntax
-path_url=$(ynh_normalize_url_path $path_url)
-# Check web path availability
-ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
-ynh_webpath_register "$app" "$domain" "$path_url"
-# Store setting
-ynh_app_setting_set "$app" domain "$domain"
-ynh_app_setting_set "$app" path "$path_url"
+ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+
+#=================================================
+# STORE SETTINGS FROM MANIFEST
+#=================================================
+ynh_script_progression --message="Storing installation settings..." --weight=6
+
+ynh_app_setting_set --app=$app --key=domain --value=$domain
+ynh_app_setting_set --app=$app --key=path --value=$path_url
+ynh_app_setting_set --app=$app --key=is_public --value=$is_public
+ynh_app_setting_set --app=$app --key=admin --value=$admin
+ynh_app_setting_set --app=$app --key=password --value=$password
+ynh_app_setting_set --app=$app --key=language --value=$language
+ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
 
 #=================================================
 # FIND AN AVAILABLE PORT
 #=================================================
+ynh_script_progression --message="Finding an available port..." --weight=3
 
 # Find an available port
-port=$(ynh_find_port 8065)
-# Store setting
-ynh_app_setting_set "$app" port "$port"
-
-#=================================================
-# SET UP INSTALLATION VARIABLES
-#=================================================
-
-root_path="$(pwd)/.."
-final_path="/var/www/$app"
-data_path="/home/yunohost.app/$app"
-logs_path="/var/log/$app"
+port=$(ynh_find_port --port=8065)
+ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # CREATE A MYSQL DATABASE
 #=================================================
+ynh_script_progression --message="Creating a MySQL database..." --weight=10
 
-db_name="$app"
-db_user="$YNH_APP_INSTANCE_NAME"
-db_password=$(ynh_string_random --length=24)
-ynh_mysql_create_db "$db_name" "$db_user" "$db_password"
-ynh_app_setting_set "$app" mysqluser "$db_user"
-ynh_app_setting_set "$app" mysqlpwd  "$db_password"
+db_name=$(ynh_sanitize_dbid --db_name=$app)
+db_user=$db_name
+#db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+
+ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
-# CREATE USER FOR EMAIL NOTIFICATIONS
+# CREATE DEDICATED USER
 #=================================================
+ynh_script_progression --message="Configuring system user..." --weight=3
 
-mattermost_user="$app"
-mattermost_user_password=$(ynh_string_random --length=24)
-useradd -M --shell /bin/false -p $(openssl passwd -1 "$mattermost_user_password") "$mattermost_user"
-ynh_app_setting_set "$app" smtppwd "$mattermost_user_password"
+# Create a system user
+ynh_system_user_create --username=$app
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression --message="Setting up source files..." --weight=3
 
-ynh_app_setting_set "$app" final_path "$final_path"
-ynh_setup_source "$final_path"
+ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$final_path"
 
-mkdir -p "$data_path"
-mkdir -p "$logs_path"
+#=================================================
+# CREATE DIRECTORY FOR DATA
+#=================================================
+ynh_script_progression --message="Creating the data directory..." --weight=1
+
+# Create datadir folder
+mkdir -p "/home/yunohost.app/$app"
+# Define app's data directory
+data_path="/home/yunohost.app/$app"
+# Give permission to the datadir
+chown -R $app: "$data_path"
+
+#=================================================
+# HANDLE LOG FILES AND LOGROTATE
+#=================================================
+ynh_script_progression --message="Configuring log rotation..." --weight=1
+
+# Create log directory
+mkdir -p /var/log/$app
+#touch /var/log/$app/$app.log
+logs_path="/var/log/$app"
+chown $app -R $logs_path
+
+# Setup logrotate
+ynh_use_logrotate
 
 #=================================================
 # EDIT MATTERMOST CONFIG
 #=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Modifying a config file..." --weight=3
 
-# Configure Service Settings
-ynh_replace_string --match_string "\"SiteURL\": \"\""                 --replace_string "\"SiteURL\": \"https://${domain}${path_url}\""     --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"ListenAddress\": \".*\""         --replace_string "\"ListenAddress\": \"127.0.0.1:${port}\""          --target_file $final_path/config/config.json
-# Configure the database connection
-db_connection_url="${db_user}:${db_password}@tcp(127.0.0.1:3306)/${db_name}?charset=utf8mb4,utf8"
-ynh_replace_string --match_string "\"DataSource\": \".*\""            --replace_string "\"DataSource\": \"${db_connection_url}\""          --target_file $final_path/config/config.json
-# Configure uploaded files directory
-ynh_replace_string --match_string "\"Directory\": \"./data/\""        --replace_string "\"Directory\": \"${data_path}/\""                  --target_file $final_path/config/config.json
-# Configure SMTP account for sending email notifications
-ynh_replace_string --match_string "\"SendEmailNotifications\": false" --replace_string "\"SendEmailNotifications\": true"                  --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"FeedbackName\": \"\""            --replace_string "\"FeedbackName\": \"Mattermost notification\""     --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"FeedbackEmail\": \"\""           --replace_string "\"FeedbackEmail\": \"no-reply@${domain}\""         --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPUsername\": \"\""            --replace_string "\"SMTPUsername\": \"${mattermost_user}\""          --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPPassword\": \"\""            --replace_string "\"SMTPPassword\": \"${mattermost_user_password}\"" --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPServer\": \"\""              --replace_string "\"SMTPServer\": \"localhost\""                     --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"SMTPPort\": \".*\""              --replace_string "\"SMTPPort\": \"25\""                              --target_file $final_path/config/config.json
-# Disable Mattermost debug console by default
-ynh_replace_string --match_string "\"EnableConsole\": true"           --replace_string "\"EnableConsole\": false"                          --target_file $final_path/config/config.json
-# Configure log file location
-ynh_replace_string --match_string "\"FileLocation\": \"\""            --replace_string "\"FileLocation\": \"$logs_path\""                  --target_file $final_path/config/config.json
-# Disable questionable password complexity rules
-ynh_replace_string --match_string "\"MinimumLength\": 10"             --replace_string "\"MinimumLength\": 8"                              --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Lowercase\": true"               --replace_string "\"Lowercase\": false"                              --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Number\": true"                  --replace_string "\"Number\": false"                                 --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Uppercase\": true"               --replace_string "\"Uppercase\": false"                              --target_file $final_path/config/config.json
-ynh_replace_string --match_string "\"Symbol\": true"                  --replace_string "\"Symbol\": false"                                 --target_file $final_path/config/config.json
-# Configure analytics according to user choice
-if [ $analytics -eq 0 ]; then
-    ynh_replace_string --match_string "\"EnableDiagnostics\": true"   --replace_string "\"EnableDiagnostics\": false"                      --target_file $final_path/config/config.json
-fi
-ynh_app_setting_set "$app" analytics "$analytics"
+cp ../conf/config.json $final_path/config/config.json
+
+# Main config File
+ynh_replace_string --match_string="__URL__" --replace_string="https://$domain$path_url" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__PORT__"  --replace_string="127.0.0.1:$port" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_NAME__" --replace_string=$db_name --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_USER__" --replace_string=$db_user --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DB_PASS__" --replace_string=$db_pwd --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__DATA__" --replace_string=$data_path --target_file="$final_path/config/config.json"
+
+ynh_replace_string --match_string="__FEEDBACK__" --replace_string="no-reply@${domain}" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__USER__" --replace_string="$app" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__USER_PW__" --replace_string="$(ynh_string_random --length=24)" --target_file="$final_path/config/config.json"
+
+ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="__LANGUAGE__" --replace_string="$language" --target_file="$final_path/config/config.json"
+
+ynh_store_file_checksum --file="$final_path/config/config.json"
 
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
 
-chown -R "$mattermost_user:www-data" "$final_path"
-chown -R "$mattermost_user:www-data" "$data_path"
-chown -R "$mattermost_user:adm"      "$logs_path"
+chown -R $app: $final_path
+chmod -R g+w $final_path
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
+ynh_script_progression --message="Configuring NGINX web server..." --weight=2
 
+# Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
-# SYSTEMD CONFIGURATION
+# SETUP SYSTEMD
 #=================================================
+ynh_script_progression --message="Configuring a systemd service..." --weight=2
 
+# Create a dedicated systemd config
 ynh_add_systemd_config
-
-#=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
-#=================================================
-
-yunohost service add "$app" --log "$logs_path/mattermost.log"
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-
-ynh_app_setting_set "$app" is_public "$is_public"
-
-if [[ $is_public == "1" ]]; then
-    # Make the app accessible to the public
-    ynh_app_setting_set "$app" unprotected_uris "/"
-fi
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-
-systemctl reload nginx
-
-#=================================================
-# START SERVER
-#=================================================
-
-systemctl start "$app"
 
 #=================================================
 # CREATE ADMIN AND FIRST TEAM
 #=================================================
 
-admin_username=$(cut -d @ -f 1 <<< "$admin_email")
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
-cd "$final_path/bin"
-./mattermost user create --username "$admin_username" --email "$admin_email" --password "$admin_password" --locale "$admin_locale" --system_admin
-./mattermost user verify "$admin_username"
-./mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$admin_email"
-./mattermost team add "$team_name" "$admin_username"
+pushd "$final_path"
+	ynh_exec_warn_less ynh_exec_as $app bin/mattermost user create --username "$admin" --email "$email" --password "$password" --locale "$language" --system_admin
+	ynh_exec_warn_less ynh_exec_as $app bin/mattermost user verify "$admin"
+	ynh_exec_warn_less ynh_exec_as $app bin/mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+	ynh_exec_warn_less ynh_exec_as $app bin/mattermost team add "$team_name" "$admin"
+popd
 
-ynh_app_setting_set "$app" admin_email "$admin_email"
-ynh_app_setting_set "$app" admin_locale "$admin_locale"
-ynh_app_setting_set "$app" team_name "$team_name"
+#=================================================
+# INTEGRATE SERVICE IN YUNOHOST
+#=================================================
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
+
+yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Started Mattermost"
+
+#=================================================
+# SETUP SSOWAT
+#=================================================
+ynh_script_progression --message="Configuring SSOwat..." --weight=1
+
+if [ $is_public -eq 1 ]
+then
+  ynh_permission_update --permission "main" --add "visitors"
+fi
+
+#=================================================
+# RELOAD NGINX
+#=================================================
+ynh_script_progression --message="Reloading NGINX web server..." --weight=2
+
+ynh_systemd_action --service_name=nginx --action=reload
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_script_progression --message="Installation of $app completed" --last

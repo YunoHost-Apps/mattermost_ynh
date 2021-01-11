@@ -1,29 +1,32 @@
-;; Mattermost
+# See here for more information
+# https://github.com/YunoHost/package_check#syntax-check_process-file
+
+;; Test complet
     ; Manifest
-        domain="ynhtests.local" (DOMAIN)
-        path="/path" (PATH)
-        admin_email="john@gmail.com"
-        admin_password="admin!42"
-        admin_locale="fr"
+        domain="domain.tld" (DOMAIN)
+        path="/path"    (PATH)
+        admin="john"    (USER)
+        email="john@gmail.com"
+        password="admin!42"
+        language="fr"
         team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)
-        analytics=0
     ; Checks
         pkg_linter=1
         setup_sub_dir=1
         setup_root=1
+        setup_nourl=0
         setup_private=1
         setup_public=1
         upgrade=1
         backup_restore=1
         multi_instance=1
-        port_already_use=1 (8085)
-        # Checks not supported yet
+        port_already_use=0
         change_url=0
-        # Checks not applicable
-        setup_nourl=0
-;;; Levels
-    Level 5=auto
 ;;; Options
 Email=kemenaran@gmail.com
-Notification=change
+Notification=none
+;;; Upgrade options
+    ; commit=CommitHash
+        name=Name and date of the commit.
+        manifest_arg=domain=DOMAIN&path=PATH&admin=USER&language=fr&is_public=1&password=pass&port=666&

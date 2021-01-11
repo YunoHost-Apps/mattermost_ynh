@@ -1,24 +1,25 @@
 {
-    "packaging_format": 1,
     "name": "Mattermost",
     "id": "mattermost",
+    "packaging_format": 1,
     "description": {
-        "en": "An open-source, self-hosted alternative to Slack",
-        "fr": "Une alternative open-source et auto-hébergée à Slack"
+        "en": "Open source collaboration platform built for developers",
+        "fr": "Plateforme de collaboration open source conçue pour les développeurs"
     },
+    "version": "5.30.1~ynh1",
     "url": "http://www.mattermost.org/",
     "license": "GPL-3.0-only",
-    "version": "5.30.1~ynh1",
     "maintainer": {
         "name": "pmorinerie",
         "email": "kemenaran@gmail.com"
     },
     "multi_instance": true,
     "services": [
-        "nginx"
+        "nginx",
+        "mysql"
     ],
     "requirements": {
-      "yunohost": ">= 3.0.0"
+      "yunohost": ">= 3.8.1"
     },
     "arguments": {
         "install" : [
@@ -38,45 +39,48 @@
                     "en": "Choose a path for Mattermost",
                     "fr": "Choisissez un chemin pour Mattermost"
                 },
-                "example": "/chat",
-                "default": "/chat"
+                "example": "/mattermost",
+                "default": "/mattermost"
             },
             {
                 "name": "is_public",
                 "type": "boolean",
                 "ask": {
-                    "en": "Can users non registered on Yunohost access this chat?",
-                    "fr": "Les invités non-enregistrés sur Yunohost peuvent-ils accéder à ce chat ?"
+                    "en": "Is it a public application?",
+                    "fr": "Est-ce une application publique ?"
+                },
+                "help": {
+                    "en": "If enabled, Mattermost will be accessible by people who do not have an account. This can be changed later via the webadmin.",
+                    "fr": "Si cette case est cochée, Mattermost sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
                 },
                 "default": true
             },
             {
-                "name": "admin_email",
-                "type": "string",
+                "name": "admin",
+                "type": "user",
                 "ask": {
-                    "en": "Login email for the chat admin",
-                    "fr": "Adresse email de login pour l’administrateur du chat"
+                    "en": "Choose an admin user",
+                    "fr": "Choisissez l'administrateur"
                 },
-                "example": "john@gmail.com",
-                "optional": false
+                "example": "johndoe"
             },
             {
-                "name": "admin_password",
+                "name": "password",
                 "type": "password",
                 "ask": {
-                    "en": "Password for the chat admin. At least 8 characters.",
-                    "fr": "Mot de passe pour l’administrateur du chat. Minimum 8 caractères."
+                    "en": "Set the administrator password",
+                    "fr": "Définissez le mot de passe administrateur"
                 },
-                "optional": false
+                "example": "Choose a password"
             },
             {
-                "name": "admin_locale",
+                "name": "language",
                 "type": "string",
                 "ask": {
                     "en": "Choose the language of the chat for the admin",
                     "fr": "Choissisez la langue utilisée pour l'administrateur"
                 },
-                "choices": ["en", "fr"],
+                "choices": ["de", "en", "es", "fr", "it", "pt"],
                 "default": "en"
             },
             {
@@ -87,17 +91,7 @@
                     "fr": "Choisissez le nom de l’équipe"
                 },
                 "example": "Team",
-                "default": "Team",
-                "optional": false
-            },
-            {
-                "name": "analytics",
-                "type": "boolean",
-                "ask": {
-                    "en": "Allow Mattermost to send some telemetrics about your usage of this app?",
-                    "fr": "Autorisez-vous Mattermost à envoyer des informations anonymes sur votre usage de l’application ?"
-                },
-                "default": false
+                "default": "Team"
             }
         ]
     }
