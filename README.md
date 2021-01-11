@@ -9,7 +9,7 @@
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
-Mattermost is a self-hosted, open source instant messaging software and service. It's designed as an internal chat for organizations and businesses, and it's touted as an alternative to Slack.
+Mattermost est un logiciel et un service de messagerie instantanée libre auto-hébergeable. Il est conçu comme un chat interne pour les organisations et les entreprises, et il est présenté comme une alternative à Slack. 
 
 **Shipped version:** 5.30.1
 
@@ -23,7 +23,7 @@ Mattermost is a self-hosted, open source instant messaging software and service.
 
 ## Configuration
 
- * How to configure this app: From an admin panel.
+How to configure this app: From an admin panel, a plain file with SSH, or any other way.
 
 ## Documentation
 
