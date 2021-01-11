@@ -5,8 +5,9 @@
     ; Manifest
         domain="domain.tld" (DOMAIN)
         path="/path" (PATH)
-        admin_email="john@gmail.com"
-        admin_password="admin!42"
+        admin="john"
+        email="john@gmail.com"
+        password="admin!42"
         language="fr"
         team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)
