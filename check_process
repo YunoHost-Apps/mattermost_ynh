@@ -9,6 +9,7 @@
         email="john@gmail.com"
         admin_email="john@gmail.com"
         password="admin!42"
+        admin_password="admin!42"
         language="fr"
         team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)
