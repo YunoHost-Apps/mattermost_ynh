@@ -33,6 +33,7 @@ port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+architecture=$(ynh_detect_arch)
 
 #=================================================
 # CHECK VERSION
@@ -100,7 +101,7 @@ then
   ynh_secure_remove --file="$final_path"
 
   # Download, check integrity, uncompress and patch the source from app.src
-  ynh_setup_source --dest_dir="$final_path"
+  ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
 
   # Copy the admin saved settings from tmp directory to final path  
   cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
