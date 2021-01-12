@@ -19,7 +19,7 @@ Mattermost est un logiciel et un service de messagerie instantanée libre auto-h
 
 ## Configuration
 
- * Comment configurer cette application : via le panneau d'administration
+ * Comment configurer cette application : via le panneau d'administration, un fichier brut en SSH.
 
 ## Documentation
 
@@ -44,7 +44,7 @@ Mattermost est un logiciel et un service de messagerie instantanée libre auto-h
 
 ## Informations additionnelles
 
-* Autres informations que vous souhaitez ajouter sur cette application.
+Ce paquet peut être installé sur les architectures `xARM`x, `xARM64`x et `x86-64`.
 
 ## Liens
 
