@@ -7,6 +7,7 @@
         path="/path"    (PATH)
         admin="john"    (USER)
         email="john@gmail.com"
+        admin_email="john@gmail.com"
         password="admin!42"
         language="fr"
         team_display_name="Mon équipe"
@@ -30,4 +31,3 @@ Notification=none
 ;;; Upgrade options
     ; commit=202cc0725652d4b8fbca52630267247bd58c8de1
         name=Merge pull request #196 from amyblais/patch-51
-        
