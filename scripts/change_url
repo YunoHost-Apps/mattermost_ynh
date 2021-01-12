@@ -29,6 +29,7 @@ ynh_script_progression --message="Loading installation settings..." --weight=1
 # Needed for helper "ynh_add_nginx_config"
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
+language=$(ynh_app_setting_get --app=$app --key=language)
 
 # Add settings here as needed by your application
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
@@ -112,6 +113,9 @@ fi
 ynh_script_progression --message="Modifying a config file..." --weight=3
 
 cp ../conf/config.json $final_path/config/config.json
+
+data_path="/home/yunohost.app/$app"
+logs_path="/var/log/$app"
 
 # Main config File
 ynh_replace_string --match_string="__URL__" --replace_string="https://$new_domain$new_path" --target_file="$final_path/config/config.json"
