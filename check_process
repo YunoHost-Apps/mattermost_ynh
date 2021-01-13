@@ -1,7 +1,7 @@
 # See here for more information
 # https://github.com/YunoHost/package_check#syntax-check_process-file
 
-;; Test with Entreprise Edition
+;; Test with Enterprise Edition
     ; Manifest
         domain="domain.tld" (DOMAIN)
         path="/path"    (PATH)
@@ -11,7 +11,7 @@
         password="admin!42"
         admin_password="admin!42"
         language="fr"
-        version="Entreprise"
+        version="Enterprise"
         team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)
     ; Checks
