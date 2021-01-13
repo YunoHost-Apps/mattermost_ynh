@@ -34,6 +34,7 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 architecture=$(ynh_detect_arch)
+version=$(ynh_app_setting_get --app=$app --key=version)
 
 #=================================================
 # CHECK VERSION
@@ -58,6 +59,18 @@ ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 if ! [[ "$port" ]]; then
   port=8065
   ynh_app_setting_set --app=$app --key=port --value=$port
+fi
+
+# Save the language used if not present
+if ! [[ "$language" ]]; then
+  language="en"
+  ynh_app_setting_set --app=$app --key=language --value=$language
+fi
+
+# If version setting doesn't exist
+if [ -z "$version" ]; then
+  version="Team"
+  ynh_app_setting_set --app=$app --key=version --value=$version
 fi
 
 #=================================================
@@ -100,8 +113,11 @@ then
   # Remove the app directory securely
   ynh_secure_remove --file="$final_path"
 
-  # Download, check integrity, uncompress and patch the source from app.src
-  ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
+  if [ "$version" = "Entreprise" ]; then
+    ynh_setup_source --dest_dir="$final_path" --source_id="$entreprise"
+  elif [ "$version" = "Team" ]; then
+    ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
+  fi
 
   # Copy the admin saved settings from tmp directory to final path  
   cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
@@ -168,7 +184,6 @@ chown -R $app: "$data_path"
 
 chown -R $app: $final_path
 chmod -R g+w $final_path
-
 chown -R $app: "/var/log/$app"
 
 #=================================================

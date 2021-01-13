@@ -32,6 +32,7 @@ password=$YNH_APP_ARG_PASSWORD
 language=$YNH_APP_ARG_LANGUAGE
 team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
 architecture=$(ynh_detect_arch)
+version=$YNH_APP_ARG_VERSION
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -57,6 +58,7 @@ ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=password --value=$password
 ynh_app_setting_set --app=$app --key=language --value=$language
+ynh_app_setting_set --app=$app --key=version --value=$version
 ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
 
 #=================================================
@@ -94,7 +96,14 @@ ynh_script_progression --message="Setting up source files..." --weight=3
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
+
+if [ "$version" = "Entreprise" ]; then
+  # Get Entreprise binary path
+  ynh_setup_source --dest_dir="$final_path" --source_id="$entreprise"
+elif [ "$version" = "Team" ]; then
+  # Get Team binary path
+  ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
+fi
 
 #=================================================
 # CREATE DIRECTORY FOR DATA
