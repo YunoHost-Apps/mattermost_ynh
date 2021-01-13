@@ -69,7 +69,7 @@ fi
 
 # If version setting doesn't exist
 if [ -z "$version" ]; then
-  version="Team"
+  version="Enterprise"
   ynh_app_setting_set --app=$app --key=version --value=$version
 fi
 
@@ -113,8 +113,8 @@ then
   # Remove the app directory securely
   ynh_secure_remove --file="$final_path"
 
-  if [ "$version" = "Entreprise" ]; then
-    ynh_setup_source --dest_dir="$final_path" --source_id="entreprise"
+  if [ "$version" = "Enterprise" ]; then
+    ynh_setup_source --dest_dir="$final_path" --source_id="enterprise"
   elif [ "$version" = "Team" ]; then
     ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
   fi
