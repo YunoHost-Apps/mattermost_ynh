@@ -28,6 +28,10 @@ Mattermost is a self-hosted, open source instant messaging and service software.
 
 ## YunoHost specific features
 
+This package can install the [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) or the [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
+
+Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/download/)
+
 #### Multi-user support
 
  * Are LDAP and HTTP auth supported? **No**
@@ -44,7 +48,7 @@ Mattermost is a self-hosted, open source instant messaging and service software.
 
 ## Additional information
 
-* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture.
+* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` if you choose to ibstall the *Entreprise Edition*).
 
 ## Links
 

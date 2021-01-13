@@ -1,0 +1,6 @@
+SOURCE_URL=https://releases.mattermost.com/5.30.1/mattermost-5.30.1-linux-amd64.tar.gz
+SOURCE_SUM=14018addf86c040200515cb0141308a6d213f149f8afe425dd171347be516401
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=mattermost-5.30.1-linux-amd64.tar.gz

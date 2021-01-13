@@ -43,7 +43,7 @@ ynh_script_progression --message="Stopping and removing the systemd service..." 
 ynh_remove_systemd_config
 
 #=================================================
-# REMOVE THE POSTGRESQL DATABASE
+# REMOVE THE MySQL DATABASE
 #=================================================
 ynh_script_progression --message="Removing the MySQL database..." --weight=2
 
