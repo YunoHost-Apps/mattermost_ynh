@@ -114,7 +114,7 @@ then
   ynh_secure_remove --file="$final_path"
 
   if [ "$version" = "Entreprise" ]; then
-    ynh_setup_source --dest_dir="$final_path" --source_id="$entreprise"
+    ynh_setup_source --dest_dir="$final_path" --source_id="entreprise"
   elif [ "$version" = "Team" ]; then
     ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
   fi

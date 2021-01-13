@@ -99,7 +99,7 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
 if [ "$version" = "Entreprise" ]; then
   # Get Entreprise binary path
-  ynh_setup_source --dest_dir="$final_path" --source_id="$entreprise"
+  ynh_setup_source --dest_dir="$final_path" --source_id="entreprise"
 elif [ "$version" = "Team" ]; then
   # Get Team binary path
   ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
