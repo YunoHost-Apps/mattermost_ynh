@@ -47,8 +47,6 @@
         setup_public=1
         upgrade=1
         upgrade=1   from_commit=202cc0725652d4b8fbca52630267247bd58c8de1
-        backup_restore=1
-        multi_instance=1
 ;;; Options
 Email=kemenaran@gmail.com
 Notification=none
