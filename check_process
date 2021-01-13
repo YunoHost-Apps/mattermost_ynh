@@ -1,6 +1,3 @@
-# See here for more information
-# https://github.com/YunoHost/package_check#syntax-check_process-file
-
 ;; Test with Enterprise Edition
     ; Manifest
         domain="domain.tld" (DOMAIN)
@@ -53,3 +50,4 @@ Notification=none
 ;;; Upgrade options
     ; commit=202cc0725652d4b8fbca52630267247bd58c8de1
         name=Merge pull request #196 from amyblais/patch-51
+        
