@@ -28,6 +28,8 @@ Mattermost est un logiciel et un service de messagerie instantanée libre auto-h
 
 ## Caractéristiques spécifiques YunoHost
 
+Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) ou la version [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
+
 #### Support multi-utilisateur
 
  * L'authentification LDAP et HTTP est-elle prise en charge ? **Non**
@@ -44,7 +46,7 @@ Mattermost est un logiciel et un service de messagerie instantanée libre auto-h
 
 ## Informations additionnelles
 
-Ce paquet peut être installé sur les architectures `xARM`x, `xARM64`x et `x86-64`.
+Ce paquet peut être installé sur les architectures `ARM`, `ARM64` et `x86-64` (mais uniquement `x86-64` si vous choisissez d'installer la version *Enterprise Edition*).
 
 ## Liens
 
