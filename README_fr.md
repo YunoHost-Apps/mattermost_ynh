@@ -42,7 +42,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 
 ## Limitations
 
-* Limitations connues.
+* L'intégration LDAP n'est pas gérée (see #58)
 
 ## Informations additionnelles
 
