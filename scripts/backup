@@ -63,7 +63,7 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 ynh_backup --src_path="/etc/systemd/system/$app.service"
 
 #=================================================
-# BACKUP THE POSTGRESQL DATABASE
+# BACKUP THE DATABASE
 #=================================================
 ynh_print_info --message="Backing up the MySQL database..."
 
