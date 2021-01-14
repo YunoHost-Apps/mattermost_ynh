@@ -50,8 +50,8 @@
                     "fr": "Est-ce une application publique ?"
                 },
                 "help": {
-                    "en": "If enabled, Mattermost will be accessible by people without a Yunohost account. This can be changed later via the webadmin.",
-                    "fr": "Si cette case est cochée, Mattermost sera accessible aux personnes sans compte Yunohost. Vous pourrez changer ceci plus tard via l’interface d’administration."
+                    "en": "If enabled, Mattermost will be accessible by the user without a YunoHost account. This can be changed later via the webadmin.",
+                    "fr": "Si cette case est cochée, Mattermost sera accessible par l'utilisateur sans compte YunoHost. Vous pourrez changer ceci plus tard via l’interface d’administration."
                 },
                 "default": true
             },
