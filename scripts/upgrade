@@ -56,7 +56,7 @@ fi
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 
 # Save the port used if not present
-if ! [[ "$port" ]]; then
+if [ -z "$port" ]; then
   port=8065
   ynh_app_setting_set --app=$app --key=port --value=$port
 fi
