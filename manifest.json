@@ -51,7 +51,7 @@
                 },
                 "help": {
                     "en": "If enabled, Mattermost will be accessible by people without a Yunohost account. This can be changed later via the webadmin.",
-                    "fr": "Si cette case est cochée, Mattermost sera accessible aux personnes n’ayant pas de compte. Vous pourrez changer ceci plus tard via la webadmin."
+                    "fr": "Si cette case est cochée, Mattermost sera accessible aux personnes sans compte Yunohost. Vous pourrez changer ceci plus tard via l’interface d’administration."
                 },
                 "default": true
             },
