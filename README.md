@@ -48,7 +48,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Additional information
 
-* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` if you choose to ibstall the *Entreprise Edition*).
+* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` if you choose to install the *Entreprise Edition*).
 
 ## Links
 
