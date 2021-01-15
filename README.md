@@ -44,7 +44,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Limitations
 
-* Any known limitations.
+* LDAP integration is not supported (see #58)
 
 ## Additional information
 
