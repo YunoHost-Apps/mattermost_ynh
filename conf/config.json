@@ -98,6 +98,7 @@
     "FeatureFlagSyncIntervalSeconds": 30,
     "DebugSplit": false,
     "ThreadAutoFollow": true,
+    "CollapsedThreads": "disabled",
     "ManagedResourcePaths": ""
   },
   "TeamSettings": {
@@ -539,6 +540,7 @@
   },
   "FeatureFlags": {
     "TestFeature": "off",
+    "TestBoolFeature": false,
     "CloudDelinquentEmailJobsEnabled": false
   }
 }
