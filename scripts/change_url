@@ -34,7 +34,7 @@ language=$(ynh_app_setting_get --app=$app --key=language)
 # Add settings here as needed by your application
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
