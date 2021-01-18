@@ -29,12 +29,6 @@ ynh_script_progression --message="Loading installation settings..." --weight=1
 # Needed for helper "ynh_add_nginx_config"
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
-language=$(ynh_app_setting_get --app=$app --key=language)
-
-# Add settings here as needed by your application
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
@@ -114,21 +108,9 @@ fi
 #=================================================
 ynh_script_progression --message="Modifying a config file..." --weight=3
 
-logs_path="/var/log/$app"
-data_path="/home/yunohost.app/$app"
-cp ../conf/config.json $final_path/config/config.json
-
 # Main config File
-ynh_replace_string --match_string="__URL__" --replace_string="https://$new_domain$new_path" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__PORT__"  --replace_string="127.0.0.1:$port" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DB_NAME__" --replace_string="$db_name" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DB_USER__" --replace_string="$db_user" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DB_PASS__" --replace_string="$db_pwd" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__DATA__" --replace_string="$data_path" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__FEEDBACK__" --replace_string="no-reply@${new_domain}" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__USER_PW__" --replace_string="$(ynh_string_random --length=24)" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__LOG__" --replace_string="$logs_path" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="__LANGUAGE__" --replace_string="$language" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="\"SiteURL\": \".*\""  --replace_string="\"SiteURL\": \"https://${new_domain}${new_path}\"" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="\"FeedbackEmail\": \".*\"" --replace_string="\"FeedbackEmail\": \"no-reply@${new_domain}\"" --target_file="$final_path/config/config.json"
 
 ynh_store_file_checksum --file="$final_path/config/config.json"
 
