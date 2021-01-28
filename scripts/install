@@ -208,11 +208,11 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring SSOwat..." --weight=1
+ynh_script_progression --message="Configuring permissions..." --weight=1
 
 if [ $is_public -eq 1 ]
 then
-  ynh_permission_update --permission "main" --add "visitors"
+  ynh_permission_update --permission="main" --add="visitors"
 fi
 
 #=================================================
