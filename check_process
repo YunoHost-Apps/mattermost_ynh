@@ -1,29 +1,53 @@
-;; Mattermost
+;; Test with Enterprise Edition
     ; Manifest
-        domain="ynhtests.local" (DOMAIN)
-        path="/path" (PATH)
+        domain="domain.tld" (DOMAIN)
+        path="/path"    (PATH)
+        admin="john"    (USER)
+        email="john@gmail.com"
         admin_email="john@gmail.com"
+        password="admin!42"
         admin_password="admin!42"
-        admin_locale="fr"
+        language="fr"
+        version="Enterprise"
         team_display_name="Mon équipe"
         is_public=1 (PUBLIC|public=1|private=0)
-        analytics=0
     ; Checks
         pkg_linter=1
+        setup_sub_dir=1
+        setup_root=1
+        setup_nourl=0
+        setup_private=1
+        setup_public=1
+        upgrade=1
+        upgrade=1   from_commit=202cc0725652d4b8fbca52630267247bd58c8de1
+        backup_restore=1
+        multi_instance=1
+        port_already_use=0
+        change_url=1
+;; Test with Team Edition
+    ; Manifest
+        domain="domain.tld" (DOMAIN)
+        path="/path"    (PATH)
+        admin="john"    (USER)
+        email="john@gmail.com"
+        admin_email="john@gmail.com"
+        password="admin!42"
+        admin_password="admin!42"
+        language="fr"
+        version="Team"
+        team_display_name="Mon équipe"
+        is_public=1 (PUBLIC|public=1|private=0)
+    ; Checks
         setup_sub_dir=1
         setup_root=1
         setup_private=1
         setup_public=1
         upgrade=1
-        backup_restore=1
-        multi_instance=1
-        port_already_use=1 (8085)
-        # Checks not supported yet
-        change_url=0
-        # Checks not applicable
-        setup_nourl=0
-;;; Levels
-    Level 5=auto
+        upgrade=1   from_commit=202cc0725652d4b8fbca52630267247bd58c8de1
 ;;; Options
 Email=kemenaran@gmail.com
-Notification=change
+Notification=none
+;;; Upgrade options
+    ; commit=202cc0725652d4b8fbca52630267247bd58c8de1
+        name=Merge pull request #196 from amyblais/patch-51
+        

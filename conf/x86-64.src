@@ -1,0 +1,6 @@
+SOURCE_URL=https://releases.mattermost.com/5.31.0/mattermost-team-5.31.0-linux-amd64.tar.gz
+SOURCE_SUM=3c9e862df1166000566772876f38713cf1eb8b64b675bcef3819fb9cc255d7bc
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=mattermost-team-5.31.0-linux-amd64.tar.gz
