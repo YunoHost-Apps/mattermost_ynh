@@ -73,6 +73,11 @@ if [ -z "$version" ]; then
   ynh_app_setting_set --app=$app --key=version --value=$version
 fi
 
+if [ -z "$db_name" ]; then
+   db_name="$app"
+   ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+fi
+
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
