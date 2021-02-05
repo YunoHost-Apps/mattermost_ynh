@@ -6,7 +6,7 @@
         "en": "Open source collaboration platform built for developers",
         "fr": "Plateforme de collaboration open source conçue pour les développeurs"
     },
-    "version": "5.31.0~ynh1",
+    "version": "5.31.1~ynh1",
     "url": "http://www.mattermost.org/",
     "license": "GPL-3.0-only",
     "maintainer": {
