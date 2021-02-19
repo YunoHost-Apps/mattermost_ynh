@@ -75,8 +75,6 @@
     "ExperimentalEnableDefaultChannelLeaveJoinMessages": true,
     "ExperimentalGroupUnreadChannels": "disabled",
     "ExperimentalChannelOrganization": false,
-    "ExperimentalChannelSidebarOrganization": "disabled",
-    "ExperimentalDataPrefetch": true,
     "ImageProxyType": "",
     "ImageProxyURL": "",
     "ImageProxyOptions": "",
@@ -99,7 +97,8 @@
     "DebugSplit": false,
     "ThreadAutoFollow": true,
     "CollapsedThreads": "disabled",
-    "ManagedResourcePaths": ""
+    "ManagedResourcePaths": "",
+    "EnableLegacySidebar": false
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -298,7 +297,10 @@
     "Scope": "",
     "AuthEndpoint": "",
     "TokenEndpoint": "",
-    "UserApiEndpoint": ""
+    "UserApiEndpoint": "",
+    "DiscoveryEndpoint": "",
+    "ButtonText": "",
+    "ButtonColor": ""
   },
   "GoogleSettings": {
     "Enable": false,
@@ -307,7 +309,10 @@
     "Scope": "profile email",
     "AuthEndpoint": "https://accounts.google.com/o/oauth2/v2/auth",
     "TokenEndpoint": "https://www.googleapis.com/oauth2/v4/token",
-    "UserApiEndpoint": "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,nicknames,metadata"
+    "UserApiEndpoint": "https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,nicknames,metadata",
+    "DiscoveryEndpoint": "",
+    "ButtonText": "",
+    "ButtonColor": ""
   },
   "Office365Settings": {
     "Enable": false,
@@ -317,7 +322,20 @@
     "AuthEndpoint": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
     "TokenEndpoint": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
     "UserApiEndpoint": "https://graph.microsoft.com/v1.0/me",
+    "DiscoveryEndpoint": "",
     "DirectoryId": ""
+  },
+  "OpenIdSettings": {
+    "Enable": false,
+    "Secret": "",
+    "Id": "",
+    "Scope": "profile openid email",
+    "AuthEndpoint": "",
+    "TokenEndpoint": "",
+    "UserApiEndpoint": "",
+    "DiscoveryEndpoint": "",
+    "ButtonText": "",
+    "ButtonColor": "#145DBF"
   },
   "LdapSettings": {
     "Enable": false,
@@ -326,7 +344,7 @@
     "LdapPort": 389,
     "ConnectionSecurity": "",
     "BaseDN": "",
-    "BindUsername": "cn",
+    "BindUsername": "",
     "BindPassword": "",
     "UserFilter": "",
     "GroupFilter": "",
@@ -403,6 +421,10 @@
     "LoginButtonTextColor": "#ffffff"
   },
   "NativeAppSettings": {
+    "AppCustomURLSchemes": [
+      "mmauth://",
+      "mmauthbeta://"
+    ],
     "AppDownloadLink": "https://mattermost.com/download/#mattermostApps",
     "AndroidAppDownloadLink": "https://about.mattermost.com/mattermost-android-app/",
     "IosAppDownloadLink": "https://about.mattermost.com/mattermost-ios-app/"
@@ -541,6 +563,12 @@
   "FeatureFlags": {
     "TestFeature": "off",
     "TestBoolFeature": false,
-    "CloudDelinquentEmailJobsEnabled": false
+    "CloudDelinquentEmailJobsEnabled": false,
+    "CollapsedThreads": false,
+    "PluginIncidentManagement": "1.3.2"
+  },
+  "ImportSettings": {
+    "Directory": "./import",
+    "RetentionDays": 30
   }
 }
