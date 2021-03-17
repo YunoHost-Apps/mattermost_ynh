@@ -229,7 +229,7 @@
     "FeedbackOrganization": "",
     "EnableSMTPAuth": false,
     "SMTPUsername": "mattermost",
-    "SMTPPassword": "__USER_PWD__",
+    "SMTPPassword": "__SMTP_USER_PWD__",
     "SMTPServer": "localhost",
     "SMTPPort": "25",
     "SMTPServerTimeout": 10,
