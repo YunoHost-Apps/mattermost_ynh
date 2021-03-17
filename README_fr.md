@@ -24,7 +24,7 @@ Mattermost est un logiciel et un service de messagerie instantanée libre auto-h
 ## Documentation
 
  * Documentation officielle : https://docs.mattermost.com/
- * Documentation YunoHost : https://yunohost.org/#/app_mattermost_fr
+ * Documentation YunoHost : https://yunohost.org/fr/app_mattermost
 
 ## Caractéristiques spécifiques YunoHost
 
