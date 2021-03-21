@@ -70,7 +70,7 @@ ynh_system_user_create --username=$app
 # RESTORE THE APP DATA
 #=================================================
 
-ynh_restore_file --origin_path="/home/yunohost.app/$app"
+ynh_restore_file --origin_path="/home/yunohost.app/$app" --not_mandatory
 chown -R $app: "/home/yunohost.app/$app"
 
 #=================================================
