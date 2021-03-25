@@ -24,7 +24,7 @@ Mattermost is a self-hosted, open source instant messaging and service software.
 ## Documentation
 
  * Official documentation: https://docs.mattermost.com/
- * YunoHost documentation: https://yunohost.org/#/app_mattermost
+ * YunoHost documentation: https://yunohost.org/en/app_mattermost
 
 ## YunoHost specific features
 
