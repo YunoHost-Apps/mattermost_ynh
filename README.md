@@ -11,7 +11,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 ## Overview
 Mattermost is a self-hosted, open source instant messaging and service software. It's designed as an internal chat for organizations and businesses, and it's touted as an alternative to Slack.
 
-**Shipped version:** 5.33.0
+**Shipped version:** 5.33.2
 
 ## Screenshots
 
