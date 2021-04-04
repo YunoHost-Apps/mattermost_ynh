@@ -6,7 +6,7 @@
         "en": "Open source collaboration platform built for developers",
         "fr": "Plateforme de collaboration open source conçue pour les développeurs"
     },
-    "version": "5.32.1~ynh1",
+    "version": "5.33.2~ynh1",
     "url": "http://www.mattermost.org/",
     "license": "GPL-3.0-only",
     "maintainer": {
@@ -81,9 +81,9 @@
                     "fr": "Choisissez la version que vous souhaitez installer"
                 },
                 "help": {
-					"en": "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 support only)",
-					"fr": "Utilisez Team Edition pour la version open source (prise en charge ARM, ARM64 et x86-64) ou Enterprise Edition si vous souhaitez utiliser une licence (prise en charge x86-64 uniquement)"
-				},
+                    "en": "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 support only)",
+                    "fr": "Utilisez Team Edition pour la version open source (prise en charge ARM, ARM64 et x86-64) ou Enterprise Edition si vous souhaitez utiliser une licence (prise en charge x86-64 uniquement)"
+                },
                 "choices": ["Enterprise", "Team"],
                 "default": "Team"
             },

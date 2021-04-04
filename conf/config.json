@@ -3,7 +3,7 @@
     "SiteURL": "__URL__",
     "WebsocketURL": "",
     "LicenseFileLocation": "",
-    "ListenAddress": "__PORT__",
+    "ListenAddress": "127.0.0.1:__PORT__",
     "ConnectionSecurity": "",
     "TLSCertFile": "",
     "TLSKeyFile": "",
@@ -108,6 +108,7 @@
     "EnableOpenServer": false,
     "EnableUserDeactivation": false,
     "RestrictCreationToDomains": "",
+    "EnableCustomUserStatuses": true,
     "EnableCustomBrand": false,
     "CustomBrandText": "",
     "CustomDescriptionText": "",
@@ -144,11 +145,12 @@
   },
   "SqlSettings": {
     "DriverName": "mysql",
-    "DataSource": "__DB_USER__:__DB_PASS__@tcp(localhost:3306)/__DB_NAME__?charset=utf8mb4,utf8",
+    "DataSource": "__DB_USER__:__DB_PWD__@tcp(localhost:3306)/__DB_NAME__?charset=utf8mb4,utf8",
     "DataSourceReplicas": [],
     "DataSourceSearchReplicas": [],
     "MaxIdleConns": 20,
     "ConnMaxLifetimeMilliseconds": 3600000,
+    "ConnMaxIdleTimeMilliseconds": 300000,
     "MaxOpenConns": 300,
     "Trace": false,
     "AtRestEncryptKey": "",
@@ -185,7 +187,7 @@
     "EnableFile": true,
     "FileLevel": "INFO",
     "FileJson": true,
-    "FileLocation": "__LOG__",
+    "FileLocation": "__LOGS_PATH__",
     "AdvancedLoggingConfig": ""
   },
   "PasswordSettings": {
@@ -199,9 +201,9 @@
     "EnableFileAttachments": true,
     "EnableMobileUpload": true,
     "EnableMobileDownload": true,
-    "MaxFileSize": 52428800,
+    "MaxFileSize": 104857600,
     "DriverName": "local",
-    "Directory": "__DATA__",
+    "Directory": "__DATA_PATH__",
     "EnablePublicLink": false,
     "PublicLinkSalt": "",
     "InitialFont": "nunito-bold.ttf",
@@ -224,12 +226,12 @@
     "UseChannelInEmailNotifications": false,
     "RequireEmailVerification": false,
     "FeedbackName": "Mattermost notification",
-    "FeedbackEmail": "__FEEDBACK__",
+    "FeedbackEmail": "no-reply@__DOMAIN__",
     "ReplyToAddress": "",
     "FeedbackOrganization": "",
     "EnableSMTPAuth": false,
     "SMTPUsername": "mattermost",
-    "SMTPPassword": "__USER_PW__",
+    "SMTPPassword": "__SMTP_USER_PWD__",
     "SMTPServer": "localhost",
     "SMTPPort": "25",
     "SMTPServerTimeout": 10,
@@ -437,7 +439,8 @@
     "BindAddress": "",
     "AdvertiseAddress": "",
     "UseIpAddress": true,
-    "UseExperimentalGossip": false,
+    "UseExperimentalGossip": true,
+    "EnableGossipCompression": true,
     "EnableExperimentalGossipEncryption": false,
     "ReadOnlyConfig": true,
     "GossipPort": 8074,
@@ -565,10 +568,15 @@
     "TestBoolFeature": false,
     "CloudDelinquentEmailJobsEnabled": false,
     "CollapsedThreads": false,
-    "PluginIncidentManagement": "1.3.2"
+    "CustomUserStatuses": true,
+    "PluginIncidentManagement": "1.4.0"
   },
   "ImportSettings": {
     "Directory": "./import",
+    "RetentionDays": 30
+  },
+  "ExportSettings": {
+    "Directory": "./export",
     "RetentionDays": 30
   }
 }
