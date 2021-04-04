@@ -19,24 +19,36 @@
         "mysql"
     ],
     "requirements": {
-      "yunohost": ">= 4.1.7"
+      "yunohost": ">= 3.8.1"
     },
     "arguments": {
         "install" : [
             {
                 "name": "domain",
                 "type": "domain",
+                "ask": {
+                    "en": "Choose a domain for Mattermost",
+                    "fr": "Choisissez un domaine pour Mattermost"
+                },
                 "example": "domain.org"
             },
             {
                 "name": "path",
                 "type": "path",
+                "ask": {
+                    "en": "Choose a path for Mattermost",
+                    "fr": "Choisissez un chemin pour Mattermost"
+                },
                 "example": "/mattermost",
                 "default": "/chat"
             },
             {
                 "name": "is_public",
                 "type": "boolean",
+                "ask": {
+                    "en": "Is it a public application?",
+                    "fr": "Est-ce une application publique ?"
+                },
                 "help": {
                     "en": "If enabled, Mattermost will be accessible by the user without a YunoHost account. This can be changed later via the webadmin.",
                     "fr": "Si cette case est cochée, Mattermost sera accessible par l'utilisateur sans compte YunoHost. Vous pourrez changer ceci plus tard via l’interface d’administration."
@@ -46,11 +58,19 @@
             {
                 "name": "admin",
                 "type": "user",
+                "ask": {
+                    "en": "Choose an admin user",
+                    "fr": "Choisissez l'administrateur"
+                },
                 "example": "johndoe"
             },
             {
                 "name": "password",
                 "type": "password",
+                "ask": {
+                    "en": "Set the administrator password",
+                    "fr": "Définissez le mot de passe administrateur"
+                },
                 "example": "Choose a password"
             },
             {
@@ -61,9 +81,9 @@
                     "fr": "Choisissez la version que vous souhaitez installer"
                 },
                 "help": {
-					"en": "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 support only)",
-					"fr": "Utilisez Team Edition pour la version open source (prise en charge ARM, ARM64 et x86-64) ou Enterprise Edition si vous souhaitez utiliser une licence (prise en charge x86-64 uniquement)"
-				},
+                    "en": "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 support only)",
+                    "fr": "Utilisez Team Edition pour la version open source (prise en charge ARM, ARM64 et x86-64) ou Enterprise Edition si vous souhaitez utiliser une licence (prise en charge x86-64 uniquement)"
+                },
                 "choices": ["Enterprise", "Team"],
                 "default": "Team"
             },
