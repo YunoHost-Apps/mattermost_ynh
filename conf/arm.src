@@ -1,6 +1,6 @@
-SOURCE_URL=https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v5.33.2/mattermost-v5.33.2-linux-arm.tar.gz
-SOURCE_SUM=4eb2d69da019979c9792435e175a12b4afb19fe66e70747039d247ca4f0769a87b1b1951a90a43edd021a898dee00946cbeac9ce213e670aeb5fce3203fa4303
+SOURCE_URL=https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v5.34.2/mattermost-v5.34.2-linux-arm.tar.gz
+SOURCE_SUM=98805b54f0f5403fbee943d2a338a781813392ac7789f3f14ed688833d5578a2000e1af20d245ef75e6beb5ae1f129eda9bd2484e63505653a80b8c97d3d3b0b
 SOURCE_SUM_PRG=sha512sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mattermost-v5.33.2-linux-arm.tar.gz
+SOURCE_FILENAME=mattermost-v5.34.2-linux-arm.tar.gz
