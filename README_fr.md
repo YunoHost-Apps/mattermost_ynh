@@ -11,7 +11,7 @@ Si vous n'avez pas YunoHost, consultez [le guide](https://yunohost.org/#/install
 ## Vue d'ensemble
 Mattermost est un logiciel et un service de messagerie instantanée libre auto-hébergeable. Il est conçu comme un chat interne pour les organisations et les entreprises, et il est présenté comme une alternative à Slack.
 
-**Version incluse :** 5.33.2
+**Version incluse :** <span class="version">5.34.2</span>
 
 ## Captures d'écran
 
@@ -37,8 +37,8 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 
 #### Supported architectures
 
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/mattermost%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/mattermost%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/mattermost/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/mattermost.svg)](https://ci-apps-arm.yunohost.org/ci/apps/mattermost/)
 
 ## Limitations
 
