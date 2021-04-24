@@ -19,7 +19,7 @@
         "mysql"
     ],
     "requirements": {
-      "yunohost": ">= 3.8.1"
+      "yunohost": ">= 4.1.0"
     },
     "arguments": {
         "install" : [
