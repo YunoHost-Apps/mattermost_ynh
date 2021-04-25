@@ -29,6 +29,7 @@
     "EnablePostUsernameOverride": false,
     "EnablePostIconOverride": false,
     "EnableLinkPreviews": true,
+    "RestrictLinkPreviews": "",
     "EnableTesting": false,
     "EnableDeveloper": false,
     "EnableOpenTracing": false,
@@ -63,6 +64,7 @@
     "PostEditTimeLimit": -1,
     "TimeBetweenUserTypingUpdatesMilliseconds": 5000,
     "EnablePostSearch": true,
+    "EnableFileSearch": true,
     "MinimumHashtagLength": 3,
     "EnableUserTypingMessages": true,
     "EnableChannelViewedMessages": true,
@@ -205,6 +207,8 @@
     "DriverName": "local",
     "Directory": "__DATA_PATH__",
     "EnablePublicLink": false,
+    "ExtractContent": false,
+    "ArchiveRecursion": false,
     "PublicLinkSalt": "",
     "InitialFont": "nunito-bold.ttf",
     "AmazonS3AccessKeyId": "",
@@ -568,8 +572,8 @@
     "TestBoolFeature": false,
     "CloudDelinquentEmailJobsEnabled": false,
     "CollapsedThreads": false,
-    "CustomUserStatuses": true,
-    "PluginIncidentManagement": "1.4.0"
+    "PluginIncidentManagement": "1.5.2",
+    "FilesSearch": false
   },
   "ImportSettings": {
     "Directory": "./import",
