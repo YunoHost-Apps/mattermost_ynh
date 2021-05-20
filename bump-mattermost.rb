@@ -1,0 +1,144 @@
+#!/usr/bin/env ruby
+
+# [For package maintainers]
+# Edit the conf/*.src files with the given Mattermost release.
+#
+# Usage:
+#   ./bump-mattermost.rb mattermost-release-version
+#
+# Example:
+#   ./bump-mattermost.rb 5.33.2
+
+require 'digest'
+require 'json'
+require 'open-uri'
+
+module Mattermost
+  # Describe a Mattermost release from its version and variant.
+  class ReleaseDescription < Struct.new(:version, :variant)
+  end
+
+  # Retrieve a downloadable release's url and checksum from its ReleaseDescription.
+  class Release
+    attr_reader :version
+    attr_reader :variant
+    attr_reader :url
+    attr_reader :sum
+
+    def initialize(release_desc)
+      @version = release_desc.version
+      @variant = release_desc.variant
+
+      retrieve_release_data
+    end
+
+    private
+
+    def retrieve_release_data
+      case @variant
+      when :'x86-64', :enterprise
+        retrieve_first_party_release_data
+      when :arm, :arm64
+        retrieve_smart_honeybee_release_data
+      else
+        raise "Unsupported variant '{#release_desc.variant}'"
+      end
+    end
+
+    def retrieve_first_party_release_data
+      edition = {
+        'x86-64': 'team',
+        enterprise: 'enterprise'
+      }.fetch(variant)
+
+      @url = "https://releases.mattermost.com/#{version}/mattermost-#{edition}-#{version}-linux-amd64.tar.gz"
+
+      puts "Downloading release #{version}-#{variant} for computing checksum…"
+      release_file = URI.parse(@url).read
+      @sum = Digest::SHA256.hexdigest(release_file)
+    end
+
+    def retrieve_smart_honeybee_release_data
+      @url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v#{version}/mattermost-v#{version}-linux-#{variant}.tar.gz"
+
+      sum_url = "#{url}.sha512sum"
+      URI.open(sum_url) do |sum_file|
+        @sum = sum_file.read.lines.first.split(' ').first
+      end
+    end
+  end
+end
+
+module Yunohost
+  class AppSrcFile
+    def initialize(path)
+      @path = path
+    end
+
+    def update_with_release(release)
+      src = File.read(@path)
+      replace_src_setting!(src, 'SOURCE_URL', release.url)
+      replace_src_setting!(src, 'SOURCE_SUM', release.sum)
+      replace_src_setting!(src, 'SOURCE_FILENAME', File.basename(URI.parse(release.url).path))
+      File.write(@path, src)
+    end
+
+    private
+
+    def replace_src_setting!(str, setting, value)
+      str.gsub!(/^#{setting}=.*$/, "#{setting}=#{value}")
+    end
+  end
+
+  class ReadmeFile
+    def initialize(path)
+      @path = path
+    end
+
+    def update_with_version(version)
+      readme = File.read(@path)
+      readme.gsub!(/<span class="version">(.*)<\/span>/, "<span class=\"version\">#{version}</span>")
+      File.write(@path, readme)
+    end
+  end
+
+  class ManifestFile
+    def initialize(path)
+      @path = path
+    end
+
+    def update_with_version(version)
+      manifest_file = File.read(@path)
+      manifest = JSON.parse(manifest_file)
+
+      manifest['version'] = "#{version}~ynh1"
+
+      manifest_file = JSON.pretty_generate(manifest, indent: '    ') + "\n"
+      File.write(@path, manifest_file)
+    end
+  end
+end
+
+version=ARGV[0]
+if version.nil?
+  abort("ERROR: The Mattermost release version must be provided.\nExample: ./bump-mattermost.sh 5.33.1")
+end
+
+VARIANTS = %i[x86-64 enterprise arm arm64]
+
+# Compute releases URLs and sums
+releases = VARIANTS
+  .map { |variant| Mattermost::ReleaseDescription.new(version, variant) }
+  .map { |description| Mattermost::Release.new(description) }
+
+# Update conf/*.src files
+releases.each do |r|
+  Yunohost::AppSrcFile.new("conf/#{r.variant}.src").update_with_release(r)
+end
+
+# Update manifest file
+Yunohost::ManifestFile.new('manifest.json').update_with_version(version)
+
+# Update documentation files
+Yunohost::ReadmeFile.new('README.md').update_with_version(version)
+Yunohost::ReadmeFile.new('README_fr.md').update_with_version(version)
