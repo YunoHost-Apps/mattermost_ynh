@@ -8,6 +8,13 @@
     },
     "version": "5.34.2~ynh1",
     "url": "http://www.mattermost.org/",
+    "upstream": {
+        "license": "GPL-3.0-only",
+        "website": "http://www.mattermost.org/",
+        "admindoc": "https://docs.mattermost.com/",
+        "userdoc": "https://yunohost.org/en/app_mattermost",
+        "code": "https://github.com/mattermost/mattermost-server"
+    },
     "license": "GPL-3.0-only",
     "maintainer": {
         "name": "pmorinerie",
