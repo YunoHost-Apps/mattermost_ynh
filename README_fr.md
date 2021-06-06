@@ -1,9 +1,9 @@
 # Mattermost pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg)  ![](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Niveau d'intégration](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)  
 [![Installer mattermost avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
-*[Read this readme in english.](./README.md)*
+*[Read this readme in english.](./README.md)* 
 *[Lire ce readme en français.](./README_fr.md)*
 
 > *This package allows you to install mattermost quickly and simply on a YunoHost server.
@@ -13,7 +13,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Plateforme de collaboration open source conçue pour les développeurs
 
-**Version incluse:** 5.34.2~ynh1
+**Version incluse:** 5.35.2~ynh1
 
 
 
@@ -53,7 +53,7 @@ Ce paquet peut être installé sur les architectures `ARM`, `ARM64` et `x86-64` 
 * Documentation officielle de l'admin: https://docs.mattermost.com/
 * Dépôt de code officiel de l'app:  https://github.com/mattermost/mattermost-server
 * Documentation YunoHost pour cette app: https://yunohost.org/app_mattermost
-* Signaler un bug: https://github.com/YunoHost-Apps/mattermost_ynh/issues
+ * Signaler un bug : https://github.com/YunoHost-Apps/mattermost_ynh/issues
 
 ## Informations pour les développeurs
 

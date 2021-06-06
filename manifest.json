@@ -6,7 +6,7 @@
         "en": "Open source collaboration platform built for developers",
         "fr": "Plateforme de collaboration open source conçue pour les développeurs"
     },
-    "version": "5.34.2~ynh1",
+    "version": "5.35.2~ynh1",
     "url": "http://www.mattermost.org/",
     "upstream": {
         "license": "GPL-3.0-only",
@@ -26,10 +26,10 @@
         "mysql"
     ],
     "requirements": {
-      "yunohost": ">= 4.1.0"
+        "yunohost": ">= 4.1.0"
     },
     "arguments": {
-        "install" : [
+        "install": [
             {
                 "name": "domain",
                 "type": "domain",
@@ -91,7 +91,10 @@
                     "en": "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 support only)",
                     "fr": "Utilisez Team Edition pour la version open source (prise en charge ARM, ARM64 et x86-64) ou Enterprise Edition si vous souhaitez utiliser une licence (prise en charge x86-64 uniquement)"
                 },
-                "choices": ["Enterprise", "Team"],
+                "choices": [
+                    "Enterprise",
+                    "Team"
+                ],
                 "default": "Team"
             },
             {
@@ -101,7 +104,14 @@
                     "en": "Choose the language of the chat for the admin",
                     "fr": "Choissisez la langue utilisée pour l'administrateur"
                 },
-                "choices": ["de", "en", "es", "fr", "it", "pt"],
+                "choices": [
+                    "de",
+                    "en",
+                    "es",
+                    "fr",
+                    "it",
+                    "pt"
+                ],
                 "default": "en"
             },
             {
