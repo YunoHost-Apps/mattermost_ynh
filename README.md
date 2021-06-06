@@ -9,7 +9,7 @@ It shall NOT be edited by hand.
 
 # Mattermost for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg)  ![](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)  
 [![Install mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -21,7 +21,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Open source collaboration platform built for developers
 
-**Shipped version:** 5.34.2~ynh1
+**Shipped version:** 5.35.2~ynh1
 
 
 
@@ -63,7 +63,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 * Official admin documentation: https://docs.mattermost.com/
 * Upstream app code repository:  https://github.com/mattermost/mattermost-server
 * YunoHost documentation for this app: https://yunohost.org/app_mattermost
-* Report a bug: https://github.com/YunoHost-Apps/mattermost_ynh/issues
+ * Report a bug: https://github.com/YunoHost-Apps/mattermost_ynh/issues
 
 ## Developer info
 
