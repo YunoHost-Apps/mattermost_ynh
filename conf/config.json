@@ -20,14 +20,14 @@
     "IdleTimeout": 60,
     "MaximumLoginAttempts": 10,
     "GoroutineHealthThreshold": -1,
-    "GoogleDeveloperKey": "",
     "EnableOAuthServiceProvider": false,
     "EnableIncomingWebhooks": true,
     "EnableOutgoingWebhooks": true,
     "EnableCommands": true,
-    "EnableOnlyAdminIntegrations": true,
     "EnablePostUsernameOverride": false,
     "EnablePostIconOverride": false,
+    "GoogleDeveloperKey": "",
+    "EnableOnlyAdminIntegrations": true,
     "EnableLinkPreviews": true,
     "RestrictLinkPreviews": "",
     "EnableTesting": false,
@@ -53,11 +53,11 @@
     "WebsocketSecurePort": 443,
     "WebsocketPort": 80,
     "WebserverMode": "gzip",
-    "EnableCustomEmoji": true,
-    "EnableEmojiPicker": true,
     "EnableGifPicker": true,
     "GfycatApiKey": "2_KtH_W5",
     "GfycatApiSecret": "3wLVZPiswc3DnaiaFoLkDvB4X0IV6CpMkj4tf2inJRsBY6-FnkT08zGmppWFgeof",
+    "EnableCustomEmoji": true,
+    "EnableEmojiPicker": true,
     "RestrictCustomEmojiCreation": "all",
     "RestrictPostDelete": "all",
     "AllowEditPost": "always",
@@ -100,7 +100,8 @@
     "ThreadAutoFollow": true,
     "CollapsedThreads": "disabled",
     "ManagedResourcePaths": "",
-    "EnableLegacySidebar": false
+    "EnableLegacySidebar": false,
+    "EnableReliableWebSockets": false
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -157,7 +158,8 @@
     "Trace": false,
     "AtRestEncryptKey": "",
     "QueryTimeout": 30,
-    "DisableDatabaseSearch": false
+    "DisableDatabaseSearch": false,
+    "ReplicaLagSettings": []
   },
   "LogSettings": {
     "EnableConsole": true,
@@ -467,7 +469,8 @@
     "UseNewSAMLLibrary": false,
     "CloudUserLimit": 0,
     "CloudBilling": false,
-    "EnableSharedChannels": false
+    "EnableSharedChannels": false,
+    "EnableRemoteClusterService": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -565,15 +568,21 @@
     "RemoteImageProxyOptions": ""
   },
   "CloudSettings": {
-    "CWSUrl": "https://customers.mattermost.com"
+    "CWSUrl": "https://customers.mattermost.com",
+    "CWSAPIUrl": "https://portal.internal.prod.cloud.mattermost.com"
   },
   "FeatureFlags": {
     "TestFeature": "off",
     "TestBoolFeature": false,
     "CloudDelinquentEmailJobsEnabled": false,
     "CollapsedThreads": false,
-    "PluginIncidentManagement": "1.5.2",
-    "FilesSearch": false
+    "EnableRemoteClusterService": false,
+    "CustomUserStatuses": false,
+    "AppsEnabled": false,
+    "PluginIncidentManagement": "1.9.3",
+    "PluginApps": "",
+    "WebSocketDelay": false,
+    "CustomDataRetentionEnabled": false
   },
   "ImportSettings": {
     "Directory": "./import",
