@@ -97,7 +97,7 @@ module Yunohost
 
     def update_with_version(version)
       readme = File.read(@path)
-      readme.gsub!(/<span class="version">(.*)<\/span>/, "<span class=\"version\">#{version}</span>")
+      readme.gsub!(/[0-9\.]+~ynh[0-9]+/, "#{version}~ynh1")
       File.write(@path, readme)
     end
   end

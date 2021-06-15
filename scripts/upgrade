@@ -40,6 +40,7 @@ version=$(ynh_app_setting_get --app=$app --key=version)
 #=================================================
 ynh_script_progression --message="Checking version..." --weight=1
 
+previous_upstream_version="$(ynh_app_upstream_version --manifest="/etc/yunohost/apps/$YNH_APP_INSTANCE_NAME/manifest.json")"
 upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
@@ -192,6 +193,12 @@ yunohost service add $app --description="Collaboration platform built for develo
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# A lengthy database migration runs when upgrading from a version < 5.35.
+if dpkg --compare-versions "$previous_upstream_version" lt "5.35.0"
+then
+  ynh_print_warn --message="A database migration will now run. This may take a while..."
+fi
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
