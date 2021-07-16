@@ -17,7 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Open source collaboration platform built for developers
 
-**Shipped version:** 5.36.1~ynh1
+**Shipped version:** 5.37.0~ynh1
 
 
 
