@@ -578,13 +578,14 @@
     "TestFeature": "off",
     "TestBoolFeature": false,
     "CloudDelinquentEmailJobsEnabled": false,
-    "CollapsedThreads": false,
+    "CollapsedThreads": true,
     "EnableRemoteClusterService": false,
     "AppsEnabled": false,
-    "PluginIncidentManagement": "1.12.0",
+    "PluginIncidentManagement": "1.14.3",
     "PluginApps": "",
     "PluginFocalboard": "",
-    "CustomDataRetentionEnabled": false
+    "CustomDataRetentionEnabled": false,
+    "TimedDND": false
   },
   "ImportSettings": {
     "Directory": "./import",
