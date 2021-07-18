@@ -20,14 +20,14 @@
     "IdleTimeout": 60,
     "MaximumLoginAttempts": 10,
     "GoroutineHealthThreshold": -1,
-    "GoogleDeveloperKey": "",
     "EnableOAuthServiceProvider": false,
     "EnableIncomingWebhooks": true,
     "EnableOutgoingWebhooks": true,
     "EnableCommands": true,
-    "EnableOnlyAdminIntegrations": true,
     "EnablePostUsernameOverride": false,
     "EnablePostIconOverride": false,
+    "GoogleDeveloperKey": "",
+    "EnableOnlyAdminIntegrations": true,
     "EnableLinkPreviews": true,
     "RestrictLinkPreviews": "",
     "EnableTesting": false,
@@ -53,11 +53,11 @@
     "WebsocketSecurePort": 443,
     "WebsocketPort": 80,
     "WebserverMode": "gzip",
-    "EnableCustomEmoji": true,
-    "EnableEmojiPicker": true,
     "EnableGifPicker": true,
     "GfycatApiKey": "2_KtH_W5",
     "GfycatApiSecret": "3wLVZPiswc3DnaiaFoLkDvB4X0IV6CpMkj4tf2inJRsBY6-FnkT08zGmppWFgeof",
+    "EnableCustomEmoji": true,
+    "EnableEmojiPicker": true,
     "RestrictCustomEmojiCreation": "all",
     "RestrictPostDelete": "all",
     "AllowEditPost": "always",
@@ -100,7 +100,8 @@
     "ThreadAutoFollow": true,
     "CollapsedThreads": "disabled",
     "ManagedResourcePaths": "",
-    "EnableLegacySidebar": false
+    "EnableLegacySidebar": false,
+    "EnableReliableWebSockets": false
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -157,12 +158,14 @@
     "Trace": false,
     "AtRestEncryptKey": "",
     "QueryTimeout": 30,
-    "DisableDatabaseSearch": false
+    "DisableDatabaseSearch": false,
+    "ReplicaLagSettings": []
   },
   "LogSettings": {
     "EnableConsole": true,
     "ConsoleLevel": "INFO",
     "ConsoleJson": true,
+    "EnableColor": false,
     "EnableFile": true,
     "FileLevel": "INFO",
     "FileJson": true,
@@ -186,6 +189,7 @@
     "EnableConsole": false,
     "ConsoleLevel": "INFO",
     "ConsoleJson": true,
+    "EnableColor": false,
     "EnableFile": true,
     "FileLevel": "INFO",
     "FileJson": true,
@@ -268,12 +272,12 @@
     "ShowFullName": true
   },
   "SupportSettings": {
-    "TermsOfServiceLink": "https://about.mattermost.com/default-terms/",
-    "PrivacyPolicyLink": "https://about.mattermost.com/default-privacy-policy/",
-    "AboutLink": "https://about.mattermost.com/default-about/",
-    "HelpLink": "https://about.mattermost.com/default-help/",
+    "TermsOfServiceLink": "https://mattermost.com/terms-of-service/",
+    "PrivacyPolicyLink": "https://mattermost.com/privacy-policy/",
+    "AboutLink": "https://docs.mattermost.com/overview/product.html",
+    "HelpLink": "https://academy.mattermost.com/",
     "ReportAProblemLink": "https://about.mattermost.com/default-report-a-problem/",
-    "SupportEmail": "feedback@mattermost.com",
+    "SupportEmail": "",
     "CustomTermsOfServiceEnabled": false,
     "CustomTermsOfServiceReAcceptancePeriod": 365,
     "EnableAskCommunityLink": true
@@ -383,7 +387,8 @@
   "ComplianceSettings": {
     "Enable": false,
     "Directory": "./data/",
-    "EnableDaily": false
+    "EnableDaily": false,
+    "BatchSize": 30000
   },
   "LocalizationSettings": {
     "DefaultServerLocale": "__LANGUAGE__",
@@ -467,7 +472,8 @@
     "UseNewSAMLLibrary": false,
     "CloudUserLimit": 0,
     "CloudBilling": false,
-    "EnableSharedChannels": false
+    "EnableSharedChannels": false,
+    "EnableRemoteClusterService": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -565,15 +571,21 @@
     "RemoteImageProxyOptions": ""
   },
   "CloudSettings": {
-    "CWSUrl": "https://customers.mattermost.com"
+    "CWSUrl": "https://customers.mattermost.com",
+    "CWSAPIUrl": "https://portal.internal.prod.cloud.mattermost.com"
   },
   "FeatureFlags": {
     "TestFeature": "off",
     "TestBoolFeature": false,
     "CloudDelinquentEmailJobsEnabled": false,
-    "CollapsedThreads": false,
-    "PluginIncidentManagement": "1.5.2",
-    "FilesSearch": false
+    "CollapsedThreads": true,
+    "EnableRemoteClusterService": false,
+    "AppsEnabled": false,
+    "PluginIncidentManagement": "1.14.3",
+    "PluginApps": "",
+    "PluginFocalboard": "",
+    "CustomDataRetentionEnabled": false,
+    "TimedDND": false
   },
   "ImportSettings": {
     "Directory": "./import",
