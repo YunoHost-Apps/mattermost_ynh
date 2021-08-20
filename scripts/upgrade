@@ -194,10 +194,10 @@ yunohost service add $app --description="Collaboration platform built for develo
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=2
 
-# A lengthy database migration runs when upgrading from a version < 5.35.
-if dpkg --compare-versions "$previous_upstream_version" lt "5.35.0"
+# A lengthy database migration runs when upgrading from a version < 5.38.
+if dpkg --compare-versions "$previous_upstream_version" lt "5.38.0"
 then
-  ynh_print_warn --message="A database migration will now run. This may take a while..."
+  ynh_print_warn --message="Lengthy database migrations will now run. This may take a while..."
 fi
 
 # Start a systemd service
