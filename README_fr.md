@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Plateforme de collaboration open source conçue pour les développeurs
 
-**Version incluse :** 5.38.0~ynh1
+**Version incluse :** 5.38.1~ynh1
 
 
 
