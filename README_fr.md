@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Plateforme de collaboration open source conçue pour les développeurs
 
-**Version incluse :** 5.38.1~ynh1
+**Version incluse :** 5.38.2~ynh1
 
 
 
@@ -42,8 +42,8 @@ Ce paquet peut être installé sur les architectures `ARM`, `ARM64` et `x86-64` 
 ## Documentations et ressources
 
 * Site officiel de l'app : http://www.mattermost.org/
-* Documentation officielle utilisateur : https://yunohost.org/en/app_mattermost
-* Documentation officielle de l'admin : https://docs.mattermost.com/
+* Documentation officielle utilisateur : https://docs.mattermost.com/guides/messaging.html
+* Documentation officielle de l'admin : https://docs.mattermost.com/guides/deployment.html
 * Dépôt de code officiel de l'app : https://github.com/mattermost/mattermost-server
 * Documentation YunoHost pour cette app : https://yunohost.org/app_mattermost
 * Signaler un bug : https://github.com/YunoHost-Apps/mattermost_ynh/issues

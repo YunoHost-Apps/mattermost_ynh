@@ -17,7 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Open source collaboration platform built for developers
 
-**Shipped version:** 5.38.1~ynh1
+**Shipped version:** 5.38.2~ynh1
 
 
 
@@ -48,8 +48,8 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 ## Documentation and resources
 
 * Official app website: http://www.mattermost.org/
-* Official user documentation: https://yunohost.org/en/app_mattermost
-* Official admin documentation: https://docs.mattermost.com/
+* Official user documentation: https://docs.mattermost.com/guides/messaging.html
+* Official admin documentation: https://docs.mattermost.com/guides/deployment.html
 * Upstream app code repository: https://github.com/mattermost/mattermost-server
 * YunoHost documentation for this app: https://yunohost.org/app_mattermost
 * Report a bug: https://github.com/YunoHost-Apps/mattermost_ynh/issues
