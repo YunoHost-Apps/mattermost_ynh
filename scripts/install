@@ -86,7 +86,7 @@ ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
 ynh_script_progression --message="Configuring system user..." --weight=3
 
 # Create a system user
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -104,17 +104,23 @@ elif [ "$version" = "Team" ]; then
   ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
 fi
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # CREATE DIRECTORY FOR DATA
 #=================================================
-ynh_script_progression --message="Creating the data directory..." --weight=1
+ynh_script_progression --message="Creating a data directory..." --weight=1
 
-# Create datadir folder
-mkdir -p "/home/yunohost.app/$app"
-# Define app's data directory
-data_path="/home/yunohost.app/$app"
-# Give permission to the datadir
-chown -R $app: "$data_path"
+data_path=/home/yunohost.app/$app
+ynh_app_setting_set --app=$app --key=data_path --value=$data_path
+
+mkdir -p $data_path
+
+chmod 750 "$data_path"
+chmod -R o-rwx "$data_path"
+chown -R $app:www-data "$data_path"
 
 #=================================================
 # HANDLE LOG FILES AND LOGROTATE
@@ -141,13 +147,8 @@ smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
-
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-
-chown -R $app: $final_path
-chmod -R g+w $final_path
+chmod 400 "$final_path/config/config.json"
+chown $app:$app "$final_path/config/config.json"
 
 #=================================================
 # NGINX CONFIGURATION

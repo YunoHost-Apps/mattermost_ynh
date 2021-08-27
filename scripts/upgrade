@@ -34,6 +34,7 @@ language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 architecture=$(ynh_detect_arch)
 version=$(ynh_app_setting_get --app=$app --key=version)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # CHECK VERSION
@@ -57,6 +58,12 @@ fi
 if [ -z "$language" ]; then
   language="en"
   ynh_app_setting_set --app=$app --key=language --value=$language
+fi
+
+# If data_path doesn't exist, create it
+if [ -z "$data_path" ]; then
+ data_path=/home/yunohost.app/$app
+ ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 fi
 
 # If version setting doesn't exist
@@ -101,6 +108,14 @@ ynh_script_progression --message="Stopping a systemd service..." --weight=3
 ynh_systemd_action --service_name=$app --action=stop --log_path="/var/log/$app/$app.log"
 
 #=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
+
+# Create a dedicated user (if not existing)
+ynh_system_user_create --username=$app --home_dir="$final_path"
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
@@ -130,6 +145,10 @@ then
   ynh_secure_remove --file="$tmpdir"
 fi
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -137,14 +156,6 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app
 
 #=================================================
 # SETUP SYSTEMD
@@ -159,19 +170,11 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Creating the data directory..." --weight=1
 
-# Define app's data directory
-data_path="/home/yunohost.app/$app"
-# Create datadir folder
 mkdir -p $data_path
-# Give permission to the datadir
-chown -R $app: "$data_path"
 
-#=================================================
-# RESTORE FILE PERMISSIONS
-#=================================================
-
-chown -R $app: $final_path
-chmod -R g+w $final_path
+chmod 750 "$data_path"
+chmod -R o-rwx "$data_path"
+chown -R $app:www-data "$data_path"
 chown -R $app: "/var/log/$app"
 
 #=================================================
