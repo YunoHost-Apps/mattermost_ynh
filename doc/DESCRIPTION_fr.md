@@ -1,9 +1,3 @@
-## Mattermost Team Edition
-A free-to-use, open source, self-hosted alternative to proprietary SaaS messaging. Team Edition is your open source “virtual office”, offering all the core productivity benefits of competing SaaS solutions. It deploys as a single Linux binary with MySQL under an MIT license.
-
-## Mattermost Enterprise Edition
-To explore the benefits of Mattermost’s enterprise features, you can replace the Mattermost Team Edition binary with a Mattermost Enterprise Edition binary. This version supports upgrading to Mattermost Enterprise Edition E10 or E20.
-
 Features include:
 
 - One-to-one and group messaging, file sharing, and unlimited search history
