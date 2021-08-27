@@ -11,20 +11,26 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 ## Vue d'ensemble
 
-Features include:
+## Mattermost Team Edition
+Une alternative gratuite, open source et auto-hébergée à la messagerie SaaS propriétaire. Team Edition est votre « bureau virtuel » open source, offrant tous les principaux avantages de productivité des solutions SaaS concurrentes.
 
-- One-to-one and group messaging, file sharing, and unlimited search history
-- Native apps for iOS, Android, Windows, Mac, Linux
-- Threaded messaging, emoji, and custom emoji
-- Tools for custom branding
-- Continuous archiving
-- Multi-factor authentication
-- Highly customizable third-party bots, integrations, and command line tools
-- Extensive integration support via webhooks, APIs, drivers, and third-party extensions
-- Easily scalable to dozens of users per team
-- Runtime profiling data and system monitoring reports
-- New features and improvements released regularly
-- Multiple languages including U.S. English, Australian English, Bulgarian, Chinese (Simplified and Traditional), Dutch, French, German, Hungarian, Italian, Japanese, Korean, Polish, Brazilian Portuguese, Romanian, Russian, Turkish, Spanish, Swedish, and Ukrainian
+## Mattermost Édition Entreprise
+Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vous pouvez remplacer le binaire Mattermost Team Edition par un binaire Mattermost Enterprise Edition. Cette version prend en charge la mise à niveau vers Mattermost Enterprise Edition E10 ou E20. 
+
+Les fonctionnalités incluent:
+
+- Messagerie individuelle et de groupe, partage de fichiers et historique de recherche illimité
+- Applications natives pour iOS, Android, Windows, Mac, Linux
+- Messagerie, emoji et emoji personnalisés
+- Outils pour une image de marque personnalisée
+- Archivage continu
+- Authentification multi-facteurs
+- Bots tiers hautement personnalisables, intégrations et outils de ligne de commande
+- Prise en charge étendue de l'intégration via des webhooks, des API, des pilotes et des extensions tierces
+- Facilement évolutif à des dizaines d'utilisateurs par équipe
+- Données de profilage d'exécution et rapports de surveillance du système
+- Nouvelles fonctionnalités et améliorations publiées régulièrement
+- Plusieurs langues dont l'anglais américain, l'anglais australien, le bulgare, le chinois (simplifié et traditionnel), le néerlandais, le français, l'allemand, le hongrois, l'italien, le japonais, le coréen, le polonais, le portugais brésilien, le roumain, le russe, le turc, l'espagnol, le suédois et l'ukrainien 
 
 **Version incluse :** 5.38.2~ynh1
 
