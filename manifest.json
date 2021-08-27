@@ -11,8 +11,8 @@
     "upstream": {
         "license": "GPL-3.0-only",
         "website": "http://www.mattermost.org/",
-        "admindoc": "https://docs.mattermost.com/",
-        "userdoc": "https://yunohost.org/en/app_mattermost",
+        "admindoc": "https://docs.mattermost.com/guides/deployment.html",
+        "userdoc": "https://docs.mattermost.com/guides/messaging.html",
         "code": "https://github.com/mattermost/mattermost-server"
     },
     "license": "GPL-3.0-only",
