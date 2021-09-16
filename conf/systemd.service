@@ -15,7 +15,6 @@ User=__APP__
 Group=__APP__
 LimitNOFILE=49152
 
-
 # Sandboxing options to harden security
 # Depending on specificities of your service/app, you may need to tweak these 
 # .. but this should be a good baseline

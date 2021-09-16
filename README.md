@@ -67,8 +67,8 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 ## Documentation and resources
 
 * Official app website: http://www.mattermost.org/
-* Official user documentation: https://yunohost.org/en/app_mattermost
-* Official admin documentation: https://docs.mattermost.com/
+* Official user documentation: https://docs.mattermost.com/guides/messaging.html
+* Official admin documentation: https://docs.mattermost.com/guides/deployment.html
 * Upstream app code repository: https://github.com/mattermost/mattermost-server
 * YunoHost documentation for this app: https://yunohost.org/app_mattermost
 * Report a bug: https://github.com/YunoHost-Apps/mattermost_ynh/issues
