@@ -1,5 +1,5 @@
 SOURCE_URL=https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v5.38.2/mattermost-v5.38.2-linux-arm64.tar.gz
-SOURCE_SUM=e2c95ca30b5604580413231747013eb36a2474298bd0feabdffd7f77e469931b77575ccb010e174ff2a910aeb513a4bcb7a7b8c5775ea2b562b284dcd8064bb2
+SOURCE_SUM=3790dd44137f53be7ffaadba26b63ca0e1333dea06580f8f91eba1eee314e3c0
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
