@@ -63,16 +63,16 @@ echo "Handling asset at $asset_url"
 # Here we base the source file name upon a unique keyword in the assets url (admin vs. update)
 # Leave $src empty to ignore the asset
 case $asset_url in
-  *".tar.gz"*)
+  *"mattermost-v"$version"-linux-arm.tar.gz"*)
     src="arm"
     ;;
-  *".tar.gz"*)
+  *"mattermost-v"$version"-linux-arm64.tar.gz"*)
     src="arm64"
     ;;
-  *".tar.gz"*)
+  *"mattermost-v"$version"-linux-amd64.tar.gz"*)
     src="x86-64"
     ;;
-  *".tar.gz"*)
+  *"mattermost-enterprise-"$version"-linux-amd64.tar.gz"*)
     src="entreprise"
     ;;
 esac
