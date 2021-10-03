@@ -1,6 +1,6 @@
 SOURCE_URL=https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v5.39.0/mattermost-v5.39.0-linux-arm.tar.gz
-SOURCE_SUM=c95e52f8977130d5e4a68ddc6b5a1c1e2756f6b40630d003e05cd82f8bed209712e2dad0874f2f92984a3b47b56a114abfecd60d290a91ac36fcb5b70e235fe7
-SOURCE_SUM_PRG=sha512sum
+SOURCE_SUM=06cf528404a2c096dc69a005654ce9c2fa89301d2f4faf38fa72bd80c05ade1a
+SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mattermost-v5.39.0-linux-arm.tar.gz
+SOURCE_FILENAME=mattermost.tar.gz
