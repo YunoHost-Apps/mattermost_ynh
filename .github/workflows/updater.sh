@@ -21,11 +21,19 @@ current_version=$(cat manifest.json | jq -j '.version|split("~")[0]')
 repo=$(cat manifest.json | jq -j '.upstream.code|split("https://github.com/")[1]')
 # Some jq magic is needed, because the latest upstream release is not always the latest version (e.g. security patches for older versions)
 version=$(curl --silent "https://api.github.com/repos/$repo/releases" | jq -r '.[] | select( .prerelease != true ) | .tag_name' | sort -V | tail -1)
-assets=($(curl --silent "https://api.github.com/repos/$repo/releases" | jq -r '[ .[] | select(.tag_name=="'$version'").assets[].browser_download_url ] | join(" ") | @sh' | tr -d "'"))
 
-# if [[ ${version:0:1} == "v" || ${version:0:1} == "V" ]]; then
-#     version=${version:1}
-# fi
+if [[ ${version:0:1} == "v" || ${version:0:1} == "V" ]]; then
+    version=${version:1}
+fi
+
+# x86-64 and enterprise assets are hosted on Mattermost's servers.
+assets=()
+assets+=("https://releases.mattermost.com/$version/mattermost-team-$version-linux-amd64.tar.gz")
+assets+=("https://releases.mattermost.com/$version/mattermost-enterprise-$version-linux-amd64.tar.gz")
+
+# ARM and ARM64 are published in another repository (with a leading "v" for version tags)
+other_repo="SmartHoneybee/ubiquitous-memory"
+other_assets=($(curl --silent "https://api.github.com/repos/$other_repo/releases" | jq -r '[ .[] | select(.tag_name=="'v$version'").assets[].browser_download_url ] | join(" ") | @sh' | tr -d "'"))
 
 # Setting up the environment variables
 echo "Current version: $current_version"
@@ -42,6 +50,13 @@ if ! dpkg --compare-versions "$current_version" "lt" "$version" ; then
 elif git ls-remote -q --exit-code --heads https://github.com/$GITHUB_REPOSITORY.git ci-auto-update-v$version ; then
     echo "::warning ::A branch already exists for this update"
     exit 0
+fi
+# Proceed only if all the binaries have been found
+if (( ${#other_assets[@]} == 0 )); then
+    echo "::warning ::$other_repo has not released anything for v$version"
+    exit 0
+else
+    assets+=( ${other_assets[@]} )
 fi
 
 # Each release can hold multiple assets (e.g. binaries for different architectures, source code, etc.)
@@ -63,17 +78,20 @@ echo "Handling asset at $asset_url"
 # Here we base the source file name upon a unique keyword in the assets url (admin vs. update)
 # Leave $src empty to ignore the asset
 case $asset_url in
-  *"mattermost-"*"-linux-arm.tar.gz"*)
+  *"mattermost-"*"-linux-arm.tar.gz")
     src="arm"
     ;;
-  *"mattermost-"*"-linux-arm64.tar.gz"*)
+  *"mattermost-"*"-linux-arm64.tar.gz")
     src="arm64"
     ;;
-  *"mattermost-"*"-linux-amd64.tar.gz"*)
+  *"mattermost-team-"*"-linux-amd64.tar.gz")
     src="x86-64"
     ;;
-  *"mattermost-enterprise-"*"-linux-amd64.tar.gz"*)
-    src="entreprise"
+  *"mattermost-enterprise-"*"-linux-amd64.tar.gz")
+    src="enterprise"
+    ;;
+  *)
+    src=""
     ;;
 esac
 
