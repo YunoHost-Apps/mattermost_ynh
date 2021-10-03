@@ -96,6 +96,7 @@ ynh_mysql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./
 #=================================================
 # RESTORE SYSTEMD
 #=================================================
+ynh_script_progression --message="Restoring the systemd configuration..." --weight=1
 
 ynh_restore_file "/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
