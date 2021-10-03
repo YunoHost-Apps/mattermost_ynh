@@ -122,12 +122,6 @@ ynh_script_progression --message="Starting a systemd service..." --weight=2
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
 
 #=================================================
-# RESTORE THE LOGROTATE CONFIGURATION
-#=================================================
-
-ynh_restore_file --origin_path="/etc/logrotate.d/$app"
-
-#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # RELOAD NGINX
