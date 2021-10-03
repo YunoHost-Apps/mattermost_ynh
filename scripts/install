@@ -122,20 +122,6 @@ chmod -R o-rwx "$data_path"
 chown -R $app:www-data "$data_path"
 
 #=================================================
-# HANDLE LOG FILES AND LOGROTATE
-#=================================================
-ynh_script_progression --message="Configuring log rotation..." --weight=1
-
-# Create log directory
-mkdir -p /var/log/$app
-#touch /var/log/$app/$app.log
-logs_path="/var/log/$app"
-chown $app -R $logs_path
-
-# Setup logrotate
-ynh_use_logrotate
-
-#=================================================
 # EDIT MATTERMOST CONFIG
 #=================================================
 # MODIFY A CONFIG FILE
@@ -175,6 +161,14 @@ pushd "$final_path"
 	ynh_exec_warn_less ynh_exec_as $app bin/mattermost team create --name "$team_name" --display_name "$team_display_name" --email "$email"
 	ynh_exec_warn_less ynh_exec_as $app bin/mattermost team add "$team_name" "$admin"
 popd
+
+#=================================================
+# SETUP LOGROTATE
+#=================================================
+ynh_script_progression --message="Configuring log rotation..." --weight=1
+
+# Use logrotate to manage application logfile(s)
+ynh_use_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

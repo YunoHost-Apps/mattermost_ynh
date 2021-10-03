@@ -92,14 +92,6 @@ ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 ynh_mysql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./db.sql
 
 #=================================================
-# RESTORE USER RIGHTS
-#=================================================
-
-logs_path="/var/log/$app"
-mkdir -p $logs_path
-chown -R $app: $logs_path
-
-#=================================================
 # SPECIFIC RESTORATION
 #=================================================
 # RESTORE SYSTEMD
@@ -107,6 +99,13 @@ chown -R $app: $logs_path
 
 ynh_restore_file "/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
+
+#=================================================
+# RESTORE THE LOGROTATE CONFIGURATION
+#=================================================
+ynh_script_progression --message="Restoring the logrotate configuration..." --time --weight=1
+
+ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
