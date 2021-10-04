@@ -513,7 +513,8 @@
     "EnableFileDeletion": false,
     "MessageRetentionDays": 365,
     "FileRetentionDays": 365,
-    "DeletionJobStartTime": "02:00"
+    "DeletionJobStartTime": "02:00",
+    "BatchSize": 3000
   },
   "MessageExportSettings": {
     "EnableExport": false,
@@ -552,7 +553,8 @@
     "AutomaticPrepackagedPlugins": true,
     "RequirePluginSignature": false,
     "MarketplaceUrl": "https://api.integrations.mattermost.com",
-    "SignaturePublicKeyFiles": []
+    "SignaturePublicKeyFiles": [],
+    "ChimeraOAuthProxyUrl": ""
   },
   "DisplaySettings": {
     "CustomUrlSchemes": [],
@@ -584,7 +586,6 @@
     "PluginIncidentManagement": "1.14.3",
     "PluginApps": "",
     "PluginFocalboard": "",
-    "CustomDataRetentionEnabled": false,
     "TimedDND": false
   },
   "ImportSettings": {
