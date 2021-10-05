@@ -34,6 +34,7 @@ language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 architecture=$(ynh_detect_arch)
 version=$(ynh_app_setting_get --app=$app --key=version)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # CHECK VERSION
@@ -42,6 +43,20 @@ ynh_script_progression --message="Checking version..." --weight=1
 
 previous_upstream_version="$(ynh_app_upstream_version --manifest="/etc/yunohost/apps/$YNH_APP_INSTANCE_NAME/manifest.json")"
 upgrade_type=$(ynh_check_app_version_changed)
+
+#=================================================
+# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+#=================================================
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
+
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+  # Restore it if the upgrade fails
+  ynh_restore_upgradebackup
+}
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -70,26 +85,18 @@ if [ -z "$db_name" ]; then
    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 fi
 
+# If final_path doesn't exist, create it
+if [ -z "$data_path" ]; then
+  data_path="/home/yunohost.app/$app"
+ ynh_app_setting_set --app=$app --key=data_path --value=$data_path
+fi
+
 # Cleaning legacy permissions
 if ynh_legacy_permissions_exists; then
   ynh_legacy_permissions_delete_all
 
   ynh_app_setting_delete --app=$app --key=is_public
 fi
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
-  # Restore it if the upgrade fails
-  ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -99,6 +106,14 @@ ynh_abort_if_errors
 ynh_script_progression --message="Stopping a systemd service..." --weight=3
 
 ynh_systemd_action --service_name=$app --action=stop --log_path="/var/log/$app/$app.log"
+
+#=================================================
+# CREATE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
+
+# Create a dedicated user (if not existing)
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -130,6 +145,10 @@ then
   ynh_secure_remove --file="$tmpdir"
 fi
 
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
+
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -139,40 +158,12 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 ynh_add_nginx_config
 
 #=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app
-
-#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=2
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
-
-#=================================================
-# CREATE DIRECTORY FOR DATA
-#=================================================
-ynh_script_progression --message="Creating the data directory..." --weight=1
-
-# Define app's data directory
-data_path="/home/yunohost.app/$app"
-# Create datadir folder
-mkdir -p $data_path
-# Give permission to the datadir
-chown -R $app: "$data_path"
-
-#=================================================
-# RESTORE FILE PERMISSIONS
-#=================================================
-
-chown -R $app: $final_path
-chmod -R g+w $final_path
-chown -R $app: "/var/log/$app"
 
 #=================================================
 # SETUP LOGROTATE

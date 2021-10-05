@@ -19,7 +19,7 @@
         setup_private=1
         setup_public=1
         upgrade=1
-        upgrade=1   from_commit=202cc0725652d4b8fbca52630267247bd58c8de1
+        upgrade=1   from_commit=4fa3ee4ad82a6154f2eb858a3da285a35afecef8
         backup_restore=1
         multi_instance=1
         port_already_use=0
@@ -43,11 +43,11 @@
         setup_private=1
         setup_public=1
         upgrade=1
-        upgrade=1   from_commit=202cc0725652d4b8fbca52630267247bd58c8de1
+        upgrade=1   from_commit=4fa3ee4ad82a6154f2eb858a3da285a35afecef8
 ;;; Options
 Email=kemenaran@gmail.com
 Notification=none
 ;;; Upgrade options
-    ; commit=202cc0725652d4b8fbca52630267247bd58c8de1
-        name=Merge pull request #196 from amyblais/patch-51
+    ; commit=4fa3ee4ad82a6154f2eb858a3da285a35afecef8
+        name= Merge pull request #268 from YunoHost-Apps/testing 
         

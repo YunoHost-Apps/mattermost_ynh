@@ -20,6 +20,7 @@ port=$(ynh_app_setting_get --app=$app --key=port)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # STANDARD REMOVE
@@ -59,7 +60,7 @@ ynh_script_progression --message="Removing $app main directory..." --weight=6
 ynh_secure_remove --file="$final_path"
 
 # We don't delete this dir as it is marked as is-big
-# ynh_secure_remove --file="/home/yunohost.app/$app"
+# ynh_secure_remove --file="$data_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION

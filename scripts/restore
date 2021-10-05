@@ -32,14 +32,13 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
 #=================================================
 ynh_script_progression --message="Validating restoration parameters..." --weight=1
 
-ynh_webpath_available --domain=$domain --path_url=$path_url \
-	|| ynh_die --message="Path not available: ${domain}${path_url}"
 test ! -d $final_path \
 	|| ynh_die --message="There is already a directory: $final_path "
 
@@ -52,26 +51,36 @@ test ! -d $final_path \
 ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
 #=================================================
+# RECREATE THE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
+
+# Create the dedicated user (if not existing)
+ynh_system_user_create --username=$app --home_dir="$final_path"
+
+#=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
 ynh_script_progression --message="Restoring the app main directory..." --weight=2
 
 ynh_restore_file --origin_path="$final_path"
 
-#=================================================
-# RECREATE THE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
-
-# Create the dedicated user (if not existing)
-ynh_system_user_create --username=$app
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 
 #=================================================
-# RESTORE THE APP DATA
+# RESTORE THE DATA DIRECTORY
 #=================================================
+ynh_script_progression --message="Restoring the data directory..." --weight=4
 
-ynh_restore_file --origin_path="/home/yunohost.app/$app" --not_mandatory
-chown -R $app: "/home/yunohost.app/$app"
+ynh_restore_file --origin_path="$data_path" --not_mandatory
+
+mkdir -p $data_path
+
+chmod 750 "$data_path"
+chmod -R o-rwx "$data_path"
+chown -R $app:www-data "$data_path"
 
 #=================================================
 # RESTORE THE MYSQL DATABASE
@@ -85,10 +94,6 @@ ynh_mysql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./
 #=================================================
 # RESTORE USER RIGHTS
 #=================================================
-
-# Restore permissions on app files
-chown -R $app: $final_path
-chmod -R g+w $final_path
 
 logs_path="/var/log/$app"
 mkdir -p $logs_path
