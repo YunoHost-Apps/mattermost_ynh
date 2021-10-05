@@ -4,7 +4,7 @@ A free-to-use, open source, self-hosted alternative to proprietary SaaS messagin
 ## Mattermost Enterprise Edition
 To explore the benefits of Mattermost’s enterprise features, you can replace the Mattermost Team Edition binary with a Mattermost Enterprise Edition binary. This version supports upgrading to Mattermost Enterprise Edition E10 or E20.
 
-Features include:
+## Features include:
 
 - One-to-one and group messaging, file sharing, and unlimited search history
 - Native apps for iOS, Android, Windows, Mac, Linux

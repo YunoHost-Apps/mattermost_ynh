@@ -4,7 +4,7 @@ Une alternative gratuite, open source et auto-hébergée à la messagerie SaaS p
 ## Mattermost Entreprise Edition
 Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vous pouvez remplacer le binaire Mattermost Team Edition par un binaire Mattermost Enterprise Edition. Cette version prend en charge la mise à niveau vers Mattermost Enterprise Edition E10 ou E20. 
 
-Les fonctionnalités incluent:
+## Les fonctionnalités incluent:
 
 - Messagerie individuelle et de groupe, partage de fichiers et historique de recherche illimité
 - Applications natives pour iOS, Android, Windows, Mac, Linux
