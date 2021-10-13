@@ -175,10 +175,10 @@ pushd "$final_path/bin"
 	#ynh_exec_warn_less ynh_exec_as $app mmctl team create --name '$team_name' --display_name '$team_display_name' --email '$email'
 	#ynh_exec_warn_less ynh_exec_as $app mmctl team add '$team_name' '$admin'
 
-	mmctl user create --username '$admin' --email '$email' --password '$password' --locale '$language' --system_admin
-	mmctl user verify '$admin'
-	mmctl team create --name '$team_name' --display_name '$team_display_name' --email '$email'
-	mmctl team add '$team_name' '$admin'
+	$final_path/bin ./mmctl user create --username '$admin' --email '$email' --password '$password' --locale '$language' --system_admin
+	$final_path/bin ./mmctl user verify '$admin'
+	$final_path/bin ./mmctl team create --name '$team_name' --display_name '$team_display_name' --email '$email'
+	$final_path/bin ./mmctl team add '$team_name' '$admin'
 popd
 
 #=================================================
