@@ -164,6 +164,24 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=2
 ynh_add_systemd_config
 
 #=================================================
+# INSTALL MMCTL
+#=================================================
+
+# Install Go if needed
+if ! command -v /usr/local/go/bin/go &> /dev/null
+then
+        ynh_script_progression --message="Installing Go dependency... (this will take some time)" --weight=3
+        ynh_setup_source --source_id="go" --dest_dir="/usr/local/"
+fi
+
+export PATH=$PATH:/usr/local/go/bin
+env_path=$PATH
+
+go get -u github.com/mattermost/mmctl
+
+source <(mmctl completion bash)
+
+#=================================================
 # CREATE ADMIN AND FIRST TEAM
 #=================================================
 
