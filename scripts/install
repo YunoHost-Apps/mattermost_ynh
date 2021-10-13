@@ -170,6 +170,7 @@ ynh_add_systemd_config
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
 ynh_exec_warn_less ynh_exec_as $app $final_path/bin/mmctl user create --email $email --username $admin --password '$password' --locale $language --system-admin
+ynh_exec_warn_less ynh_exec_as $app $final_path/bin/mmctl auth login https://${domain}${path} --name $admin --username $admin --password '$password'
 ynh_exec_warn_less ynh_exec_as $app $final_path/bin/mmctl user verify $admin
 ynh_exec_warn_less ynh_exec_as $app $final_path/bin/mmctl team create --name $team_name --display_name $team_display_name --email $email
 ynh_exec_warn_less ynh_exec_as $app $final_path/bin/mmctl team add $team_name $admin
