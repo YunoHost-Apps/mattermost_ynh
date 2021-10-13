@@ -169,16 +169,16 @@ ynh_add_systemd_config
 
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
-pushd "$final_path/bin"
+pushd "$final_path"
 	#ynh_exec_warn_less ynh_exec_as $app mmctl user create --username '$admin' --email '$email' --password '$password' --locale '$language' --system_admin
 	#ynh_exec_warn_less ynh_exec_as $app mmctl user verify '$admin'
 	#ynh_exec_warn_less ynh_exec_as $app mmctl team create --name '$team_name' --display_name '$team_display_name' --email '$email'
 	#ynh_exec_warn_less ynh_exec_as $app mmctl team add '$team_name' '$admin'
 
-	$final_path/bin ./mmctl user create --username '$admin' --email '$email' --password '$password' --locale '$language' --system_admin
-	$final_path/bin ./mmctl user verify '$admin'
-	$final_path/bin ./mmctl team create --name '$team_name' --display_name '$team_display_name' --email '$email'
-	$final_path/bin ./mmctl team add '$team_name' '$admin'
+	$final_path/bin/mmctl user create --username '$admin' --email '$email' --password '$password' --locale '$language' --system_admin
+	$final_path/bin/mmctl user verify '$admin'
+	$final_path/bin/mmctl team create --name '$team_name' --display_name '$team_display_name' --email '$email'
+	$final_path/bin/mmctl team add '$team_name' '$admin'
 popd
 
 #=================================================
