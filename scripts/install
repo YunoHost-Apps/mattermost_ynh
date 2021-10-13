@@ -164,34 +164,16 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=2
 ynh_add_systemd_config
 
 #=================================================
-# INSTALL MMCTL
-#=================================================
-
-# Install Go if needed
-if ! command -v /usr/local/go/bin/go &> /dev/null
-then
-        ynh_script_progression --message="Installing Go dependency... (this will take some time)" --weight=3
-        ynh_setup_source --source_id="go" --dest_dir="/usr/local/"
-fi
-
-export PATH=$PATH:/usr/local/go/bin
-env_path=$PATH
-
-go get -u github.com/mattermost/mmctl
-
-source <(mmctl completion bash)
-
-#=================================================
 # CREATE ADMIN AND FIRST TEAM
 #=================================================
 
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
-pushd "$final_path"
-	ynh_exec_warn_less ynh_exec_as $app bin/mattermost mmctl user create --username "$admin" --email "$email" --password "$password" --locale "$language" --system_admin
-	ynh_exec_warn_less ynh_exec_as $app bin/mattermost mmctl user verify "$admin"
-	ynh_exec_warn_less ynh_exec_as $app bin/mattermost mmctl team create --name "$team_name" --display_name "$team_display_name" --email "$email"
-	ynh_exec_warn_less ynh_exec_as $app bin/mattermost mmctl team add "$team_name" "$admin"
+pushd "$final_path/bin"
+	ynh_exec_warn_less ynh_exec_as $app mmctl user create --username "$admin" --email "$email" --password "$password" --locale "$language" --system_admin
+	ynh_exec_warn_less ynh_exec_as $app mmctl user verify "$admin"
+	ynh_exec_warn_less ynh_exec_as $app mmctl team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+	ynh_exec_warn_less ynh_exec_as $app mmctl team add "$team_name" "$admin"
 popd
 
 #=================================================
