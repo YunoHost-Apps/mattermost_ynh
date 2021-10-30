@@ -164,21 +164,6 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=2
 ynh_add_systemd_config
 
 #=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
-
-yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=2
-
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
-
-#=================================================
 # CREATE ADMIN AND FIRST TEAM
 #=================================================
 ynh_script_progression --message="Create the first administrator and team..." --weight=1
@@ -194,7 +179,21 @@ popd
 
 # Now that the first user is created, disable mmctl passwordless access
 ynh_replace_string 'EnableLocalMode": true' '"EnableLocalMode": false' "$final_path/config/config.json"
-ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match="Started Mattermost"
+
+#=================================================
+# INTEGRATE SERVICE IN YUNOHOST
+#=================================================
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
+
+yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
 
 #=================================================
 # SETUP SSOWAT
