@@ -6,7 +6,7 @@ Requires=mysql.service
 
 [Service]
 Type=notify
-ExecStart=__FINALPATH__/bin/mattermost
+ExecStart=__FINALPATH__/bin/mmctl
 TimeoutStartSec=3600
 Restart=always
 RestartSec=10
