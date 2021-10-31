@@ -83,7 +83,7 @@
     "EnableSVGs": false,
     "EnableLatex": false,
     "EnableAPIChannelDeletion": false,
-    "EnableLocalMode": false,
+    "EnableLocalMode": true,
     "LocalModeSocketLocation": "/var/tmp/mattermost_local.socket",
     "EnableAWSMetering": false,
     "SplitKey": "",
