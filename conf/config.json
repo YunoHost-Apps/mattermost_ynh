@@ -84,7 +84,7 @@
     "EnableLatex": false,
     "EnableAPIChannelDeletion": false,
     "EnableLocalMode": true,
-    "LocalModeSocketLocation": "/var/tmp/mattermost_local.socket",
+    "LocalModeSocketLocation": "__LOCAL_SOCKET_PATH__",
     "EnableAWSMetering": false,
     "SplitKey": "",
     "FeatureFlagSyncIntervalSeconds": 30,
