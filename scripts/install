@@ -190,8 +190,7 @@ pushd "$final_path"
   export MMCTL_LOCAL=true
   export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
 
-  ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl user create --username "$admin" --email "$email" --password "$password" --locale "$language" --system-admin
-  ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl user verify "$admin"
+  ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
   ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl team create --name "$team_name" --display_name "$team_display_name" --email "$email"
   ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl team add "$team_name" "$admin"
 popd
