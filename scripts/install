@@ -144,6 +144,7 @@ ynh_script_progression --message="Modifying a config file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
+local_socket_path="/var/run/${app}/mattermost_local.socket"
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
@@ -186,10 +187,12 @@ ynh_script_progression --message="Create the first administrator and team..." --
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 
 pushd "$final_path"
-  ynh_exec_warn_less ynh_exec_as $app bin/mmctl user create --local --username "$admin" --email "$email" --password "$password" --locale "$language" --system_admin
-  ynh_exec_warn_less ynh_exec_as $app bin/mmctl user verify --local "$admin"
-  ynh_exec_warn_less ynh_exec_as $app bin/mmctl team create --local --name "$team_name" --display_name "$team_display_name" --email "$email"
-  ynh_exec_warn_less ynh_exec_as $app bin/mmctl team add --local "$team_name" "$admin"
+  export MMCTL_LOCAL=true
+  export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
+
+  ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+  ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+  ynh_exec_warn_less sudo --preserve-env -u $app bin/mmctl team users add "$team_name" "$admin"
 popd
 
 # Now that the first user is created, disable mmctl passwordless access
