@@ -11,6 +11,7 @@ TimeoutStartSec=3600
 Restart=always
 RestartSec=10
 WorkingDirectory=__FINALPATH__
+RuntimeDirectory=__APP__
 User=__APP__
 Group=__APP__
 LimitNOFILE=49152
