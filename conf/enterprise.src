@@ -1,6 +1,6 @@
-SOURCE_URL=https://releases.mattermost.com/5.38.2/mattermost-enterprise-5.38.2-linux-amd64.tar.gz
-SOURCE_SUM=5d6769cca6aa058547965408baa6937135e08718bc5d1477033df1000e43ec8b
+SOURCE_URL=https://releases.mattermost.com/6.0.2/mattermost-enterprise-6.0.2-linux-amd64.tar.gz
+SOURCE_SUM=4580a435a350c9401d50972e720a47e2551eba889a51b976991c6b906a2ac1fd
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=mattermost-enterprise-5.38.2-linux-amd64.tar.gz
+SOURCE_FILENAME=mattermost.tar.gz
