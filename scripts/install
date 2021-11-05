@@ -187,14 +187,17 @@ ynh_script_progression --message="Create the first administrator and team..." --
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 bin_mmctl="$final_path/bin/mmctl"
 
-export MMCTL_LOCAL=true
-export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
+# mmctl is not packaged with ARM versions yet
+if [[ -f $"bin_mmctl" ]]; then
+  export MMCTL_LOCAL=true
+  export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
 
-ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
-ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
-ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
+  ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+  ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+  ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
+fi
 
-# Now that the first user is created, disable mmctl passwordless access
+# Disable mmctl passwordless access
 ynh_replace_string '"EnableLocalMode": true' '"EnableLocalMode": false' "$final_path/config/config.json"
 ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match="Started Mattermost"
 
