@@ -172,7 +172,7 @@
     "EnableFile": true,
     "FileLevel": "INFO",
     "FileJson": true,
-    "FileLocation": "__LOGS_PATH__",
+    "FileLocation": "/var/log/__APP__",
     "AdvancedLoggingConfig": ""
   },
   "PasswordSettings": {
