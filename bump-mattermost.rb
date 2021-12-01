@@ -61,10 +61,9 @@ module Mattermost
     def retrieve_smart_honeybee_release_data
       @url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v#{version}/mattermost-v#{version}-linux-#{variant}.tar.gz"
 
-      sum_url = "#{url}.sha512sum"
-      URI.open(sum_url) do |sum_file|
-        @sum = sum_file.read.lines.first.split(' ').first
-      end
+      puts "Downloading release #{version}-#{variant} for computing checksum…"
+      release_file = URI.parse(@url).read
+      @sum = Digest::SHA256.hexdigest(release_file)
     end
   end
 end
@@ -79,7 +78,6 @@ module Yunohost
       src = File.read(@path)
       replace_src_setting!(src, 'SOURCE_URL', release.url)
       replace_src_setting!(src, 'SOURCE_SUM', release.sum)
-      replace_src_setting!(src, 'SOURCE_FILENAME', File.basename(URI.parse(release.url).path))
       File.write(@path, src)
     end
 
