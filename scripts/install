@@ -31,7 +31,7 @@ email=$(ynh_user_get_info --username=$admin --key=mail)
 password=$YNH_APP_ARG_PASSWORD
 language=$YNH_APP_ARG_LANGUAGE
 team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
-architecture=$(ynh_detect_arch)
+architecture=$YNH_ARCH
 version=$YNH_APP_ARG_VERSION
 
 app=$YNH_APP_INSTANCE_NAME
