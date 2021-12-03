@@ -1,6 +1,7 @@
 ## Configuration
 
 * How to configure this app: From an admin panel, a plain file with SSH.
+* How to change from edition version to another (Team<->Enterprise) : Modify the `settings.yml` in the apps directory `/etc/yunohost/apps/mattermost_instance/settings.yml` and replace the version to wich you whant : Team or Enterprise. Update your apps and verify the *About* on your mattermost
 
 ## YunoHost specific features
 
