@@ -82,6 +82,7 @@
     "EnableBotAccountCreation": false,
     "EnableSVGs": false,
     "EnableLatex": false,
+    "EnableInlineLatex": true,
     "EnableAPIChannelDeletion": false,
     "EnableLocalMode": true,
     "LocalModeSocketLocation": "__LOCAL_SOCKET_PATH__",
@@ -512,7 +513,8 @@
   },
   "JobSettings": {
     "RunJobs": true,
-    "RunScheduler": true
+    "RunScheduler": true,
+    "CleanupJobsThresholdDays": -1
   },
   "PluginSettings": {
     "Enable": true,
@@ -571,10 +573,15 @@
     "PluginPlaybooks": "",
     "PluginApps": "",
     "PluginFocalboard": "",
-    "TimedDND": false,
     "PermalinkPreviews": true,
     "GlobalHeader": true,
-    "AddChannelButton": "by_team_name"
+    "AddChannelButton": "by_team_name",
+    "PrewrittenMessages": "tour_point",
+    "DownloadAppsCTA": "tips_and_next_steps",
+    "NewAccountNoisy": false,
+    "BoardsUnfurl": true,
+    "CallsMobile": false,
+    "AutoTour": "none"
   },
   "ImportSettings": {
     "Directory": "./import",

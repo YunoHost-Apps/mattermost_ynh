@@ -182,7 +182,7 @@ team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE
 bin_mmctl="$final_path/bin/mmctl"
 
 # mmctl is not packaged with ARM versions yet
-if [[ -f $"bin_mmctl" ]]; then
+if [[ -f "$bin_mmctl" ]]; then
   export MMCTL_LOCAL=true
   export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
 
