@@ -6,7 +6,7 @@
         "en": "Open source collaboration platform built for developers",
         "fr": "Plateforme de collaboration open source conçue pour les développeurs"
     },
-    "version": "6.1.0~ynh1",
+    "version": "6.2.1~ynh1",
     "url": "http://www.mattermost.org/",
     "upstream": {
         "license": "GPL-3.0-only",
@@ -26,7 +26,7 @@
         "mysql"
     ],
     "requirements": {
-        "yunohost": ">= 4.2.0"
+        "yunohost": ">= 4.3.0"
     },
     "arguments": {
         "install": [

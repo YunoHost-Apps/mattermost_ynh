@@ -37,7 +37,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 - Multiple languages including U.S. English, Australian English, Bulgarian, Chinese (Simplified and Traditional), Dutch, French, German, Hungarian, Italian, Japanese, Korean, Polish, Brazilian Portuguese, Romanian, Russian, Turkish, Spanish, Swedish, and Ukrainian
 
 
-**Shipped version:** 6.1.0~ynh1
+**Shipped version:** 6.2.1~ynh1
 
 
 
@@ -50,6 +50,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 ## Configuration
 
 * How to configure this app: From an admin panel, a plain file with SSH.
+* How to change from edition version to another (Team<->Enterprise) : Modify the `settings.yml` in the apps directory `/etc/yunohost/apps/mattermost_instance/settings.yml` and replace the version to wich you whant : Team or Enterprise. Update your apps and verify the *About* on your mattermost
 
 ## YunoHost specific features
 

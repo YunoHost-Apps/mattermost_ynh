@@ -33,7 +33,7 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 - Plusieurs langues dont l'anglais américain, l'anglais australien, le bulgare, le chinois (simplifié et traditionnel), le néerlandais, le français, l'allemand, le hongrois, l'italien, le japonais, le coréen, le polonais, le portugais brésilien, le roumain, le russe, le turc, l'espagnol, le suédois et l'ukrainien 
 
 
-**Version incluse :** 6.1.0~ynh1
+**Version incluse :** 6.2.1~ynh1
 
 
 
@@ -45,7 +45,8 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 
 ## Configuration
 
- * Comment configurer cette application : via le panneau d'administration, un fichier brut en SSH.
+* Comment configurer cette application : via le panneau d'administration, un fichier brut en SSH.
+* Comment changer d'une version à une autre (Team<->Enterprise) : Modifiez le `settings.yml` dans le répertoire de l'application `/etc/yunohost/apps/mattermost_instance/settings.yml` et remplacez la version avec celle que vous voulez : Team ou Enterprise. Mettez à jour votre application et vérifiez dans le *À Propos* sur la console système de votre application.
 
 ## Caractéristiques spécifiques YunoHost
 
