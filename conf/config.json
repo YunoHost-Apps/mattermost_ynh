@@ -36,7 +36,7 @@
     "EnableOpenTracing": false,
     "EnableSecurityFixAlert": true,
     "EnableInsecureOutgoingConnections": false,
-    "AllowedUntrustedInternalConnections": "",
+    "AllowedUntrustedInternalConnections": "api.integrations.mattermost.com",
     "EnableMultifactorAuthentication": false,
     "EnforceMultifactorAuthentication": false,
     "EnableUserAccessTokens": false,
