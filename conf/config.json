@@ -93,8 +93,7 @@
     "DebugSplit": false,
     "ThreadAutoFollow": true,
     "CollapsedThreads": "disabled",
-    "ManagedResourcePaths": "",
-    "EnableReliableWebSockets": false
+    "ManagedResourcePaths": ""
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -582,6 +581,7 @@
     "AutoTour": "none",
     "BoardsFeatureFlags": "",
     "AddMembersToChannel": "top",
+    "GuidedChannelCreation": false,
     "ResendInviteEmailInterval": "",
     "InviteToTeam": "none"
   },
