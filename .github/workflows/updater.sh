@@ -79,13 +79,13 @@ echo "Handling asset at $asset_url"
 # Leave $src empty to ignore the asset
 case $asset_url in
   *"mattermost-"*"-linux-arm.tar.gz")
-    src="arm"
+    src="armhf"
     ;;
   *"mattermost-"*"-linux-arm64.tar.gz")
     src="arm64"
     ;;
   *"mattermost-team-"*"-linux-amd64.tar.gz")
-    src="x86-64"
+    src="amd64"
     ;;
   *"mattermost-enterprise-"*"-linux-amd64.tar.gz")
     src="enterprise"
