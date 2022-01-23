@@ -33,7 +33,7 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 - Plusieurs langues dont l'anglais américain, l'anglais australien, le bulgare, le chinois (simplifié et traditionnel), le néerlandais, le français, l'allemand, le hongrois, l'italien, le japonais, le coréen, le polonais, le portugais brésilien, le roumain, le russe, le turc, l'espagnol, le suédois et l'ukrainien 
 
 
-**Version incluse :** 6.3.0~ynh1
+**Version incluse :** 6.3.1~ynh1
 
 
 
