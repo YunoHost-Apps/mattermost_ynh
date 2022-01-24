@@ -32,10 +32,11 @@
     "RestrictLinkPreviews": "",
     "EnableTesting": false,
     "EnableDeveloper": false,
+    "DeveloperFlags": "",
     "EnableOpenTracing": false,
     "EnableSecurityFixAlert": true,
     "EnableInsecureOutgoingConnections": false,
-    "AllowedUntrustedInternalConnections": "",
+    "AllowedUntrustedInternalConnections": "api.integrations.mattermost.com",
     "EnableMultifactorAuthentication": false,
     "EnforceMultifactorAuthentication": false,
     "EnableUserAccessTokens": false,
@@ -92,8 +93,7 @@
     "DebugSplit": false,
     "ThreadAutoFollow": true,
     "CollapsedThreads": "disabled",
-    "ManagedResourcePaths": "",
-    "EnableReliableWebSockets": false
+    "ManagedResourcePaths": ""
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -121,8 +121,6 @@
   "ClientRequirements": {
     "AndroidLatestVersion": "",
     "AndroidMinVersion": "",
-    "DesktopLatestVersion": "",
-    "DesktopMinVersion": "",
     "IosLatestVersion": "",
     "IosMinVersion": ""
   },
@@ -570,18 +568,22 @@
     "CollapsedThreads": true,
     "EnableRemoteClusterService": false,
     "AppsEnabled": false,
+    "AppBarEnabled": false,
     "PluginPlaybooks": "",
     "PluginApps": "",
     "PluginFocalboard": "",
     "PermalinkPreviews": true,
     "GlobalHeader": true,
     "AddChannelButton": "by_team_name",
-    "PrewrittenMessages": "tour_point",
-    "DownloadAppsCTA": "tips_and_next_steps",
     "NewAccountNoisy": false,
     "BoardsUnfurl": true,
     "CallsMobile": false,
-    "AutoTour": "none"
+    "AutoTour": "none",
+    "BoardsFeatureFlags": "",
+    "AddMembersToChannel": "top",
+    "GuidedChannelCreation": false,
+    "ResendInviteEmailInterval": "",
+    "InviteToTeam": "none"
   },
   "ImportSettings": {
     "Directory": "./import",

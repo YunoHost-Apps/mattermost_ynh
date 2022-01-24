@@ -36,9 +36,9 @@ module Mattermost
 
     def retrieve_release_data
       case @variant
-      when :'x86-64', :enterprise
+      when :amd64, :enterprise
         retrieve_first_party_release_data
-      when :arm, :arm64
+      when :armhf, :arm64
         retrieve_smart_honeybee_release_data
       else
         raise "Unsupported variant '{#release_desc.variant}'"
@@ -47,7 +47,7 @@ module Mattermost
 
     def retrieve_first_party_release_data
       edition = {
-        'x86-64': 'team',
+        amd64: 'team',
         enterprise: 'enterprise'
       }.fetch(variant)
 
@@ -59,7 +59,12 @@ module Mattermost
     end
 
     def retrieve_smart_honeybee_release_data
-      @url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v#{version}/mattermost-v#{version}-linux-#{variant}.tar.gz"
+      arch = {
+        armhf: 'arm',
+        arm64: 'arm64'
+      }.fetch(variant)
+
+      @url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v#{version}/mattermost-v#{version}-linux-#{arch}.tar.gz"
 
       puts "Downloading release #{version}-#{variant} for computing checksum…"
       release_file = URI.parse(@url).read
@@ -122,7 +127,7 @@ if version.nil?
   abort("ERROR: The Mattermost release version must be provided.\nExample: ./bump-mattermost.sh 5.33.1")
 end
 
-VARIANTS = %i[x86-64 enterprise arm arm64]
+VARIANTS = %i[amd64 enterprise armhf arm64]
 
 # Compute releases URLs and sums
 releases = VARIANTS
