@@ -583,7 +583,9 @@
     "AddMembersToChannel": "top",
     "GuidedChannelCreation": false,
     "ResendInviteEmailInterval": "",
-    "InviteToTeam": "none"
+    "InviteToTeam": "none",
+    "InlinePostEditing": false,
+    "NormalizeLdapDNs": false
   },
   "ImportSettings": {
     "Directory": "./import",
