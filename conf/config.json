@@ -137,6 +137,7 @@
     "AtRestEncryptKey": "",
     "QueryTimeout": 30,
     "DisableDatabaseSearch": false,
+    "MigrationsStatementTimeoutSeconds": 100000,
     "ReplicaLagSettings": []
   },
   "LogSettings": {
@@ -489,8 +490,10 @@
   "DataRetentionSettings": {
     "EnableMessageDeletion": false,
     "EnableFileDeletion": false,
+    "EnableBoardsDeletion": false,
     "MessageRetentionDays": 365,
     "FileRetentionDays": 365,
+    "BoardsRetentionDays": 365,
     "DeletionJobStartTime": "02:00",
     "BatchSize": 3000
   },
@@ -576,14 +579,16 @@
     "GlobalHeader": true,
     "AddChannelButton": "by_team_name",
     "NewAccountNoisy": false,
-    "BoardsUnfurl": true,
     "CallsMobile": false,
     "AutoTour": "none",
     "BoardsFeatureFlags": "",
     "AddMembersToChannel": "top",
     "GuidedChannelCreation": false,
     "ResendInviteEmailInterval": "",
-    "InviteToTeam": "none"
+    "InviteToTeam": "none",
+    "InlinePostEditing": false,
+    "BoardsDataRetention": false,
+    "NormalizeLdapDNs": false
   },
   "ImportSettings": {
     "Directory": "./import",
