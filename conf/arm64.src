@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v6.3.3/mattermost-v6.3.3-linux-arm64.tar.gz
-SOURCE_SUM=ded58bd1b3136b818982cdc87e4f3cd82af4ac86d8ffabacdc7854242a3fd7e7
+SOURCE_URL=https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v6.4.1/mattermost-v6.4.1-linux-arm64.tar.gz
+SOURCE_SUM=8f5e50393a2450261146c696f7398a5bc789e9260751724e97f1d34290baca2b
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
