@@ -37,7 +37,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 - Multiple languages including U.S. English, Australian English, Bulgarian, Chinese (Simplified and Traditional), Dutch, French, German, Hungarian, Italian, Japanese, Korean, Polish, Brazilian Portuguese, Romanian, Russian, Turkish, Spanish, Swedish, and Ukrainian
 
 
-**Shipped version:** 6.4.2~ynh1
+**Shipped version:** 6.5.0~ynh1
 
 
 
