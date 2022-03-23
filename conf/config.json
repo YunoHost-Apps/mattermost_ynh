@@ -33,6 +33,7 @@
     "EnableTesting": false,
     "EnableDeveloper": false,
     "DeveloperFlags": "",
+    "EnableClientPerformanceDebugging": false,
     "EnableOpenTracing": false,
     "EnableSecurityFixAlert": true,
     "EnableInsecureOutgoingConnections": false,
@@ -93,7 +94,8 @@
     "DebugSplit": false,
     "ThreadAutoFollow": true,
     "CollapsedThreads": "disabled",
-    "ManagedResourcePaths": ""
+    "ManagedResourcePaths": "",
+    "EnableCustomGroups": true
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -577,18 +579,21 @@
     "PluginFocalboard": "",
     "PermalinkPreviews": true,
     "GlobalHeader": true,
-    "AddChannelButton": "by_team_name",
     "NewAccountNoisy": false,
     "CallsMobile": false,
-    "AutoTour": "none",
     "BoardsFeatureFlags": "",
     "AddMembersToChannel": "top",
     "GuidedChannelCreation": false,
     "ResendInviteEmailInterval": "",
     "InviteToTeam": "none",
+    "CustomGroups": true,
     "InlinePostEditing": false,
     "BoardsDataRetention": false,
-    "NormalizeLdapDNs": false
+    "NormalizeLdapDNs": false,
+    "EnableInactivityCheckJob": true,
+    "UseCaseOnboarding": true,
+    "WorkspaceOptimizationDashboard": true,
+    "GraphQL": false
   },
   "ImportSettings": {
     "Directory": "./import",
