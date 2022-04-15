@@ -9,7 +9,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 
 ## Limitations
 
-* L'intégration LDAP n'est pas gérée (see #58)
+* L'intégration LDAP n'est pas gérée (see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## Informations additionnelles
 
