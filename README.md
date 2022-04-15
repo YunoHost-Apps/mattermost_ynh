@@ -60,7 +60,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Limitations
 
-* LDAP integration is not supported (see #58)
+* LDAP integration is not supported (see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## Additional information
 
