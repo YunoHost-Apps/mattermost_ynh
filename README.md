@@ -37,7 +37,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 - Multiple languages including U.S. English, Australian English, Bulgarian, Chinese (Simplified and Traditional), Dutch, French, German, Hungarian, Italian, Japanese, Korean, Polish, Brazilian Portuguese, Romanian, Russian, Turkish, Spanish, Swedish, and Ukrainian
 
 
-**Shipped version:** 6.5.0~ynh2
+**Shipped version:** 6.6.0~ynh1
 
 
 
@@ -60,7 +60,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Limitations
 
-* LDAP integration is not supported (see #58)
+* LDAP integration is not supported (see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## Additional information
 

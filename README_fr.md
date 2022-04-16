@@ -33,7 +33,7 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 - Plusieurs langues dont l'anglais américain, l'anglais australien, le bulgare, le chinois (simplifié et traditionnel), le néerlandais, le français, l'allemand, le hongrois, l'italien, le japonais, le coréen, le polonais, le portugais brésilien, le roumain, le russe, le turc, l'espagnol, le suédois et l'ukrainien 
 
 
-**Version incluse :** 6.5.0~ynh2
+**Version incluse :** 6.6.0~ynh1
 
 
 
@@ -54,7 +54,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 
 ## Limitations
 
-* L'intégration LDAP n'est pas gérée (see #58)
+* L'intégration LDAP n'est pas gérée (see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
 
 ## Informations additionnelles
 
