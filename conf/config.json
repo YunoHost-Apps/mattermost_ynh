@@ -238,7 +238,8 @@
     "EmailNotificationContentsType": "full",
     "LoginButtonColor": "#0000",
     "LoginButtonBorderColor": "#2389D7",
-    "LoginButtonTextColor": "#2389D7"
+    "LoginButtonTextColor": "#2389D7",
+    "EnableInactivityEmail": true
   },
   "RateLimitSettings": {
     "Enable": false,
@@ -451,7 +452,6 @@
     "LinkMetadataTimeoutMilliseconds": 5000,
     "RestrictSystemAdmin": false,
     "UseNewSAMLLibrary": false,
-    "CloudUserLimit": 0,
     "CloudBilling": false,
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false
@@ -477,7 +477,7 @@
     "PostsAggregatorJobStartTime": "03:00",
     "IndexPrefix": "",
     "LiveIndexingBatchSize": 1,
-    "BulkIndexingTimeWindowSeconds": 3600,
+    "BatchSize": 10000,
     "RequestTimeoutSeconds": 30,
     "SkipTLSVerification": false,
     "Trace": ""
@@ -487,7 +487,7 @@
     "EnableIndexing": false,
     "EnableSearching": false,
     "EnableAutocomplete": false,
-    "BulkIndexingTimeWindowSeconds": 3600
+    "BatchSize": 10000
   },
   "DataRetentionSettings": {
     "EnableMessageDeletion": false,
@@ -517,7 +517,8 @@
   "JobSettings": {
     "RunJobs": true,
     "RunScheduler": true,
-    "CleanupJobsThresholdDays": -1
+    "CleanupJobsThresholdDays": -1,
+    "CleanupConfigThresholdDays": -1
   },
   "PluginSettings": {
     "Enable": true,
@@ -572,7 +573,6 @@
   "FeatureFlags": {
     "TestFeature": "off",
     "TestBoolFeature": false,
-    "CloudDelinquentEmailJobsEnabled": false,
     "CollapsedThreads": true,
     "EnableRemoteClusterService": false,
     "AppsEnabled": true,
@@ -581,10 +581,8 @@
     "PluginApps": "",
     "PluginFocalboard": "",
     "PermalinkPreviews": true,
-    "NewAccountNoisy": false,
     "CallsMobile": false,
     "BoardsFeatureFlags": "",
-    "AddMembersToChannel": "top",
     "GuidedChannelCreation": false,
     "InviteToTeam": "none",
     "CustomGroups": true,
@@ -592,7 +590,9 @@
     "NormalizeLdapDNs": false,
     "EnableInactivityCheckJob": true,
     "UseCaseOnboarding": true,
-    "GraphQL": false
+    "GraphQL": false,
+    "InsightsEnabled": false,
+    "CommandPalette": false
   },
   "ImportSettings": {
     "Directory": "./import",
