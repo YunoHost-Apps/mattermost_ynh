@@ -1,5 +1,5 @@
-SOURCE_URL=https://releases.mattermost.com/6.6.1/mattermost-team-6.6.1-linux-amd64.tar.gz
-SOURCE_SUM=044e3ea02acc14873cd86513f68831a042f3a3ffe25280d24568f97886527751
+SOURCE_URL=https://releases.mattermost.com/6.7.0/mattermost-team-6.7.0-linux-amd64.tar.gz
+SOURCE_SUM=5ae7f74ee5aa1f3b0f1597c020eec1460a950ea77f60ce9123d1f8cac96d7beb
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true

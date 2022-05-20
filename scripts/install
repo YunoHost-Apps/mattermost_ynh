@@ -31,7 +31,6 @@ email=$(ynh_user_get_info --username=$admin --key=mail)
 password=$YNH_APP_ARG_PASSWORD
 language=$YNH_APP_ARG_LANGUAGE
 team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
-architecture=$YNH_ARCH
 version=$YNH_APP_ARG_VERSION
 
 app=$YNH_APP_INSTANCE_NAME
@@ -55,7 +54,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=6
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
 ynh_app_setting_set --app=$app --key=admin --value=$admin
-ynh_app_setting_set --app=$app --key=password --value=$password
+ynh_app_setting_set --app=$app --key=password --value="$password"
 ynh_app_setting_set --app=$app --key=language --value=$language
 ynh_app_setting_set --app=$app --key=version --value=$version
 ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
@@ -100,7 +99,7 @@ if [ "$version" = "Enterprise" ]; then
   ynh_setup_source --dest_dir="$final_path" --source_id="enterprise"
 elif [ "$version" = "Team" ]; then
   # Get Team binary path
-  ynh_setup_source --dest_dir="$final_path" --source_id="$architecture"
+  ynh_setup_source --dest_dir="$final_path" --source_id="$YNH_ARCH"
 fi
 
 chmod 750 "$final_path"
