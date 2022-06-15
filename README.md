@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Mattermost for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Working status](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)  
 [![Install Mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -39,11 +39,9 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 
 **Shipped version:** 6.7.0~ynh1
 
-
-
 ## Screenshots
 
-![](./doc/screenshots/screenshot.png)
+![Screenshot of Mattermost](./doc/screenshots/screenshot.png)
 
 ## Disclaimers / important information
 
@@ -68,22 +66,23 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Documentation and resources
 
-* Official app website: http://www.mattermost.org/
-* Official user documentation: https://docs.mattermost.com/guides/messaging.html
-* Official admin documentation: https://docs.mattermost.com/guides/deployment.html
-* Upstream app code repository: https://github.com/mattermost/mattermost-server
-* YunoHost documentation for this app: https://yunohost.org/app_mattermost
-* Report a bug: https://github.com/YunoHost-Apps/mattermost_ynh/issues
+* Official app website: <http://www.mattermost.org/>
+* Official user documentation: <https://docs.mattermost.com/guides/messaging.html>
+* Official admin documentation: <https://docs.mattermost.com/guides/deployment.html>
+* Upstream app code repository: <https://github.com/mattermost/mattermost-server>
+* YunoHost documentation for this app: <https://yunohost.org/app_mattermost>
+* Report a bug: <https://github.com/YunoHost-Apps/mattermost_ynh/issues>
 
 ## Developer info
 
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/mattermost_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
-```
+
+``` bash
 sudo yunohost app install https://github.com/YunoHost-Apps/mattermost_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade mattermost -u https://github.com/YunoHost-Apps/mattermost_ynh/tree/testing --debug
 ```
 
-**More info regarding app packaging:** https://yunohost.org/packaging_apps
+**More info regarding app packaging:** <https://yunohost.org/packaging_apps>
