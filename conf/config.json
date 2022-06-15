@@ -600,13 +600,9 @@
     "UseCaseOnboarding": true,
     "GraphQL": false,
     "InsightsEnabled": false,
-<<<<<<< Updated upstream
-    "CommandPalette": false
-=======
     "CloudFree": false,
     "CommandPalette": false,
     "AdvancedTextEditor": true
->>>>>>> Stashed changes
   },
   "ImportSettings": {
     "Directory": "./import",
