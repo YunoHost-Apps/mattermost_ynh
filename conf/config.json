@@ -48,8 +48,11 @@
     "AllowCookiesForSubdomains": false,
     "ExtendSessionLengthWithActivity": true,
     "SessionLengthWebInDays": 30,
+    "SessionLengthWebInHours": 720,
     "SessionLengthMobileInDays": 30,
+    "SessionLengthMobileInHours": 720,
     "SessionLengthSSOInDays": 30,
+    "SessionLengthSSOInHours": 720,
     "SessionCacheInMinutes": 10,
     "SessionIdleTimeoutInMinutes": 43200,
     "WebsocketSecurePort": 443,
@@ -454,7 +457,8 @@
     "UseNewSAMLLibrary": false,
     "CloudBilling": false,
     "EnableSharedChannels": false,
-    "EnableRemoteClusterService": false
+    "EnableRemoteClusterService": false,
+    "EnableAppBar": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -532,6 +536,9 @@
       "com.mattermost.apps": {
         "Enable": true
       },
+      "com.mattermost.calls": {
+        "Enable": true
+      },
       "com.mattermost.nps": {
         "Enable": true
       },
@@ -576,12 +583,13 @@
     "CollapsedThreads": true,
     "EnableRemoteClusterService": false,
     "AppsEnabled": true,
-    "AppBarEnabled": false,
     "PluginPlaybooks": "",
     "PluginApps": "",
     "PluginFocalboard": "",
+    "PluginCalls": "",
     "PermalinkPreviews": true,
     "CallsMobile": false,
+    "CallsEnabled": true,
     "BoardsFeatureFlags": "",
     "GuidedChannelCreation": false,
     "InviteToTeam": "none",
@@ -592,7 +600,9 @@
     "UseCaseOnboarding": true,
     "GraphQL": false,
     "InsightsEnabled": false,
-    "CommandPalette": false
+    "CloudFree": false,
+    "CommandPalette": false,
+    "AdvancedTextEditor": true
   },
   "ImportSettings": {
     "Directory": "./import",

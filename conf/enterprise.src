@@ -1,5 +1,5 @@
-SOURCE_URL=https://releases.mattermost.com/6.7.0/mattermost-enterprise-6.7.0-linux-amd64.tar.gz
-SOURCE_SUM=1b97ef44b9578ed2b609a6df31dfe59ebeb66c70319cedd09d5d3aa2f65e19a6
+SOURCE_URL=https://releases.mattermost.com/7.0.0/mattermost-enterprise-7.0.0-linux-amd64.tar.gz
+SOURCE_SUM=3b66c9b23d988de6917ea3eb7a18309fc6cd1da630a9cadc53586d098bab3e5c
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
