@@ -179,11 +179,10 @@ if mysqlshow | grep -q "^| $db_name "; then
 
   ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
 
-  psql_db_pwd=$(ynh_string_random --length=30)
   ynh_psql_test_if_first_run
-  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$psql_db_pwd
+  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
-  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$psql_db_pwd@localhost:5432/$db_name
+  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name
 
   ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 else
@@ -197,7 +196,6 @@ ynh_script_progression --message="Updating a configuration file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
-db_pwd=$psql_db_pwd
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
