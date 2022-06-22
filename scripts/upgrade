@@ -33,10 +33,13 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
-#db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 version=$(ynh_app_setting_get --app=$app --key=version)
 data_path=$(ynh_app_setting_get --app=$app --key=data_path)
+team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
+admin=$(ynh_app_setting_get --app=$app --key=admin)
+password=$(ynh_app_setting_get --app=$app --key=password)
+email=$(ynh_user_get_info --username=$admin --key=mail)
 
 #=================================================
 # CHECK VERSION
@@ -173,32 +176,27 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
 
-db_name_ps=(mattermost_postgresql)
 ynh_psql_test_if_first_run
-ynh_psql_setup_db --db_user=$db_user --db_name=$db_name_ps --db_pwd=$db_pwd
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
 #=================================================
 # MIGRATING DATABASE
 #=================================================
 ynh_script_progression --message="Migrating to postgreSQL database..." --weight=10
 
-if [[ ! -z "`mysql -qfsBe "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='$db_name'" 2>&1`" ]];
+
+if [ ynh_psql_database_exists --database=$db_name -eq 1 ]
 then
-  #echo "DATABASE ALREADY EXISTS"
-  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name_ps
-  #ynh_psql_connect_as --db_user=$db_user --db_pwd="$db_pwd" < $db_name_ps
+  #Return 1 if the database doesn't exist
+  ynh_psql_test_if_first_run
+  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+
+  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name
+
+  ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 else
-  #echo "DATABASE DOES NOT EXIST"
-  ynh_print_info  --message="Database does not exist. No migration needed"
+  ynh_print_info  --message="No migration needed"
 fi
-
-#=================================================
-# REMOVE THE MYSQL DATABASE
-#=================================================
-ynh_script_progression --message="Removing the MySQL database..." --weight=1
-
-# Remove a database if it exists, along with the associated user
-ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # UPDATE A CONFIG FILE
@@ -208,7 +206,6 @@ ynh_script_progression --message="Updating a configuration file..." --weight=3
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
 local_socket_path="/var/run/${app}/mattermost_local.socket"
-db_name=$db_name_ps
 logs_path="/var/log/$app"
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
@@ -249,6 +246,28 @@ fi
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
+
+#=================================================
+# CREATE ADMIN AND FIRST TEAM
+#=================================================
+ynh_script_progression --message="Create the first administrator and team..." --weight=1
+
+team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+bin_mmctl="$final_path/bin/mmctl"
+
+# mmctl is not packaged with ARM versions yet
+if [[ -f "$bin_mmctl" ]]; then
+  export MMCTL_LOCAL=true
+  export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
+
+  ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+  ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+  ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
+fi
+
+# Disable mmctl passwordless access
+ynh_replace_string '"EnableLocalMode": true' '"EnableLocalMode": false' "$final_path/config/config.json"
+ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match="Started Mattermost"
 
 #=================================================
 # RELOAD NGINX
