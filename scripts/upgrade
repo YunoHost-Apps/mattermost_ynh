@@ -185,11 +185,12 @@ ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 ynh_script_progression --message="Migrating to postgreSQL database..." --weight=10
 
 if mysqlshow | grep -q "^| $db_name "; then
-  
-  ynh_psql_test_if_first_run
-  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
-  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name
+  postgresql_db_pwd=$(ynh_string_random --length=24)
+  ynh_psql_test_if_first_run
+  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$postgresql_db_pwd
+
+  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$postgresql_db_pwd@localhost:5432/$db_name
 
   ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 else
@@ -203,8 +204,6 @@ ynh_script_progression --message="Updating a configuration file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
-local_socket_path="/var/run/${app}/mattermost_local.socket"
-logs_path="/var/log/$app"
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
