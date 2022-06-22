@@ -33,7 +33,8 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+#db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 version=$(ynh_app_setting_get --app=$app --key=version)
 data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
@@ -166,6 +167,37 @@ ynh_add_nginx_config
 ynh_script_progression --message="Upgrading dependencies..." --weight=10
 
 ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# CREATE A POSTGRESQL DATABASE
+#=================================================
+ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
+
+ynh_psql_test_if_first_run
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+
+#=================================================
+# MIGRATING DATABASE
+#=================================================
+ynh_script_progression --message="Migrating to postgreSQL database..." --weight=10
+
+if [[ ! -z "`mysql -qfsBe "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='$db_name'" 2>&1`" ]];
+then
+  #echo "DATABASE ALREADY EXISTS"
+  pgloader mysql://$db_user:$db_pwd@localhost/$db_name postgresql:///mattermost-postgres-backup
+  ynh_psql_connect_as --db_user=$db_user --db_pwd="$db_pwd" --db_name=$db_name < mattermost-postgres-backup
+else
+  #echo "DATABASE DOES NOT EXIST"
+  ynh_die --message="Database does not exist"
+fi
+
+#=================================================
+# REMOVE THE MYSQL DATABASE
+#=================================================
+ynh_script_progression --message="Removing the MySQL database..." --weight=1
+
+# Remove a database if it exists, along with the associated user
+ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # UPDATE A CONFIG FILE
