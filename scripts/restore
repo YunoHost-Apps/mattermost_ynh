@@ -83,13 +83,22 @@ chmod -R o-rwx "$data_path"
 chown -R $app:www-data "$data_path"
 
 #=================================================
-# RESTORE THE MYSQL DATABASE
+# REINSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Restoring the MySQL database..." --weight=6
+ynh_script_progression --message="Reinstalling dependencies..." --weight=10
 
-db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
-ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
-ynh_mysql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./db.sql
+# Define and install dependencies
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# RESTORE THE DATABASE
+#=================================================
+ynh_script_progression --message="Restoring the database..." --weight=6
+
+db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+ynh_psql_test_if_first_run
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
 
 #=================================================
 # RESTORE USER RIGHTS
