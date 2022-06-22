@@ -32,6 +32,8 @@ port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
+db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 version=$(ynh_app_setting_get --app=$app --key=version)
 data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 
@@ -126,7 +128,7 @@ then
   tmpdir="$(mktemp -d)"
 
   # Backup the config file and local plugins in the temp dir
-  cp -a "$final_path/config/config.json" "$tmpdir/config.json"
+  #cp -a "$final_path/config/config.json" "$tmpdir/config.json"
   cp -ar "$final_path/plugins" "$tmpdir/plugins"
 
   # Remove the app directory securely
@@ -139,7 +141,7 @@ then
   fi
 
   # Copy the admin saved settings and plugins from tmp directory to final path
-  cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
+  #cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
   cp -ar --no-clobber "$tmpdir/plugins" "$final_path/"
 
   # Remove the tmp directory securely
@@ -164,6 +166,17 @@ ynh_add_nginx_config
 ynh_script_progression --message="Upgrading dependencies..." --weight=10
 
 ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Updating a configuration file..." --weight=3
+
+smtp_user_pwd=$(ynh_string_random --length=24)
+url=https://$domain$path_url
+local_socket_path="/var/run/${app}/mattermost_local.socket"
+
+ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
 #=================================================
 # SETUP SYSTEMD
