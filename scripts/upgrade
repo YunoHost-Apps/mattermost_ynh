@@ -192,8 +192,6 @@ else
   ynh_print_info  --message="Database does not exist. No migration needed"
 fi
 
-
-
 #=================================================
 # REMOVE THE MYSQL DATABASE
 #=================================================
@@ -211,6 +209,7 @@ smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
 local_socket_path="/var/run/${app}/mattermost_local.socket"
 db_name=$db_name_ps
+logs_path="/var/log/$app"
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
