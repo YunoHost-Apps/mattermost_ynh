@@ -185,6 +185,7 @@ ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 ynh_script_progression --message="Migrating to postgreSQL database..." --weight=10
 
 if mysqlshow | grep -q "^| $db_name "; then
+  
   ynh_psql_test_if_first_run
   ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
