@@ -44,9 +44,17 @@ ynh_script_progression --message="Stopping and removing the systemd service..." 
 ynh_remove_systemd_config
 
 #=================================================
+# REMOVE LOGROTATE CONFIGURATION
+#=================================================
+ynh_script_progression --message="Removing logrotate configuration..." --weight=1
+
+# Remove the app-specific logrotate config
+ynh_remove_logrotate
+
+#=================================================
 # REMOVE THE DATABASE
 #=================================================
-ynh_script_progression --message="Removing the MySQL database..." --weight=2
+ynh_script_progression --message="Removing the database..." --weight=2
 
 # Remove a database if it exists, along with the associated user
 ynh_psql_remove_db --db_user=$db_user --db_name=$db_name
@@ -87,16 +95,11 @@ ynh_script_progression --message="Removing NGINX web server configuration..." --
 ynh_remove_nginx_config
 
 #=================================================
-# REMOVE LOGROTATE CONFIGURATION
+# SPECIFIC REMOVE
 #=================================================
-ynh_script_progression --message="Removing logrotate configuration..." --weight=1
-
-# Remove the app-specific logrotate config
-ynh_remove_logrotate
-
+# REMOVE VARIOUS FILES
 #=================================================
-# REMOVE LOG FILE
-#=================================================
+ynh_script_progression --message="Removing various files..." --weight=1
 
 ynh_secure_remove --file="/var/log/$app"
 
