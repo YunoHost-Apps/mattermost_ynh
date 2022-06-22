@@ -173,8 +173,9 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
 
+db_name_ps=(mattermost_postgresql)
 ynh_psql_test_if_first_run
-ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name_ps --db_pwd=$db_pwd
 
 #=================================================
 # MIGRATING DATABASE
@@ -184,8 +185,8 @@ ynh_script_progression --message="Migrating to postgreSQL database..." --weight=
 if [[ ! -z "`mysql -qfsBe "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='$db_name'" 2>&1`" ]];
 then
   #echo "DATABASE ALREADY EXISTS"
-  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name
-  ynh_psql_connect_as --db_user=$db_user --db_pwd="$db_pwd" < $db_name
+  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name_ps
+  #ynh_psql_connect_as --db_user=$db_user --db_pwd="$db_pwd" < $db_name_ps
 else
   #echo "DATABASE DOES NOT EXIST"
   ynh_print_info  --message="Database does not exist. No migration needed"
