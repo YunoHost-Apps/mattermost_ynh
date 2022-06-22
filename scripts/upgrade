@@ -185,7 +185,7 @@ ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 ynh_script_progression --message="Migrating to postgreSQL database..." --weight=10
 
 
-if [ "ynh_psql_database_exists --database=$db_name" -eq 1 ]
+if [ ynh_psql_database_exists --database=$db_name ]
 then
   #Return 1 if the database doesn't exist
   ynh_psql_test_if_first_run
