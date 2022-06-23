@@ -174,7 +174,6 @@ ynh_script_progression --message="Updating a configuration file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
-local_socket_path="/var/run/${app}/mattermost_local.socket"
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
@@ -205,12 +204,6 @@ yunohost service add $app --description="Collaboration platform built for develo
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=2
-
-# A lengthy database migration runs when upgrading from a version < 6.0.
-if dpkg --compare-versions "$previous_upstream_version" lt "6.0.0"
-then
-  ynh_print_warn --message="Lengthy database migrations will now run. This may take a while..."
-fi
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
