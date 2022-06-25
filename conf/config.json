@@ -90,7 +90,7 @@
     "EnableInlineLatex": true,
     "EnableAPIChannelDeletion": false,
     "EnableLocalMode": true,
-    "LocalModeSocketLocation": "__LOCAL_SOCKET_PATH__",
+    "LocalModeSocketLocation": "/var/run/__APP__/mattermost_local.socket",
     "EnableAWSMetering": false,
     "SplitKey": "",
     "FeatureFlagSyncIntervalSeconds": 30,
