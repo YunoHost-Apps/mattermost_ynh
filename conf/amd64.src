@@ -1,5 +1,5 @@
-SOURCE_URL=https://releases.mattermost.com/7.0.0/mattermost-team-7.0.0-linux-amd64.tar.gz
-SOURCE_SUM=8a303cdaf0edd28f318d5fe504238da6aa2afbe4fce27cfee8370aac3b46e02a
+SOURCE_URL=https://releases.mattermost.com/7.0.1/mattermost-team-7.0.1-linux-amd64.tar.gz
+SOURCE_SUM=d65e85f3e523c00afca521e79af79d37047d3a3b0662d2174e9ddc206609880d
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
