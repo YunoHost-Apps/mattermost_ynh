@@ -37,7 +37,9 @@ team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
 password=$(ynh_app_setting_get --app=$app --key=password)
 email=$(ynh_user_get_info --username=$admin --key=mail)
-
+  db_name=$(ynh_sanitize_dbid --db_name=$app)
+  db_user=$db_name
+  
 #=================================================
 # CHECK VERSION
 #=================================================
@@ -181,8 +183,6 @@ if mysqlshow | grep -q "^| $db_name "; then
 
   ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
 
-  db_name=$(ynh_sanitize_dbid --db_name=$app)
-  db_user=$db_name
   mysql_db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
   postgres_db_pwd=$(ynh_string_random --length=24)
