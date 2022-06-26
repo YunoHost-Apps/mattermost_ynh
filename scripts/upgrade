@@ -190,7 +190,7 @@ if mysqlshow | grep -q "^| $db_name "; then
 
   ynh_psql_test_if_first_run
   ynh_psql_create_user $db_user $postgres_db_pwd
-  ynh_psql_execute_as_root --sql="CREATE DATABASE $db_name ENCODING 'UTF8' LC_COLLATE='C' LC_CTYPE='C' TEMPLATE template0 OWNER $postgres_db_pwd;"
+  ynh_psql_execute_as_root --sql="CREATE DATABASE $db_name ENCODING 'UTF8' LC_COLLATE='C' LC_CTYPE='C' TEMPLATE template0 OWNER $db_user"
 
   # Migrating from MySQL to PostgreSQL
   pgloader mysql://$db_user:$mysql_db_pwd@localhost:3306/$db_name postgresql://$db_user:$postgres_db_pwd@localhost:5432/$db_name
