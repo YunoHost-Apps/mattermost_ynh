@@ -127,9 +127,7 @@ ynh_script_progression --message="Configuring log rotation..." --weight=1
 
 # Create log directory
 mkdir -p /var/log/$app
-#touch /var/log/$app/$app.log
-logs_path="/var/log/$app"
-chown $app -R $logs_path
+chown $app -R "/var/log/$app"
 
 # Setup logrotate
 ynh_use_logrotate
@@ -143,7 +141,6 @@ ynh_script_progression --message="Modifying a config file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
-local_socket_path="/var/run/${app}/mattermost_local.socket"
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
@@ -189,7 +186,7 @@ bin_mmctl="$final_path/bin/mmctl"
 # mmctl is not packaged with ARM versions yet
 if [[ -f "$bin_mmctl" ]]; then
   export MMCTL_LOCAL=true
-  export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
+  export MMCTL_LOCAL_SOCKET_PATH="/var/run/${app}/mattermost_local.socket"
 
   ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
   ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
