@@ -33,7 +33,8 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+mysql_db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 version=$(ynh_app_setting_get --app=$app --key=version)
 data_path=$(ynh_app_setting_get --app=$app --key=data_path)
 team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
@@ -184,7 +185,7 @@ if mysqlshow | grep -q "^| $db_name "; then
   ynh_psql_test_if_first_run
   ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$postgresql_db_pwd
   # Migrating from MySQL to PostgreSQL
-  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$postgresql_db_pwd@localhost:5432/$db_name
+  pgloader mysql://$db_user:$mysql_db_pwd@localhost:3306/$db_name postgresql://$db_user:$postgresql_db_pwd@localhost:5432/$db_name
   # Removinging MySQL database
   ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 else
