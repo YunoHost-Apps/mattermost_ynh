@@ -37,9 +37,9 @@ team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
 password=$(ynh_app_setting_get --app=$app --key=password)
 email=$(ynh_user_get_info --username=$admin --key=mail)
-  db_name=$(ynh_sanitize_dbid --db_name=$app)
-  db_user=$db_name
-  
+db_name=$(ynh_sanitize_dbid --db_name=$app)
+db_user=$db_name
+
 #=================================================
 # CHECK VERSION
 #=================================================
