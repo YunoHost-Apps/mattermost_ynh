@@ -33,9 +33,13 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 version=$(ynh_app_setting_get --app=$app --key=version)
 data_path=$(ynh_app_setting_get --app=$app --key=data_path)
+team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
+admin=$(ynh_app_setting_get --app=$app --key=admin)
+password=$(ynh_app_setting_get --app=$app --key=password)
+email=$(ynh_user_get_info --username=$admin --key=mail)
 
 #=================================================
 # CHECK VERSION
@@ -168,6 +172,26 @@ ynh_script_progression --message="Upgrading dependencies..." --weight=10
 ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
+# MIGRATING DATABASE
+#=================================================
+
+if mysqlshow | grep -q "^| $db_name "; then
+
+  ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
+
+  postgresql_db_pwd=$(ynh_string_random --length=24)
+  ynh_app_setting_set --app=$app --key=postgresql_db_pwd --value=$postgresql_db_pwd
+  ynh_psql_test_if_first_run
+  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$postgresql_db_pwd
+  # Migrating from MySQL to PostgreSQL
+  pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$postgresql_db_pwd@localhost:5432/$db_name
+  # Removinging MySQL database
+  ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
+else
+  ynh_print_info --message="No migration needed"
+fi
+
+#=================================================
 # UPDATE A CONFIG FILE
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=3
@@ -176,6 +200,9 @@ smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
+
+chmod 400 "$final_path/config/config.json"
+chown $app:$app "$final_path/config/config.json"
 
 #=================================================
 # SETUP SYSTEMD
@@ -207,6 +234,28 @@ ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
+
+#=================================================
+# CREATE ADMIN AND FIRST TEAM
+#=================================================
+# ynh_script_progression --message="Create the first administrator and team..." --weight=1
+
+# team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
+# bin_mmctl="$final_path/bin/mmctl"
+
+# # mmctl is not packaged with ARM versions yet
+# if [[ -f "$bin_mmctl" ]]; then
+#   export MMCTL_LOCAL=true
+#   export MMCTL_LOCAL_SOCKET_PATH="$local_socket_path"
+
+#   ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+#   ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+#   ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
+# fi
+
+# # Disable mmctl passwordless access
+# ynh_replace_string '"EnableLocalMode": true' '"EnableLocalMode": false' "$final_path/config/config.json"
+# ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match="Started Mattermost"
 
 #=================================================
 # RELOAD NGINX
