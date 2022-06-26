@@ -190,7 +190,7 @@ if mysqlshow | grep -q "^| $db_name "; then
   ynh_app_setting_set --app=$app --key=db_name --value=$db_name
   ynh_psql_test_if_first_run
   ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
-  ynh_app_setting_set --app=$app --key=psqlpwd --value=$db_pwd
+  db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
   # Migrating from MySQL to PostgreSQL
   pgloader mysql://$db_user:$mysql_db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name
