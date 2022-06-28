@@ -1,19 +1,18 @@
 [Unit]
 Description=Mattermost
-After=network.target
-After=postgresql.service
+After=network.target postgresql.service
 Requires=postgresql.service
 
 [Service]
 Type=notify
+User=__APP__
+Group=__APP__
 ExecStart=__FINALPATH__/bin/mattermost
 TimeoutStartSec=3600
 Restart=always
 RestartSec=10
 WorkingDirectory=__FINALPATH__
 RuntimeDirectory=__APP__
-User=__APP__
-Group=__APP__
 LimitNOFILE=49152
 
 # Sandboxing options to harden security
