@@ -89,11 +89,6 @@ if [ -z "$db_name" ]; then
    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 fi
 
-# if [ -z "$db_pwd" ]; then
-#    db_pwd=$(ynh_string_random --length=24)
-#    ynh_app_setting_set --app=$app --key=psqlpwd --value=$db_pwd
-# fi
-
 # If final_path doesn't exist, create it
 if [ -z "$data_path" ]; then
   data_path="/home/yunohost.app/$app"
@@ -136,7 +131,7 @@ then
   tmpdir="$(mktemp -d)"
 
   # Backup the config file and local plugins in the temp dir
-  #cp -a "$final_path/config/config.json" "$tmpdir/config.json"
+  cp -a "$final_path/config/config.json" "$tmpdir/config.json"
   cp -ar "$final_path/plugins" "$tmpdir/plugins"
 
   # Remove the app directory securely
@@ -149,7 +144,7 @@ then
   fi
 
   # Copy the admin saved settings and plugins from tmp directory to final path
-  #cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
+  cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
   cp -ar --no-clobber "$tmpdir/plugins" "$final_path/"
 
   # Remove the tmp directory securely
@@ -182,49 +177,15 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 # Migrating from MySQL to PostgreSQL
 mysql-to-pg
 
-# if mysqlshow | grep -q "^| $db_name "; then
-
-#   ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
-
-#   mysql_db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
-
-#   db_pwd=$(ynh_string_random --length=24)
-#   ynh_app_setting_set --app=$app --key=db_pwd --value=$db_pwd
-#   ynh_psql_test_if_first_run
-#   ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
-
-#   tmpdir="$(mktemp -d)"
-#   ynh_add_config --template="../conf/mysql-to-pg.conf" --destination="$tmpdir/mysql-to-pg.conf"
-#   # Migrating from MySQL to PostgreSQL
-#   pgloader $tmpdir/mysql-to-pg.conf
-
-#   # Removinging MySQL database
-#   ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
-#   ynh_secure_remove --file="$tmpdir"
-
-#   smtp_user_pwd=$(ynh_string_random --length=24)
-#   url=https://$domain$path_url
-#   ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
-
-#   chmod 400 "$final_path/config/config.json"
-#   chown $app:$app "$final_path/config/config.json"
-
-# else
-#   ynh_print_info --message="No migration needed"
-# fi
-
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-# ynh_script_progression --message="Updating a configuration file..." --weight=3
+ynh_script_progression --message="Updating a configuration file..." --weight=3
 
-# smtp_user_pwd=$(ynh_string_random --length=24)
-# url=https://$domain$path_url
+smtp_user_pwd=$(ynh_string_random --length=24)
+url=https://$domain$path_url
 
-# ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
-
-# chmod 400 "$final_path/config/config.json"
-# chown $app:$app "$final_path/config/config.json"
+ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
 #=================================================
 # SETUP SYSTEMD

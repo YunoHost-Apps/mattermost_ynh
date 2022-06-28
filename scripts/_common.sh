@@ -33,20 +33,10 @@ mysql-to-pg() {
 	  ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 	  ynh_secure_remove --file="$tmpdir"
 
-	  smtp_user_pwd=$(ynh_string_random --length=24)
-	  url=https://$domain$path_url
-	  ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
-
-	  chmod 400 "$final_path/config/config.json"
-	  chown $app:$app "$final_path/config/config.json"
-
 	else
 	  ynh_print_info --message="No migration needed"
 	fi
 }
-
-
-
 
 
 #=================================================
