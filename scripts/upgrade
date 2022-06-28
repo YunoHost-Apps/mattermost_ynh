@@ -179,6 +179,7 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 # MIGRATING DATABASE
 #=================================================
 
+# Migrating from MySQL to PostgreSQL
 mysql-to-pg
 
 # if mysqlshow | grep -q "^| $db_name "; then
