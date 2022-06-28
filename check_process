@@ -19,7 +19,8 @@
         setup_private=1
         setup_public=1
         upgrade=1
-        upgrade=1   from_commit=4fa3ee4ad82a6154f2eb858a3da285a35afecef8
+        # 7.0.1
+        upgrade=1   from_commit=00d02169435b8dc49744a1e896fe09001211d34c
         backup_restore=1
         multi_instance=1
         port_already_use=0
@@ -43,11 +44,11 @@
         setup_private=1
         setup_public=1
         upgrade=1
-        upgrade=1   from_commit=4fa3ee4ad82a6154f2eb858a3da285a35afecef8
+        upgrade=1   from_commit=00d02169435b8dc49744a1e896fe09001211d34c
 ;;; Options
 Email=kemenaran@gmail.com
 Notification=none
 ;;; Upgrade options
-    ; commit=4fa3ee4ad82a6154f2eb858a3da285a35afecef8
-        name= Merge pull request #268 from YunoHost-Apps/testing 
+    ; commit=00d02169435b8dc49744a1e896fe09001211d34c
+        name= Merge pull request #381 from YunoHost-Apps/testing 
         
