@@ -180,12 +180,12 @@ mysql-to-pg
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..." --weight=3
+# ynh_script_progression --message="Updating a configuration file..." --weight=3
 
-smtp_user_pwd=$(ynh_string_random --length=24)
-url=https://$domain$path_url
+# smtp_user_pwd=$(ynh_string_random --length=24)
+# url=https://$domain$path_url
 
-ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
+# ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
 #=================================================
 # SETUP SYSTEMD
