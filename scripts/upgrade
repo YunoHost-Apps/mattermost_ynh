@@ -185,20 +185,22 @@ if mysqlshow | grep -q "^| $db_name "; then
 
   mysql_db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
-  postgres_db_pwd=$(ynh_string_random --length=24)
-  ynh_app_setting_set --app=$app --key=postgres_db_pwd --value=$postgres_db_pwd
+  db_pwd=$(ynh_string_random --length=24)
+  ynh_app_setting_set --app=$app --key=db_pwd --value=$db_pwd
   ynh_psql_test_if_first_run
-  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$postgres_db_pwd
+  ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 
+  tmpdir="$(mktemp -d)"
+  ynh_add_config --template="../conf/mysql-to-pg.conf" --destination="$tmpdir/mysql-to-pg.conf"
   # Migrating from MySQL to PostgreSQL
-  pgloader ../conf/mysql-to-pg.conf
+  pgloader $tmpdir/mysql-to-pg.conf
 
   # Removinging MySQL database
   ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
+  ynh_secure_remove --file="$tmpdir"
 
   smtp_user_pwd=$(ynh_string_random --length=24)
   url=https://$domain$path_url
-  $postgres_db_pwd=$db_pwd
   ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
   chmod 400 "$final_path/config/config.json"
