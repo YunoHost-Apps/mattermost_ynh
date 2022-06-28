@@ -35,6 +35,7 @@ mysql-to-pg() {
 
 	else
 		ynh_print_info --message="No migration needed"
+		db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 	fi
 }
 
