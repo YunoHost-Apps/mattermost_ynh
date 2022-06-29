@@ -131,7 +131,7 @@
   },
   "SqlSettings": {
     "DriverName": "postgres",
-    "DataSource": "__DB_USER__:__DB_PWD__@localhost:5432/__DB_NAME__?sslmode=disable&connect_timeout=10",
+    "DataSource": "postgres://__DB_USER__:__DB_PWD__@localhost:5432/__DB_NAME__?sslmode=disable&connect_timeout=10",
     "DataSourceReplicas": [],
     "DataSourceSearchReplicas": [],
     "MaxIdleConns": 20,
