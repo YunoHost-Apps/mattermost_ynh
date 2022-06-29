@@ -84,9 +84,9 @@ ynh_script_progression --message="Configuring system user..." --weight=3
 ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
-# CREATE A POSTGRESQL DATABASE
+# CREATE A DATABASE
 #=================================================
-ynh_script_progression --message="Creating a PostgreSQL database..." --weight=10
+ynh_script_progression --message="Creating a database..." --weight=10
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
