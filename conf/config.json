@@ -193,6 +193,7 @@
     "EnableMobileDownload": true,
     "MaxFileSize": 104857600,
     "MaxImageResolution": 33177600,
+    "MaxImageDecoderConcurrency": -1,
     "DriverName": "local",
     "Directory": "__DATA_PATH__",
     "EnablePublicLink": false,
@@ -451,7 +452,6 @@
   "ExperimentalSettings": {
     "ClientSideCertEnable": false,
     "ClientSideCertCheck": "secondary",
-    "EnableClickToReply": false,
     "LinkMetadataTimeoutMilliseconds": 5000,
     "RestrictSystemAdmin": false,
     "UseNewSAMLLibrary": false,
@@ -599,8 +599,7 @@
     "EnableInactivityCheckJob": true,
     "UseCaseOnboarding": true,
     "GraphQL": false,
-    "InsightsEnabled": false,
-    "CloudFree": false,
+    "InsightsEnabled": true,
     "CommandPalette": false,
     "AdvancedTextEditor": true
   },
