@@ -1,6 +1,6 @@
 [Unit]
 Description=Mattermost
-After=network.target postgresql.service
+After=network.target
 Requires=postgresql.service
 
 [Service]
