@@ -13,7 +13,8 @@
         "website": "http://www.mattermost.org/",
         "admindoc": "https://docs.mattermost.com/guides/deployment.html",
         "userdoc": "https://docs.mattermost.com/guides/messaging.html",
-        "code": "https://github.com/mattermost/mattermost-server"
+        "code": "https://github.com/mattermost/mattermost-server",
+        "cpe": "cpe:2.3:a:mattermost:mattermost"
     },
     "license": "GPL-3.0-only",
     "maintainer": {
