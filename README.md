@@ -39,6 +39,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 
 **Shipped version:** 7.1.2~ynh1
 
+
 ## Screenshots
 
 ![Screenshot of Mattermost](./doc/screenshots/screenshot.png)
