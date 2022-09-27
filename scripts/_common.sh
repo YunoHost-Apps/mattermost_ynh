@@ -32,13 +32,13 @@ mysql-to-pg() {
 		#=================================================
 		# MODIFY A CONFIG FILE
 		#=================================================
-		ynh_script_progression --message="Modifying a config file..." --weight=3
+		#ynh_script_progression --message="Modifying a config file..." --weight=3
 
-		smtp_user_pwd=$(ynh_string_random --length=24)
-		url=https://$domain$path_url
-		db_pwd=$(psqlpwd)
+		#smtp_user_pwd=$(ynh_string_random --length=24)
+		#url=https://$domain$path_url
+		#db_pwd=$(psqlpwd)
 
-		ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
+		#ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
 		# Removinging MySQL database
 		ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
