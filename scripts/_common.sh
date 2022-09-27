@@ -19,10 +19,9 @@ mysql-to-pg() {
 
 		mysql_db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
-		db_pwd=$(ynh_string_random --length=24)
-		ynh_app_setting_set --app=$app --key=db_pwd --value=$db_pwd
 		ynh_psql_test_if_first_run
-		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
+		db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
 		# Migrating from MySQL to PostgreSQL
 		pgloader mysql://mattermost:$mysql_db_pwd@localhost:3306/mattermost postgresql://mattermost:$db_pwd@localhost:5432/mattermost
