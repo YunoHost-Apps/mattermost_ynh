@@ -152,9 +152,6 @@ url=https://$domain$path_url
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
-chmod 400 "$final_path/config/config.json"
-chown $app:$app "$final_path/config/config.json"
-
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
