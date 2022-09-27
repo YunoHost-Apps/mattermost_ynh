@@ -40,9 +40,6 @@ mysql-to-pg() {
 
 		ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
-		chmod 400 "$final_path/config/config.json"
-		chown $app:$app "$final_path/config/config.json"
-
 		# Removinging MySQL database
 		ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
 
