@@ -39,7 +39,7 @@
                 "name": "path",
                 "type": "path",
                 "example": "/mattermost",
-                "default": "/chat"
+                "default": "/mattermost"
             },
             {
                 "name": "is_public",
