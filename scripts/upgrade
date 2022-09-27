@@ -178,6 +178,19 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 mysql-to-pg
 
 #=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+ynh_script_progression --message="Modifying a config file..." --weight=3
+
+smtp_user_pwd=$(ynh_string_random --length=24)
+url=https://$domain$path_url
+
+ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
+
+chmod 400 "$final_path/config/config.json"
+chown $app:$app "$final_path/config/config.json"
+
+#=================================================
 # SETUP SYSTEMD
 #=================================================
 ynh_script_progression --message="Upgrading systemd configuration..." --weight=2
