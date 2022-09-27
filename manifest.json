@@ -6,14 +6,15 @@
         "en": "Open source collaboration platform built for developers",
         "fr": "Plateforme de collaboration open source conçue pour les développeurs"
     },
-    "version": "7.1.2~ynh1",
+    "version": "7.3.0~ynh1",
     "url": "http://www.mattermost.org/",
     "upstream": {
         "license": "GPL-3.0-only",
         "website": "http://www.mattermost.org/",
         "admindoc": "https://docs.mattermost.com/guides/deployment.html",
         "userdoc": "https://docs.mattermost.com/guides/messaging.html",
-        "code": "https://github.com/mattermost/mattermost-server"
+        "code": "https://github.com/mattermost/mattermost-server",
+        "cpe": "cpe:2.3:a:mattermost:mattermost"
     },
     "license": "GPL-3.0-only",
     "maintainer": {

@@ -210,7 +210,8 @@
     "AmazonS3SSL": true,
     "AmazonS3SignV2": false,
     "AmazonS3SSE": false,
-    "AmazonS3Trace": false
+    "AmazonS3Trace": false,
+    "AmazonS3RequestTimeoutMilliseconds": 30000
   },
   "EmailSettings": {
     "EnableSignUpWithEmail": true,
@@ -601,7 +602,9 @@
     "GraphQL": false,
     "InsightsEnabled": true,
     "CommandPalette": false,
-    "AdvancedTextEditor": true
+    "AdvancedTextEditor": true,
+    "BoardsProduct": false,
+    "PlanUpgradeButtonText": "upgrade"
   },
   "ImportSettings": {
     "Directory": "./import",
