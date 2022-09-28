@@ -184,7 +184,6 @@ ynh_script_progression --message="Modifying a config file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
-db_pwd=$(psqlpwd)
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
