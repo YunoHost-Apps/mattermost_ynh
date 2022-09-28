@@ -18,10 +18,11 @@ mysql-to-pg() {
 		ynh_script_progression --message="Migrating to PostgreSQL database..." --weight=10
 
 		mysql_db_pwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+		db_pwd=$(ynh_string_random --length=24)
 
 		ynh_psql_test_if_first_run
-		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
-		db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+
 
 		# Migrating from MySQL to PostgreSQL
 		pgloader mysql://mattermost:$mysql_db_pwd@localhost:3306/mattermost postgresql://mattermost:$db_pwd@localhost:5432/mattermost
@@ -34,11 +35,10 @@ mysql-to-pg() {
 		#=================================================
 		#ynh_script_progression --message="Modifying a config file..." --weight=3
 
-		#smtp_user_pwd=$(ynh_string_random --length=24)
-		#url=https://$domain$path_url
-		#db_pwd=$(psqlpwd)
+		smtp_user_pwd=$(ynh_string_random --length=24)
+		url=https://$domain$path_url
 
-		#ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
+		ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
 		# Removinging MySQL database
 		ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
