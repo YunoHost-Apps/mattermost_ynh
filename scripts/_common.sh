@@ -30,6 +30,8 @@ mysql-to-pg() {
 		#ynh_replace_string --match_string="\"DriverName\":*," --replace_string="\"DriverName\": \"postgres\"," --target_file="$final_path/config/config.json"
 		#ynh_replace_string --match_string="\"DataSource\":*," --replace_string="\"DataSource\": \"postgres://$db_user:$db_pwd@localhost:5432/$db_name?sslmode=disable&connect_timeout=10\"," --target_file="$final_path/config/config.json"
 
+		ynh_psql_execute_as_root --sql "DROP TABLE schema_migrations"
+
 		#=================================================
 		# MODIFY A CONFIG FILE
 		#=================================================
