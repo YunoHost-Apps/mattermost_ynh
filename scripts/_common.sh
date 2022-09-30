@@ -26,7 +26,7 @@ mysql-to-pg() {
 
 
 		# Migrating from MySQL to PostgreSQL
-		pgloader mysql://mattermost:${db_pwd}@localhost:3306/mattermost postgresql://mattermost:${db_pwd}@localhost:5432/mattermost
+		pgloader mysql://$db_user:$db_pwd@localhost:3306/$db_name postgresql://$db_user:$db_pwd@localhost:5432/$db_name
 		
 		ynh_replace_string --match_string="\"DriverName\":*," --replace_string="\"DriverName\": \"postgres\"," --target_file="$final_path/config/config.json"
 		ynh_replace_string --match_string="\"DataSource\":*," --replace_string="\"DataSource\": \"postgres://$db_user:$db_pwd@localhost:5432/$db_name?sslmode=disable&connect_timeout=10\"," --target_file="$final_path/config/config.json"
