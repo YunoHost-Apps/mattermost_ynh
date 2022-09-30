@@ -21,7 +21,7 @@ mysql-to-pg() {
 		postgresql_db_pwd=$(ynh_string_random --length=24)
 
 		ynh_psql_test_if_first_run
-		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
+		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$postgresql_db_pwd
 		postgresql_db_pwd=$(ynh_app_setting_get --app=$app --key=postgresql_db_pwd)
 
 
