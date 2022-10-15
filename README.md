@@ -37,8 +37,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 - Multiple languages including U.S. English, Australian English, Bulgarian, Chinese (Simplified and Traditional), Dutch, French, German, Hungarian, Italian, Japanese, Korean, Polish, Brazilian Portuguese, Romanian, Russian, Turkish, Spanish, Swedish, and Ukrainian
 
 
-**Shipped version:** 7.3.0~ynh1 *(:warning: This is the `PostgreSQL` branch. The [`master` branch](https://github.com/YunoHost-Apps/mattermost_ynh/tree/master) used in the catalog is currently on version 7.2.0\~ynh1.)*
-
+**Shipped version:** 7.4.0~ynh1
 
 ## Screenshots
 
