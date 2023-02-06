@@ -103,6 +103,24 @@ if ynh_legacy_permissions_exists; then
 fi
 
 #=================================================
+# UPGRADE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Upgrading dependencies..." --weight=10
+
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# MIGRATING DATABASE
+#=================================================
+
+# Migrating from MySQL to PostgreSQL
+# This migration should be done before the upgrade
+if mysqlshow | grep -q "^| $db_name "; then
+    # Mattermost only support mysql and postgresql (not mariadb...)
+    mariadb-to-pg
+fi
+
+#=================================================
 # STANDARD UPGRADE STEPS
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -163,19 +181,7 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=10
 
-ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# MIGRATING DATABASE
-#=================================================
-
-# Migrating from MySQL to PostgreSQL
-mysql-to-pg
 
 #=================================================
 # SETUP SYSTEMD
@@ -184,6 +190,33 @@ ynh_script_progression --message="Upgrading systemd configuration..." --weight=2
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
+
+#=================================================
+# Fix old migrations
+#=================================================
+# Crazy fix for old unupgraded version
+# IMPORTANT: THIS fix should be done after setup new sources and running mattermost
+if ynh_compare_current_package_version --comparison lt --version 5.37.1~ynh1
+then
+    read -r -d '' fix_old_version_sql << EOM
+ALTER TABLE ChannelMembers ALTER COLUMN mentioncountroot SET DEFAULT '0'::bigint;
+UPDATE ChannelMembers SET mentioncountroot=0 WHERE mentioncountroot IS NULL;
+ALTER TABLE ChannelMembers ALTER COLUMN msgcountroot SET DEFAULT '0'::bigint;
+UPDATE ChannelMembers SET msgcountroot=0 WHERE msgcountroot IS NULL;
+ALTER TABLE Channels ALTER COLUMN totalmsgcountroot SET DEFAULT '0'::bigint;
+UPDATE Channels SET totalmsgcountroot=0 WHERE totalmsgcountroot IS NULL;
+UPDATE SidebarCategories SET collapsed=False where collapsed IS NULL;
+UPDATE SidebarCategories SET muted=False where muted IS NULL;
+UPDATE SidebarCategories set sorting = 'manual' where sorting='';
+UPDATE SidebarCategories set sorting = 'manual' where sorting IS NULL;
+EOM
+    ynh_psql_execute_as_root --sql="$fix_old_version_sql" --database=mattermost
+
+    # Note: it's possible that some instances need other fixes
+    # If nothing is displayed in the sidebar it may be needed to change the Id of SidebarCategories...
+fi
+
+
 
 #=================================================
 # SETUP LOGROTATE
