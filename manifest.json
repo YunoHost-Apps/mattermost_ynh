@@ -27,7 +27,7 @@
         "mysql"
     ],
     "requirements": {
-        "yunohost": ">= 11.0.9"
+        "yunohost": ">= 11.1.5.5"
     },
     "arguments": {
         "install": [
