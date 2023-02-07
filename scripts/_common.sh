@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="postgresql postgresql-contrib pgloader"
+#REMOVEME? pkg_dependencies="postgresql postgresql-contrib pgloader"
 
 #=================================================
 # PERSONAL HELPERS
@@ -15,7 +15,7 @@ mariadb-to-pg() {
 
 		ynh_print_info --message="Migrating to PostgreSQL database..."
 
-		mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+#REMOVEME? 		mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
         
         # In old instance db_user is `mmuser`
         mysql_db_user="$db_user"
@@ -24,15 +24,15 @@ mariadb-to-pg() {
         fi
 
         # Initialize PostgreSQL database
-		ynh_psql_test_if_first_run
-		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$mysqlpwd
-		psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+#REMOVEME? 		ynh_psql_test_if_first_run
+#REMOVEME? 		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$mysqlpwd
+#REMOVEME? 		psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
         # Configure the new database and run Mattermost in order to create tables
-        ynh_write_var_in_file --file="$final_path/config/config.json" --key="DriverName" --value="postgres" --after="SqlSettings"
-        ynh_write_var_in_file --file="$final_path/config/config.json" --key="DataSource" --value="postgres://$db_user:$psqlpwd@localhost:5432/$db_name?sslmode=disable&connect_timeout=10" --after="SqlSettings"
-        cat "$final_path/config/config.json"
-        pushd $final_path
+        ynh_write_var_in_file --file="$install_dir/config/config.json" --key="DriverName" --value="postgres" --after="SqlSettings"
+        ynh_write_var_in_file --file="$install_dir/config/config.json" --key="DataSource" --value="postgres://$db_user:$psqlpwd@localhost:5432/$db_name?sslmode=disable&connect_timeout=10" --after="SqlSettings"
+        cat "$install_dir/config/config.json"
+        pushd $install_dir
         ynh_systemd_action --service_name="$app" --action="stop"
         set +e
 		sudo -u mattermost timeout --preserve-status 30 "./bin/mattermost" 
@@ -75,7 +75,7 @@ EOT
 		
 
 		# Removinging MySQL database
-		ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
+#REMOVEME? 		ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
 
 }
 

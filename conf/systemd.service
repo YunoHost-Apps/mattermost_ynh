@@ -7,11 +7,11 @@ Requires=postgresql.service
 Type=notify
 User=__APP__
 Group=__APP__
-ExecStart=__FINALPATH__/bin/mattermost
+ExecStart=__INSTALL_DIR__/bin/mattermost
 TimeoutStartSec=3600
 Restart=always
 RestartSec=10
-WorkingDirectory=__FINALPATH__
+WorkingDirectory=__INSTALL_DIR__
 RuntimeDirectory=__APP__
 LimitNOFILE=49152
 

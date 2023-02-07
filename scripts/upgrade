@@ -13,54 +13,54 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
-ynh_clean_setup () {
+#REMOVEME? ynh_clean_setup () {
   ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=2
+#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=2
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-port=$(ynh_app_setting_get --app=$app --key=port)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-language=$(ynh_app_setting_get --app=$app --key=language)
-version=$(ynh_app_setting_get --app=$app --key=version)
-data_path=$(ynh_app_setting_get --app=$app --key=data_path)
-team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
-admin=$(ynh_app_setting_get --app=$app --key=admin)
-password=$(ynh_app_setting_get --app=$app --key=password)
+#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
+#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
+#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
+#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
+#REMOVEME? language=$(ynh_app_setting_get --app=$app --key=language)
+#REMOVEME? version=$(ynh_app_setting_get --app=$app --key=version)
+#REMOVEME? data_path=$(ynh_app_setting_get --app=$app --key=data_path)
+#REMOVEME? team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
+#REMOVEME? admin=$(ynh_app_setting_get --app=$app --key=admin)
+#REMOVEME? password=$(ynh_app_setting_get --app=$app --key=password)
 email=$(ynh_user_get_info --username=$admin --key=mail)
-db_name=$(ynh_sanitize_dbid --db_name=$app)
-db_user=$db_name
+#REMOVEME? db_name=$(ynh_sanitize_dbid --db_name=$app)
+#REMOVEME? db_user=$db_name
 
 #=================================================
 # CHECK VERSION
 #=================================================
 ynh_script_progression --message="Checking version..." --weight=1
 
-previous_upstream_version="$(ynh_app_upstream_version --manifest="/etc/yunohost/apps/$YNH_APP_INSTANCE_NAME/manifest.json")"
+#REMOVEME? previous_upstream_version="$(ynh_app_upstream_version --manifest="/etc/yunohost/apps/$YNH_APP_INSTANCE_NAME/manifest.json")"
 upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
+#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
 
 # Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
+#REMOVEME? ynh_backup_before_upgrade
+#REMOVEME? ynh_clean_setup () {
   # Restore it if the upgrade fails
-  ynh_restore_upgradebackup
+#REMOVEME?   ynh_restore_upgradebackup
 }
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -69,7 +69,7 @@ ynh_abort_if_errors
 # Save the port used if not present
 if [ -z "$port" ]; then
   port=8065
-  ynh_app_setting_set --app=$app --key=port --value=$port
+#REMOVEME?   ynh_app_setting_set --app=$app --key=port --value=$port
 fi
 
 # Save the language used if not present
@@ -86,18 +86,18 @@ fi
 
 if [ -z "$db_name" ]; then
    db_name="$app"
-   ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+#REMOVEME?    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 fi
 
-# If final_path doesn't exist, create it
+# If install_dir doesn't exist, create it
 if [ -z "$data_path" ]; then
   data_path="/home/yunohost.app/$app"
- ynh_app_setting_set --app=$app --key=data_path --value=$data_path
+#REMOVEME?  ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 fi
 
 # Cleaning legacy permissions
-if ynh_legacy_permissions_exists; then
-  ynh_legacy_permissions_delete_all
+#REMOVEME? if ynh_legacy_permissions_exists; then
+#REMOVEME?   ynh_legacy_permissions_delete_all
 
   ynh_app_setting_delete --app=$app --key=is_public
 fi
@@ -105,9 +105,9 @@ fi
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=10
+#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=10
 
-ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+#REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # MIGRATING DATABASE
@@ -132,10 +132,10 @@ ynh_systemd_action --service_name=$app --action=stop --log_path="/var/log/$app/$
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
+#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path"
+#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -149,29 +149,29 @@ then
   tmpdir="$(mktemp -d)"
 
   # Backup the config file and local plugins in the temp dir
-  cp -a "$final_path/config/config.json" "$tmpdir/config.json"
-  cp -ar "$final_path/plugins" "$tmpdir/plugins"
+  cp -a "$install_dir/config/config.json" "$tmpdir/config.json"
+  cp -ar "$install_dir/plugins" "$tmpdir/plugins"
 
   # Remove the app directory securely
-  ynh_secure_remove --file="$final_path"
+#REMOVEME?   ynh_secure_remove --file="$install_dir"
 
   if [ "$version" = "Enterprise" ]; then
-    ynh_setup_source --dest_dir="$final_path" --source_id="enterprise"
+    ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
   elif [ "$version" = "Team" ]; then
-    ynh_setup_source --dest_dir="$final_path" --source_id="$YNH_ARCH"
+    ynh_setup_source --dest_dir="$install_dir" --source_id="$YNH_ARCH"
   fi
 
   # Copy the admin saved settings and plugins from tmp directory to final path
-  cp -a "$tmpdir/config.json" "$final_path/config/config.json" 
-  cp -ar --no-clobber "$tmpdir/plugins" "$final_path/"
+  cp -a "$tmpdir/config.json" "$install_dir/config/config.json" 
+  cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
 
   # Remove the tmp directory securely
   ynh_secure_remove --file="$tmpdir"
 fi
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -244,9 +244,9 @@ ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
-ynh_systemd_action --service_name=nginx --action=reload
+#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT

@@ -13,48 +13,48 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
-ynh_clean_setup () {
+#REMOVEME? ynh_clean_setup () {
 	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-domain=$YNH_APP_ARG_DOMAIN
-path_url=$YNH_APP_ARG_PATH
-is_public=$YNH_APP_ARG_IS_PUBLIC
-admin=$YNH_APP_ARG_ADMIN
+#REMOVEME? domain=$YNH_APP_ARG_DOMAIN
+#REMOVEME? path=$YNH_APP_ARG_PATH
+#REMOVEME? is_public=$YNH_APP_ARG_IS_PUBLIC
+#REMOVEME? admin=$YNH_APP_ARG_ADMIN
 email=$(ynh_user_get_info --username=$admin --key=mail)
-password=$YNH_APP_ARG_PASSWORD
-language=$YNH_APP_ARG_LANGUAGE
-team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
-version=$YNH_APP_ARG_VERSION
+#REMOVEME? password=$YNH_APP_ARG_PASSWORD
+#REMOVEME? language=$YNH_APP_ARG_LANGUAGE
+#REMOVEME? team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
+#REMOVEME? version=$YNH_APP_ARG_VERSION
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_script_progression --message="Validating installation parameters..." --weight=1
+#REMOVEME? ynh_script_progression --message="Validating installation parameters..." --weight=1
 
-final_path=/var/www/$app
-test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
+#REMOVEME? install_dir=/var/www/$app
+#REMOVEME? test ! -e "$install_dir" || ynh_die --message="This path already contains a folder"
 
 # Register (book) web path
-ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
+#REMOVEME? ynh_webpath_register --app=$app --domain=$domain --path=$path
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=6
+#REMOVEME? ynh_script_progression --message="Storing installation settings..." --weight=6
 
-ynh_app_setting_set --app=$app --key=domain --value=$domain
-ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=admin --value=$admin
-ynh_app_setting_set --app=$app --key=password --value="$password"
+#REMOVEME? ynh_app_setting_set --app=$app --key=domain --value=$domain
+#REMOVEME? ynh_app_setting_set --app=$app --key=path --value=$path
+#REMOVEME? ynh_app_setting_set --app=$app --key=admin --value=$admin
+#REMOVEME? ynh_app_setting_set --app=$app --key=password --value="$password"
 ynh_app_setting_set --app=$app --key=language --value=$language
 ynh_app_setting_set --app=$app --key=version --value=$version
 ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
@@ -62,57 +62,57 @@ ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_nam
 #=================================================
 # FIND AN AVAILABLE PORT
 #=================================================
-ynh_script_progression --message="Finding an available port..." --weight=3
+#REMOVEME? ynh_script_progression --message="Finding an available port..." --weight=3
 
 # Find an available port
-port=$(ynh_find_port --port=8065)
-ynh_app_setting_set --app=$app --key=port --value=$port
+#REMOVEME? port=$(ynh_find_port --port=8065)
+#REMOVEME? ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=10
+#REMOVEME? ynh_script_progression --message="Installing dependencies..." --weight=10
 
-ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+#REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --weight=3
+#REMOVEME? ynh_script_progression --message="Configuring system user..." --weight=3
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path"
+#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir"
 
 #=================================================
 # CREATE A DATABASE
 #=================================================
 ynh_script_progression --message="Creating a database..." --weight=10
 
-db_name=$(ynh_sanitize_dbid --db_name=$app)
-db_user=$db_name
-ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-ynh_psql_test_if_first_run
-ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
+#REMOVEME? db_name=$(ynh_sanitize_dbid --db_name=$app)
+#REMOVEME? db_user=$db_name
+#REMOVEME? ynh_app_setting_set --app=$app --key=db_name --value=$db_name
+#REMOVEME? ynh_psql_test_if_first_run
+#REMOVEME? ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+#REMOVEME? ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
 # Download, check integrity, uncompress and patch the source from app.src
 
 if [ "$version" = "Enterprise" ]; then
   # Get Enterprise binary path
-  ynh_setup_source --dest_dir="$final_path" --source_id="enterprise"
+  ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
 elif [ "$version" = "Team" ]; then
   # Get Team binary path
-  ynh_setup_source --dest_dir="$final_path" --source_id="$YNH_ARCH"
+  ynh_setup_source --dest_dir="$install_dir" --source_id="$YNH_ARCH"
 fi
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 
 #=================================================
 # CREATE DIRECTORY FOR DATA
@@ -120,7 +120,7 @@ chown -R $app:www-data "$final_path"
 ynh_script_progression --message="Creating the data directory..." --weight=1
 
 data_path=/home/yunohost.app/$app
-ynh_app_setting_set --app=$app --key=data_path --value=$data_path
+#REMOVEME? ynh_app_setting_set --app=$app --key=data_path --value=$data_path
 
 mkdir -p $data_path
 
@@ -148,10 +148,10 @@ ynh_use_logrotate
 ynh_script_progression --message="Modifying a config file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
-url=https://$domain$path_url
-db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+url=https://$domain$path
+#REMOVEME? db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
-ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
+ynh_add_config --template="../conf/config.json" --destination="$install_dir/config/config.json"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -190,7 +190,7 @@ ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_
 ynh_script_progression --message="Create the first administrator and team..." --weight=1
 
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
-bin_mmctl="$final_path/bin/mmctl"
+bin_mmctl="$install_dir/bin/mmctl"
 
 # mmctl is not packaged with ARM versions yet
 if [[ -f "$bin_mmctl" ]]; then
@@ -203,25 +203,25 @@ if [[ -f "$bin_mmctl" ]]; then
 fi
 
 # Disable mmctl passwordless access
-ynh_replace_string '"EnableLocalMode": true' '"EnableLocalMode": false' "$final_path/config/config.json"
+ynh_replace_string '"EnableLocalMode": true' '"EnableLocalMode": false' "$install_dir/config/config.json"
 ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match="Started Mattermost"
 
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..." --weight=1
+#REMOVEME? ynh_script_progression --message="Configuring permissions..." --weight=1
 
-if [ $is_public -eq 1 ]
+#REMOVEME? if [ $is_public -eq 1 ]
 then
-  ynh_permission_update --permission="main" --add="visitors"
+#REMOVEME?   ynh_permission_update --permission="main" --add="visitors"
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=2
+#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=2
 
-ynh_systemd_action --service_name=nginx --action=reload
+#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT

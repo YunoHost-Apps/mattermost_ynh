@@ -1,0 +1,87 @@
+packaging_format = 2
+
+id = "mattermost"
+name = "Mattermost"
+description.en = "Open source collaboration platform built for developers"
+description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
+
+version = "7.5.2~ynh1"
+
+maintainers = ["pmorinerie"]
+
+[upstream]
+license = "GPL-3.0-only"
+website = "http://www.mattermost.org/"
+admindoc = "https://docs.mattermost.com/guides/deployment.html"
+userdoc = "https://docs.mattermost.com/guides/messaging.html"
+code = "https://github.com/mattermost/mattermost-server"
+cpe = "???" # FIXME: optional but recommended if relevant, this is meant to contain the Common Platform Enumeration, which is sort of a standard id for applications defined by the NIST. In particular, Yunohost may use this is in the future to easily track CVE (=security reports) related to apps. The CPE may be obtained by searching here: https://nvd.nist.gov/products/cpe/search. For example, for Nextcloud, the CPE is 'cpe:2.3:a:nextcloud:nextcloud' (no need to include the version number)
+fund = "???" # FIXME: optional but recommended (or remove if irrelevant / not applicable). This is meant to be an URL where people can financially support this app, especially when its development is based on volunteers and/or financed by its community. YunoHost may later advertise it in the webadmin.
+
+[integration]
+yunohost = ">= 11.1.6"
+architectures = "all" # FIXME: can be replaced by a list of supported archs using the dpkg --print-architecture nomenclature (amd64/i386/armhf/arm64), for example: ["amd64", "i386"]
+multi_instance = true
+ldap = "?" # FIXME: replace with true, false, or "not_relevant". Not to confuse with the "sso" key : the "ldap" key corresponds to wether or not a user *can* login on the app using its YunoHost credentials.
+sso = "?" # FIXME: replace with true, false, or "not_relevant". Not to confuse with the "ldap" key : the "sso" key corresponds to wether or not a user is *automatically logged-in* on the app when logged-in on the YunoHost portal.
+disk = "50M" # FIXME: replace with an **estimate** minimum disk requirement. e.g. 20M, 400M, 1G, ...
+ram.build = "50M" # FIXME: replace with an **estimate** minimum ram requirement. e.g. 50M, 400M, 1G, ...
+ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requirement. e.g. 50M, 400M, 1G, ...
+
+[install]
+    [install.domain]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "domain"
+
+    [install.path]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "path"
+    default = "/mattermost"
+
+    [install.init_main_permission]
+    help.en = "If enabled, Mattermost will be accessible by the user without a YunoHost account. This can be changed later via the webadmin."
+    help.fr = "Si cette case est cochée, Mattermost sera accessible par l'utilisateur sans compte YunoHost. Vous pourrez changer ceci plus tard via l’interface d’administration."
+    type = "group"
+    default = "visitors"
+
+    [install.admin]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "user"
+
+    [install.password]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "password"
+
+    [install.version]
+    ask.en = "Choose the version you want to install"
+    ask.fr = "Choisissez la version que vous souhaitez installer"
+    help.en = "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 support only)"
+    help.fr = "Utilisez Team Edition pour la version open source (prise en charge ARM, ARM64 et x86-64) ou Enterprise Edition si vous souhaitez utiliser une licence (prise en charge x86-64 uniquement)"
+    type = "string"
+    choices = ["Enterprise", "Team"]
+    default = "Team"
+
+    [install.language]
+    ask.en = "Choose the language of the chat for the admin"
+    ask.fr = "Choissisez la langue utilisée pour l'administrateur"
+    type = "string"
+    choices = ["de", "en", "es", "fr", "it", "pt"]
+    default = "en"
+
+    [install.team_display_name]
+    ask.en = "Choose a Team name"
+    ask.fr = "Choisissez le nom de l’équipe"
+    type = "string"
+    example = "Team"
+    default = "Team"
+
+[resources]
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.database]
+    type = "postgresql"
