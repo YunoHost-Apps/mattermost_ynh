@@ -13,7 +13,7 @@ pkg_dependencies="postgresql postgresql-contrib pgloader"
 
 mariadb-to-pg() {
 
-		ynh_script_progression --message="Migrating to PostgreSQL database..." --weight=10
+		ynh_print_info --message="Migrating to PostgreSQL database..."
 
 		mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
         
