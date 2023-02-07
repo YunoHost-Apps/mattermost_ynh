@@ -23,12 +23,12 @@ mariadb-to-pg() {
             mysql_db_user="mmuser"
         fi
 
-        # Initialize Postgresql db
+        # Initialize PostgreSQL database
 		ynh_psql_test_if_first_run
 		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$mysqlpwd
 		psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
-        # Configure the new db and run mattermost in order to create tables
+        # Configure the new database and run Mattermost in order to create tables
         ynh_write_var_in_file --file="$final_path/config/config.json" --key="DriverName" --value="postgres" --after="SqlSettings"
         ynh_write_var_in_file --file="$final_path/config/config.json" --key="DataSource" --value="postgres://$db_user:$psqlpwd@localhost:5432/$db_name?sslmode=disable&connect_timeout=10" --after="SqlSettings"
         cat "$final_path/config/config.json"
@@ -42,7 +42,7 @@ mariadb-to-pg() {
         set -e
         popd
 
-        # Some fixes to let the mariadb -> postgresql conversion working
+        # Some fixes to let the MariaDB -> PostgreSQL conversion working
         ynh_psql_execute_as_root --sql='DROP INDEX public.idx_fileinfo_content_txt;' --database=mattermost
         ynh_psql_execute_as_root --sql='DROP INDEX public.idx_posts_message_txt;' --database=mattermost
         ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=mattermost
