@@ -10,19 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
-#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
-#REMOVEME? db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-#REMOVEME? db_user=$db_name
-#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
-#REMOVEME? data_path=$(ynh_app_setting_get --app=$app --key=data_path)
-
-#=================================================
 # STANDARD REMOVE
 #=================================================
 # REMOVE SERVICE FROM ADMIN PANEL
@@ -52,41 +39,6 @@ ynh_script_progression --message="Removing logrotate configuration..." --weight=
 ynh_remove_logrotate
 
 #=================================================
-# REMOVE THE DATABASE
-#=================================================
-ynh_script_progression --message="Removing the database..." --weight=2
-
-# Remove a database if it exists, along with the associated user
-#REMOVEME? ynh_psql_remove_db --db_user=$db_user --db_name=$db_name
-
-#=================================================
-# REMOVE DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Removing dependencies..." --weight=3
-
-# Remove metapackage and its dependencies
-#REMOVEME? ynh_remove_app_dependencies
-
-#=================================================
-# REMOVE APP MAIN DIR
-#=================================================
-ynh_script_progression --message="Removing $app main directory..." --weight=6
-
-# Remove the app directory securely
-#REMOVEME? ynh_secure_remove --file="$install_dir"
-
-#=================================================
-# REMOVE DATA DIR
-#=================================================
-
-# Remove the data directory if --purge option is used
-if [ "${YNH_APP_PURGE:-0}" -eq 1 ]
-then
-	ynh_script_progression --message="Removing app data directory..." --weight=1
-	ynh_secure_remove --file="$data_path"
-fi
-
-#=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
 ynh_script_progression --message="Removing NGINX web server configuration..." --weight=5
@@ -102,13 +54,6 @@ ynh_remove_nginx_config
 ynh_script_progression --message="Removing various files..." --weight=1
 
 ynh_secure_remove --file="/var/log/$app"
-
-#=================================================
-# REMOVE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Removing the dedicated system user..." --weight=1
-
-#REMOVEME? ynh_system_user_delete --username=$app
 
 #=================================================
 # END OF SCRIPT

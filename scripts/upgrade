@@ -10,57 +10,18 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
-#=================================================
-
-#REMOVEME? ynh_clean_setup () {
-  ynh_clean_check_starting
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
-
-#=================================================
 # LOAD SETTINGS
 #=================================================
-#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=2
+ynh_script_progression --message="Loading installation settings..." --weight=2
 
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
-#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
-#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
-#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
-#REMOVEME? language=$(ynh_app_setting_get --app=$app --key=language)
-#REMOVEME? version=$(ynh_app_setting_get --app=$app --key=version)
-#REMOVEME? data_path=$(ynh_app_setting_get --app=$app --key=data_path)
-#REMOVEME? team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
-#REMOVEME? admin=$(ynh_app_setting_get --app=$app --key=admin)
-#REMOVEME? password=$(ynh_app_setting_get --app=$app --key=password)
+team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
 email=$(ynh_user_get_info --username=$admin --key=mail)
-#REMOVEME? db_name=$(ynh_sanitize_dbid --db_name=$app)
-#REMOVEME? db_user=$db_name
 
 #=================================================
 # CHECK VERSION
 #=================================================
-ynh_script_progression --message="Checking version..." --weight=1
 
-#REMOVEME? previous_upstream_version="$(ynh_app_upstream_version --manifest="/etc/yunohost/apps/$YNH_APP_INSTANCE_NAME/manifest.json")"
 upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-#REMOVEME? ynh_backup_before_upgrade
-#REMOVEME? ynh_clean_setup () {
-  # Restore it if the upgrade fails
-#REMOVEME?   ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -91,23 +52,10 @@ fi
 
 # If install_dir doesn't exist, create it
 if [ -z "$data_path" ]; then
-  data_path="/home/yunohost.app/$app"
-#REMOVEME?  ynh_app_setting_set --app=$app --key=data_path --value=$data_path
+  data_path=data_dir
+  data_dir="/home/yunohost.app/$app"
+  ynh_app_setting_set --app=$app --key=data_dir --value=$data_dir
 fi
-
-# Cleaning legacy permissions
-#REMOVEME? if ynh_legacy_permissions_exists; then
-#REMOVEME?   ynh_legacy_permissions_delete_all
-
-  ynh_app_setting_delete --app=$app --key=is_public
-fi
-
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=10
-
-#REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # MIGRATING DATABASE
@@ -130,14 +78,6 @@ ynh_script_progression --message="Stopping a systemd service..." --weight=3
 ynh_systemd_action --service_name=$app --action=stop --log_path="/var/log/$app/$app.log"
 
 #=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir"
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
@@ -153,7 +93,7 @@ then
   cp -ar "$install_dir/plugins" "$tmpdir/plugins"
 
   # Remove the app directory securely
-#REMOVEME?   ynh_secure_remove --file="$install_dir"
+  ynh_secure_remove --file="$install_dir"
 
   if [ "$version" = "Enterprise" ]; then
     ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
@@ -180,8 +120,6 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
-
-
 
 #=================================================
 # SETUP SYSTEMD
@@ -216,8 +154,6 @@ EOM
     # If nothing is displayed in the sidebar it may be needed to change the Id of SidebarCategories...
 fi
 
-
-
 #=================================================
 # SETUP LOGROTATE
 #=================================================
@@ -240,13 +176,6 @@ ynh_script_progression --message="Starting a systemd service..." --weight=2
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT

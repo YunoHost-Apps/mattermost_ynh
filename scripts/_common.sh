@@ -15,7 +15,7 @@ mariadb-to-pg() {
 
 		ynh_print_info --message="Migrating to PostgreSQL database..."
 
-#REMOVEME? 		mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+ 		mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
         
         # In old instance db_user is `mmuser`
         mysql_db_user="$db_user"
@@ -24,9 +24,9 @@ mariadb-to-pg() {
         fi
 
         # Initialize PostgreSQL database
-#REMOVEME? 		ynh_psql_test_if_first_run
-#REMOVEME? 		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$mysqlpwd
-#REMOVEME? 		psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+ 		ynh_psql_test_if_first_run
+ 		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$mysqlpwd
+ 		psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
         # Configure the new database and run Mattermost in order to create tables
         ynh_write_var_in_file --file="$install_dir/config/config.json" --key="DriverName" --value="postgres" --after="SqlSettings"
@@ -75,7 +75,7 @@ EOT
 		
 
 		# Removinging MySQL database
-#REMOVEME? 		ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
+ 		ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
 
 }
 
