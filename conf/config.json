@@ -79,6 +79,7 @@
     "ExperimentalEnableDefaultChannelLeaveJoinMessages": true,
     "ExperimentalGroupUnreadChannels": "disabled",
     "EnableAPITeamDeletion": false,
+    "EnableAPITriggerAdminNotifications": false,
     "EnableAPIUserDeletion": false,
     "ExperimentalEnableHardenedMode": false,
     "ExperimentalStrictCSRFEnforcement": false,
@@ -88,6 +89,7 @@
     "EnableSVGs": false,
     "EnableLatex": false,
     "EnableInlineLatex": true,
+    "PostPriority": false,
     "EnableAPIChannelDeletion": false,
     "EnableLocalMode": true,
     "LocalModeSocketLocation": "/var/run/__APP__/mattermost_local.socket",
@@ -112,6 +114,7 @@
     "CustomBrandText": "",
     "CustomDescriptionText": "",
     "RestrictDirectMessage": "any",
+    "EnableLastActiveTime": true,
     "UserStatusAwayTimeout": 300,
     "MaxChannelsPerTeam": 2000,
     "MaxNotificationsPerChannel": 1000,
@@ -456,7 +459,6 @@
     "LinkMetadataTimeoutMilliseconds": 5000,
     "RestrictSystemAdmin": false,
     "UseNewSAMLLibrary": false,
-    "CloudBilling": false,
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false,
     "EnableAppBar": false
@@ -524,6 +526,9 @@
     "RunScheduler": true,
     "CleanupJobsThresholdDays": -1,
     "CleanupConfigThresholdDays": -1
+  },
+  "ProductSettings": {
+    "EnablePublicSharedBoards": false
   },
   "PluginSettings": {
     "Enable": true,
@@ -602,9 +607,9 @@
     "GraphQL": false,
     "InsightsEnabled": true,
     "CommandPalette": false,
-    "AdvancedTextEditor": true,
     "BoardsProduct": false,
-    "PlanUpgradeButtonText": "upgrade"
+    "SendWelcomePost": true,
+    "PostPriority": false
   },
   "ImportSettings": {
     "Directory": "./import",
