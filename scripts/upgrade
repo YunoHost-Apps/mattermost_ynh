@@ -116,7 +116,7 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 # Migrating from MySQL to PostgreSQL
 # This migration should be done before the upgrade
 if mysqlshow | grep -q "^| $db_name "; then
-    # Mattermost only support mysql and postgresql (not mariadb...)
+    # Mattermost only support MySQL and PostgreSQL (not MariaDB...)
     mariadb-to-pg
 fi
 
@@ -181,8 +181,6 @@ ynh_script_progression --message="Upgrading NGINX web server configuration..." -
 # Create a dedicated NGINX config
 ynh_add_nginx_config
 
-
-
 #=================================================
 # SETUP SYSTEMD
 #=================================================
@@ -215,8 +213,6 @@ EOM
     # Note: it's possible that some instances need other fixes
     # If nothing is displayed in the sidebar it may be needed to change the Id of SidebarCategories...
 fi
-
-
 
 #=================================================
 # SETUP LOGROTATE
