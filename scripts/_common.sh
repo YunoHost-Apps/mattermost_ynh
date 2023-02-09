@@ -74,7 +74,7 @@ EOT
         ynh_psql_execute_as_root --sql='CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));' --database=mattermost
 
 
-        # Removinging MySQL database
+        # Remove the MariaDB database
         ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
 
 }
