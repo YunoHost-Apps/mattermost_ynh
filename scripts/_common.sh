@@ -13,10 +13,10 @@ pkg_dependencies="postgresql postgresql-contrib pgloader"
 
 mariadb-to-pg() {
 
-		ynh_print_info --message="Migrating to PostgreSQL database..."
+        ynh_print_info --message="Migrating to PostgreSQL database..."
 
-		mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
-        
+        mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
+
         # In old instance db_user is `mmuser`
         mysql_db_user="$db_user"
         if ynh_mysql_connect_as --user="mmuser" --password="$mysqlpwd" 2> /dev/null <<< ";"; then
@@ -24,9 +24,9 @@ mariadb-to-pg() {
         fi
 
         # Initialize PostgreSQL database
-		ynh_psql_test_if_first_run
-		ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$mysqlpwd
-		psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+        ynh_psql_test_if_first_run
+        ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$mysqlpwd
+        psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
         # Configure the new database and run Mattermost in order to create tables
         ynh_write_var_in_file --file="$final_path/config/config.json" --key="DriverName" --value="postgres" --after="SqlSettings"
@@ -67,15 +67,15 @@ ALTER SCHEMA '$db_name' RENAME TO 'public'
 
 ;
 EOT
-		pgloader $tmpdir/commands.load
-        
+        pgloader $tmpdir/commands.load
+
         # Rebuild INDEX
         ynh_psql_execute_as_root --sql='CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))' --database=mattermost
         ynh_psql_execute_as_root --sql='CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));' --database=mattermost
-		
 
-		# Removinging MySQL database
-		ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
+
+        # Removinging MySQL database
+        ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
 
 }
 
