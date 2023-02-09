@@ -37,7 +37,7 @@ mariadb-to-pg() {
         set +e
 		sudo -u mattermost timeout --preserve-status 30 "./bin/mattermost" 
         if [ "$?" != "0" ] && [ "$?" != "143" ] ; then
-            ynh_die --message="Mattermost creation failed on mattermost running" --ret_code=1
+            ynh_die --message="Failed to run Mattermost to create PostgreSQL database tables" --ret_code=1
         fi
         set -e
         popd
@@ -47,7 +47,7 @@ mariadb-to-pg() {
         ynh_psql_execute_as_root --sql='DROP INDEX public.idx_posts_message_txt;' --database=mattermost
         ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=mattermost
 
-        # Migrating from MySQL to PostgreSQL
+        # Use pgloader to migrate database content from MariaDB to PostgreSQL
         tmpdir="$(mktemp -d)"
 
         cat <<EOT > $tmpdir/commands.load

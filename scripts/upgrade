@@ -117,6 +117,7 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 # This migration should be done before the upgrade
 if mysqlshow | grep -q "^| $db_name "; then
     # Mattermost only support MySQL and PostgreSQL (not MariaDB...)
+    # Migrate the database from MariaDB to PostgreSQL
     mariadb-to-pg
 fi
 
