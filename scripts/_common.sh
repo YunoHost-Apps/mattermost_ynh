@@ -37,7 +37,7 @@ mariadb-to-pg() {
         set +e
 		sudo -u mattermost timeout --preserve-status 30 "./bin/mattermost" 
         if [ "$?" != "0" ] && [ "$?" != "143" ] ; then
-            ynh_die --message="Mattermost creation failed on mattermost running" --ret_code=1
+            ynh_die --message="Mattermost creation failed on Mattermost running" --ret_code=1
         fi
         set -e
         popd

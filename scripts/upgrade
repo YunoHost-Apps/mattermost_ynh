@@ -53,7 +53,7 @@ fi
 # Migrating from MySQL to PostgreSQL
 # This migration should be done before the upgrade
 if mysqlshow | grep -q "^| $db_name "; then
-    # Mattermost only support mysql and postgresql (not mariadb...)
+    # Mattermost only support MySQL and PostgreSQL (not MariaDB...)
     mariadb-to-pg
 fi
 
@@ -122,7 +122,7 @@ ynh_add_systemd_config
 # Fix old migrations
 #=================================================
 # Crazy fix for old unupgraded version
-# IMPORTANT: THIS fix should be done after setup new sources and running mattermost
+# IMPORTANT: THIS fix should be done after setup new sources and running Mattermost
 if ynh_compare_current_package_version --comparison lt --version 5.37.1~ynh1
 then
     read -r -d '' fix_old_version_sql << EOM
