@@ -35,7 +35,7 @@ mariadb-to-pg() {
         pushd $final_path
         ynh_systemd_action --service_name="$app" --action="stop"
         set +e
-		sudo -u mattermost timeout --preserve-status 30 "./bin/mattermost" 
+		sudo -u mattermost timeout --preserve-status 120 "./bin/mattermost" 
         if [ "$?" != "0" ] && [ "$?" != "143" ] ; then
             ynh_die --message="Failed to run Mattermost to create PostgreSQL database tables" --ret_code=1
         fi
