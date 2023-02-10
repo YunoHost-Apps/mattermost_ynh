@@ -27,12 +27,6 @@ upgrade_type=$(ynh_check_app_version_changed)
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 
-# Save the port used if not present
-if [ -z "$port" ]; then
-  port=8065
-#REMOVEME?   ynh_app_setting_set --app=$app --key=port --value=$port
-fi
-
 # Save the language used if not present
 if [ -z "$language" ]; then
   language="en"
@@ -43,11 +37,6 @@ fi
 if [ -z "$version" ]; then
   version="Enterprise"
   ynh_app_setting_set --app=$app --key=version --value=$version
-fi
-
-if [ -z "$db_name" ]; then
-   db_name="$app"
-#REMOVEME?    ynh_app_setting_set --app=$app --key=db_name --value=$db_name
 fi
 
 # If install_dir doesn't exist, create it
