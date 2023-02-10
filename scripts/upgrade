@@ -40,7 +40,7 @@ if [ -z "$version" ]; then
 fi
 
 # If install_dir doesn't exist, create it
-if [ -z "$data_path" ]; then
+if [ -z "$data_dir" ]; then
   data_path=data_dir
   data_dir="/home/yunohost.app/$app"
   ynh_app_setting_set --app=$app --key=data_dir --value=$data_dir

@@ -11,8 +11,11 @@ test_format = 1.0
     args.version = "Enterprise"
 	args.team_display_name = "Mon équipe"
 
-["Test with Team Edition"]
+["Test-with-Team-Edition"]
 
     only = ["install.subdir", "backup_restore", "upgrade" ]
+    
+    args.email = "john@gmail.com"
+    args.admin_password = "admin!42"
     args.version = "Team"
-
+    args.team_display_name = "Mon équipe"

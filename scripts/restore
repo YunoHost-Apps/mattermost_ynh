@@ -32,13 +32,13 @@ chown -R $app:www-data "$install_dir"
 #=================================================
 ynh_script_progression --message="Restoring the data directory..." --weight=4
 
-ynh_restore_file --origin_path="$data_path" --not_mandatory
+ynh_restore_file --origin_path="$data_dir" --not_mandatory
 
-mkdir -p $data_path
+mkdir -p $data_dir
 
-chmod 750 "$data_path"
-chmod -R o-rwx "$data_path"
-chown -R $app:www-data "$data_path"
+chmod 750 "$data_dir"
+chmod -R o-rwx "$data_dir"
+chown -R $app:www-data "$data_dir"
 
 #=================================================
 # RESTORE THE DATABASE

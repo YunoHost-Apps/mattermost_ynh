@@ -27,7 +27,7 @@ app=$YNH_APP_INSTANCE_NAME
 ynh_script_progression --message="Loading installation settings..." --weight=1
 
 # Needed for helper "ynh_add_nginx_config"
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
 port=$(ynh_app_setting_get --app=$app --key=port)
 
 #=================================================
@@ -109,10 +109,10 @@ fi
 ynh_script_progression --message="Modifying a config file..." --weight=3
 
 # Main config File
-ynh_replace_string --match_string="\"SiteURL\": \".*\""  --replace_string="\"SiteURL\": \"https://${new_domain}${new_path}\"" --target_file="$final_path/config/config.json"
-ynh_replace_string --match_string="\"FeedbackEmail\": \".*\"" --replace_string="\"FeedbackEmail\": \"no-reply@${new_domain}\"" --target_file="$final_path/config/config.json"
+ynh_replace_string --match_string="\"SiteURL\": \".*\""  --replace_string="\"SiteURL\": \"https://${new_domain}${new_path}\"" --target_file="$install_dir/config/config.json"
+ynh_replace_string --match_string="\"FeedbackEmail\": \".*\"" --replace_string="\"FeedbackEmail\": \"no-reply@${new_domain}\"" --target_file="$install_dir/config/config.json"
 
-ynh_store_file_checksum --file="$final_path/config/config.json"
+ynh_store_file_checksum --file="$install_dir/config/config.json"
 
 #=================================================
 # GENERIC FINALISATION

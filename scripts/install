@@ -22,7 +22,7 @@ version=$YNH_APP_ARG_VERSION
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=6
 
-ynh_app_setting_set --app=$app --key=language --value=$language
+#ynh_app_setting_set --app=$app --key=language --value=$language
 ynh_app_setting_set --app=$app --key=version --value=$version
 ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
 
