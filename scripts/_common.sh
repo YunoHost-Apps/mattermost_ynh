@@ -43,9 +43,9 @@ mariadb-to-pg() {
         popd
 
         # Some fixes to let the MariaDB -> PostgreSQL conversion working
-        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_fileinfo_content_txt;' --database=mattermost
-        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_posts_message_txt;' --database=mattermost
-        ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=mattermost
+        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_fileinfo_content_txt;' --database=$db_name
+        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_posts_message_txt;' --database=$db_name
+        ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=$db_name
 
         # Use pgloader to migrate database content from MariaDB to PostgreSQL
         tmpdir="$(mktemp -d)"
@@ -70,8 +70,8 @@ EOT
         pgloader $tmpdir/commands.load
 
         # Rebuild INDEX
-        ynh_psql_execute_as_root --sql='CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))' --database=mattermost
-        ynh_psql_execute_as_root --sql='CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));' --database=mattermost
+        ynh_psql_execute_as_root --sql='CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))' --database=$db_name
+        ynh_psql_execute_as_root --sql='CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));' --database=$db_name
 
 
         # Remove the MariaDB database
