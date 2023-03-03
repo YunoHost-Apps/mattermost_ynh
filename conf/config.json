@@ -198,7 +198,7 @@
     "MaxImageResolution": 33177600,
     "MaxImageDecoderConcurrency": -1,
     "DriverName": "local",
-    "Directory": "__DATA_PATH__",
+    "Directory": "__DATA_DIR__",
     "EnablePublicLink": false,
     "ExtractContent": false,
     "ArchiveRecursion": false,
