@@ -6,6 +6,7 @@ It shall NOT be edited by hand.
 # Mattermost pour YunoHost
 
 [![Niveau d’intégration](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+
 [![Installer Mattermost avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
 *[Read this readme in english.](./README.md)*
