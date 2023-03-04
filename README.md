@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Mattermost for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Working status](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Working status](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+
 [![Install Mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -39,7 +40,6 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 
 **Shipped version:** 7.3.0~ynh1
 
-
 ## Screenshots
 
 ![Screenshot of Mattermost](./doc/screenshots/screenshot.png)
@@ -63,7 +63,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Additional information
 
-* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` if you choose to install the *Entreprise Edition*).
+* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` and `ARM64` if you choose to install the *Entreprise Edition*).
 
 ## Documentation and resources
 
