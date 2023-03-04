@@ -46,6 +46,7 @@
         setup_private=1
         setup_public=1
         upgrade=1
+        # 7.2.0
         upgrade=1   from_commit=738ba505f581ddd72889c889dcb34406250fea35
         # 7.3.0
         upgrade=1   from_commit=1677cb9fa9d95ab788a6acd5b310b09c7d2ab7df

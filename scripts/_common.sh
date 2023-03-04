@@ -76,6 +76,8 @@ EOT
 
         if ynh_compare_current_package_version --comparison eq --version 7.3.0~ynh1
         then
+            # There is a problem with version 7.3.0 and the database migration.
+            # More information here: https://forum.mattermost.com/t/migrating-from-mariadb-to-postgresql-db/14194/6
             ynh_psql_execute_as_root --sql="DELETE FROM db_migrations WHERE version=92;" --database=$db_name
         fi
         # Remove the MariaDB database
