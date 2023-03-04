@@ -36,9 +36,9 @@ module Mattermost
 
     def retrieve_release_data
       case @variant
-      when :amd64, :enterprise
+      when :team_amd64, :team_arm64, :enterprise_amd64, :enterprise_arm64
         retrieve_first_party_release_data
-      when :armhf, :arm64
+      when :team_armhf
         retrieve_smart_honeybee_release_data
       else
         raise "Unsupported variant '{#release_desc.variant}'"
@@ -47,21 +47,29 @@ module Mattermost
 
     def retrieve_first_party_release_data
       edition = {
-        amd64: 'team',
-        enterprise: 'enterprise'
+        team_amd64: 'team',
+        team_arm64: 'team',
+        enterprise_amd64: 'enterprise',
+        enterprise_arm64: 'enterprise'
       }.fetch(variant)
 
-      @url = "https://releases.mattermost.com/#{version}/mattermost-#{edition}-#{version}-linux-amd64.tar.gz"
+      arch = {
+        team_amd64: 'amd64',
+        team_arm64: 'arm64',
+        enterprise_amd64: 'amd64',
+        enterprise_arm64: 'arm64'
+      }.fetch(variant)
 
-      puts "Downloading release #{version}-#{variant} for computing checksum…"
+      @url = "https://releases.mattermost.com/#{version}/mattermost-#{edition}-#{version}-linux-#{arch}.tar.gz"
+
+      puts "Downloading release #{version}-#{edition}-#{arch} for computing checksum…"
       release_file = URI.parse(@url).read
       @sum = Digest::SHA256.hexdigest(release_file)
     end
 
     def retrieve_smart_honeybee_release_data
       arch = {
-        armhf: 'arm',
-        arm64: 'arm64'
+        team_armhf: 'arm',
       }.fetch(variant)
 
       @url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v#{version}/mattermost-v#{version}-linux-#{arch}.tar.gz"
@@ -127,7 +135,7 @@ if version.nil?
   abort("ERROR: The Mattermost release version must be provided.\nExample: ./bump-mattermost.sh 5.33.1")
 end
 
-VARIANTS = %i[amd64 enterprise armhf arm64]
+VARIANTS = %i[team_amd64 enterprise_amd64 enterprise_arm64 team_arm64 team_armhf]
 
 # Compute releases URLs and sums
 releases = VARIANTS
