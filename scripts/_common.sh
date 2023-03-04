@@ -43,9 +43,9 @@ mariadb-to-pg() {
         popd
 
         # Some fixes to let the MariaDB -> PostgreSQL conversion working
-        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_fileinfo_content_txt;' --database=mattermost
-        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_posts_message_txt;' --database=mattermost
-        ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=mattermost
+        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_fileinfo_content_txt;' --database=$db_name
+        ynh_psql_execute_as_root --sql='DROP INDEX public.idx_posts_message_txt;' --database=$db_name
+        ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=$db_name
 
         # Use pgloader to migrate database content from MariaDB to PostgreSQL
         tmpdir="$(mktemp -d)"
@@ -70,10 +70,16 @@ EOT
         pgloader $tmpdir/commands.load
 
         # Rebuild INDEX
-        ynh_psql_execute_as_root --sql='CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))' --database=mattermost
-        ynh_psql_execute_as_root --sql='CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));' --database=mattermost
+        ynh_psql_execute_as_root --sql='CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))' --database=$db_name
+        ynh_psql_execute_as_root --sql='CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));' --database=$db_name
 
 
+        if ynh_compare_current_package_version --comparison eq --version 7.3.0~ynh1
+        then
+            # There is a problem with version 7.3.0 and the database migration.
+            # More information here: https://forum.mattermost.com/t/migrating-from-mariadb-to-postgresql-db/14194/6
+            ynh_psql_execute_as_root --sql="DELETE FROM db_migrations WHERE version=92;" --database=$db_name
+        fi
         # Remove the MariaDB database
         ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
 
