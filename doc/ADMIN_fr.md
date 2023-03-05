@@ -1,0 +1,1 @@
+* Comment changer d'une version à une autre (Team<->Enterprise) : Modifiez le `settings.yml` dans le répertoire de l'application `/etc/yunohost/apps/mattermost_instance/settings.yml` et remplacez la version avec celle que vous voulez : Team ou Enterprise. Mettez à jour votre application et vérifiez dans le *À Propos* sur la console système de votre application.
