@@ -22,6 +22,11 @@ Une alternative gratuite, open source et auto-hébergée à la messagerie SaaS p
 ## Mattermost Entreprise Edition
 Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vous pouvez remplacer le binaire Mattermost Team Edition par un binaire Mattermost Enterprise Edition. Cette version prend en charge la mise à niveau vers Mattermost Enterprise Edition E10 ou E20. 
 
+## Caractéristiques spécifiques YunoHost
+
+Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) ou la version [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
+
+
 ## Les fonctionnalités incluent:
 
 - Messagerie individuelle et de groupe, partage de fichiers et historique de recherche illimité
