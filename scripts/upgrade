@@ -31,9 +31,14 @@ path_url=$(ynh_app_setting_get --app=$app --key=path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 language=$(ynh_app_setting_get --app=$app --key=language)
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
 version=$(ynh_app_setting_get --app=$app --key=version)
 data_path=$(ynh_app_setting_get --app=$app --key=data_path)
+team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
+admin=$(ynh_app_setting_get --app=$app --key=admin)
+password=$(ynh_app_setting_get --app=$app --key=password)
+email=$(ynh_user_get_info --username=$admin --key=mail)
+db_name=$(ynh_sanitize_dbid --db_name=$app)
+db_user=$db_name
 
 #=================================================
 # CHECK VERSION
@@ -95,6 +100,25 @@ if ynh_legacy_permissions_exists; then
   ynh_legacy_permissions_delete_all
 
   ynh_app_setting_delete --app=$app --key=is_public
+fi
+
+#=================================================
+# UPGRADE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Upgrading dependencies..." --weight=10
+
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
+# MIGRATING DATABASE
+#=================================================
+
+# Check if using MariaDB
+# This migration should be done before the upgrade
+if mysqlshow | grep -q "^| $db_name "; then
+    # Mattermost only support MySQL and PostgreSQL (not MariaDB...)
+    # Migrate the database from MariaDB to PostgreSQL
+    mariadb-to-pg
 fi
 
 #=================================================
@@ -167,6 +191,31 @@ ynh_script_progression --message="Upgrading systemd configuration..." --weight=2
 ynh_add_systemd_config
 
 #=================================================
+# Fix old migrations
+#=================================================
+# Crazy fix for old unupgraded version
+# IMPORTANT: THIS fix should be done after setup new sources and running mattermost
+if ynh_compare_current_package_version --comparison lt --version 5.37.1~ynh1
+then
+    read -r -d '' fix_old_version_sql << EOM
+ALTER TABLE ChannelMembers ALTER COLUMN mentioncountroot SET DEFAULT '0'::bigint;
+UPDATE ChannelMembers SET mentioncountroot=0 WHERE mentioncountroot IS NULL;
+ALTER TABLE ChannelMembers ALTER COLUMN msgcountroot SET DEFAULT '0'::bigint;
+UPDATE ChannelMembers SET msgcountroot=0 WHERE msgcountroot IS NULL;
+ALTER TABLE Channels ALTER COLUMN totalmsgcountroot SET DEFAULT '0'::bigint;
+UPDATE Channels SET totalmsgcountroot=0 WHERE totalmsgcountroot IS NULL;
+UPDATE SidebarCategories SET collapsed=False where collapsed IS NULL;
+UPDATE SidebarCategories SET muted=False where muted IS NULL;
+UPDATE SidebarCategories set sorting = 'manual' where sorting='';
+UPDATE SidebarCategories set sorting = 'manual' where sorting IS NULL;
+EOM
+    ynh_psql_execute_as_root --sql="$fix_old_version_sql" --database=$db_name
+
+    # Note: it's possible that some instances need other fixes
+    # If nothing is displayed in the sidebar it may be needed to change the Id of SidebarCategories...
+fi
+
+#=================================================
 # SETUP LOGROTATE
 #=================================================
 ynh_script_progression --message="Upgrading logrotate configuration..." --weight=1
@@ -185,12 +234,6 @@ yunohost service add $app --description="Collaboration platform built for develo
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=2
-
-# A lengthy database migration runs when upgrading from a version < 6.0.
-if dpkg --compare-versions "$previous_upstream_version" lt "6.0.0"
-then
-  ynh_print_warn --message="Lengthy database migrations will now run. This may take a while..."
-fi
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"

@@ -69,6 +69,13 @@ port=$(ynh_find_port --port=8065)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing dependencies..." --weight=10
+
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
+#=================================================
 # CREATE DEDICATED USER
 #=================================================
 ynh_script_progression --message="Configuring system user..." --weight=3
@@ -77,14 +84,15 @@ ynh_script_progression --message="Configuring system user..." --weight=3
 ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
-# CREATE A MYSQL DATABASE
+# CREATE A DATABASE
 #=================================================
-ynh_script_progression --message="Creating a MySQL database..." --weight=10
+ynh_script_progression --message="Creating a database..." --weight=10
 
 db_name=$(ynh_sanitize_dbid --db_name=$app)
 db_user=$db_name
 ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-ynh_mysql_setup_db --db_user=$db_user --db_name=$db_name
+ynh_psql_test_if_first_run
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -141,6 +149,7 @@ ynh_script_progression --message="Modifying a config file..." --weight=3
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path_url
+db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
 ynh_add_config --template="../conf/config.json" --destination="$final_path/config/config.json"
 
