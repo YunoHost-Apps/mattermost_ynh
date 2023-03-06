@@ -46,6 +46,8 @@ mariadb-to-pg() {
         ynh_psql_execute_as_root --sql='DROP INDEX public.idx_fileinfo_content_txt;' --database=$db_name
         ynh_psql_execute_as_root --sql='DROP INDEX public.idx_posts_message_txt;' --database=$db_name
         ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=$db_name
+        ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.SharedChannelRemotes DROP COLUMN IF EXISTS description;" --database=$db_name
+        ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.SharedChannelRemotes DROP COLUMN IF EXISTS nextsyncat;" --database=$db_name
 
         # Use pgloader to migrate database content from MariaDB to PostgreSQL
         tmpdir="$(mktemp -d)"
