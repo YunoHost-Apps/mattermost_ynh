@@ -4,9 +4,6 @@
 # COMMON VARIABLES
 #=================================================
 
-# dependencies used by the app
-#REMOVEME? pkg_dependencies="postgresql postgresql-contrib pgloader"
-
 #=================================================
 # PERSONAL HELPERS
 #=================================================
