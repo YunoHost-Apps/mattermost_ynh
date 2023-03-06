@@ -25,7 +25,6 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 ## Les fonctionnalités incluent:
 
 - Messagerie individuelle et de groupe, partage de fichiers et historique de recherche illimité
-- Applications natives pour iOS, Android, Windows, Mac, Linux
 - Messagerie, emoji et emoji personnalisés
 - Outils pour une image de marque personnalisée
 - Archivage continu
@@ -35,10 +34,9 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 - Facilement évolutif à des dizaines d'utilisateurs par équipe
 - Données de profilage d'exécution et rapports de surveillance du système
 - Nouvelles fonctionnalités et améliorations publiées régulièrement
-- Plusieurs langues dont l'anglais américain, l'anglais australien, le bulgare, le chinois (simplifié et traditionnel), le néerlandais, le français, l'allemand, le hongrois, l'italien, le japonais, le coréen, le polonais, le portugais brésilien, le roumain, le russe, le turc, l'espagnol, le suédois et l'ukrainien 
 
 
-**Version incluse :** 7.3.0~ynh1
+**Version incluse :** 7.5.2~ynh1
 
 ## Captures d’écran
 
