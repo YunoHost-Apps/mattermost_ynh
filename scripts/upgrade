@@ -43,17 +43,6 @@ fi
 # MIGRATING DATABASE
 #=================================================
 
-# Migrating from MySQL to PostgreSQL
-# This migration should be done before the upgrade
-if mysqlshow | grep -q "^| $db_name "; then
-    # Mattermost only support MySQL and PostgreSQL (not MariaDB...)
-    mariadb-to-pg
-fi
-
-#=================================================
-# MIGRATING DATABASE
-#=================================================
-
 # Check if using MariaDB
 # This migration should be done before the upgrade
 if mysqlshow | grep -q "^| $db_name "; then
