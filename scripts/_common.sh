@@ -45,6 +45,15 @@ mariadb-to-pg() {
         ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;" --database=$db_name
         ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.SharedChannelRemotes DROP COLUMN IF EXISTS description;" --database=$db_name
         ynh_mysql_execute_as_root --sql="ALTER TABLE mattermost.SharedChannelRemotes DROP COLUMN IF EXISTS nextsyncat;" --database=$db_name
+        
+        # Focalboard is broken in Mattermost 7.3.0
+        if ynh_compare_current_package_version --comparison eq --version 7.3.0~ynh1
+        then
+            # Remove Focalboard tables
+            # Command from https://stackoverflow.com/a/1589324
+            cmd=$(ynh_mysql_execute_as_root --sql="SELECT CONCAT( 'DROP TABLE ', GROUP_CONCAT(table_name) , ';' ) AS statement FROM information_schema.tables WHERE table_schema = '$db_name' AND table_name LIKE 'focalboard_%';" --database=$db_name | tail -n 1)
+            ynh_mysql_execute_as_root --sql="$cmd" --database=$db_name
+        fi
 
         # Use pgloader to migrate database content from MariaDB to PostgreSQL
         tmpdir="$(mktemp -d)"
