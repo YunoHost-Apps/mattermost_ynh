@@ -10,15 +10,6 @@ source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD RESTORATION STEPS
-#=================================================
-# RESTORE THE NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Restoring the NGINX web server configuration..." --weight=1
-
-ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
-
-#=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
 ynh_script_progression --message="Restoring the app main directory..." --weight=2
@@ -37,55 +28,36 @@ ynh_restore_file --origin_path="$data_dir" --not_mandatory
 chown -R $app:www-data "$data_dir"
 
 #=================================================
-# RESTORE THE DATABASE
+# RESTORE SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression --message="Restoring the database..." --weight=6
+# RESTORE THE PHP-FPM CONFIGURATION
+#=================================================
+ynh_script_progression --message="Restoring system configurations related to $app..." --weight=1
+
+ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
 ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
-
-#=================================================
-# RESTORE USER RIGHTS
-#=================================================
 
 logs_path="/var/log/$app"
 mkdir -p $logs_path
 chown -R $app: $logs_path
 
-#=================================================
-# SPECIFIC RESTORATION
-#=================================================
-# RESTORE SYSTEMD
-#=================================================
-
 ynh_restore_file "/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
 
-#=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
-#=================================================
-
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=2
-
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
-
-#=================================================
-# RESTORE THE LOGROTATE CONFIGURATION
-#=================================================
 
 ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
-# RELOAD NGINX
+# RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+ynh_script_progression --message="Reloading NGINX web server and $app's service..." --weight=1
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
 
 ynh_systemd_action --service_name=nginx --action=reload
 
