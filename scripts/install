@@ -104,10 +104,10 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 
 if [ "$version" = "Enterprise" ]; then
   # Get Enterprise binary path
-  ynh_setup_source --dest_dir="$final_path" --source_id="enterprise"
+  ynh_setup_source --dest_dir="$final_path" --source_id="enterprise_$YNH_ARCH"
 elif [ "$version" = "Team" ]; then
   # Get Team binary path
-  ynh_setup_source --dest_dir="$final_path" --source_id="$YNH_ARCH"
+  ynh_setup_source --dest_dir="$final_path" --source_id="team_$YNH_ARCH"
 fi
 
 chmod 750 "$final_path"

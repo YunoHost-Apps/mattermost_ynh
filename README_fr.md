@@ -59,7 +59,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 
 ## Informations additionnelles
 
-Ce paquet peut être installé sur les architectures `ARM`, `ARM64` et `x86-64` (mais uniquement `x86-64` si vous choisissez d'installer la version *Enterprise Edition*).
+Ce paquet peut être installé sur les architectures `ARM`, `ARM64` et `x86-64` (mais uniquement `x86-64` et `ARM64` si vous choisissez d'installer la version *Enterprise Edition*).
 
 ## Documentations et ressources
 
