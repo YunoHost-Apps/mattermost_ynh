@@ -14,8 +14,8 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 email=$(ynh_user_get_info --username=$admin --key=mail)
-team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
-version=$YNH_APP_ARG_VERSION
+#team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
+#version=$YNH_APP_ARG_VERSION
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
