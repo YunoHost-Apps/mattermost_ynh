@@ -56,6 +56,10 @@ ynh_script_progression --message="Backing up the app before upgrading (may take 
 # Backup the current version of the app
 ynh_backup_before_upgrade
 ynh_clean_setup () {
+  # Remove the PostgreSQL db in case of error during the migration.
+  if [ -n "$remove_psql_in_case_of_error" ]; then
+    ynh_psql_remove_db --db_user=$db_user --db_name=$db_name
+  fi
   # Restore it if the upgrade fails
   ynh_restore_upgradebackup
 }
@@ -118,6 +122,7 @@ ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 if mysqlshow | grep -q "^| $db_name "; then
     # Mattermost only support MySQL and PostgreSQL (not MariaDB...)
     # Migrate the database from MariaDB to PostgreSQL
+    remove_psql_in_case_of_error=1
     mariadb-to-pg
 fi
 
