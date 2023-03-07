@@ -26,10 +26,12 @@ if [[ ${version:0:1} == "v" || ${version:0:1} == "V" ]]; then
     version=${version:1}
 fi
 
-# x86-64 and enterprise assets are hosted on Mattermost's servers.
+# x86-64 team, x86-64 enterprise, ARM64 team and ARM64 enterprise assets are hosted on Mattermost's servers.
 assets=()
 assets+=("https://releases.mattermost.com/$version/mattermost-team-$version-linux-amd64.tar.gz")
 assets+=("https://releases.mattermost.com/$version/mattermost-enterprise-$version-linux-amd64.tar.gz")
+assets+=("https://releases.mattermost.com/$version/mattermost-team-$version-linux-arm64.tar.gz")
+assets+=("https://releases.mattermost.com/$version/mattermost-enterprise-$version-linux-arm64.tar.gz")
 
 # ARM and ARM64 are published in another repository (with a leading "v" for version tags)
 other_repo="SmartHoneybee/ubiquitous-memory"
@@ -79,16 +81,19 @@ echo "Handling asset at $asset_url"
 # Leave $src empty to ignore the asset
 case $asset_url in
   *"mattermost-"*"-linux-arm.tar.gz")
-    src="armhf"
+    src="team_armhf"
     ;;
-  *"mattermost-"*"-linux-arm64.tar.gz")
-    src="arm64"
-    ;;
-  *"mattermost-team-"*"-linux-amd64.tar.gz")
-    src="amd64"
+  *"mattermost-team-"*"-linux-arm64.tar.gz")
+    src="team_arm64"
     ;;
   *"mattermost-enterprise-"*"-linux-amd64.tar.gz")
-    src="enterprise"
+    src="enterprise_amd64"
+    ;;
+  *"mattermost-team-"*"-linux-amd64.tar.gz")
+    src="team_amd64"
+    ;;
+  *"mattermost-enterprise-"*"-linux-amd64.tar.gz")
+    src="enterprise_amd64"
     ;;
   *)
     src=""
