@@ -26,10 +26,10 @@ mariadb-to-pg() {
         psqlpwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
         # Configure the new database and run Mattermost in order to create tables
-        ynh_write_var_in_file --file="$final_path/config/config.json" --key="DriverName" --value="postgres" --after="SqlSettings"
-        ynh_write_var_in_file --file="$final_path/config/config.json" --key="DataSource" --value="postgres://$db_user:$psqlpwd@localhost:5432/$db_name?sslmode=disable&connect_timeout=10" --after="SqlSettings"
-        cat "$final_path/config/config.json"
-        pushd $final_path
+        ynh_write_var_in_file --file="$install_dir/config/config.json" --key="DriverName" --value="postgres" --after="SqlSettings"
+        ynh_write_var_in_file --file="$install_dir/config/config.json" --key="DataSource" --value="postgres://$db_user:$psqlpwd@localhost:5432/$db_name?sslmode=disable&connect_timeout=10" --after="SqlSettings"
+        cat "$install_dir/config/config.json"
+        pushd $install_dir
         ynh_systemd_action --service_name="$app" --action="stop"
         set +e
         sudo -u mattermost timeout --preserve-status 180 "./bin/mattermost"
