@@ -43,18 +43,6 @@ fi
 chown -R $app:www-data "$install_dir"
 
 #=================================================
-# HANDLE LOG FILES AND LOGROTATE
-#=================================================
-ynh_script_progression --message="Configuring log rotation..." --weight=1
-
-# Create log directory
-mkdir -p /var/log/$app
-chown $app -R "/var/log/$app"
-
-# Setup logrotate
-ynh_use_logrotate
-
-#=================================================
 # EDIT MATTERMOST CONFIG
 #=================================================
 # MODIFY A CONFIG FILE
@@ -78,6 +66,13 @@ ynh_add_nginx_config
 ynh_add_systemd_config
 
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
+
+# Create log directory
+mkdir -p /var/log/$app
+chown $app -R "/var/log/$app"
+
+# Setup logrotate
+ynh_use_logrotate
 
 #=================================================
 # START SYSTEMD SERVICE
