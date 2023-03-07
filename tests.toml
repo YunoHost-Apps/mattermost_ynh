@@ -11,6 +11,15 @@ test_format = 1.0
     args.version = "Enterprise"
 	args.team_display_name = "Mon équipe"
 
+    # -------------------------------
+    # Commits to test upgrade from
+    # -------------------------------
+
+    test_upgrade_from.738ba505.name = "Upgrade from 7.2.0"
+
+    test_upgrade_from.1677cb9f.name = "Upgrade from 7.3.0"
+
+
 ["Test-with-Team-Edition"]
 
     only = ["install.subdir", "backup_restore", "upgrade" ]
