@@ -10,10 +10,11 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD REMOVE
+# REMOVE SYSTEM CONFIGURATIONS
 #=================================================
-# REMOVE SERVICE FROM ADMIN PANEL
+# REMOVE SYSTEMD SERVICE 
 #=================================================
+ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
 
 # Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
 if ynh_exec_warn_less yunohost service status $app >/dev/null
@@ -22,36 +23,14 @@ then
 	yunohost service remove $app
 fi
 
-#=================================================
-# STOP AND REMOVE SERVICE
-#=================================================
-ynh_script_progression --message="Stopping and removing the systemd service..." --weight=1
-
 # Remove the dedicated systemd config
 ynh_remove_systemd_config
-
-#=================================================
-# REMOVE LOGROTATE CONFIGURATION
-#=================================================
-ynh_script_progression --message="Removing logrotate configuration..." --weight=1
 
 # Remove the app-specific logrotate config
 ynh_remove_logrotate
 
-#=================================================
-# REMOVE NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Removing NGINX web server configuration..." --weight=5
-
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
-
-#=================================================
-# SPECIFIC REMOVE
-#=================================================
-# REMOVE VARIOUS FILES
-#=================================================
-ynh_script_progression --message="Removing various files..." --weight=1
 
 ynh_secure_remove --file="/var/log/$app"
 
