@@ -97,9 +97,9 @@ then
   ynh_secure_remove --file="$install_dir"
 
   if [ "$version" = "Enterprise" ]; then
-    ynh_setup_source --dest_dir="$final_path" --source_id="enterprise_$YNH_ARCH"
+    ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise_$YNH_ARCH"
   elif [ "$version" = "Team" ]; then
-    ynh_setup_source --dest_dir="$final_path" --source_id="team_$YNH_ARCH"
+    ynh_setup_source --dest_dir="$install_dir" --source_id="team_$YNH_ARCH"
   fi
 
   # Copy the admin saved settings and plugins from tmp directory to final path
