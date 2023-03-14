@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Mattermost for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Working status](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Working status](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+
 [![Install Mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -24,7 +25,6 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 ## Features include:
 
 - One-to-one and group messaging, file sharing, and unlimited search history
-- Native apps for iOS, Android, Windows, Mac, Linux
 - Threaded messaging, emoji, and custom emoji
 - Tools for custom branding
 - Continuous archiving
@@ -34,11 +34,9 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 - Easily scalable to dozens of users per team
 - Runtime profiling data and system monitoring reports
 - New features and improvements released regularly
-- Multiple languages including U.S. English, Australian English, Bulgarian, Chinese (Simplified and Traditional), Dutch, French, German, Hungarian, Italian, Japanese, Korean, Polish, Brazilian Portuguese, Romanian, Russian, Turkish, Spanish, Swedish, and Ukrainian
 
 
-**Shipped version:** 7.2.0~ynh1
-
+**Shipped version:** 7.5.2~ynh1
 
 ## Screenshots
 
@@ -49,7 +47,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 ## Configuration
 
 * How to configure this app: From an admin panel, a plain file with SSH.
-* How to change from edition version to another (Team<->Enterprise) : Modify the `settings.yml` in the apps directory `/etc/yunohost/apps/mattermost_instance/settings.yml` and replace the version to wich you whant : Team or Enterprise. Update your apps and verify the *About* on your mattermost
+* How to change from edition version to another (Team<->Enterprise): Modify the `settings.yml` in the apps directory `/etc/yunohost/apps/mattermost_instance/settings.yml` and replace the version to wich you whant: Team or Enterprise. Update your apps and verify the *About* on your Mattermost
 
 ## YunoHost specific features
 
@@ -63,7 +61,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Additional information
 
-* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` if you choose to install the *Entreprise Edition*).
+* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` and `ARM64` if you choose to install the *Entreprise Edition*).
 
 ## Documentation and resources
 

@@ -1,7 +1,7 @@
 ## Configuration
 
 * How to configure this app: From an admin panel, a plain file with SSH.
-* How to change from edition version to another (Team<->Enterprise) : Modify the `settings.yml` in the apps directory `/etc/yunohost/apps/mattermost_instance/settings.yml` and replace the version to wich you whant : Team or Enterprise. Update your apps and verify the *About* on your mattermost
+* How to change from edition version to another (Team<->Enterprise): Modify the `settings.yml` in the apps directory `/etc/yunohost/apps/mattermost_instance/settings.yml` and replace the version to wich you whant: Team or Enterprise. Update your apps and verify the *About* on your Mattermost
 
 ## YunoHost specific features
 
@@ -15,4 +15,4 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Additional information
 
-* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` if you choose to install the *Entreprise Edition*).
+* This package can by installed on `ARM`, `ARM64` and `x86-64` architecture (only `x86-64` and `ARM64` if you choose to install the *Entreprise Edition*).

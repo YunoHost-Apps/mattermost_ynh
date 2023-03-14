@@ -1,0 +1,6 @@
+SOURCE_URL=https://releases.mattermost.com/7.5.2/mattermost-enterprise-7.5.2-linux-arm64.tar.gz
+SOURCE_SUM=2aa9aaf3d599a38682dbb9a2c76b277c85976dd0d331f2d563b51dd58ac141aa
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=mattermost.tar.gz

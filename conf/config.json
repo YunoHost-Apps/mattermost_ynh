@@ -79,6 +79,7 @@
     "ExperimentalEnableDefaultChannelLeaveJoinMessages": true,
     "ExperimentalGroupUnreadChannels": "disabled",
     "EnableAPITeamDeletion": false,
+    "EnableAPITriggerAdminNotifications": false,
     "EnableAPIUserDeletion": false,
     "ExperimentalEnableHardenedMode": false,
     "ExperimentalStrictCSRFEnforcement": false,
@@ -88,6 +89,7 @@
     "EnableSVGs": false,
     "EnableLatex": false,
     "EnableInlineLatex": true,
+    "PostPriority": false,
     "EnableAPIChannelDeletion": false,
     "EnableLocalMode": true,
     "LocalModeSocketLocation": "/var/run/__APP__/mattermost_local.socket",
@@ -112,6 +114,7 @@
     "CustomBrandText": "",
     "CustomDescriptionText": "",
     "RestrictDirectMessage": "any",
+    "EnableLastActiveTime": true,
     "UserStatusAwayTimeout": 300,
     "MaxChannelsPerTeam": 2000,
     "MaxNotificationsPerChannel": 1000,
@@ -130,8 +133,8 @@
     "IosMinVersion": ""
   },
   "SqlSettings": {
-    "DriverName": "mysql",
-    "DataSource": "__DB_USER__:__DB_PWD__@tcp(localhost:3306)/__DB_NAME__?charset=utf8mb4,utf8",
+    "DriverName": "postgres",
+    "DataSource": "postgres://__DB_USER__:__DB_PWD__@127.0.0.1:5432/__DB_NAME__?sslmode=disable&connect_timeout=10",
     "DataSourceReplicas": [],
     "DataSourceSearchReplicas": [],
     "MaxIdleConns": 20,
@@ -210,7 +213,8 @@
     "AmazonS3SSL": true,
     "AmazonS3SignV2": false,
     "AmazonS3SSE": false,
-    "AmazonS3Trace": false
+    "AmazonS3Trace": false,
+    "AmazonS3RequestTimeoutMilliseconds": 30000
   },
   "EmailSettings": {
     "EnableSignUpWithEmail": true,
@@ -455,7 +459,6 @@
     "LinkMetadataTimeoutMilliseconds": 5000,
     "RestrictSystemAdmin": false,
     "UseNewSAMLLibrary": false,
-    "CloudBilling": false,
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false,
     "EnableAppBar": false
@@ -523,6 +526,9 @@
     "RunScheduler": true,
     "CleanupJobsThresholdDays": -1,
     "CleanupConfigThresholdDays": -1
+  },
+  "ProductSettings": {
+    "EnablePublicSharedBoards": false
   },
   "PluginSettings": {
     "Enable": true,
@@ -601,10 +607,9 @@
     "GraphQL": false,
     "InsightsEnabled": true,
     "CommandPalette": false,
-    "PostForwarding": true,
-    "AdvancedTextEditor": true,
     "BoardsProduct": false,
-    "PlanUpgradeButtonText": "Upgrade"
+    "SendWelcomePost": true,
+    "PostPriority": false
   },
   "ImportSettings": {
     "Directory": "./import",
