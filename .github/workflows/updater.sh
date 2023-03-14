@@ -17,8 +17,8 @@
 #=================================================
 
 # Fetching information
-current_version=$(cat manifest.json | jq -j '.version|split("~")[0]')
-repo=$(cat manifest.json | jq -j '.upstream.code|split("https://github.com/")[1]')
+current_version=$(cat manifest.toml | tomlq -j '.version|split("~")[0]')
+repo=$(cat manifest.toml | tomlq -j '.upstream.code|split("https://github.com/")[1]')
 # Some jq magic is needed, because the latest upstream release is not always the latest version (e.g. security patches for older versions)
 version=$(curl --silent "https://api.github.com/repos/$repo/releases" | jq -r '.[] | select( .prerelease != true ) | .tag_name' | sort -V | tail -1)
 
@@ -150,7 +150,7 @@ done
 #=================================================
 
 # Replace new version in manifest
-echo "$(jq -s --indent 4 ".[] | .version = \"$version~ynh1\"" manifest.json)" > manifest.json
+echo "$(tomlq -s --indent 4 ".[] | .version = \"$version~ynh1\"" manifest.toml)" > manifest.toml
 
 # No need to update the README, yunohost-bot takes care of it
 
