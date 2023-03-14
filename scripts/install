@@ -10,22 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# RETRIEVE ARGUMENTS FROM THE MANIFEST
-#=================================================
-
-email=$(ynh_user_get_info --username=$admin --key=mail)
-#team_display_name=$YNH_APP_ARG_TEAM_DISPLAY_NAME
-#version=$YNH_APP_ARG_VERSION
-
-#=================================================
-# STORE SETTINGS FROM MANIFEST
-#=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=6
-
-ynh_app_setting_set --app=$app --key=version --value=$version
-ynh_app_setting_set --app=$app --key=team_display_name --value=$team_display_name
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=3
@@ -89,6 +73,7 @@ ynh_script_progression --message="Create the first administrator and team..." --
 
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 bin_mmctl="$install_dir/bin/mmctl"
+email=$(ynh_user_get_info --username=$admin --key=mail)
 
 # mmctl is not packaged with ARM versions yet
 if [[ -f "$bin_mmctl" ]]; then
