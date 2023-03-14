@@ -40,7 +40,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 - Données de profilage d'exécution et rapports de surveillance du système
 
 
-**Version incluse :** 7.7.1~ynh1
+**Version incluse :** 7.5.2~ynh1
 
 ## Captures d’écran
 
