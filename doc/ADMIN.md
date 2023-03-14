@@ -1,1 +1,1 @@
-* How to change from edition version to another (Team<->Enterprise): Modify the `settings.yml` in the apps directory `/etc/yunohost/apps/mattermost_instance/settings.yml` and replace the version to wich you whant: Team or Enterprise. Update your apps and verify the *About* on your Mattermost
+* How to change from edition version to another (Team<->Enterprise): Modify the `settings.yml` in the apps directory `__DATA_DIR__/__APP__/settings.yml` and replace the version to wich you whant: Team or Enterprise. Update your apps and verify the *About* on your Mattermost
