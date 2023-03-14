@@ -100,7 +100,9 @@
     "ThreadAutoFollow": true,
     "CollapsedThreads": "disabled",
     "ManagedResourcePaths": "",
-    "EnableCustomGroups": true
+    "EnableCustomGroups": true,
+    "SelfHostedPurchase": true,
+    "AllowSyncedDrafts": true
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -158,7 +160,8 @@
     "FileJson": true,
     "FileLocation": "",
     "EnableWebhookDebugging": true,
-    "EnableDiagnostics": false,
+    "EnableDiagnostics": true,
+    "VerboseDiagnostics": false,
     "EnableSentry": true,
     "AdvancedLoggingConfig": ""
   },
@@ -461,7 +464,8 @@
     "UseNewSAMLLibrary": false,
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false,
-    "EnableAppBar": false
+    "EnableAppBar": false,
+    "PatchPluginsReactDOM": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -586,7 +590,6 @@
   "FeatureFlags": {
     "TestFeature": "off",
     "TestBoolFeature": false,
-    "CollapsedThreads": true,
     "EnableRemoteClusterService": false,
     "AppsEnabled": true,
     "PluginPlaybooks": "",
@@ -594,12 +597,8 @@
     "PluginFocalboard": "",
     "PluginCalls": "",
     "PermalinkPreviews": true,
-    "CallsMobile": false,
     "CallsEnabled": true,
     "BoardsFeatureFlags": "",
-    "GuidedChannelCreation": false,
-    "InviteToTeam": "none",
-    "CustomGroups": true,
     "BoardsDataRetention": false,
     "NormalizeLdapDNs": false,
     "EnableInactivityCheckJob": true,
@@ -609,7 +608,13 @@
     "CommandPalette": false,
     "BoardsProduct": false,
     "SendWelcomePost": true,
-    "PostPriority": false
+    "WorkTemplate": false,
+    "PostPriority": true,
+    "PeopleProduct": false,
+    "AnnualSubscription": false,
+    "ReduceOnBoardingTaskList": false,
+    "ThreadsEverywhere": false,
+    "GlobalDrafts": true
   },
   "ImportSettings": {
     "Directory": "./import",
