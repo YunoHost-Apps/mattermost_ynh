@@ -70,6 +70,21 @@ ram.runtime = "50M"
     default = "Team"
 
 [resources]
+    [resources.sources]
+
+        [resources.sources.main]
+        amd64.url = "https://releases.mattermost.com/7.8.1/mattermost-team-7.8.1-linux-amd64.tar.gz"
+        amd64.sha256 = "79e0a0f1819ff59165b61cb1aeb4da0104b5cdbe7b32bd88c2a6b44cbd1c8039"
+        arm64.url = "https://releases.mattermost.com/7.8.1/mattermost-team-7.8.1-linux-arm64.tar.gz"
+        arm64.sha256 = "60017d20593288e43228196ff57bf13d983482a0fea3b4b6273043cab30e8117"
+        armhf.url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v7.5.2/mattermost-v7.5.2-linux-arm.tar.gz"
+        armhf.sha256 = "b26a4b676ee92ac848fa2993aa67559238ba7d8c1d0e6f7ffdd79ad8fb4942f3"
+
+        [resources.sources.enterprise]
+        amd64.url = "https://releases.mattermost.com/7.8.1/mattermost-enterprise-7.8.1-linux-amd64.tar.gz"
+        amd64.sha256 = "2a6ce384092fd53a4e947b599cdfe27e4427cc3aa4d6b37e7e5e094ad6516d74"
+        arm64.url = "https://releases.mattermost.com/7.8.1/mattermost-enterprise-7.8.1-linux-arm64.tar.gz"
+        arm64.sha256 = "a52fd6f2f9ae5b2c5ffa632239caccfe6f76342edf066ece08761c59597aca08"
 
     [resources.system_user]
 

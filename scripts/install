@@ -18,10 +18,10 @@ ynh_script_progression --message="Setting up source files..." --weight=3
 
 if [ "$version" = "Enterprise" ]; then
   # Get Enterprise binary path
-  ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise_$YNH_ARCH"
+  ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
 elif [ "$version" = "Team" ]; then
   # Get Team binary path
-  ynh_setup_source --dest_dir="$install_dir" --source_id="team_$YNH_ARCH"
+  ynh_setup_source --dest_dir="$install_dir" --source_id="main"
 fi
 
 chown -R $app:www-data "$install_dir"
