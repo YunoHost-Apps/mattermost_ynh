@@ -15,6 +15,7 @@ test_format = 1.0
     # Commits to test upgrade from
     # -------------------------------
 
+    test_upgrade_from.1677cb9f.name = "Upgrade from 7.3.0"
     test_upgrade_from.c88d6ea7.name = "Upgrade from 7.5.2"
 
 ["Test-with-Team-Edition"]
