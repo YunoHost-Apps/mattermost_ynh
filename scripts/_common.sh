@@ -49,10 +49,9 @@ mariadb-to-pg() {
         # Focalboard is broken in Mattermost 7.3.0
         if ynh_compare_current_package_version --comparison eq --version 7.3.0~ynh1
         then
-            # Remove Focalboard tables
-            # Command from https://stackoverflow.com/a/1589324
-            cmd=$(ynh_mysql_execute_as_root --sql="SELECT CONCAT( 'DROP TABLE ', GROUP_CONCAT(table_name) , ';' ) AS statement FROM information_schema.tables WHERE table_schema = '$db_name' AND table_name LIKE 'focalboard_%';" --database=$db_name | tail -n 1)
-            ynh_mysql_execute_as_root --sql="$cmd" --database=$db_name
+            remove_focalboard_if_7_3_0="EXCLUDING TABLE NAMES MATCHING ~/^focalboard_/"
+        else
+            remove_focalboard_if_7_3_0=""
         fi
 
         # Use pgloader to migrate database content from MariaDB to PostgreSQL
@@ -70,6 +69,8 @@ WITH include no drop, truncate, create no tables,
 SET MySQL PARAMETERS
 net_read_timeout = '90',
 net_write_timeout = '180'
+
+$remove_focalboard_if_7_3_0
 
 ALTER SCHEMA '$db_name' RENAME TO 'public'
 
