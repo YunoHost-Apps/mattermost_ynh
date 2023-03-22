@@ -491,6 +491,9 @@
     "BatchSize": 10000,
     "RequestTimeoutSeconds": 30,
     "SkipTLSVerification": false,
+    "CA": "",
+    "ClientCert": "",
+    "ClientKey": "",
     "Trace": ""
   },
   "BleveSettings": {
@@ -610,11 +613,13 @@
     "SendWelcomePost": true,
     "WorkTemplate": false,
     "PostPriority": true,
+    "WysiwygEditor": false,
     "PeopleProduct": false,
-    "AnnualSubscription": false,
     "ReduceOnBoardingTaskList": false,
+    "OnboardingAutoShowLinkedBoard": true,
     "ThreadsEverywhere": false,
-    "GlobalDrafts": true
+    "GlobalDrafts": true,
+    "OnboardingTourTips": true
   },
   "ImportSettings": {
     "Directory": "./import",
