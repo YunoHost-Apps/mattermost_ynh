@@ -36,7 +36,7 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 - New features and improvements released regularly
 
 
-**Shipped version:** 7.5.2~ynh2
+**Shipped version:** 7.8.1~ynh1
 
 ## Screenshots
 

@@ -1,5 +1,5 @@
-SOURCE_URL=https://releases.mattermost.com/7.5.2/mattermost-team-7.5.2-linux-arm64.tar.gz
-SOURCE_SUM=39281870a69eccd7876f3c25c69ffae2b87a6920519b74a8eed25c553e06e80c
+SOURCE_URL=https://releases.mattermost.com/7.8.1/mattermost-team-7.8.1-linux-arm64.tar.gz
+SOURCE_SUM=60017d20593288e43228196ff57bf13d983482a0fea3b4b6273043cab30e8117
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
