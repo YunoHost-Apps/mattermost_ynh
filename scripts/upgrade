@@ -14,7 +14,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression --message="Loading installation settings..." --weight=2
 
-team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
+#team_display_name=$(ynh_app_setting_get --app=$app --key=team_display_name)
 email=$(ynh_user_get_info --username=$admin --key=mail)
 
 #=================================================
