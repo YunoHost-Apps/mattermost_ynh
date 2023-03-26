@@ -1,7 +1,9 @@
 ## Mattermost Team Edition
+
 Une alternative gratuite, open source et auto-hébergée à la messagerie SaaS propriétaire. Team Edition est votre « bureau virtuel » open source, offrant tous les principaux avantages de productivité des solutions SaaS concurrentes.
 
 ## Mattermost Entreprise Edition
+
 Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vous pouvez remplacer le binaire Mattermost Team Edition par un binaire Mattermost Enterprise Edition. Cette version prend en charge la mise à niveau vers Mattermost Enterprise Edition E10 ou E20. 
 
 ## Caractéristiques spécifiques YunoHost
