@@ -64,7 +64,7 @@ LOAD DATABASE
 
 WITH include no drop, truncate, create no tables,
      create no indexes, preserve index names, no foreign keys,
-     data only, workers = 16, concurrency = 1
+     data only, workers = 16, concurrency = 1, prefetch rows = 10000
 
 SET MySQL PARAMETERS
 net_read_timeout = '90',
