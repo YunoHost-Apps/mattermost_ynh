@@ -17,7 +17,7 @@ userdoc = "https://docs.mattermost.com/guides/messaging.html"
 code = "https://github.com/mattermost/mattermost-server"
 
 [integration]
-yunohost = ">= 11.1.15"
+yunohost = ">= 11.1.17"
 architectures = ["amd64", "armhf", "arm64"]
 multi_instance = true
 ldap = false
