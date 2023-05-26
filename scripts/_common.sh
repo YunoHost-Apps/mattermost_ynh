@@ -15,6 +15,7 @@ mariadb-to-pg() {
 
         ynh_print_info --message="Migrating to PostgreSQL database..."
 
+        username=$app
         mysqlpwd=$(ynh_app_setting_get --app=$app --key=mysqlpwd)
 
         # In old instance db_user is `mmuser`
@@ -35,7 +36,7 @@ mariadb-to-pg() {
         pushd $final_path
         ynh_systemd_action --service_name="$app" --action="stop"
         set +e
-        sudo -u mattermost timeout --preserve-status 300 "./bin/mattermost"
+        sudo -u "$username" timeout --preserve-status 300 "./bin/mattermost"
         if [ "$?" != "0" ] && [ "$?" != "143" ] ; then
             ynh_die --message="Failed to run Mattermost to create PostgreSQL database tables" --ret_code=1
         fi
