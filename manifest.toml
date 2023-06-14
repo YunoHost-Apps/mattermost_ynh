@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Open source collaboration platform built for developers"
 description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
 
-version = "7.10.0~ynh1"
+version = "7.10.2~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -17,7 +17,7 @@ userdoc = "https://docs.mattermost.com/guides/messaging.html"
 code = "https://github.com/mattermost/mattermost-server"
 
 [integration]
-yunohost = ">= 11.1.19"
+yunohost = ">= 11.1.20"
 architectures = ["amd64", "armhf", "arm64"]
 multi_instance = true
 ldap = false
@@ -73,18 +73,18 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.main]
-        amd64.url = "https://releases.mattermost.com/7.10.0/mattermost-team-7.10.0-linux-amd64.tar.gz"
-        amd64.sha256 = "89ca4dab5a9a64d1c937b7ead16eba7491e193e8a07866242430b86cf225770e"
-        arm64.url = "https://releases.mattermost.com/7.10.0/mattermost-team-7.10.0-linux-arm64.tar.gz"
-        arm64.sha256 = "7553fac2cc962f4d2699ac04661505c82a090e20651799a54cdd6dd407325913"
+        amd64.url = "https://releases.mattermost.com/7.10.2/mattermost-team-7.10.2-linux-amd64.tar.gz"
+        amd64.sha256 = "47075ee215ec1abd3f81c67ce56a425ef37c2f41f114429d9bb3b6cc0b13915d"
+        arm64.url = "https://releases.mattermost.com/7.10.2/mattermost-team-7.10.2-linux-arm64.tar.gz"
+        arm64.sha256 = "9e8e4492166e984619548d113929f1d3534053589d5cc85d46eadc1150eaaca5"
         armhf.url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v7.5.2/mattermost-v7.5.2-linux-arm.tar.gz"
         armhf.sha256 = "b26a4b676ee92ac848fa2993aa67559238ba7d8c1d0e6f7ffdd79ad8fb4942f3"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/7.10.0/mattermost-enterprise-7.10.0-linux-amd64.tar.gz"
-        amd64.sha256 = "d15f8c946d54c2a127b22b887c2caaca4f17bf399224b5494c3727207383ead9"
-        arm64.url = "https://releases.mattermost.com/7.10.0/mattermost-enterprise-7.10.0-linux-arm64.tar.gz"
-        arm64.sha256 = "13c0b6d3ce1775950ab7de85a4cff6af715ae8662e7b5c3b478fa866fc5968af"
+        amd64.url = "https://releases.mattermost.com/7.10.2/mattermost-enterprise-7.10.2-linux-amd64.tar.gz"
+        amd64.sha256 = "4f697283806d02bc7cd77924e9e750ec05f766603b713b2b26e5acee4e9660f5"
+        arm64.url = "https://releases.mattermost.com/7.10.2/mattermost-enterprise-7.10.2-linux-arm64.tar.gz"
+        arm64.sha256 = "0911e72e738aaa645e48b46e61521fce0de4e0488936f528a92428ded40430a3"
 
     [resources.system_user]
 
