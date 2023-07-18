@@ -89,7 +89,12 @@
     "EnableSVGs": false,
     "EnableLatex": false,
     "EnableInlineLatex": true,
-    "PostPriority": false,
+    "PostPriority": true,
+    "AllowPersistentNotifications": true,
+    "AllowPersistentNotificationsForGuests": false,
+    "PersistentNotificationIntervalMinutes": 5,
+    "PersistentNotificationMaxCount": 6,
+    "PersistentNotificationMaxRecipients": 5,
     "EnableAPIChannelDeletion": false,
     "EnableLocalMode": true,
     "LocalModeSocketLocation": "/var/run/__APP__/mattermost_local.socket",
@@ -148,7 +153,8 @@
     "QueryTimeout": 30,
     "DisableDatabaseSearch": false,
     "MigrationsStatementTimeoutSeconds": 100000,
-    "ReplicaLagSettings": []
+    "ReplicaLagSettings": [],
+    "ReplicaMonitorIntervalSeconds": 5
   },
   "LogSettings": {
     "EnableConsole": true,
@@ -163,6 +169,7 @@
     "EnableDiagnostics": true,
     "VerboseDiagnostics": false,
     "EnableSentry": true,
+    "AdvancedLoggingJSON": {},
     "AdvancedLoggingConfig": ""
   },
   "ExperimentalAuditSettings": {
@@ -173,6 +180,7 @@
     "FileMaxBackups": 0,
     "FileCompress": false,
     "FileMaxQueueSize": 1000,
+    "AdvancedLoggingJSON": {},
     "AdvancedLoggingConfig": ""
   },
   "NotificationLogSettings": {
@@ -184,6 +192,7 @@
     "FileLevel": "INFO",
     "FileJson": true,
     "FileLocation": "/var/log/__APP__",
+    "AdvancedLoggingJSON": {},
     "AdvancedLoggingConfig": ""
   },
   "PasswordSettings": {
@@ -249,8 +258,7 @@
     "EmailNotificationContentsType": "full",
     "LoginButtonColor": "#0000",
     "LoginButtonBorderColor": "#2389D7",
-    "LoginButtonTextColor": "#2389D7",
-    "EnableInactivityEmail": true
+    "LoginButtonTextColor": "#2389D7"
   },
   "RateLimitSettings": {
     "Enable": false,
@@ -464,8 +472,9 @@
     "UseNewSAMLLibrary": false,
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false,
-    "EnableAppBar": false,
-    "PatchPluginsReactDOM": false
+    "DisableAppBar": false,
+    "DisableRefetchingOnBrowserFocus": false,
+    "DelayChannelAutocomplete": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -494,7 +503,8 @@
     "CA": "",
     "ClientCert": "",
     "ClientKey": "",
-    "Trace": ""
+    "Trace": "",
+    "IgnoredPurgeIndexes": ""
   },
   "BleveSettings": {
     "IndexDir": "",
@@ -534,9 +544,7 @@
     "CleanupJobsThresholdDays": -1,
     "CleanupConfigThresholdDays": -1
   },
-  "ProductSettings": {
-    "EnablePublicSharedBoards": false
-  },
+  "ProductSettings": {},
   "PluginSettings": {
     "Enable": true,
     "EnableUploads": false,
@@ -546,16 +554,10 @@
     "ClientDirectory": "./client/plugins",
     "Plugins": {},
     "PluginStates": {
-      "com.mattermost.apps": {
-        "Enable": true
-      },
       "com.mattermost.calls": {
         "Enable": true
       },
       "com.mattermost.nps": {
-        "Enable": true
-      },
-      "focalboard": {
         "Enable": true
       },
       "playbooks": {
@@ -587,8 +589,9 @@
     "RemoteImageProxyOptions": ""
   },
   "CloudSettings": {
-    "CWSURL": "https://customers.mattermost.com",
-    "CWSAPIURL": "https://portal.internal.prod.cloud.mattermost.com"
+    "CWSURL": "https://portal.test.cloud.mattermost.com",
+    "CWSAPIURL": "https://api.internal.test.cloud.mattermost.com",
+    "CWSMock": false
   },
   "FeatureFlags": {
     "TestFeature": "off",
@@ -604,22 +607,20 @@
     "BoardsFeatureFlags": "",
     "BoardsDataRetention": false,
     "NormalizeLdapDNs": false,
-    "EnableInactivityCheckJob": true,
-    "UseCaseOnboarding": true,
     "GraphQL": false,
-    "InsightsEnabled": true,
+    "InsightsEnabled": false,
     "CommandPalette": false,
-    "BoardsProduct": false,
     "SendWelcomePost": true,
-    "WorkTemplate": false,
     "PostPriority": true,
     "WysiwygEditor": false,
     "PeopleProduct": false,
     "ReduceOnBoardingTaskList": false,
-    "OnboardingAutoShowLinkedBoard": true,
+    "OnboardingAutoShowLinkedBoard": false,
     "ThreadsEverywhere": false,
     "GlobalDrafts": true,
-    "OnboardingTourTips": true
+    "OnboardingTourTips": true,
+    "DeprecateCloudFree": false,
+    "CloudReverseTrial": false
   },
   "ImportSettings": {
     "Directory": "./import",
