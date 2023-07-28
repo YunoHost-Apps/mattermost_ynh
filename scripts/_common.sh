@@ -35,7 +35,7 @@ mariadb-to-pg() {
         pushd $final_path
         ynh_systemd_action --service_name="$app" --action="stop"
         set +e
-        sudo -u mattermost timeout --preserve-status 180 "./bin/mattermost"
+        sudo -u mattermost timeout --preserve-status 300 "./bin/mattermost"
         if [ "$?" != "0" ] && [ "$?" != "143" ] ; then
             ynh_die --message="Failed to run Mattermost to create PostgreSQL database tables" --ret_code=1
         fi
@@ -67,7 +67,7 @@ LOAD DATABASE
 
 WITH include no drop, truncate, create no tables,
      create no indexes, preserve index names, no foreign keys,
-     data only, workers = 16, concurrency = 1
+     data only, workers = 16, concurrency = 1, prefetch rows = 10000
 
 SET MySQL PARAMETERS
 net_read_timeout = '90',
