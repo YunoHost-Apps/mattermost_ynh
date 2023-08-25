@@ -8,7 +8,7 @@ test_format = 1.0
 
     args.email = "john@gmail.com"
     args.admin_password = "admin!42"
-    args.version = "Enterprise"
+    args.version = "Team"
     args.team_display_name = "Mon équipe"
 
     # -------------------------------
@@ -25,7 +25,7 @@ test_format = 1.0
     
     args.email = "john@gmail.com"
     args.admin_password = "admin!42"
-    args.version = "Team"
+    args.version = "Enterprise"
     args.team_display_name = "Mon équipe"
 
     test_upgrade_from.c88d6ea7.name = "Upgrade from 7.5.2"
