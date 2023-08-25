@@ -34,7 +34,7 @@ fi
 
 # If version setting doesn't exist
 if [ -z "${version:-}" ]; then
-  version="Enterprise"
+  version="Team"
   ynh_app_setting_set --app=$app --key=version --value=$version
 fi
 
