@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Open source collaboration platform built for developers"
 description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
 
-version = "8.0.1~ynh1"
+version = "8.1.0~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -35,8 +35,8 @@ ram.runtime = "50M"
     default = "/mattermost"
 
     [install.init_main_permission]
-    help.en = "If enabled, Mattermost will be accessible by users without a YunoHost account. This can be changed later via the webadmin."
-    help.fr = "Si cette case est cochée, Mattermost sera accessible par les utilisateur n’ayant pas de  compte YunoHost. Vous pourrez changer ceci plus tard via l’interface d’administration."
+    help.en = "If visitors selected, Mattermost will be accessible by users without a YunoHost account. This can be changed later via the webadmin."
+    help.fr = "Si visitors selectionné, Mattermost sera accessible par les utilisateur n’ayant pas de  compte YunoHost. Vous pourrez changer ceci plus tard via l’interface d’administration."
     type = "group"
     default = "visitors"
 
@@ -73,18 +73,18 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.main]
-        amd64.url = "https://releases.mattermost.com/8.0.1/mattermost-team-8.0.1-linux-amd64.tar.gz"
-        amd64.sha256 = "684d266e9deafe03c1203bd7e19ef65259000d1e7aa0978b44135ca164981f23"
-        arm64.url = "https://releases.mattermost.com/8.0.1/mattermost-team-8.0.1-linux-arm64.tar.gz"
-        arm64.sha256 = "dac41fb6ac40ac6e985dc7e04e351e58d03a25caeb80e8566b8ac50957083e7c"
+        amd64.url = "https://releases.mattermost.com/8.1.0/mattermost-team-8.1.0-linux-amd64.tar.gz"
+        amd64.sha256 = "d6efe0cdaa04a13b34ded521283951fcedb0632ac42a12682e4daf97e53c909d"
+        arm64.url = "https://releases.mattermost.com/8.1.0/mattermost-team-8.1.0-linux-arm64.tar.gz"
+        arm64.sha256 = "237618552d805613d106c810f165c6587aa7d6e408728c9f88221a7531dc30ae"
         armhf.url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v7.5.2/mattermost-v7.5.2-linux-arm.tar.gz"
         armhf.sha256 = "b26a4b676ee92ac848fa2993aa67559238ba7d8c1d0e6f7ffdd79ad8fb4942f3"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/8.0.1/mattermost-enterprise-8.0.1-linux-amd64.tar.gz"
-        amd64.sha256 = "c3601f0cfcdc8ac8827576e66bfda3e12d3fc3e92aa67c2b68a643c52e7eb17f"
-        arm64.url = "https://releases.mattermost.com/8.0.1/mattermost-enterprise-8.0.1-linux-arm64.tar.gz"
-        arm64.sha256 = "29273c534fa310703908d84783b69cdb42f5cbd2901ccebc3c1c624617ea4c43"
+        amd64.url = "https://releases.mattermost.com/8.1.0/mattermost-enterprise-8.1.0-linux-amd64.tar.gz"
+        amd64.sha256 = "70fb4aa1042d949966ac7485847ee5bbddd849f2565a89779ac101474f09a610"
+        arm64.url = "https://releases.mattermost.com/8.1.0/mattermost-enterprise-8.1.0-linux-arm64.tar.gz"
+        arm64.sha256 = "8f47ade6f43bfad6c3ef8922379e7914f11282c51a3af91246a050e7d279beca"
 
     [resources.system_user]
 
