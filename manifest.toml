@@ -57,7 +57,7 @@ ram.runtime = "50M"
 
     [install.language]
     ask.en = "Choose the language of the chat for the admin"
-    ask.fr = "Choissisez la langue utilisée pour l'administrateur"
+    ask.fr = "Choissisez la langue utilisée par le compte administrateur"
     type = "string"
     choices = ["de", "en", "es", "fr", "it", "pt"]
     default = "en"
