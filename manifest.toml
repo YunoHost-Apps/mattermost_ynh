@@ -51,14 +51,14 @@ ram.runtime = "50M"
     ask.fr = "Choisissez la version que vous souhaitez installer"
     help.en = "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 and ARM64 support)"
     help.fr = "Utilisez Team Edition pour la version open-source (prise en charge ARM, ARM64 et x86-64) ou Édition Enterprise si vous souhaitez utiliser une licence (prise en charge x86-64 et ARM64)"
-    type = "string"
+    type = "select"
     choices = ["Enterprise", "Team"]
     default = "Team"
 
     [install.language]
     ask.en = "Choose the language of the chat for the admin"
     ask.fr = "Choissisez la langue utilisée par le compte administrateur"
-    type = "string"
+    type = "select"
     choices = ["de", "en", "es", "fr", "it", "pt"]
     default = "en"
 
