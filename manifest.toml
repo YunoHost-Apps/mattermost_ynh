@@ -36,7 +36,7 @@ ram.runtime = "50M"
 
     [install.init_main_permission]
     help.en = "If visitors selected, Mattermost will be accessible by users without a YunoHost account. This can be changed later via the webadmin."
-    help.fr = "Si visitors selectionné, Mattermost sera accessible par les utilisateur n’ayant pas de  compte YunoHost. Vous pourrez changer ceci plus tard via l’interface d’administration."
+    help.fr = "Si « Visiteurs » est sélectionné, Mattermost sera accessible même par les utilisateurs n’ayant pas de compte YunoHost. Vous pourrez changer ce réglage plus tard dans l’interface d’administration."
     type = "group"
     default = "visitors"
 
