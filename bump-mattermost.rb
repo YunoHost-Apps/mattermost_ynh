@@ -135,7 +135,7 @@ if version.nil?
   abort("ERROR: The Mattermost release version must be provided.\nExample: ./bump-mattermost.sh 5.33.1")
 end
 
-VARIANTS = %i[team_amd64 enterprise_amd64 enterprise_arm64 team_arm64 team_armhf]
+VARIANTS = %i[team_amd64 enterprise_amd64 enterprise_arm64 team_arm64]
 
 # Compute releases URLs and sums
 releases = VARIANTS

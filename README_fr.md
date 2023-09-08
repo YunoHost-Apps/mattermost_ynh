@@ -36,7 +36,7 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 - Nouvelles fonctionnalités et améliorations publiées régulièrement
 
 
-**Version incluse :** 7.8.1~ynh2
+**Version incluse :** 8.1.1~ynh1
 
 ## Captures d’écran
 
