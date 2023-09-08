@@ -1,5 +1,5 @@
-SOURCE_URL=https://releases.mattermost.com/7.8.1/mattermost-enterprise-7.8.1-linux-amd64.tar.gz
-SOURCE_SUM=2a6ce384092fd53a4e947b599cdfe27e4427cc3aa4d6b37e7e5e094ad6516d74
+SOURCE_URL=https://releases.mattermost.com/8.1.1/mattermost-enterprise-8.1.1-linux-amd64.tar.gz
+SOURCE_SUM=5ce9090089601c5c7746768c9799cda8069b6116468d0377d603cd9116810911
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
