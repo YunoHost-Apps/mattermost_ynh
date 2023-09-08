@@ -61,6 +61,7 @@
     "EnableGifPicker": true,
     "GfycatAPIKey": "2_KtH_W5",
     "GfycatAPISecret": "3wLVZPiswc3DnaiaFoLkDvB4X0IV6CpMkj4tf2inJRsBY6-FnkT08zGmppWFgeof",
+    "GiphySdkKey": "",
     "EnableCustomEmoji": true,
     "EnableEmojiPicker": true,
     "PostEditTimeLimit": -1,
@@ -200,7 +201,8 @@
     "Lowercase": false,
     "Number": false,
     "Uppercase": false,
-    "Symbol": false
+    "Symbol": false,
+    "EnableForgotLink": true
   },
   "FileSettings": {
     "EnableFileAttachments": true,
@@ -226,7 +228,22 @@
     "AmazonS3SignV2": false,
     "AmazonS3SSE": false,
     "AmazonS3Trace": false,
-    "AmazonS3RequestTimeoutMilliseconds": 30000
+    "AmazonS3RequestTimeoutMilliseconds": 30000,
+    "DedicatedExportStore": false,
+    "ExportDriverName": "local",
+    "ExportDirectory": "./data/",
+    "ExportAmazonS3AccessKeyId": "",
+    "ExportAmazonS3SecretAccessKey": "",
+    "ExportAmazonS3Bucket": "",
+    "ExportAmazonS3PathPrefix": "",
+    "ExportAmazonS3Region": "",
+    "ExportAmazonS3Endpoint": "s3.amazonaws.com",
+    "ExportAmazonS3SSL": true,
+    "ExportAmazonS3SignV2": false,
+    "ExportAmazonS3SSE": false,
+    "ExportAmazonS3Trace": false,
+    "ExportAmazonS3RequestTimeoutMilliseconds": 30000,
+    "ExportAmazonS3PresignExpiresSeconds": 21600
   },
   "EmailSettings": {
     "EnableSignUpWithEmail": true,
@@ -274,11 +291,12 @@
     "ShowFullName": true
   },
   "SupportSettings": {
-    "TermsOfServiceLink": "https://mattermost.com/terms-of-use/",
-    "PrivacyPolicyLink": "https://mattermost.com/privacy-policy/",
-    "AboutLink": "https://docs.mattermost.com/about/product.html/",
-    "HelpLink": "https://mattermost.com/default-help/",
-    "ReportAProblemLink": "https://mattermost.com/default-report-a-problem/",
+    "TermsOfServiceLink": "https://mattermost.com/pl/terms-of-use/",
+    "PrivacyPolicyLink": "https://mattermost.com/pl/privacy-policy/",
+    "AboutLink": "https://mattermost.com/pl/about-mattermomst",
+    "HelpLink": "https://mattermost.com/pl/help/",
+    "ReportAProblemLink": "https://mattermost.com/pl/report-a-bug",
+    "ForgotPasswordLink": "",
     "SupportEmail": "",
     "CustomTermsOfServiceEnabled": false,
     "CustomTermsOfServiceReAcceptancePeriod": 365,
@@ -438,9 +456,9 @@
       "mmauth://",
       "mmauthbeta://"
     ],
-    "AppDownloadLink": "https://mattermost.com/download/#mattermostApps",
-    "AndroidAppDownloadLink": "https://mattermost.com/mattermost-android-app/",
-    "IosAppDownloadLink": "https://mattermost.com/mattermost-ios-app/"
+    "AppDownloadLink": "https://mattermost.com/pl/download-apps",
+    "AndroidAppDownloadLink": "https://mattermost.com/pl/android-app/",
+    "IosAppDownloadLink": "https://mattermost.com/pl/ios-app/"
   },
   "ClusterSettings": {
     "Enable": false,
@@ -521,7 +539,8 @@
     "FileRetentionDays": 365,
     "BoardsRetentionDays": 365,
     "DeletionJobStartTime": "02:00",
-    "BatchSize": 3000
+    "BatchSize": 3000,
+    "TimeBetweenBatchesMilliseconds": 100
   },
   "MessageExportSettings": {
     "EnableExport": false,
@@ -578,6 +597,7 @@
   },
   "GuestAccountsSettings": {
     "Enable": false,
+    "HideTags": false,
     "AllowEmailAccounts": true,
     "EnforceMultifactorAuthentication": false,
     "RestrictCreationToDomains": ""
@@ -602,7 +622,7 @@
     "PluginApps": "",
     "PluginFocalboard": "",
     "PluginCalls": "",
-    "PermalinkPreviews": true,
+    "PermalinkPreviews": false,
     "CallsEnabled": true,
     "BoardsFeatureFlags": "",
     "BoardsDataRetention": false,
@@ -610,8 +630,7 @@
     "GraphQL": false,
     "InsightsEnabled": false,
     "CommandPalette": false,
-    "SendWelcomePost": true,
-    "PostPriority": true,
+    "PostPriority": false,
     "WysiwygEditor": false,
     "PeopleProduct": false,
     "ReduceOnBoardingTaskList": false,
@@ -620,7 +639,9 @@
     "GlobalDrafts": true,
     "OnboardingTourTips": true,
     "DeprecateCloudFree": false,
-    "CloudReverseTrial": false
+    "CloudReverseTrial": false,
+    "EnableExportDirectDownload": false,
+    "DataRetentionConcurrencyEnabled": true
   },
   "ImportSettings": {
     "Directory": "./import",
