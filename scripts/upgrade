@@ -45,8 +45,8 @@ fi
 # Check if using MariaDB
 # This migration should be done before the upgrade
 if mysqlshow | grep -q "^| $db_name "; then
-    # Mattermost only support MySQL and PostgreSQL (not MariaDB...)
-    # Migrate the database from MariaDB to PostgreSQL
+    # Mattermost recommands PostgreSQL over MySQL (and doesn't support MariaDB at all)
+    # Migrate the database from MySQL/MariaDB to PostgreSQL
     remove_psql_in_case_of_error=1
     mariadb-to-pg
 fi
