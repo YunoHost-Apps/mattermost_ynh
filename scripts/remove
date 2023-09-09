@@ -23,7 +23,7 @@ then
 	yunohost service remove $app
 fi
 
-# Remove the dedicated systemd config
+# Stop the server, and remove the dedicated systemd config
 ynh_remove_systemd_config
 
 # Remove the app-specific logrotate config
@@ -32,6 +32,7 @@ ynh_remove_logrotate
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
+# Remove the log file
 ynh_secure_remove --file="/var/log/$app"
 
 #=================================================
