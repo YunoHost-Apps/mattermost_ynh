@@ -5,7 +5,7 @@ DB_USER="__DB_USER__"
 DB_NAME="__DB_NAME__"
 DB_PASS="__DB_PWD__"
 DB_HOST="localhost"
-RETENTION="__RETENTION_DAY__" #number of days to *keep*; 93 ~ 3 months
+RETENTION="__RETENTION__" #number of days to *keep*; 93 ~ 3 months
 DATA_DIR="__DATA_DIR__"
 
 # calculate epoch in milisec

@@ -1,0 +1,15 @@
+version = "1.0"
+
+[main]
+name = "Mattermost configuration"
+services = ["__APP__"]
+
+    [main.congig]
+    name = "Retention mode"
+
+        [main.config.retention]
+        ask = "Retention days"
+        type = "string"
+        default = "93"
+        help = "Vumber of days to *keep*; 93 ~ 3 months"
+        bind = "retention:__INSTALL_DIR__/retention.sh"
