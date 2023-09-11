@@ -49,6 +49,10 @@ yunohost service add $app --description="Collaboration platform built for develo
 
 ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 
+ynh_restore_file --origin_path="/etc/cron.d/$app"
+chown root: "/etc/cron.d/$app"
+chmod 644 "/etc/cron.d/$app"
+
 #=================================================
 # GENERIC FINALIZATION
 #=================================================

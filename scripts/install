@@ -38,6 +38,12 @@ url=https://$domain$path
 
 ynh_add_config --template="../conf/config.json" --destination="$install_dir/config/config.json"
 
+# Data rentention management
+ynh_add_config --template="../conf/retention.sh" --destination="$install_dir/retention.sh"
+
+chmod 400 "$install_dir/retention.sh"
+chown $app:$app "$install_dir/retention.sh"
+
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
@@ -57,6 +63,10 @@ chown $app -R "/var/log/$app"
 
 # Setup logrotate
 ynh_use_logrotate
+
+ynh_add_config --template="../conf/cron" --destination="/etc/cron.d/$app"
+chown root: "/etc/cron.d/$app"
+chmod 644 "/etc/cron.d/$app"
 
 #=================================================
 # START SYSTEMD SERVICE

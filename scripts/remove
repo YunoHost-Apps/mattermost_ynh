@@ -32,6 +32,9 @@ ynh_remove_logrotate
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
+# Remove a cron file
+ynh_secure_remove --file="/etc/cron.d/$app"
+
 # Remove the log file
 ynh_secure_remove --file="/var/log/$app"
 

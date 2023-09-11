@@ -111,6 +111,10 @@ yunohost service add $app --description="Collaboration platform built for develo
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
 
+ynh_add_config --template="../conf/cron" --destination="/etc/cron.d/$app"
+chown root: "/etc/cron.d/$app"
+chmod 644 "/etc/cron.d/$app"
+
 #=================================================
 # Fix old migrations
 #=================================================
