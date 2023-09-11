@@ -17,12 +17,19 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 ## Vue d’ensemble
 
 ## Mattermost Team Edition
+
 Une alternative gratuite, open source et auto-hébergée à la messagerie SaaS propriétaire. Team Edition est votre « bureau virtuel » open source, offrant tous les principaux avantages de productivité des solutions SaaS concurrentes.
 
 ## Mattermost Entreprise Edition
+
 Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vous pouvez remplacer le binaire Mattermost Team Edition par un binaire Mattermost Enterprise Edition. Cette version prend en charge la mise à niveau vers Mattermost Enterprise Edition E10 ou E20. 
 
-## Les fonctionnalités incluent:
+## Caractéristiques spécifiques YunoHost
+
+Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) ou la version [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
+
+
+## Les fonctionnalités incluent :
 
 - Messagerie individuelle et de groupe, partage de fichiers et historique de recherche illimité
 - Messagerie, emoji et emoji personnalisés
@@ -33,33 +40,13 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 - Prise en charge étendue de l'intégration via des webhooks, des API, des pilotes et des extensions tierces
 - Facilement évolutif à des dizaines d'utilisateurs par équipe
 - Données de profilage d'exécution et rapports de surveillance du système
-- Nouvelles fonctionnalités et améliorations publiées régulièrement
 
 
-**Version incluse :** 8.1.1~ynh1
+**Version incluse :** 8.1.2~ynh1
 
 ## Captures d’écran
 
 ![Capture d’écran de Mattermost](./doc/screenshots/screenshot.png)
-
-## Avertissements / informations importantes
-
-## Configuration
-
-* Comment configurer cette application : via le panneau d'administration, un fichier brut en SSH.
-* Comment changer d'une version à une autre (Team<->Enterprise) : Modifiez le `settings.yml` dans le répertoire de l'application `/etc/yunohost/apps/mattermost_instance/settings.yml` et remplacez la version avec celle que vous voulez : Team ou Enterprise. Mettez à jour votre application et vérifiez dans le *À Propos* sur la console système de votre application.
-
-## Caractéristiques spécifiques YunoHost
-
-Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) ou la version [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
-
-## Limitations
-
-* L'intégration LDAP n'est pas gérée (see [#58](https://github.com/YunoHost-Apps/mattermost_ynh/issues/58))
-
-## Informations additionnelles
-
-Ce paquet peut être installé sur les architectures `ARM`, `ARM64` et `x86-64` (mais uniquement `x86-64` et `ARM64` si vous choisissez d'installer la version *Enterprise Edition*).
 
 ## Documentations et ressources
 

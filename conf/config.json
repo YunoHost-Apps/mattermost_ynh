@@ -61,6 +61,7 @@
     "EnableGifPicker": true,
     "GfycatAPIKey": "2_KtH_W5",
     "GfycatAPISecret": "3wLVZPiswc3DnaiaFoLkDvB4X0IV6CpMkj4tf2inJRsBY6-FnkT08zGmppWFgeof",
+    "GiphySdkKey": "",
     "EnableCustomEmoji": true,
     "EnableEmojiPicker": true,
     "PostEditTimeLimit": -1,
@@ -89,7 +90,12 @@
     "EnableSVGs": false,
     "EnableLatex": false,
     "EnableInlineLatex": true,
-    "PostPriority": false,
+    "PostPriority": true,
+    "AllowPersistentNotifications": true,
+    "AllowPersistentNotificationsForGuests": false,
+    "PersistentNotificationIntervalMinutes": 5,
+    "PersistentNotificationMaxCount": 6,
+    "PersistentNotificationMaxRecipients": 5,
     "EnableAPIChannelDeletion": false,
     "EnableLocalMode": true,
     "LocalModeSocketLocation": "/var/run/__APP__/mattermost_local.socket",
@@ -148,7 +154,8 @@
     "QueryTimeout": 30,
     "DisableDatabaseSearch": false,
     "MigrationsStatementTimeoutSeconds": 100000,
-    "ReplicaLagSettings": []
+    "ReplicaLagSettings": [],
+    "ReplicaMonitorIntervalSeconds": 5
   },
   "LogSettings": {
     "EnableConsole": true,
@@ -163,6 +170,7 @@
     "EnableDiagnostics": true,
     "VerboseDiagnostics": false,
     "EnableSentry": true,
+    "AdvancedLoggingJSON": {},
     "AdvancedLoggingConfig": ""
   },
   "ExperimentalAuditSettings": {
@@ -173,6 +181,7 @@
     "FileMaxBackups": 0,
     "FileCompress": false,
     "FileMaxQueueSize": 1000,
+    "AdvancedLoggingJSON": {},
     "AdvancedLoggingConfig": ""
   },
   "NotificationLogSettings": {
@@ -184,6 +193,7 @@
     "FileLevel": "INFO",
     "FileJson": true,
     "FileLocation": "/var/log/__APP__",
+    "AdvancedLoggingJSON": {},
     "AdvancedLoggingConfig": ""
   },
   "PasswordSettings": {
@@ -191,7 +201,8 @@
     "Lowercase": false,
     "Number": false,
     "Uppercase": false,
-    "Symbol": false
+    "Symbol": false,
+    "EnableForgotLink": true
   },
   "FileSettings": {
     "EnableFileAttachments": true,
@@ -201,7 +212,7 @@
     "MaxImageResolution": 33177600,
     "MaxImageDecoderConcurrency": -1,
     "DriverName": "local",
-    "Directory": "__DATA_PATH__",
+    "Directory": "__DATA_DIR__",
     "EnablePublicLink": false,
     "ExtractContent": false,
     "ArchiveRecursion": false,
@@ -217,7 +228,22 @@
     "AmazonS3SignV2": false,
     "AmazonS3SSE": false,
     "AmazonS3Trace": false,
-    "AmazonS3RequestTimeoutMilliseconds": 30000
+    "AmazonS3RequestTimeoutMilliseconds": 30000,
+    "DedicatedExportStore": false,
+    "ExportDriverName": "local",
+    "ExportDirectory": "./data/",
+    "ExportAmazonS3AccessKeyId": "",
+    "ExportAmazonS3SecretAccessKey": "",
+    "ExportAmazonS3Bucket": "",
+    "ExportAmazonS3PathPrefix": "",
+    "ExportAmazonS3Region": "",
+    "ExportAmazonS3Endpoint": "s3.amazonaws.com",
+    "ExportAmazonS3SSL": true,
+    "ExportAmazonS3SignV2": false,
+    "ExportAmazonS3SSE": false,
+    "ExportAmazonS3Trace": false,
+    "ExportAmazonS3RequestTimeoutMilliseconds": 30000,
+    "ExportAmazonS3PresignExpiresSeconds": 21600
   },
   "EmailSettings": {
     "EnableSignUpWithEmail": true,
@@ -249,8 +275,7 @@
     "EmailNotificationContentsType": "full",
     "LoginButtonColor": "#0000",
     "LoginButtonBorderColor": "#2389D7",
-    "LoginButtonTextColor": "#2389D7",
-    "EnableInactivityEmail": true
+    "LoginButtonTextColor": "#2389D7"
   },
   "RateLimitSettings": {
     "Enable": false,
@@ -266,11 +291,12 @@
     "ShowFullName": true
   },
   "SupportSettings": {
-    "TermsOfServiceLink": "https://mattermost.com/terms-of-use/",
-    "PrivacyPolicyLink": "https://mattermost.com/privacy-policy/",
-    "AboutLink": "https://docs.mattermost.com/about/product.html/",
-    "HelpLink": "https://mattermost.com/default-help/",
-    "ReportAProblemLink": "https://mattermost.com/default-report-a-problem/",
+    "TermsOfServiceLink": "https://mattermost.com/pl/terms-of-use/",
+    "PrivacyPolicyLink": "https://mattermost.com/pl/privacy-policy/",
+    "AboutLink": "https://mattermost.com/pl/about-mattermomst",
+    "HelpLink": "https://mattermost.com/pl/help/",
+    "ReportAProblemLink": "https://mattermost.com/pl/report-a-bug",
+    "ForgotPasswordLink": "",
     "SupportEmail": "",
     "CustomTermsOfServiceEnabled": false,
     "CustomTermsOfServiceReAcceptancePeriod": 365,
@@ -430,9 +456,9 @@
       "mmauth://",
       "mmauthbeta://"
     ],
-    "AppDownloadLink": "https://mattermost.com/download/#mattermostApps",
-    "AndroidAppDownloadLink": "https://mattermost.com/mattermost-android-app/",
-    "IosAppDownloadLink": "https://mattermost.com/mattermost-ios-app/"
+    "AppDownloadLink": "https://mattermost.com/pl/download-apps",
+    "AndroidAppDownloadLink": "https://mattermost.com/pl/android-app/",
+    "IosAppDownloadLink": "https://mattermost.com/pl/ios-app/"
   },
   "ClusterSettings": {
     "Enable": false,
@@ -464,8 +490,9 @@
     "UseNewSAMLLibrary": false,
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false,
-    "EnableAppBar": false,
-    "PatchPluginsReactDOM": false
+    "DisableAppBar": false,
+    "DisableRefetchingOnBrowserFocus": false,
+    "DelayChannelAutocomplete": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -491,7 +518,11 @@
     "BatchSize": 10000,
     "RequestTimeoutSeconds": 30,
     "SkipTLSVerification": false,
-    "Trace": ""
+    "CA": "",
+    "ClientCert": "",
+    "ClientKey": "",
+    "Trace": "",
+    "IgnoredPurgeIndexes": ""
   },
   "BleveSettings": {
     "IndexDir": "",
@@ -508,7 +539,8 @@
     "FileRetentionDays": 365,
     "BoardsRetentionDays": 365,
     "DeletionJobStartTime": "02:00",
-    "BatchSize": 3000
+    "BatchSize": 3000,
+    "TimeBetweenBatchesMilliseconds": 100
   },
   "MessageExportSettings": {
     "EnableExport": false,
@@ -531,9 +563,7 @@
     "CleanupJobsThresholdDays": -1,
     "CleanupConfigThresholdDays": -1
   },
-  "ProductSettings": {
-    "EnablePublicSharedBoards": false
-  },
+  "ProductSettings": {},
   "PluginSettings": {
     "Enable": true,
     "EnableUploads": false,
@@ -543,16 +573,10 @@
     "ClientDirectory": "./client/plugins",
     "Plugins": {},
     "PluginStates": {
-      "com.mattermost.apps": {
-        "Enable": true
-      },
       "com.mattermost.calls": {
         "Enable": true
       },
       "com.mattermost.nps": {
-        "Enable": true
-      },
-      "focalboard": {
         "Enable": true
       },
       "playbooks": {
@@ -573,6 +597,7 @@
   },
   "GuestAccountsSettings": {
     "Enable": false,
+    "HideTags": false,
     "AllowEmailAccounts": true,
     "EnforceMultifactorAuthentication": false,
     "RestrictCreationToDomains": ""
@@ -584,8 +609,9 @@
     "RemoteImageProxyOptions": ""
   },
   "CloudSettings": {
-    "CWSURL": "https://customers.mattermost.com",
-    "CWSAPIURL": "https://portal.internal.prod.cloud.mattermost.com"
+    "CWSURL": "https://portal.test.cloud.mattermost.com",
+    "CWSAPIURL": "https://api.internal.test.cloud.mattermost.com",
+    "CWSMock": false
   },
   "FeatureFlags": {
     "TestFeature": "off",
@@ -596,25 +622,26 @@
     "PluginApps": "",
     "PluginFocalboard": "",
     "PluginCalls": "",
-    "PermalinkPreviews": true,
+    "PermalinkPreviews": false,
     "CallsEnabled": true,
     "BoardsFeatureFlags": "",
     "BoardsDataRetention": false,
     "NormalizeLdapDNs": false,
-    "EnableInactivityCheckJob": true,
-    "UseCaseOnboarding": true,
     "GraphQL": false,
-    "InsightsEnabled": true,
+    "InsightsEnabled": false,
     "CommandPalette": false,
-    "BoardsProduct": false,
-    "SendWelcomePost": true,
-    "WorkTemplate": false,
-    "PostPriority": true,
+    "PostPriority": false,
+    "WysiwygEditor": false,
     "PeopleProduct": false,
-    "AnnualSubscription": false,
     "ReduceOnBoardingTaskList": false,
+    "OnboardingAutoShowLinkedBoard": false,
     "ThreadsEverywhere": false,
-    "GlobalDrafts": true
+    "GlobalDrafts": true,
+    "OnboardingTourTips": true,
+    "DeprecateCloudFree": false,
+    "CloudReverseTrial": false,
+    "EnableExportDirectDownload": false,
+    "DataRetentionConcurrencyEnabled": true
   },
   "ImportSettings": {
     "Directory": "./import",
