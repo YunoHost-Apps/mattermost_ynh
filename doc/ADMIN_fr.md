@@ -1,0 +1,1 @@
+Vous pouvez changer l'édition installée (Team <-> Enterprise) en éditant le fichier de configuration `__DATA_DIR__/__APP__/settings.yml` et remplacez la version avec celle que vous voulez : Team ou Enterprise. Mettez à jour votre application et vérifiez dans le *À Propos* sur la console système de votre application.
