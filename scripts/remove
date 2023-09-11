@@ -23,7 +23,7 @@ then
 	yunohost service remove $app
 fi
 
-# Remove the dedicated systemd config
+# Stop the server, and remove the dedicated systemd config
 ynh_remove_systemd_config
 
 # Remove the app-specific logrotate config
@@ -32,7 +32,18 @@ ynh_remove_logrotate
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
+# Remove the log file
 ynh_secure_remove --file="/var/log/$app"
+
+# If the user attempted to upgrade from an older MariaDB-based version, but the upgrade failed,
+# the 'remove' action will automatically remove the PostgreSQL database – but doesn't know
+# that a MariaDB database is still lying around.
+# In that case, remove the MariaDB database manually.
+if mysqlshow | grep -q "^| $db_name "
+then
+	ynh_script_progression --message="Removing MariaDB database..." --weight=1
+  ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
+fi
 
 #=================================================
 # END OF SCRIPT
