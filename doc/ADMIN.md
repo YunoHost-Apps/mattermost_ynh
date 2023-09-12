@@ -1,1 +1,0 @@
-You can change the istalled edition (Team <-> Enterprise) by modifying the setting file `__DATA_DIR__/__APP__/settings.yml` and replace the version to wich you want: Team or Enterprise. Update your apps and verify the *About* on your Mattermost

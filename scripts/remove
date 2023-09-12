@@ -10,11 +10,23 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# REMOVE SYSTEM CONFIGURATIONS
+# LOAD SETTINGS
 #=================================================
-# REMOVE SYSTEMD SERVICE 
+
+app=$YNH_APP_INSTANCE_NAME
+
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+port=$(ynh_app_setting_get --app=$app --key=port)
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
+
 #=================================================
-ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
+# STANDARD REMOVE
+#=================================================
+# REMOVE SERVICE FROM ADMIN PANEL
+#=================================================
 
 # Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
 if ynh_exec_warn_less yunohost service status $app >/dev/null
@@ -23,27 +35,80 @@ then
 	yunohost service remove $app
 fi
 
-# Stop the server, and remove the dedicated systemd config
+#=================================================
+# STOP AND REMOVE SERVICE
+#=================================================
+ynh_script_progression --message="Stopping and removing the systemd service..." --weight=1
+
+# Remove the dedicated systemd config
 ynh_remove_systemd_config
+
+#=================================================
+# REMOVE LOGROTATE CONFIGURATION
+#=================================================
+ynh_script_progression --message="Removing logrotate configuration..." --weight=1
 
 # Remove the app-specific logrotate config
 ynh_remove_logrotate
 
+#=================================================
+# REMOVE THE DATABASE
+#=================================================
+ynh_script_progression --message="Removing the database..." --weight=2
+
+# Remove a database if it exists, along with the associated user
+ynh_psql_remove_db --db_user=$db_user --db_name=$db_name
+
+#=================================================
+# REMOVE DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Removing dependencies..." --weight=3
+
+# Remove metapackage and its dependencies
+ynh_remove_app_dependencies
+
+#=================================================
+# REMOVE APP MAIN DIR
+#=================================================
+ynh_script_progression --message="Removing $app main directory..." --weight=6
+
+# Remove the app directory securely
+ynh_secure_remove --file="$final_path"
+
+#=================================================
+# REMOVE DATA DIR
+#=================================================
+
+# Remove the data directory if --purge option is used
+if [ "${YNH_APP_PURGE:-0}" -eq 1 ]
+then
+	ynh_script_progression --message="Removing app data directory..." --weight=1
+	ynh_secure_remove --file="$data_path"
+fi
+
+#=================================================
+# REMOVE NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Removing NGINX web server configuration..." --weight=5
+
 # Remove the dedicated NGINX config
 ynh_remove_nginx_config
 
-# Remove the log file
+#=================================================
+# SPECIFIC REMOVE
+#=================================================
+# REMOVE VARIOUS FILES
+#=================================================
+ynh_script_progression --message="Removing various files..." --weight=1
+
 ynh_secure_remove --file="/var/log/$app"
 
-# If the user attempted to upgrade from an older MariaDB-based version, but the upgrade failed,
-# the 'remove' action will automatically remove the PostgreSQL database – but doesn't know
-# that a MariaDB database is still lying around.
-# In that case, remove the MariaDB database manually.
-if mysqlshow | grep -q "^| $db_name "
-then
-	ynh_script_progression --message="Removing MariaDB database..." --weight=1
-  ynh_mysql_remove_db --db_user=$db_user --db_name=$db_name
-fi
+#=================================================
+# REMOVE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Removing the dedicated system user..." --weight=1
+
+ynh_system_user_delete --username=$app
 
 #=================================================
 # END OF SCRIPT

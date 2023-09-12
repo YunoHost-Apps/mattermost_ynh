@@ -1,16 +1,8 @@
 ## Mattermost Team Edition
-
-A free-to-use, open source, self-hosted alternative to proprietary SaaS messaging. Team Edition is your open source “virtual office”, offering all the core productivity benefits of competing SaaS solutions. It deploys as a single Linux binary with PosgreSQL under an MIT license.
+A free-to-use, open source, self-hosted alternative to proprietary SaaS messaging. Team Edition is your open source “virtual office”, offering all the core productivity benefits of competing SaaS solutions. It deploys as a single Linux binary with MySQL under an MIT license.
 
 ## Mattermost Enterprise Edition
-
 To explore the benefits of Mattermost’s enterprise features, you can replace the Mattermost Team Edition binary with a Mattermost Enterprise Edition binary. This version supports upgrading to Mattermost Enterprise Edition E10 or E20.
-
-## YunoHost specific features
-
-This package can install the [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) or the [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
-
-Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/download/)
 
 ## Features include:
 
@@ -23,3 +15,4 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Extensive integration support via webhooks, APIs, drivers, and third-party extensions
 - Easily scalable to dozens of users per team
 - Runtime profiling data and system monitoring reports
+- New features and improvements released regularly

@@ -10,54 +10,140 @@ source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
+# MANAGE SCRIPT FAILURE
+#=================================================
+
+ynh_clean_setup () {
+	ynh_clean_check_starting
+}
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
+
+#=================================================
+# LOAD SETTINGS
+#=================================================
+ynh_script_progression --message="Loading installation settings..." --weight=1
+
+app=$YNH_APP_INSTANCE_NAME
+
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+path_url=$(ynh_app_setting_get --app=$app --key=path)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+port=$(ynh_app_setting_get --app=$app --key=port)
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
+data_path=$(ynh_app_setting_get --app=$app --key=data_path)
+
+#=================================================
+# CHECK IF THE APP CAN BE RESTORED
+#=================================================
+ynh_script_progression --message="Validating restoration parameters..." --weight=1
+
+test ! -d $final_path \
+	|| ynh_die --message="There is already a directory: $final_path "
+
+#=================================================
+# STANDARD RESTORATION STEPS
+#=================================================
+# RESTORE THE NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Restoring the NGINX web server configuration..." --weight=1
+
+ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
+
+#=================================================
+# RECREATE THE DEDICATED USER
+#=================================================
+ynh_script_progression --message="Recreating the dedicated system user..." --weight=1
+
+# Create the dedicated user (if not existing)
+ynh_system_user_create --username=$app --home_dir="$final_path"
+
+#=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
 ynh_script_progression --message="Restoring the app main directory..." --weight=2
 
-ynh_restore_file --origin_path="$install_dir"
+ynh_restore_file --origin_path="$final_path"
 
-chown -R $app:www-data "$install_dir"
+chmod 750 "$final_path"
+chmod -R o-rwx "$final_path"
+chown -R $app:www-data "$final_path"
 
 #=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Restoring the data directory..." --weight=4
 
-ynh_restore_file --origin_path="$data_dir" --not_mandatory
+ynh_restore_file --origin_path="$data_path" --not_mandatory
 
-chown -R $app:www-data "$data_dir"
+mkdir -p $data_path
+
+chmod 750 "$data_path"
+chmod -R o-rwx "$data_path"
+chown -R $app:www-data "$data_path"
 
 #=================================================
-# RESTORE SYSTEM CONFIGURATIONS
+# REINSTALL DEPENDENCIES
 #=================================================
-# RESTORE THE PHP-FPM CONFIGURATION
+ynh_script_progression --message="Reinstalling dependencies..." --weight=10
+
+# Define and install dependencies
+ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+
 #=================================================
-ynh_script_progression --message="Restoring system configurations related to $app..." --weight=1
+# RESTORE THE DATABASE
+#=================================================
+ynh_script_progression --message="Restoring the database..." --weight=6
 
-ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
-
+db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+ynh_psql_test_if_first_run
+ynh_psql_setup_db --db_user=$db_user --db_name=$db_name --db_pwd=$db_pwd
 ynh_psql_execute_file_as_root --file="./db.sql" --database=$db_name
+
+#=================================================
+# RESTORE USER RIGHTS
+#=================================================
 
 logs_path="/var/log/$app"
 mkdir -p $logs_path
 chown -R $app: $logs_path
 
+#=================================================
+# SPECIFIC RESTORATION
+#=================================================
+# RESTORE SYSTEMD
+#=================================================
+
 ynh_restore_file "/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
 
+#=================================================
+# ADVERTISE SERVICE IN ADMIN PANEL
+#=================================================
+
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --weight=2
+
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
+
+#=================================================
+# RESTORE THE LOGROTATE CONFIGURATION
+#=================================================
 
 ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
-# RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
+# RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server and $app's service..." --weight=1
-
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 

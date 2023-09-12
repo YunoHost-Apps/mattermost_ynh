@@ -1,0 +1,6 @@
+SOURCE_URL=https://releases.mattermost.com/8.1.1/mattermost-team-8.1.1-linux-amd64.tar.gz
+SOURCE_SUM=1ca6b77cc34be7bd2cea57f9dfa064e19c5556ab59c5e24e93dfdf6d0dc39603
+SOURCE_SUM_PRG=sha256sum
+SOURCE_FORMAT=tar.gz
+SOURCE_IN_SUBDIR=true
+SOURCE_FILENAME=mattermost.tar.gz
