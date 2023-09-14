@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Open source collaboration platform built for developers"
 description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
 
-version = "8.1.2~ynh1"
+version = "8.1.2~ynh2"
 
 maintainers = ["pmorinerie"]
 
