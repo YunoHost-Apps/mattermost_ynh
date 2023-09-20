@@ -633,14 +633,9 @@
     "PostPriority": false,
     "WysiwygEditor": false,
     "PeopleProduct": false,
-    "ReduceOnBoardingTaskList": false,
-    "OnboardingAutoShowLinkedBoard": false,
-    "ThreadsEverywhere": false,
-    "GlobalDrafts": true,
     "OnboardingTourTips": true,
     "DeprecateCloudFree": false,
     "CloudReverseTrial": false,
-    "EnableExportDirectDownload": false,
     "DataRetentionConcurrencyEnabled": true
   },
   "ImportSettings": {
