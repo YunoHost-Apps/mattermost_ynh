@@ -43,7 +43,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Shipped version:** 9.0.0~ynh1
+**Shipped version:** 9.0.1~ynh1
 
 ## Screenshots
 
@@ -55,7 +55,6 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 * Official user documentation: <https://docs.mattermost.com/guides/messaging.html>
 * Official admin documentation: <https://docs.mattermost.com/guides/deployment.html>
 * Upstream app code repository: <https://github.com/mattermost/mattermost-server>
-* YunoHost documentation for this app: <https://yunohost.org/app_mattermost>
 * Report a bug: <https://github.com/YunoHost-Apps/mattermost_ynh/issues>
 
 ## Developer info

@@ -227,22 +227,7 @@
     "AmazonS3SignV2": false,
     "AmazonS3SSE": false,
     "AmazonS3Trace": false,
-    "AmazonS3RequestTimeoutMilliseconds": 30000,
-    "DedicatedExportStore": false,
-    "ExportDriverName": "local",
-    "ExportDirectory": "./data/",
-    "ExportAmazonS3AccessKeyId": "",
-    "ExportAmazonS3SecretAccessKey": "",
-    "ExportAmazonS3Bucket": "",
-    "ExportAmazonS3PathPrefix": "",
-    "ExportAmazonS3Region": "",
-    "ExportAmazonS3Endpoint": "s3.amazonaws.com",
-    "ExportAmazonS3SSL": true,
-    "ExportAmazonS3SignV2": false,
-    "ExportAmazonS3SSE": false,
-    "ExportAmazonS3Trace": false,
-    "ExportAmazonS3RequestTimeoutMilliseconds": 30000,
-    "ExportAmazonS3PresignExpiresSeconds": 21600
+    "AmazonS3RequestTimeoutMilliseconds": 30000
   },
   "EmailSettings": {
     "EnableSignUpWithEmail": true,
