@@ -61,6 +61,7 @@
     "EnableGifPicker": true,
     "GfycatAPIKey": "2_KtH_W5",
     "GfycatAPISecret": "3wLVZPiswc3DnaiaFoLkDvB4X0IV6CpMkj4tf2inJRsBY6-FnkT08zGmppWFgeof",
+    "GiphySdkKey": "",
     "EnableCustomEmoji": true,
     "EnableEmojiPicker": true,
     "PostEditTimeLimit": -1,
@@ -112,6 +113,7 @@
   "TeamSettings": {
     "SiteName": "Mattermost",
     "MaxUsersPerTeam": 50,
+    "EnableJoinLeaveMessageByDefault": true,
     "EnableUserCreation": true,
     "EnableOpenServer": false,
     "EnableUserDeactivation": false,
@@ -577,6 +579,7 @@
   },
   "DisplaySettings": {
     "CustomURLSchemes": [],
+    "MaxMarkdownNodes": 0,
     "ExperimentalTimezone": true
   },
   "GuestAccountsSettings": {
@@ -602,25 +605,18 @@
     "TestBoolFeature": false,
     "EnableRemoteClusterService": false,
     "AppsEnabled": true,
-    "PluginPlaybooks": "",
-    "PluginApps": "",
-    "PluginFocalboard": "",
-    "PluginCalls": "",
     "PermalinkPreviews": false,
     "CallsEnabled": true,
-    "BoardsFeatureFlags": "",
-    "BoardsDataRetention": false,
     "NormalizeLdapDNs": false,
     "GraphQL": false,
-    "InsightsEnabled": false,
-    "CommandPalette": false,
     "PostPriority": false,
     "WysiwygEditor": false,
-    "PeopleProduct": false,
     "OnboardingTourTips": true,
     "DeprecateCloudFree": false,
     "CloudReverseTrial": false,
-    "DataRetentionConcurrencyEnabled": true
+    "EnableExportDirectDownload": false,
+    "DataRetentionConcurrencyEnabled": true,
+    "StreamlinedMarketplace": true
   },
   "ImportSettings": {
     "Directory": "./import",
