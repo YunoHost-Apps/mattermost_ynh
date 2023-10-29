@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Open source collaboration platform built for developers"
 description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
 
-version = "9.1.0~ynh1"
+version = "9.1.1~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -73,18 +73,18 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.main]
-        amd64.url = "https://releases.mattermost.com/9.1.0/mattermost-team-9.1.0-linux-amd64.tar.gz"
-        amd64.sha256 = "b120c4a55f76361bb10ea23dcc1ef19617932f7a80df8e6255ad0f9e0ff1da3a"
-        arm64.url = "https://releases.mattermost.com/9.1.0/mattermost-team-9.1.0-linux-arm64.tar.gz"
-        arm64.sha256 = "69b406a9aad5ebb6cc50afa2ad6ba052e985c0544120cb3083c51aaa2a66aa96"
+        amd64.url = "https://releases.mattermost.com/9.1.1/mattermost-team-9.1.1-linux-amd64.tar.gz"
+        amd64.sha256 = "5395642cd0d79db34b6fab16a9311dfd6eb1fe82fa10c22cca55194ffd0a828b"
+        arm64.url = "https://releases.mattermost.com/9.1.1/mattermost-team-9.1.1-linux-arm64.tar.gz"
+        arm64.sha256 = "2070dc950aa3660dd1f3c049364ba595f8a2b27d230ad0bf4743932c91c19deb"
         armhf.url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v7.5.2/mattermost-v7.5.2-linux-arm.tar.gz"
         armhf.sha256 = "b26a4b676ee92ac848fa2993aa67559238ba7d8c1d0e6f7ffdd79ad8fb4942f3"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/9.1.0/mattermost-enterprise-9.1.0-linux-amd64.tar.gz"
-        amd64.sha256 = "11bd6fa1e0ec9bfe5c3e4b2449ce7fe8dfb28c4a48714bff968a7a985b047ca6"
-        arm64.url = "https://releases.mattermost.com/9.1.0/mattermost-enterprise-9.1.0-linux-arm64.tar.gz"
-        arm64.sha256 = "3880ac51b8898a89d6a1f4b0edc9d3e3e0e2d06a6d178611b861a0cfbb59ad09"
+        amd64.url = "https://releases.mattermost.com/9.1.1/mattermost-enterprise-9.1.1-linux-amd64.tar.gz"
+        amd64.sha256 = "6073190d619456b9d3db9e597b61849be035c5f8f3682d7e3dd69ccd4df86be4"
+        arm64.url = "https://releases.mattermost.com/9.1.1/mattermost-enterprise-9.1.1-linux-arm64.tar.gz"
+        arm64.sha256 = "d7227177752ce23ac1e28d2d7b90d5882288e2aeb555ee22ab36d46c192cd8f0"
 
     [resources.system_user]
 
