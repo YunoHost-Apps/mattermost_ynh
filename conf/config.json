@@ -59,8 +59,6 @@
     "WebsocketPort": 80,
     "WebserverMode": "gzip",
     "EnableGifPicker": true,
-    "GfycatAPIKey": "2_KtH_W5",
-    "GfycatAPISecret": "3wLVZPiswc3DnaiaFoLkDvB4X0IV6CpMkj4tf2inJRsBY6-FnkT08zGmppWFgeof",
     "GiphySdkKey": "",
     "EnableCustomEmoji": true,
     "EnableEmojiPicker": true,
@@ -172,7 +170,8 @@
     "VerboseDiagnostics": false,
     "EnableSentry": true,
     "AdvancedLoggingJSON": {},
-    "AdvancedLoggingConfig": ""
+    "AdvancedLoggingConfig": "",
+    "MaxFieldSize": 2048
   },
   "ExperimentalAuditSettings": {
     "FileEnabled": false,
@@ -541,7 +540,8 @@
     "BoardsRetentionDays": 365,
     "DeletionJobStartTime": "02:00",
     "BatchSize": 3000,
-    "TimeBetweenBatchesMilliseconds": 100
+    "TimeBetweenBatchesMilliseconds": 100,
+    "RetentionIdsBatchSize": 100
   },
   "MessageExportSettings": {
     "EnableExport": false,
@@ -630,7 +630,6 @@
     "DeprecateCloudFree": false,
     "CloudReverseTrial": false,
     "EnableExportDirectDownload": false,
-    "DataRetentionConcurrencyEnabled": true,
     "StreamlinedMarketplace": true
   },
   "ImportSettings": {
