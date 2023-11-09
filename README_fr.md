@@ -42,7 +42,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 - Données de profilage d'exécution et rapports de surveillance du système
 
 
-**Version incluse :** 9.1.0~ynh1
+**Version incluse :** 9.1.1~ynh1
 
 ## Captures d’écran
 
@@ -54,6 +54,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 * Documentation officielle utilisateur : <https://docs.mattermost.com/guides/messaging.html>
 * Documentation officielle de l’admin : <https://docs.mattermost.com/guides/deployment.html>
 * Dépôt de code officiel de l’app : <https://github.com/mattermost/mattermost-server>
+* YunoHost Store: <https://apps.yunohost.org/app/mattermost>
 * Signaler un bug : <https://github.com/YunoHost-Apps/mattermost_ynh/issues>
 
 ## Informations pour les développeurs
