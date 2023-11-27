@@ -4,6 +4,11 @@
 # COMMON VARIABLES
 #=================================================
 
+# We want Mattermost emails to be sent from the main domain
+# (the one for which the emails headers are properly configured),
+# and not the subdomain or secondary domain used for Mattermost.
+main_domain=$(cat /etc/yunohost/current_host)
+
 #=================================================
 # PERSONAL HELPERS
 #=================================================
