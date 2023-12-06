@@ -42,7 +42,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 - Données de profilage d'exécution et rapports de surveillance du système
 
 
-**Version incluse :** 9.2.2~ynh1
+**Version incluse :** 9.2.3~ynh1
 
 ## Captures d’écran
 
