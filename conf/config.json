@@ -106,7 +106,8 @@
     "ManagedResourcePaths": "",
     "EnableCustomGroups": true,
     "SelfHostedPurchase": true,
-    "AllowSyncedDrafts": true
+    "AllowSyncedDrafts": true,
+    "UniqueEmojiReactionLimitPerPost": 50
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -293,7 +294,7 @@
   "SupportSettings": {
     "TermsOfServiceLink": "https://mattermost.com/pl/terms-of-use/",
     "PrivacyPolicyLink": "https://mattermost.com/pl/privacy-policy/",
-    "AboutLink": "https://mattermost.com/pl/about-mattermomst",
+    "AboutLink": "https://mattermost.com/pl/about-mattermost",
     "HelpLink": "https://mattermost.com/pl/help/",
     "ReportAProblemLink": "https://mattermost.com/pl/report-a-bug",
     "ForgotPasswordLink": "",
@@ -594,8 +595,7 @@
   },
   "DisplaySettings": {
     "CustomURLSchemes": [],
-    "MaxMarkdownNodes": 0,
-    "ExperimentalTimezone": true
+    "MaxMarkdownNodes": 0
   },
   "GuestAccountsSettings": {
     "Enable": false,
@@ -629,7 +629,8 @@
     "DeprecateCloudFree": false,
     "CloudReverseTrial": false,
     "EnableExportDirectDownload": false,
-    "StreamlinedMarketplace": true
+    "StreamlinedMarketplace": true,
+    "ConsumePostHook": false
   },
   "ImportSettings": {
     "Directory": "./import",
