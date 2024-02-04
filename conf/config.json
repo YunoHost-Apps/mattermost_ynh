@@ -107,7 +107,8 @@
     "EnableCustomGroups": true,
     "SelfHostedPurchase": true,
     "AllowSyncedDrafts": true,
-    "UniqueEmojiReactionLimitPerPost": 50
+    "UniqueEmojiReactionLimitPerPost": 50,
+    "RefreshPostStatsRunTime": "00:00"
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -556,7 +557,9 @@
       "SMTPUsername": "",
       "SMTPPassword": "",
       "EmailAddress": "",
-      "SMTPServerTimeout": 1800
+      "SMTPServerTimeout": 1800,
+      "CustomSMTPServerName": "",
+      "CustomSMTPPort": "25"
     }
   },
   "JobSettings": {
@@ -630,7 +633,9 @@
     "CloudReverseTrial": false,
     "EnableExportDirectDownload": false,
     "StreamlinedMarketplace": true,
-    "ConsumePostHook": false
+    "CloudIPFiltering": false,
+    "ConsumePostHook": false,
+    "CloudAnnualRenewals": false
   },
   "ImportSettings": {
     "Directory": "./import",
