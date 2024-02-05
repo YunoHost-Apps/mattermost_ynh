@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Open source collaboration platform built for developers"
 description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
 
-version = "9.3.0~ynh1"
+version = "9.4.2~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -25,7 +25,7 @@ ldap = false
 
 sso = false
 
-disk = "50M"
+disk = "750M"
 ram.build = "350M"
 ram.runtime = "50M"
 
@@ -76,18 +76,18 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.main]
-        amd64.url = "https://releases.mattermost.com/9.3.0/mattermost-team-9.3.0-linux-amd64.tar.gz"
-        amd64.sha256 = "a53ddf36e313f0d5bc69ecd5940d089ce0b6ab392831e8126edbba22dc0946b4"
-        arm64.url = "https://releases.mattermost.com/9.3.0/mattermost-team-9.3.0-linux-arm64.tar.gz"
-        arm64.sha256 = "b459b43f599fed5a1905e49e4605198a2cfdedf8fd7e54a361ca17adb047df00"
+        amd64.url = "https://releases.mattermost.com/9.4.2/mattermost-team-9.4.2-linux-amd64.tar.gz"
+        amd64.sha256 = "61627ab1fb5f987756edf8b4f5c07f9e6d4937c62f27babea0532e5a1fa41ce7"
+        arm64.url = "https://releases.mattermost.com/9.4.2/mattermost-team-9.4.2-linux-arm64.tar.gz"
+        arm64.sha256 = "f6801a236c573595ac56fed97e636de72789f98e0b1c71b9ff01dfca354a1a9f"
         armhf.url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v7.5.2/mattermost-v7.5.2-linux-arm.tar.gz"
         armhf.sha256 = "b26a4b676ee92ac848fa2993aa67559238ba7d8c1d0e6f7ffdd79ad8fb4942f3"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/9.3.0/mattermost-enterprise-9.3.0-linux-amd64.tar.gz"
-        amd64.sha256 = "2145f476b53f51c454c4f2631664ff080c46390928d2be142d3697750a023f3f"
-        arm64.url = "https://releases.mattermost.com/9.3.0/mattermost-enterprise-9.3.0-linux-arm64.tar.gz"
-        arm64.sha256 = "b2d1dab455228d60c4f29fd323f28a6387d8a87691388ae087f4487ef8b5086b"
+        amd64.url = "https://releases.mattermost.com/9.4.2/mattermost-enterprise-9.4.2-linux-amd64.tar.gz"
+        amd64.sha256 = "7bfd596a880a162aff351e447a5df97acf826405a9d98335a41ca574db6326e7"
+        arm64.url = "https://releases.mattermost.com/9.4.2/mattermost-enterprise-9.4.2-linux-arm64.tar.gz"
+        arm64.sha256 = "57e8cfcbf89ef56d27ed18f751db3ceeb1f18d62ab33694a67d7b86a9d3d1faf"
 
     [resources.system_user]
     allow_email = true
