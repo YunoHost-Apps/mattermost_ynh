@@ -7,7 +7,7 @@ description.fr = "Plateforme de collaboration open source conçue pour les déve
 
 version = "9.4.2~ynh1"
 
-maintainers = [ "pmorinerie" ]
+maintainers = ["pmorinerie"]
 
 [upstream]
 license = "GPL-3.0-only"
@@ -18,7 +18,7 @@ code = "https://github.com/mattermost/mattermost-server"
 
 [integration]
 yunohost = ">= 11.2"
-architectures = [ "amd64", "armhf", "arm64" ]
+architectures = ["amd64", "armhf", "arm64"]
 multi_instance = true
 
 ldap = false
@@ -39,7 +39,7 @@ ram.runtime = "50M"
 
     [install.init_main_permission]
     help.en = "If visitors selected, Mattermost will be accessible by users without a YunoHost account. This can be changed later via the webadmin."
-    help.fr = "Si « Visiteurs » est sélectionné, Mattermost sera accessible même par les utilisateurs n’ayant pas de compte YunoHost. Vous pourrez changer ce réglage plus tard dans l’interface d’administration."
+    help.fr = "Si « Visiteurs » est sélectionné, Mattermost sera accessible même par les utilisateurs n’ayant pas de compte YunoHost. Vous pourrez changer ce réglage plus tard dans l’interface d’administration."
     type = "group"
     default = "visitors"
 
@@ -55,14 +55,14 @@ ram.runtime = "50M"
     help.en = "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 and ARM64 support)"
     help.fr = "Utilisez Team Edition pour la version open-source (prise en charge ARM, ARM64 et x86-64) ou Édition Enterprise si vous souhaitez utiliser une licence (prise en charge x86-64 et ARM64)"
     type = "select"
-    choices = [ "Enterprise", "Team" ]
+    choices = ["Enterprise", "Team"]
     default = "Team"
 
     [install.language]
     ask.en = "Choose the language of the chat for the admin"
     ask.fr = "Choissisez la langue utilisée par le compte administrateur"
     type = "select"
-    choices = [ "de", "en", "es", "fr", "it", "pt" ]
+    choices = ["de", "en", "es", "fr", "it", "pt"]
     default = "en"
 
     [install.team_display_name]
@@ -89,20 +89,20 @@ ram.runtime = "50M"
         arm64.url = "https://releases.mattermost.com/9.4.2/mattermost-enterprise-9.4.2-linux-arm64.tar.gz"
         arm64.sha256 = "57e8cfcbf89ef56d27ed18f751db3ceeb1f18d62ab33694a67d7b86a9d3d1faf"
 
-[resources.system_user]
-allow_email = true
+    [resources.system_user]
+    allow_email = true
 
-[resources.install_dir]
+    [resources.install_dir]
 
-[resources.data_dir]
+    [resources.data_dir]
 
-[resources.ports]
+    [resources.ports]
 
-[resources.permissions]
-main.url = "/"
+    [resources.permissions]
+    main.url = "/"
 
-[resources.apt]
-packages = "postgresql, pgloader"
+    [resources.apt]
+    packages = "postgresql, pgloader"
 
-[resources.database]
-type = "postgresql"
+    [resources.database]
+    type = "postgresql"
