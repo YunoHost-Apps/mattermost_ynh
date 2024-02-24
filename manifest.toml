@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Open source collaboration platform built for developers"
 description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
 
-version = "9.4.2~ynh1"
+version = "9.4.2~ynh2"
 
 maintainers = ["pmorinerie"]
 
@@ -80,8 +80,8 @@ ram.runtime = "50M"
         amd64.sha256 = "61627ab1fb5f987756edf8b4f5c07f9e6d4937c62f27babea0532e5a1fa41ce7"
         arm64.url = "https://releases.mattermost.com/9.4.2/mattermost-team-9.4.2-linux-arm64.tar.gz"
         arm64.sha256 = "f6801a236c573595ac56fed97e636de72789f98e0b1c71b9ff01dfca354a1a9f"
-        armhf.url = "https://github.com/SmartHoneybee/ubiquitous-memory/releases/download/v7.5.2/mattermost-v7.5.2-linux-arm.tar.gz"
-        armhf.sha256 = "b26a4b676ee92ac848fa2993aa67559238ba7d8c1d0e6f7ffdd79ad8fb4942f3"
+        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v9.4.2/mattermost-v9.4.2-linux-arm.tar.gz"
+        armhf.sha256 = "d2e3e52b1555eefd3f3b15cf3a322508d944a64a1bda9d101798988e4033212e"
 
         [resources.sources.enterprise]
         amd64.url = "https://releases.mattermost.com/9.4.2/mattermost-enterprise-9.4.2-linux-amd64.tar.gz"
