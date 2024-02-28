@@ -24,6 +24,7 @@
     "EnableIncomingWebhooks": true,
     "EnableOutgoingWebhooks": true,
     "EnableCommands": true,
+    "OutgoingIntegrationRequestsTimeout": 30,
     "EnablePostUsernameOverride": false,
     "EnablePostIconOverride": false,
     "GoogleDeveloperKey": "",
@@ -108,7 +109,8 @@
     "SelfHostedPurchase": true,
     "AllowSyncedDrafts": true,
     "UniqueEmojiReactionLimitPerPost": 50,
-    "RefreshPostStatsRunTime": "00:00"
+    "RefreshPostStatsRunTime": "00:00",
+    "MaximumPayloadSizeBytes": 100000
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -538,7 +540,9 @@
     "EnableFileDeletion": false,
     "EnableBoardsDeletion": false,
     "MessageRetentionDays": 365,
+    "MessageRetentionHours": 0,
     "FileRetentionDays": 365,
+    "FileRetentionHours": 0,
     "BoardsRetentionDays": 365,
     "DeletionJobStartTime": "02:00",
     "BatchSize": 3000,
@@ -632,10 +636,12 @@
     "DeprecateCloudFree": false,
     "CloudReverseTrial": false,
     "EnableExportDirectDownload": false,
+    "MoveThreadsEnabled": false,
     "StreamlinedMarketplace": true,
     "CloudIPFiltering": false,
     "ConsumePostHook": false,
-    "CloudAnnualRenewals": false
+    "CloudAnnualRenewals": false,
+    "OutgoingOAuthConnections": false
   },
   "ImportSettings": {
     "Directory": "./import",
@@ -644,5 +650,14 @@
   "ExportSettings": {
     "Directory": "./export",
     "RetentionDays": 30
+  },
+  "WranglerSettings": {
+    "PermittedWranglerRoles": [],
+    "AllowedEmailDomain": [],
+    "MoveThreadMaxCount": 100,
+    "MoveThreadToAnotherTeamEnable": false,
+    "MoveThreadFromPrivateChannelEnable": false,
+    "MoveThreadFromDirectMessageChannelEnable": false,
+    "MoveThreadFromGroupMessageChannelEnable": false
   }
 }
