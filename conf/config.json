@@ -23,6 +23,7 @@
     "EnableOAuthServiceProvider": false,
     "EnableIncomingWebhooks": true,
     "EnableOutgoingWebhooks": true,
+    "EnableOutgoingOAuthConnections": false,
     "EnableCommands": true,
     "OutgoingIntegrationRequestsTimeout": 30,
     "EnablePostUsernameOverride": false,
@@ -640,8 +641,7 @@
     "StreamlinedMarketplace": true,
     "CloudIPFiltering": false,
     "ConsumePostHook": false,
-    "CloudAnnualRenewals": false,
-    "OutgoingOAuthConnections": false
+    "CloudAnnualRenewals": false
   },
   "ImportSettings": {
     "Directory": "./import",
