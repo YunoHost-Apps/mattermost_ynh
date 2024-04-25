@@ -621,7 +621,8 @@
   "CloudSettings": {
     "CWSURL": "https://portal.test.cloud.mattermost.com",
     "CWSAPIURL": "https://api.internal.test.cloud.mattermost.com",
-    "CWSMock": false
+    "CWSMock": false,
+    "Disable": false
   },
   "FeatureFlags": {
     "TestFeature": "off",
@@ -641,7 +642,9 @@
     "StreamlinedMarketplace": true,
     "CloudIPFiltering": false,
     "ConsumePostHook": false,
-    "CloudAnnualRenewals": false
+    "CloudAnnualRenewals": false,
+    "CloudDedicatedExportUI": false,
+    "WebSocketEventScope": false
   },
   "ImportSettings": {
     "Directory": "./import",
