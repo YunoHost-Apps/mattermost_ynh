@@ -3,7 +3,7 @@
 请勿手动编辑。
 -->
 
-# YunoHost 的 Mattermost
+# YunoHost 上的 Mattermost
 
 [![集成程度](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![工作状态](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
 
