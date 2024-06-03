@@ -234,6 +234,7 @@
     "AmazonS3SSE": false,
     "AmazonS3Trace": false,
     "AmazonS3RequestTimeoutMilliseconds": 30000,
+    "AmazonS3UploadPartSizeBytes": 5242880,
     "DedicatedExportStore": false,
     "ExportDriverName": "local",
     "ExportDirectory": "./data/",
@@ -248,7 +249,8 @@
     "ExportAmazonS3SSE": false,
     "ExportAmazonS3Trace": false,
     "ExportAmazonS3RequestTimeoutMilliseconds": 30000,
-    "ExportAmazonS3PresignExpiresSeconds": 21600
+    "ExportAmazonS3PresignExpiresSeconds": 21600,
+    "ExportAmazonS3UploadPartSizeBytes": 104857600
   },
   "EmailSettings": {
     "EnableSignUpWithEmail": true,
@@ -476,11 +478,7 @@
     "EnableGossipCompression": true,
     "EnableExperimentalGossipEncryption": false,
     "ReadOnlyConfig": true,
-    "GossipPort": 8074,
-    "StreamingPort": 8075,
-    "MaxIdleConns": 100,
-    "MaxIdleConnsPerHost": 128,
-    "IdleConnTimeoutMilliseconds": 90000
+    "GossipPort": 8074
   },
   "MetricsSettings": {
     "Enable": false,
@@ -492,7 +490,6 @@
     "ClientSideCertCheck": "secondary",
     "LinkMetadataTimeoutMilliseconds": 5000,
     "RestrictSystemAdmin": false,
-    "UseNewSAMLLibrary": false,
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false,
     "DisableAppBar": false,
@@ -644,7 +641,9 @@
     "ConsumePostHook": false,
     "CloudAnnualRenewals": false,
     "CloudDedicatedExportUI": false,
-    "WebSocketEventScope": false
+    "ChannelBookmarks": false,
+    "WebSocketEventScope": false,
+    "NotificationMonitoring": true
   },
   "ImportSettings": {
     "Directory": "./import",
