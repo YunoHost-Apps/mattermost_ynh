@@ -18,6 +18,7 @@ code = "https://github.com/mattermost/mattermost-server"
 
 [integration]
 yunohost = ">= 11.2"
+helpers_version = "2.1"
 architectures = ["amd64", "armhf", "arm64"]
 multi_instance = true
 
