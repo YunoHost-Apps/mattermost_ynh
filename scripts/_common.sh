@@ -38,9 +38,9 @@ mariadb-to-pg() {
         popd
 
         # Some fixes to let the MariaDB -> PostgreSQL conversion working
-        ynh_psql_db_shell <<< "'DROP INDEX public.idx_fileinfo_content_txt;'
+        ynh_psql_db_shell <<< 'DROP INDEX public.idx_fileinfo_content_txt;'
 
-        ynh_psql_db_shell <<< "'DROP INDEX public.idx_posts_message_txt;'
+        ynh_psql_db_shell <<< 'DROP INDEX public.idx_posts_message_txt;'
 
         ynh_mysql_db_shell <<< "ALTER TABLE mattermost.Users DROP COLUMN IF EXISTS acceptedtermsofserviceid;"
 
@@ -81,15 +81,15 @@ EOT
         pgloader $tmpdir/commands.load
 
         # Rebuild INDEX
-        ynh_psql_db_shell <<< "'CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))'
+        ynh_psql_db_shell <<< 'CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))'
 
-        ynh_psql_db_shell <<< "'CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));'
+        ynh_psql_db_shell <<< 'CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));'
 
         if ynh_compare_current_package_version --comparison eq --version 7.3.0~ynh1
         then
             # There is a problem with version 7.3.0 and the database migration.
             # More information here: https://forum.mattermost.com/t/migrating-from-mariadb-to-postgresql-db/14194/6
-            ynh_psql_db_shell <<< ""DELETE FROM db_migrations WHERE version=92;"
+            ynh_psql_db_shell <<< "DELETE FROM db_migrations WHERE version=92;"
 
         fi
 
