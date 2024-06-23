@@ -77,7 +77,7 @@ ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team create --name "$
 ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
 
 # Disable mmctl passwordless access
-ynh_replace '"EnableLocalMode": true' '"EnableLocalMode": false' "$install_dir/config/config.json"
+ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": false' --file="$install_dir/config/config.json"
 ynh_systemctl --service=$app --action=restart --log_path=systemd --wait_until="Started Mattermost"
 
 #=================================================
