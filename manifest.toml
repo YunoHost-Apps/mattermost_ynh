@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Open source collaboration platform built for developers"
 description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
 
-version = "9.8.1~ynh1"
+version = "9.9.0~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -76,18 +76,18 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.main]
-        amd64.url = "https://releases.mattermost.com/9.8.1/mattermost-team-9.8.1-linux-amd64.tar.gz"
-        amd64.sha256 = "02097cd7aff6cf55575b54f74f168cfb07b9335bb3079e50419166df312daf53"
-        arm64.url = "https://releases.mattermost.com/9.8.1/mattermost-team-9.8.1-linux-arm64.tar.gz"
-        arm64.sha256 = "210d29abbdbd3946bd541cb678fb3e11ac404fc301caadee730de23eb62d5115"
-        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v9.8.1/mattermost-v9.8.1-linux-arm.tar.gz"
-        armhf.sha256 = "692ee44e352fde7f3a6412066a441c9436b693d25b990a0d3af552c6a158c148"
+        amd64.url = "https://releases.mattermost.com/9.9.0/mattermost-team-9.9.0-linux-amd64.tar.gz"
+        amd64.sha256 = "83e982f193f3f81cd276fa78c6786b407a671b15f9f0cb927cc44883f231dbdf"
+        arm64.url = "https://releases.mattermost.com/9.9.0/mattermost-team-9.9.0-linux-arm64.tar.gz"
+        arm64.sha256 = "f3afb214fd6ae1e1c7895d6c10d88812286e3851fc7da8a5ee995cb5843fa222"
+        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v9.9.0/mattermost-v9.9.0-linux-arm.tar.gz"
+        armhf.sha256 = "612b2a0bca1b1755291d5723dcf617be6d0848474b58727151d8cbf2d5431826"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/9.8.1/mattermost-enterprise-9.8.1-linux-amd64.tar.gz"
-        amd64.sha256 = "b8b09673a731eb6cda52688383e0a5c5148453a7972a75322db522f3daee5248"
-        arm64.url = "https://releases.mattermost.com/9.8.1/mattermost-enterprise-9.8.1-linux-arm64.tar.gz"
-        arm64.sha256 = "d51a60f1fca305bec466bee6de565ffba91e778354818142ddd63cec521516f2"
+        amd64.url = "https://releases.mattermost.com/9.9.0/mattermost-enterprise-9.9.0-linux-amd64.tar.gz"
+        amd64.sha256 = "8808ddaa46476924d2087b39a45e287b3120e41a124a63618aaa7ffce5b69d3b"
+        arm64.url = "https://releases.mattermost.com/9.9.0/mattermost-enterprise-9.9.0-linux-arm64.tar.gz"
+        arm64.sha256 = "a1e516e5f2fcaffa8ff19f70a71c1f735642f5dc0cb066e7142e50d4943081d8"
 
     [resources.system_user]
     allow_email = true
