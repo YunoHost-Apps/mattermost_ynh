@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # Mattermost YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
 
 [![Instalatu Mattermost YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
