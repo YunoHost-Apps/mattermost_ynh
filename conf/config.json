@@ -43,7 +43,7 @@
     "EnableMultifactorAuthentication": false,
     "EnforceMultifactorAuthentication": false,
     "EnableUserAccessTokens": false,
-    "AllowCorsFrom": "",
+    "AllowCorsFrom": "__DOMAIN__",
     "CorsExposedHeaders": "",
     "CorsAllowCredentials": false,
     "CorsDebug": false,
