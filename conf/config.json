@@ -496,7 +496,8 @@
     "DisableAppBar": false,
     "DisableRefetchingOnBrowserFocus": false,
     "DelayChannelAutocomplete": false,
-    "DisableWakeUpReconnectHandler": false
+    "DisableWakeUpReconnectHandler": false,
+    "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -645,8 +646,7 @@
     "ChannelBookmarks": false,
     "WebSocketEventScope": false,
     "NotificationMonitoring": true,
-    "ExperimentalAuditSettingsSystemConsoleUI": false,
-    "ClientMetrics": false
+    "ExperimentalAuditSettingsSystemConsoleUI": false
   },
   "ImportSettings": {
     "Directory": "./import",
