@@ -43,7 +43,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Versi terkirim:** 9.10.0~ynh1
+**Versi terkirim:** 9.11.0~ynh1
 
 ## Tangkapan Layar
 
@@ -54,7 +54,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Website aplikasi resmi: <http://www.mattermost.org/>
 - Dokumentasi pengguna resmi: <https://docs.mattermost.com/guides/messaging.html>
 - Dokumentasi admin resmi: <https://docs.mattermost.com/guides/deployment.html>
-- Repositori kode aplikasi hulu: <https://github.com/mattermost/mattermost-server>
+- Depot kode aplikasi hulu: <https://github.com/mattermost/mattermost-server>
 - Gudang YunoHost: <https://apps.yunohost.org/app/mattermost>
 - Laporkan bug: <https://github.com/YunoHost-Apps/mattermost_ynh/issues>
 
