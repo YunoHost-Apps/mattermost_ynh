@@ -49,6 +49,7 @@
     "CorsDebug": false,
     "AllowCookiesForSubdomains": false,
     "ExtendSessionLengthWithActivity": true,
+    "TerminateSessionsOnPasswordChange": true,
     "SessionLengthWebInDays": 30,
     "SessionLengthWebInHours": 720,
     "SessionLengthMobileInDays": 30,
@@ -504,6 +505,7 @@
   },
   "ElasticsearchSettings": {
     "ConnectionURL": "http://localhost:9200",
+    "Backend": "elasticsearch",
     "Username": "elastic",
     "Password": "changeme",
     "EnableIndexing": false,
