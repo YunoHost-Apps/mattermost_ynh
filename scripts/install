@@ -1,18 +1,12 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=3
+ynh_script_progression "Setting up source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src
 
@@ -24,52 +18,51 @@ elif [ "$version" = "Team" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="main"
 fi
 
-chown -R $app:www-data "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 #=================================================
 # EDIT MATTERMOST CONFIG
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Modifying a config file..." --weight=3
+ynh_script_progression "Updating configuration..."
 
 smtp_user_pwd=$(ynh_string_random --length=24)
 url=https://$domain$path
 
-ynh_add_config --template="config.json" --destination="$install_dir/config/config.json"
+ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
 
 #=================================================
 # SYSTEM CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding system configurations related to $app..." --weight=1
+ynh_script_progression "Adding system configurations related to $app..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 # Create a dedicated systemd config
-ynh_add_systemd_config
+ynh_config_add_systemd
 
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
 
 # Create log directory
 mkdir -p /var/log/$app
-chown $app -R "/var/log/$app"
+#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app -R "/var/log/$app"
 
 # Setup logrotate
-ynh_use_logrotate
+ynh_config_add_logrotate
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=2
+ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
+ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started Mattermost"
 
 #=================================================
 # CREATE ADMIN AND FIRST TEAM
 #=================================================
-ynh_script_progression --message="Create the first administrator and team..." --weight=1
+ynh_script_progression "Create the first administrator and team..."
 
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
 bin_mmctl="$install_dir/bin/mmctl"
@@ -78,16 +71,17 @@ email=$(ynh_user_get_info --username=$admin --key=mail)
 export MMCTL_LOCAL=true
 export MMCTL_LOCAL_SOCKET_PATH="/var/run/${app}/mattermost_local.socket"
 
-ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
-ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
-ynh_exec_warn_less sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
+ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
 
 # Disable mmctl passwordless access
-ynh_replace_string '"EnableLocalMode": true' '"EnableLocalMode": false' "$install_dir/config/config.json"
-ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match="Started Mattermost"
+# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
+ynh_replace '"EnableLocalMode": true' '"EnableLocalMode": false' "$install_dir/config/config.json"
+ynh_systemctl --service=$app --action=restart --log_path=systemd --wait_until="Started Mattermost"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
