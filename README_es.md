@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Mattermost para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/mattermost.svg)](https://dash.yunohost.org/appci/app/mattermost) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
 
 [![Instalar Mattermost con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
