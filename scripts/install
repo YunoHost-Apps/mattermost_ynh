@@ -8,8 +8,6 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-# Download, check integrity, uncompress and patch the source from app.src
-
 if [ "$version" = "Enterprise" ]; then
   # Get Enterprise binary path
   ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
@@ -20,8 +18,6 @@ fi
 
 chown -R $app:www-data "$install_dir"
 
-#=================================================
-# EDIT MATTERMOST CONFIG
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================

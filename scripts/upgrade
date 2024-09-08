@@ -7,19 +7,9 @@ source /usr/share/yunohost/helpers
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 
-# Save the language used if not present
-# FIXME: maybe replace with: ynh_app_setting_set_default --key=language --value="en"
-if [ -z "${language:-}" ]; then
-  language="en"
-  ynh_app_setting_set --key=language --value=$language
-fi
+ynh_app_setting_set_default --key=language --value="en"
 
-# If version setting doesn't exist
-# FIXME: maybe replace with: ynh_app_setting_set_default --key=version --value="Team"
-if [ -z "${version:-}" ]; then
-  version="Team"
-  ynh_app_setting_set --key=version --value=$version
-fi
+ynh_app_setting_set_default --key=version --value="Team"
 
 #=================================================
 # MIGRATING DATABASE
