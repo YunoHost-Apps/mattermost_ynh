@@ -18,9 +18,6 @@ elif [ "$version" = "Team" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="main"
 fi
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
-#=================================================
-# EDIT MATTERMOST CONFIG
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
@@ -36,17 +33,15 @@ ynh_config_add --template="config.json" --destination="$install_dir/config/confi
 #=================================================
 ynh_script_progression "Adding system configurations related to $app..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
 
-# Create a dedicated systemd config
 ynh_config_add_systemd
 
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
 
 # Create log directory
 mkdir -p /var/log/$app
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app -R "/var/log/$app"
+chown $app -R "/var/log/$app"
 
 # Setup logrotate
 ynh_config_add_logrotate
@@ -56,7 +51,6 @@ ynh_config_add_logrotate
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started Mattermost"
 
 #=================================================
@@ -76,8 +70,7 @@ ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team create --name "$
 ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
 
 # Disable mmctl passwordless access
-# FIXMEhelpers2.1: ynh_replace used with positional args. Please add the keywords: --match=, --replace=, --file=
-ynh_replace '"EnableLocalMode": true' '"EnableLocalMode": false' "$install_dir/config/config.json"
+ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": false' --file="$install_dir/config/config.json"
 ynh_systemctl --service=$app --action=restart --log_path=systemd --wait_until="Started Mattermost"
 
 #=================================================

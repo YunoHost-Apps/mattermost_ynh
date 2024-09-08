@@ -10,7 +10,6 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:www-data "$install_dir"
 #=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
@@ -23,13 +22,11 @@ chown -R $app:www-data "$data_dir"
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
-# RESTORE THE PHP-FPM CONFIGURATION
-#=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
-ynh_psql_db_shell  < "./db.sql""
+ynh_psql_db_shell  < "./db.sql"
 
 logs_path="/var/log/$app"
 mkdir -p $logs_path
@@ -47,7 +44,6 @@ ynh_restore "/etc/logrotate.d/$app"
 #=================================================
 ynh_script_progression "Reloading NGINX web server and $app's service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started Mattermost"
 
 ynh_systemctl --service=nginx --action=reload
