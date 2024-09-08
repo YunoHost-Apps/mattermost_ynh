@@ -49,6 +49,7 @@
     "CorsDebug": false,
     "AllowCookiesForSubdomains": false,
     "ExtendSessionLengthWithActivity": true,
+    "TerminateSessionsOnPasswordChange": true,
     "SessionLengthWebInDays": 30,
     "SessionLengthWebInHours": 720,
     "SessionLengthMobileInDays": 30,
@@ -107,7 +108,6 @@
     "CollapsedThreads": "disabled",
     "ManagedResourcePaths": "",
     "EnableCustomGroups": true,
-    "SelfHostedPurchase": true,
     "AllowSyncedDrafts": true,
     "UniqueEmojiReactionLimitPerPost": 50,
     "RefreshPostStatsRunTime": "00:00",
@@ -483,7 +483,9 @@
   "MetricsSettings": {
     "Enable": false,
     "BlockProfileRate": 0,
-    "ListenAddress": ":8067"
+    "ListenAddress": ":8067",
+    "EnableClientMetrics": true,
+    "EnableNotificationMetrics": true
   },
   "ExperimentalSettings": {
     "ClientSideCertEnable": false,
@@ -494,13 +496,16 @@
     "EnableRemoteClusterService": false,
     "DisableAppBar": false,
     "DisableRefetchingOnBrowserFocus": false,
-    "DelayChannelAutocomplete": false
+    "DelayChannelAutocomplete": false,
+    "DisableWakeUpReconnectHandler": false,
+    "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
   },
   "ElasticsearchSettings": {
     "ConnectionURL": "http://localhost:9200",
+    "Backend": "elasticsearch",
     "Username": "elastic",
     "Password": "changeme",
     "EnableIndexing": false,
@@ -629,7 +634,6 @@
     "PermalinkPreviews": false,
     "CallsEnabled": true,
     "NormalizeLdapDNs": false,
-    "PostPriority": false,
     "WysiwygEditor": false,
     "OnboardingTourTips": true,
     "DeprecateCloudFree": false,
@@ -643,7 +647,8 @@
     "CloudDedicatedExportUI": false,
     "ChannelBookmarks": false,
     "WebSocketEventScope": false,
-    "NotificationMonitoring": true
+    "NotificationMonitoring": true,
+    "ExperimentalAuditSettingsSystemConsoleUI": false
   },
   "ImportSettings": {
     "Directory": "./import",
