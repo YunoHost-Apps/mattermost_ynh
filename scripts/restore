@@ -30,7 +30,7 @@ ynh_script_progression "Restoring system configurations related to $app..."
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
-ynh_psql_db_shell  < "./db.sql""
+ynh_psql_db_shell  < "./db.sql"
 
 logs_path="/var/log/$app"
 mkdir -p $logs_path
