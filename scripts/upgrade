@@ -68,15 +68,12 @@ chown -R $app:www-data "$install_dir"
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
 
-# Create a dedicated systemd config
 ynh_config_add_systemd
 
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
 
-# Use logrotate to manage app-specific logfile(s)
 ynh_config_add_logrotate
 
 #=================================================
@@ -110,7 +107,6 @@ fi
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started Mattermost"
 
 #=================================================

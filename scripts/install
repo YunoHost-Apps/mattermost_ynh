@@ -33,19 +33,15 @@ ynh_config_add --template="config.json" --destination="$install_dir/config/confi
 #=================================================
 ynh_script_progression "Adding system configurations related to $app..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
 
-# Create a dedicated systemd config
 ynh_config_add_systemd
 
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
 
-# Create log directory
 mkdir -p /var/log/$app
 chown $app -R "/var/log/$app"
 
-# Setup logrotate
 ynh_config_add_logrotate
 
 #=================================================
@@ -53,7 +49,6 @@ ynh_config_add_logrotate
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started Mattermost"
 
 #=================================================
