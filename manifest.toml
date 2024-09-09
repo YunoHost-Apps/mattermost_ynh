@@ -94,7 +94,8 @@ ram.runtime = "50M"
     allow_email = true
 
     [resources.install_dir]
-
+    group = "www-data:r-x"
+    
     [resources.data_dir]
     
     [resources.ports]
