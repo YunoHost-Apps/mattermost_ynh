@@ -36,8 +36,6 @@ ynh_systemctl --service=$app --action=stop --log_path=systemd
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_script_progression "Upgrading source files..."
-
 if [ "$version" = "Enterprise" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise" --full_replace --keep = "config/config.json plugins"
 elif [ "$version" = "Team" ]; then
