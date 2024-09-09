@@ -2,8 +2,8 @@ packaging_format = 2
 
 id = "mattermost"
 name = "Mattermost"
-description.en = "Open source collaboration platform built for developers"
-description.fr = "Plateforme de collaboration open source conçue pour les développeurs"
+description.en = "Collaboration platform built for developers"
+description.fr = "Plateforme de collaboration conçue pour les développeurs"
 
 version = "9.11.1~ynh1"
 

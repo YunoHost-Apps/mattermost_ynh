@@ -49,7 +49,7 @@ ynh_restore "/etc/logrotate.d/$app"
 ynh_script_progression "Reloading NGINX web server and $app's service..."
 
 # Start a systemd service
-ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started Mattermost"
+ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started mattermost"
 
 ynh_systemctl --service=nginx --action=reload
 
