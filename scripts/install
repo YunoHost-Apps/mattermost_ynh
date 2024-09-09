@@ -49,7 +49,7 @@ ynh_config_add_logrotate
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started Mattermost"
+ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started mattermost"
 
 #=================================================
 # CREATE ADMIN AND FIRST TEAM
