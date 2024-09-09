@@ -49,7 +49,7 @@ mariadb-to-pg() {
         ynh_mysql_db_shell <<< "ALTER TABLE mattermost.SharedChannelRemotes DROP COLUMN IF EXISTS nextsyncat;"
 
         # Focalboard is broken in Mattermost 7.3.0
-        if ynh_compare_current_package_version --comparison eq --version 7.3.0~ynh1
+        if ynh_app_upstream_version --comparison eq --version 7.3.0~ynh1
         then
             remove_focalboard_if_7_3_0="EXCLUDING TABLE NAMES MATCHING ~/^focalboard_/"
         else
@@ -85,7 +85,7 @@ EOT
 
         ynh_psql_db_shell <<< 'CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));'
 
-        if ynh_compare_current_package_version --comparison eq --version 7.3.0~ynh1
+        if ynh_app_upstream_version --comparison eq --version 7.3.0~ynh1
         then
             # There is a problem with version 7.3.0 and the database migration.
             # More information here: https://forum.mattermost.com/t/migrating-from-mariadb-to-postgresql-db/14194/6
