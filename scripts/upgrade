@@ -44,7 +44,7 @@ cp -a "$install_dir/config/config.json" "$tmpdir/config.json"
 cp -ar "$install_dir/plugins" "$tmpdir/plugins"
 
 # Remove the app directory securely
-ynh_secure_remove --file="$install_dir"
+ynh_safe_rm --file="$install_dir"
 
 if [ "$version" = "Enterprise" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
