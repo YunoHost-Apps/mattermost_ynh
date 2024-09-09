@@ -57,7 +57,7 @@ cp -a "$tmpdir/config.json" "$install_dir/config/config.json"
 cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
 
 # Remove the tmp directory securely
-ynh_secure_remove --file="$tmpdir"
+ynh_safe_rm --file="$tmpdir"
 
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
