@@ -43,7 +43,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Versión actual:** 9.11.0~ynh1
+**Versión actual:** 9.11.1~ynh1
 
 ## Capturas
 
