@@ -35,9 +35,6 @@ ynh_remove_nginx_config
 # Remove a cron file
 ynh_secure_remove --file="/etc/cron.d/$app"
 
-# Remove the log file
-ynh_secure_remove --file="/var/log/$app"
-
 # If the user attempted to upgrade from an older MariaDB-based version, but the upgrade failed,
 # the 'remove' action will automatically remove the PostgreSQL database – but doesn't know
 # that a MariaDB database is still lying around.

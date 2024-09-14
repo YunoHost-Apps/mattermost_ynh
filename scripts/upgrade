@@ -10,19 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=2
-
-email=$(ynh_user_get_info --username=$admin --key=mail)
-
-#=================================================
-# CHECK VERSION
-#=================================================
-
-upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 
@@ -63,34 +50,30 @@ ynh_systemd_action --service_name=$app --action=stop --log_path=systemd
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression --message="Upgrading source files..." --weight=2
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-  ynh_script_progression --message="Upgrading source files..." --weight=2
+# Create a temporary directory
+tmpdir="$(mktemp -d)"
 
-  # Create a temporary directory
-  tmpdir="$(mktemp -d)"
+# Backup the config file and local plugins in the temp dir
+cp -a "$install_dir/config/config.json" "$tmpdir/config.json"
+cp -ar "$install_dir/plugins" "$tmpdir/plugins"
 
-  # Backup the config file and local plugins in the temp dir
-  cp -a "$install_dir/config/config.json" "$tmpdir/config.json"
-  cp -ar "$install_dir/plugins" "$tmpdir/plugins"
+# Remove the app directory securely
+ynh_secure_remove --file="$install_dir"
 
-  # Remove the app directory securely
-  ynh_secure_remove --file="$install_dir"
-
-  if [ "$version" = "Enterprise" ]; then
-    ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
-  elif [ "$version" = "Team" ]; then
-    ynh_setup_source --dest_dir="$install_dir" --source_id="main"
-  fi
-
-  # Copy the admin saved settings and plugins from tmp directory to final path
-  cp -a "$tmpdir/config.json" "$install_dir/config/config.json" 
-  cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
-
-  # Remove the tmp directory securely
-  ynh_secure_remove --file="$tmpdir"
+if [ "$version" = "Enterprise" ]; then
+  ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
+elif [ "$version" = "Team" ]; then
+  ynh_setup_source --dest_dir="$install_dir" --source_id="main"
 fi
+
+# Copy the admin saved settings and plugins from tmp directory to final path
+cp -a "$tmpdir/config.json" "$install_dir/config/config.json" 
+cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
+
+# Remove the tmp directory securely
+ynh_secure_remove --file="$tmpdir"
 
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
