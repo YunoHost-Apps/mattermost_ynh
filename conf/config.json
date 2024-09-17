@@ -75,7 +75,6 @@
     "EnableUserStatuses": true,
     "ExperimentalEnableAuthenticationTransfer": true,
     "ClusterLogTimeoutMilliseconds": 2000,
-    "EnablePreviewFeatures": true,
     "EnableTutorial": true,
     "EnableOnboardingFlow": true,
     "ExperimentalEnableDefaultChannelLeaveJoinMessages": true,
@@ -111,7 +110,8 @@
     "AllowSyncedDrafts": true,
     "UniqueEmojiReactionLimitPerPost": 50,
     "RefreshPostStatsRunTime": "00:00",
-    "MaximumPayloadSizeBytes": 100000
+    "MaximumPayloadSizeBytes": 300000,
+    "MaximumURLLength": 2048
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -175,7 +175,6 @@
     "VerboseDiagnostics": false,
     "EnableSentry": true,
     "AdvancedLoggingJSON": {},
-    "AdvancedLoggingConfig": "",
     "MaxFieldSize": 2048
   },
   "ExperimentalAuditSettings": {
@@ -186,8 +185,7 @@
     "FileMaxBackups": 0,
     "FileCompress": false,
     "FileMaxQueueSize": 1000,
-    "AdvancedLoggingJSON": {},
-    "AdvancedLoggingConfig": ""
+    "AdvancedLoggingJSON": {}
   },
   "NotificationLogSettings": {
     "EnableConsole": false,
@@ -198,8 +196,7 @@
     "FileLevel": "INFO",
     "FileJson": true,
     "FileLocation": "/var/log/__APP__",
-    "AdvancedLoggingJSON": {},
-    "AdvancedLoggingConfig": ""
+    "AdvancedLoggingJSON": {}
   },
   "PasswordSettings": {
     "MinimumLength": 8,
@@ -580,7 +577,6 @@
     "CleanupJobsThresholdDays": -1,
     "CleanupConfigThresholdDays": -1
   },
-  "ProductSettings": {},
   "PluginSettings": {
     "Enable": true,
     "EnableUploads": false,
@@ -637,12 +633,10 @@
     "EnableRemoteClusterService": false,
     "AppsEnabled": false,
     "PermalinkPreviews": false,
-    "CallsEnabled": true,
     "NormalizeLdapDNs": false,
     "WysiwygEditor": false,
     "OnboardingTourTips": true,
     "DeprecateCloudFree": false,
-    "CloudReverseTrial": false,
     "EnableExportDirectDownload": false,
     "MoveThreadsEnabled": false,
     "StreamlinedMarketplace": true,
