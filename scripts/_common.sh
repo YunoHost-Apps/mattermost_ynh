@@ -92,5 +92,5 @@ EOT
         fi
 
         # Remove the MariaDB database
-        ynh_mysql_drop_db $db_name
+        ynh_mysql_remove_db --db_user=$mysql_db_user --db_name=$db_name
 }
