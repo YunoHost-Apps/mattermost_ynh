@@ -63,9 +63,9 @@ email=$(ynh_user_get_info --username=$admin --key=mail)
 export MMCTL_LOCAL=true
 export MMCTL_LOCAL_SOCKET_PATH="/var/run/${app}/mattermost_local.socket"
 
-ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
-ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
-ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
+ynh_hide_warnings ynh_exec_as_app --preserve-env "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+ynh_hide_warnings ynh_exec_as_app --preserve-env "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+ynh_hide_warnings ynh_exec_as_app --preserve-env "$bin_mmctl" team users add "$team_name" "$admin"
 
 # Disable mmctl passwordless access
 ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": false' --file="$install_dir/config/config.json"
