@@ -10,8 +10,6 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
-chown -R $app:www-data "$install_dir"
-
 #=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
@@ -20,13 +18,18 @@ ynh_script_progression "Restoring the data directory..."
 ynh_restore "$data_dir"
 
 #=================================================
+# RESTORE THE DATABASE
+#=================================================
+ynh_script_progression "Restoring the database..."
+
+ynh_psql_db_shell < ./db.sql
+
+#=================================================
 # RESTORE SYSTEM CONFIGURATIONS
 #=================================================
 ynh_script_progression "Restoring system configurations related to $app..."
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
-
-ynh_psql_db_shell  < "./db.sql"
 
 logs_path="/var/log/$app"
 mkdir -p $logs_path
