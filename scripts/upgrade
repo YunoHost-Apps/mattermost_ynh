@@ -62,13 +62,6 @@ ynh_safe_rm --file="$tmpdir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 
-
-#if [ "$version" = "Enterprise" ]; then
-#  ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise" --full_replace --keep = "config/config.json plugins"
-#elif [ "$version" = "Team" ]; then
-#  ynh_setup_source --dest_dir="$install_dir" --source_id="main" --full_replace --keep = "config/config.json plugins"
-#fi
-
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
@@ -113,7 +106,7 @@ fi
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start --log_path=systemd --wait_until="Started mattermost"
+ynh_systemctl --service=$app --action=start --log_path=systemd #--wait_until="Started mattermost"
 
 #=================================================
 # END OF SCRIPT

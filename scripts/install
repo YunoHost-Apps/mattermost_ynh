@@ -9,10 +9,8 @@ source /usr/share/yunohost/helpers
 ynh_script_progression "Setting up source files..."
 
 if [ "$version" = "Enterprise" ]; then
-  # Get Enterprise binary path
   ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
 elif [ "$version" = "Team" ]; then
-  # Get Team binary path
   ynh_setup_source --dest_dir="$install_dir" --source_id="main"
 fi
 
