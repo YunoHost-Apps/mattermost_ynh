@@ -16,8 +16,6 @@ elif [ "$version" = "Team" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="main"
 fi
 
-chown -R $app:www-data "$install_dir"
-
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
