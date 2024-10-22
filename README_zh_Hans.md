@@ -30,7 +30,7 @@ This package can install the [*Entreprise Edition*](https://docs.mattermost.com/
 
 Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/download/)
 
-## Features include:
+### Features
 
 - One-to-one and group messaging, file sharing, and unlimited search history
 - Threaded messaging, emoji, and custom emoji
