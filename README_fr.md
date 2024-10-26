@@ -29,7 +29,7 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) ou la version [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
 
 
-## Les fonctionnalités incluent :
+### Les fonctionnalités
 
 - Messagerie individuelle et de groupe, partage de fichiers et historique de recherche illimité
 - Messagerie, emoji et emoji personnalisés
@@ -42,7 +42,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 - Données de profilage d'exécution et rapports de surveillance du système
 
 
-**Version incluse :** 9.11.0~ynh1
+**Version incluse :** 10.1.1~ynh1
 
 ## Captures d’écran
 

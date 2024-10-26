@@ -75,7 +75,6 @@
     "EnableUserStatuses": true,
     "ExperimentalEnableAuthenticationTransfer": true,
     "ClusterLogTimeoutMilliseconds": 2000,
-    "EnablePreviewFeatures": true,
     "EnableTutorial": true,
     "EnableOnboardingFlow": true,
     "ExperimentalEnableDefaultChannelLeaveJoinMessages": true,
@@ -111,7 +110,8 @@
     "AllowSyncedDrafts": true,
     "UniqueEmojiReactionLimitPerPost": 50,
     "RefreshPostStatsRunTime": "00:00",
-    "MaximumPayloadSizeBytes": 100000
+    "MaximumPayloadSizeBytes": 300000,
+    "MaximumURLLength": 2048
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -175,7 +175,6 @@
     "VerboseDiagnostics": false,
     "EnableSentry": true,
     "AdvancedLoggingJSON": {},
-    "AdvancedLoggingConfig": "",
     "MaxFieldSize": 2048
   },
   "ExperimentalAuditSettings": {
@@ -186,8 +185,7 @@
     "FileMaxBackups": 0,
     "FileCompress": false,
     "FileMaxQueueSize": 1000,
-    "AdvancedLoggingJSON": {},
-    "AdvancedLoggingConfig": ""
+    "AdvancedLoggingJSON": {}
   },
   "NotificationLogSettings": {
     "EnableConsole": false,
@@ -198,8 +196,7 @@
     "FileLevel": "INFO",
     "FileJson": true,
     "FileLocation": "/var/log/__APP__",
-    "AdvancedLoggingJSON": {},
-    "AdvancedLoggingConfig": ""
+    "AdvancedLoggingJSON": {}
   },
   "PasswordSettings": {
     "MinimumLength": 8,
@@ -408,8 +405,7 @@
     "LoginFieldName": "",
     "LoginButtonColor": "#0000",
     "LoginButtonBorderColor": "#2389D7",
-    "LoginButtonTextColor": "#2389D7",
-    "Trace": false
+    "LoginButtonTextColor": "#2389D7"
   },
   "ComplianceSettings": {
     "Enable": false,
@@ -467,6 +463,12 @@
     "AndroidAppDownloadLink": "https://mattermost.com/pl/android-app/",
     "IosAppDownloadLink": "https://mattermost.com/pl/ios-app/"
   },
+  "CacheSettings": {
+    "CacheType": "lru",
+    "RedisAddress": "",
+    "RedisPassword": "",
+    "RedisDB": -1
+  },
   "ClusterSettings": {
     "Enable": false,
     "ClusterName": "",
@@ -498,7 +500,8 @@
     "DisableRefetchingOnBrowserFocus": false,
     "DelayChannelAutocomplete": false,
     "DisableWakeUpReconnectHandler": false,
-    "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000
+    "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000,
+    "YoutubeReferrerPolicy": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -521,7 +524,7 @@
     "AggregatePostsAfterDays": 365,
     "PostsAggregatorJobStartTime": "03:00",
     "IndexPrefix": "",
-    "LiveIndexingBatchSize": 1,
+    "LiveIndexingBatchSize": 10,
     "BatchSize": 10000,
     "RequestTimeoutSeconds": 30,
     "SkipTLSVerification": false,
@@ -575,7 +578,6 @@
     "CleanupJobsThresholdDays": -1,
     "CleanupConfigThresholdDays": -1
   },
-  "ProductSettings": {},
   "PluginSettings": {
     "Enable": true,
     "EnableUploads": false,
@@ -630,14 +632,12 @@
     "TestFeature": "off",
     "TestBoolFeature": false,
     "EnableRemoteClusterService": false,
-    "AppsEnabled": true,
+    "AppsEnabled": false,
     "PermalinkPreviews": false,
-    "CallsEnabled": true,
     "NormalizeLdapDNs": false,
     "WysiwygEditor": false,
     "OnboardingTourTips": true,
     "DeprecateCloudFree": false,
-    "CloudReverseTrial": false,
     "EnableExportDirectDownload": false,
     "MoveThreadsEnabled": false,
     "StreamlinedMarketplace": true,
@@ -645,8 +645,8 @@
     "ConsumePostHook": false,
     "CloudAnnualRenewals": false,
     "CloudDedicatedExportUI": false,
-    "ChannelBookmarks": false,
-    "WebSocketEventScope": false,
+    "ChannelBookmarks": true,
+    "WebSocketEventScope": true,
     "NotificationMonitoring": true,
     "ExperimentalAuditSettingsSystemConsoleUI": false
   },
@@ -666,5 +666,11 @@
     "MoveThreadFromPrivateChannelEnable": false,
     "MoveThreadFromDirectMessageChannelEnable": false,
     "MoveThreadFromGroupMessageChannelEnable": false
+  },
+  "ConnectedWorkspacesSettings": {
+    "EnableSharedChannels": false,
+    "EnableRemoteClusterService": false,
+    "DisableSharedChannelsStatusSync": false,
+    "MaxPostsPerSync": 50
   }
 }

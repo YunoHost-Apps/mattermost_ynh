@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
@@ -13,17 +7,9 @@ source /usr/share/yunohost/helpers
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 
-# Save the language used if not present
-if [ -z "${language:-}" ]; then
-  language="en"
-  ynh_app_setting_set --app=$app --key=language --value=$language
-fi
+ynh_app_setting_set_default --key=language --value="en"
 
-# If version setting doesn't exist
-if [ -z "${version:-}" ]; then
-  version="Team"
-  ynh_app_setting_set --app=$app --key=version --value=$version
-fi
+ynh_app_setting_set_default --key=version --value="Team"
 
 #=================================================
 # MIGRATING DATABASE
@@ -39,18 +25,16 @@ if mysqlshow | grep -q "^| $db_name "; then
 fi
 
 #=================================================
-# STANDARD UPGRADE STEPS
-#=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=3
+ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemd_action --service_name=$app --action=stop --log_path=systemd
+ynh_systemctl --service=$app --action=stop --log_path=systemd
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Upgrading source files..." --weight=2
+ynh_script_progression "Upgrading source files..."
 
 # Create a temporary directory
 tmpdir="$(mktemp -d)"
@@ -60,7 +44,7 @@ cp -a "$install_dir/config/config.json" "$tmpdir/config.json"
 cp -ar "$install_dir/plugins" "$tmpdir/plugins"
 
 # Remove the app directory securely
-ynh_secure_remove --file="$install_dir"
+ynh_safe_rm --file="$install_dir"
 
 if [ "$version" = "Enterprise" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
@@ -73,7 +57,7 @@ cp -a "$tmpdir/config.json" "$install_dir/config/config.json"
 cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
 
 # Remove the tmp directory securely
-ynh_secure_remove --file="$tmpdir"
+ynh_safe_rm --file="$tmpdir"
 
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
@@ -81,25 +65,22 @@ chown -R $app:www-data "$install_dir"
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-ynh_script_progression --message="Upgrading system configurations related to $app..." --weight=3
+ynh_script_progression "Upgrading system configurations related to $app..."
 
-# Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
-# Create a dedicated systemd config
-ynh_add_systemd_config
+ynh_config_add_systemd
 
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
 
-# Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
+ynh_config_add_logrotate
 
 #=================================================
 # Fix old migrations
 #=================================================
 # Crazy fix for old unupgraded version
 # IMPORTANT: THIS fix should be done after setup new sources and running Mattermost
-if ynh_compare_current_package_version --comparison lt --version 5.37.1~ynh1
+if ynh_app_upgrading_from_version_before 5.37.1~ynh1
 then
     read -r -d '' fix_old_version_sql << EOM
 ALTER TABLE ChannelMembers ALTER COLUMN mentioncountroot SET DEFAULT '0'::bigint;
@@ -114,7 +95,7 @@ UPDATE SidebarCategories set sorting = 'manual' where sorting='';
 UPDATE SidebarCategories set sorting = 'manual' where sorting IS NULL;
 EOM
 
-    ynh_psql_execute_as_root --sql="$fix_old_version_sql" --database=$db_name
+    ynh_psql_db_shell <<< "$fix_old_version_sql"
 
     # Note: it's possible that some instances need other fixes
     # If nothing is displayed in the sidebar it may be needed to change the Id of SidebarCategories...
@@ -123,13 +104,12 @@ fi
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=2
+ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Mattermost"
+ynh_systemctl --service=$app --action=start --log_path=systemd #--wait_until="Started mattermost"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --last
+ynh_script_progression "Upgrade of $app completed"

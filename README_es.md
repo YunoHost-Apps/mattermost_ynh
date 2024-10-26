@@ -30,7 +30,7 @@ This package can install the [*Entreprise Edition*](https://docs.mattermost.com/
 
 Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/download/)
 
-## Features include:
+### Features
 
 - One-to-one and group messaging, file sharing, and unlimited search history
 - Threaded messaging, emoji, and custom emoji
@@ -43,7 +43,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Versión actual:** 9.11.0~ynh1
+**Versión actual:** 10.1.1~ynh1
 
 ## Capturas
 
@@ -60,7 +60,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/mattermost_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/mattermost_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 
