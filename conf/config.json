@@ -500,7 +500,8 @@
     "DisableRefetchingOnBrowserFocus": false,
     "DelayChannelAutocomplete": false,
     "DisableWakeUpReconnectHandler": false,
-    "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000
+    "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000,
+    "YoutubeReferrerPolicy": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -644,7 +645,7 @@
     "ConsumePostHook": false,
     "CloudAnnualRenewals": false,
     "CloudDedicatedExportUI": false,
-    "ChannelBookmarks": false,
+    "ChannelBookmarks": true,
     "WebSocketEventScope": true,
     "NotificationMonitoring": true,
     "ExperimentalAuditSettingsSystemConsoleUI": false
@@ -665,5 +666,11 @@
     "MoveThreadFromPrivateChannelEnable": false,
     "MoveThreadFromDirectMessageChannelEnable": false,
     "MoveThreadFromGroupMessageChannelEnable": false
+  },
+  "ConnectedWorkspacesSettings": {
+    "EnableSharedChannels": false,
+    "EnableRemoteClusterService": false,
+    "DisableSharedChannelsStatusSync": false,
+    "MaxPostsPerSync": 50
   }
 }
