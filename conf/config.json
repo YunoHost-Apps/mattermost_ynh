@@ -461,7 +461,8 @@
     ],
     "AppDownloadLink": "https://mattermost.com/pl/download-apps",
     "AndroidAppDownloadLink": "https://mattermost.com/pl/android-app/",
-    "IosAppDownloadLink": "https://mattermost.com/pl/ios-app/"
+    "IosAppDownloadLink": "https://mattermost.com/pl/ios-app/",
+    "MobileExternalBrowser": false
   },
   "CacheSettings": {
     "CacheType": "lru",
