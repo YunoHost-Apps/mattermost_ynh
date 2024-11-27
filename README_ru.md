@@ -5,7 +5,9 @@
 
 # Mattermost для YunoHost
 
-[![Уровень интеграции](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Состояние работы](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Состояние сопровождения](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Уровень интеграции](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+![Состояние работы](https://apps.yunohost.org/badge/state/mattermost)
+![Состояние сопровождения](https://apps.yunohost.org/badge/maintained/mattermost)
 
 [![Установите Mattermost с YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 

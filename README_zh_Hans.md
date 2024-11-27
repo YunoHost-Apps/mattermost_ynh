@@ -5,7 +5,9 @@
 
 # YunoHost 上的 Mattermost
 
-[![集成程度](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![集成程度](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+![工作状态](https://apps.yunohost.org/badge/state/mattermost)
+![维护状态](https://apps.yunohost.org/badge/maintained/mattermost)
 
 [![使用 YunoHost 安装 Mattermost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
