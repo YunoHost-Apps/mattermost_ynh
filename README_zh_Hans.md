@@ -43,7 +43,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**分发版本：** 10.1.2~ynh1
+**分发版本：** 10.2.0~ynh1
 
 ## 截图
 
