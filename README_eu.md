@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # Mattermost YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/mattermost)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/mattermost)
 
 [![Instalatu Mattermost YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
@@ -43,7 +45,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Paketatutako bertsioa:** 10.2.0~ynh1
+**Paketatutako bertsioa:** 10.3.1~ynh1
 
 ## Pantaila-argazkiak
 

@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # Mattermost voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/mattermost)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/mattermost)
 
 [![Mattermost met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
@@ -43,7 +45,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Geleverde versie:** 10.2.0~ynh1
+**Geleverde versie:** 10.3.1~ynh1
 
 ## Schermafdrukken
 

@@ -5,7 +5,9 @@ It shall NOT be edited by hand.
 
 # Mattermost for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Working status](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Integration level](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+![Working status](https://apps.yunohost.org/badge/state/mattermost)
+![Maintenance status](https://apps.yunohost.org/badge/maintained/mattermost)
 
 [![Install Mattermost with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
@@ -43,7 +45,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Shipped version:** 10.2.0~ynh1
+**Shipped version:** 10.3.1~ynh1
 
 ## Screenshots
 
