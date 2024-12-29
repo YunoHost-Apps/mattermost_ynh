@@ -5,7 +5,9 @@ Il NE doit PAS être modifié à la main.
 
 # Mattermost pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Niveau d’intégration](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+![Statut du fonctionnement](https://apps.yunohost.org/badge/state/mattermost)
+![Statut de maintenance](https://apps.yunohost.org/badge/maintained/mattermost)
 
 [![Installer Mattermost avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
@@ -42,7 +44,7 @@ Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermo
 - Données de profilage d'exécution et rapports de surveillance du système
 
 
-**Version incluse :** 10.2.0~ynh1
+**Version incluse :** 10.3.1~ynh1
 
 ## Captures d’écran
 

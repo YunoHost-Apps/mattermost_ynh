@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Mattermost untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/mattermost.svg)](https://ci-apps.yunohost.org/ci/apps/mattermost/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/mattermost.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/mattermost.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
+![Status kerja](https://apps.yunohost.org/badge/state/mattermost)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/mattermost)
 
 [![Pasang Mattermost dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mattermost)
 
@@ -43,7 +45,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Versi terkirim:** 10.2.0~ynh1
+**Versi terkirim:** 10.3.1~ynh1
 
 ## Tangkapan Layar
 
