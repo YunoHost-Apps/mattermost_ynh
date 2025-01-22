@@ -82,6 +82,8 @@
     "EnableAPITeamDeletion": false,
     "EnableAPITriggerAdminNotifications": false,
     "EnableAPIUserDeletion": false,
+    "EnableAPIPostDeletion": false,
+    "EnableDesktopLandingPage": true,
     "ExperimentalEnableHardenedMode": false,
     "ExperimentalStrictCSRFEnforcement": false,
     "EnableEmailInvitations": false,
@@ -111,7 +113,8 @@
     "UniqueEmojiReactionLimitPerPost": 50,
     "RefreshPostStatsRunTime": "00:00",
     "MaximumPayloadSizeBytes": 300000,
-    "MaximumURLLength": 2048
+    "MaximumURLLength": 2048,
+    "ScheduledPosts": true
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -468,7 +471,8 @@
     "CacheType": "lru",
     "RedisAddress": "",
     "RedisPassword": "",
-    "RedisDB": -1
+    "RedisDB": -1,
+    "DisableClientCache": false
   },
   "ClusterSettings": {
     "Enable": false,
@@ -594,6 +598,9 @@
       "com.mattermost.nps": {
         "Enable": true
       },
+      "mattermost-ai": {
+        "Enable": true
+      },
       "playbooks": {
         "Enable": true
       }
@@ -633,6 +640,7 @@
     "TestFeature": "off",
     "TestBoolFeature": false,
     "EnableRemoteClusterService": false,
+    "EnableSharedChannelsDMs": false,
     "AppsEnabled": false,
     "PermalinkPreviews": false,
     "NormalizeLdapDNs": false,
