@@ -61,9 +61,9 @@ team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE
 export MMCTL_LOCAL=true
 export MMCTL_LOCAL_SOCKET_PATH="/var/run/${app}/mattermost_local.socket"
 
-ynh_hide_warnings ynh_exec_as_app "$install_dir/bin/mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
-ynh_hide_warnings ynh_exec_as_app "$install_dir/bin/mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
-ynh_hide_warnings ynh_exec_as_app "$install_dir/bin/mmctl" team users add "$team_name" "$admin"
+ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" team users add "$team_name" "$admin"
 
 # Disable mmctl passwordless access
 ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": false' --file="$install_dir/config/config.json"
