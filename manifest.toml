@@ -84,9 +84,9 @@ ram.runtime = "50M"
         armhf.sha256 = "8ba7d5701b80a188c701c50de4fd0feabfbde1344a6c98e1a1ff3b5c489be71c"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/10.4.1/mattermost-enterprise-10.4.2-linux-amd64.tar.gz"
+        amd64.url = "https://releases.mattermost.com/10.4.2/mattermost-enterprise-10.4.2-linux-amd64.tar.gz"
         amd64.sha256 = "7dc8400f27958f7be545088c343deecda40c754c4f4e13e97205fa75b2ddc1e7"
-        arm64.url = "https://releases.mattermost.com/10.4.1/mattermost-enterprise-10.4.2-linux-arm64.tar.gz"
+        arm64.url = "https://releases.mattermost.com/10.4.2/mattermost-enterprise-10.4.2-linux-arm64.tar.gz"
         arm64.sha256 = "6b87a7f672638e2dad7b7d867d499ddd508e6d3948fdc69dd27a82bac996969e"
 
     [resources.system_user]
