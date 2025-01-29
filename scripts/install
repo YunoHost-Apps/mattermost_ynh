@@ -7,7 +7,7 @@ source /usr/share/yunohost/helpers
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 
-smtp_user_pwd=$(ynh_string_random --length=24)
+#smtp_user_pwd=$(ynh_string_random --length=24)
 email=$(ynh_user_get_info --username=$admin --key=mail)
 
 #=================================================
