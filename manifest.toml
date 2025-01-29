@@ -63,7 +63,7 @@ ram.runtime = "50M"
     ask.fr = "Choissisez la langue utilisée par le compte administrateur"
     type = "select"
     choices = ["de", "en", "es", "fr", "it", "pt"]
-    default = "en"
+    default = "fr"
 
     [install.team_display_name]
     ask.en = "Choose a Team name"
