@@ -1,6 +1,6 @@
 {
   "ServiceSettings": {
-    "SiteURL": "__URL__",
+    "SiteURL": "https://__DOMAIN____PATH__",
     "WebsocketURL": "",
     "LicenseFileLocation": "",
     "ListenAddress": "127.0.0.1:__PORT__",
