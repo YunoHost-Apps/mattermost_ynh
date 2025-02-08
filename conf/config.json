@@ -235,6 +235,7 @@
     "AmazonS3Trace": false,
     "AmazonS3RequestTimeoutMilliseconds": 30000,
     "AmazonS3UploadPartSizeBytes": 5242880,
+    "AmazonS3StorageClass": "",
     "DedicatedExportStore": false,
     "ExportDriverName": "local",
     "ExportDirectory": "./data/",
@@ -250,7 +251,8 @@
     "ExportAmazonS3Trace": false,
     "ExportAmazonS3RequestTimeoutMilliseconds": 30000,
     "ExportAmazonS3PresignExpiresSeconds": 21600,
-    "ExportAmazonS3UploadPartSizeBytes": 104857600
+    "ExportAmazonS3UploadPartSizeBytes": 104857600,
+    "ExportAmazonS3StorageClass": ""
   },
   "EmailSettings": {
     "EnableSignUpWithEmail": true,
@@ -419,7 +421,8 @@
   "LocalizationSettings": {
     "DefaultServerLocale": "__LANGUAGE__",
     "DefaultClientLocale": "__LANGUAGE__",
-    "AvailableLocales": ""
+    "AvailableLocales": "",
+    "EnableExperimentalLocales": false
   },
   "SamlSettings": {
     "Enable": false,
@@ -657,7 +660,8 @@
     "ChannelBookmarks": true,
     "WebSocketEventScope": true,
     "NotificationMonitoring": true,
-    "ExperimentalAuditSettingsSystemConsoleUI": false
+    "ExperimentalAuditSettingsSystemConsoleUI": false,
+    "ExperimentalCrossTeamSearch": false
   },
   "ImportSettings": {
     "Directory": "./import",
