@@ -114,7 +114,8 @@
     "RefreshPostStatsRunTime": "00:00",
     "MaximumPayloadSizeBytes": 300000,
     "MaximumURLLength": 2048,
-    "ScheduledPosts": true
+    "ScheduledPosts": true,
+    "EnableWebHubChannelIteration": false
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -570,6 +571,8 @@
     "ExportFromTimestamp": 0,
     "BatchSize": 10000,
     "DownloadExportResults": false,
+    "ChannelBatchSize": 100,
+    "ChannelHistoryBatchSize": 10,
     "GlobalRelaySettings": {
       "CustomerType": "A9",
       "SMTPUsername": "",
@@ -661,7 +664,8 @@
     "WebSocketEventScope": true,
     "NotificationMonitoring": true,
     "ExperimentalAuditSettingsSystemConsoleUI": false,
-    "ExperimentalCrossTeamSearch": false
+    "ExperimentalCrossTeamSearch": false,
+    "CustomProfileAttributes": false
   },
   "ImportSettings": {
     "Directory": "./import",
