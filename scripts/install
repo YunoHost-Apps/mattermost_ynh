@@ -4,6 +4,12 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
+# INITIALIZE AND STORE SETTINGS
+#=================================================
+
+email=$(ynh_user_get_info --username=$admin --key=mail)
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Setting up source files..."
@@ -20,9 +26,6 @@ chown -R $app:www-data "$install_dir"
 # MODIFY A CONFIG FILE
 #=================================================
 ynh_script_progression "Updating configuration..."
-
-smtp_user_pwd=$(ynh_string_random --length=24)
-url=https://$domain$path
 
 ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
 
@@ -55,19 +58,17 @@ ynh_systemctl --service=$app --action=start --log_path=systemd
 ynh_script_progression "Create the first administrator and team..."
 
 team_name=$(echo "$team_display_name" | iconv -f utf8 -t ascii//TRANSLIT//IGNORE | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)
-bin_mmctl="$install_dir/bin/mmctl"
-email=$(ynh_user_get_info --username=$admin --key=mail)
 
 export MMCTL_LOCAL=true
 export MMCTL_LOCAL_SOCKET_PATH="/var/run/${app}/mattermost_local.socket"
 
-ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
-ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
-ynh_hide_warnings sudo --preserve-env -u $app "$bin_mmctl" team users add "$team_name" "$admin"
+ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" user create --username "$admin" --email "$email" --password "$password" --locale "$language" --email-verified --system-admin
+ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" team create --name "$team_name" --display_name "$team_display_name" --email "$email"
+ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" team users add "$team_name" "$admin"
 
 # Disable mmctl passwordless access
 ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": false' --file="$install_dir/config/config.json"
-ynh_systemctl --service=$app --action=restart --log_path=systemd #--wait_until="Started mattermost"
+ynh_systemctl --service=$app --action=restart --log_path=systemd
 
 #=================================================
 # END OF SCRIPT
