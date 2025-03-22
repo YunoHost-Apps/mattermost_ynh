@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Collaboration platform built for developers"
 description.fr = "Plateforme de collaboration conçue pour les développeurs"
 
-version = "10.5.1~ynh1"
+version = "10.6.1~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -76,18 +76,18 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.main]
-        amd64.url = "https://releases.mattermost.com/10.5.1/mattermost-team-10.5.1-linux-amd64.tar.gz"
-        amd64.sha256 = "0b552d835ed91c54998e12fcc5727bfc23c09231b4e60911db22bbb8862e8bf9"
-        arm64.url = "https://releases.mattermost.com/10.5.1/mattermost-team-10.5.1-linux-arm64.tar.gz"
-        arm64.sha256 = "f5fde61fe39a18a2f53e4d331bc930854426eca5e2182bf2e13d40aa58666542"
-        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v10.4.2/mattermost-v10.4.2-linux-arm.tar.gz"
+        amd64.url = "https://releases.mattermost.com/10.6.1/mattermost-team-10.6.1-linux-amd64.tar.gz"
+        amd64.sha256 = "4fcc6417c31634b23b1acf2785838019ea7a2c482b4a59b36cff9f94e383c7a4"
+        arm64.url = "https://releases.mattermost.com/10.6.1/mattermost-team-10.6.1-linux-arm64.tar.gz"
+        arm64.sha256 = "745ca5ec9259d906891afdc5bc9ada38e22e28b8bdc56eb0f9fea9c9caaa3c8f"
+        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v10.5.1/mattermost-v10.5.1-linux-arm.tar.gz"
         armhf.sha256 = "16d6e0f70b670dab570c3ec8c0c936a33158edb9dc025e6c2a36c8e19cc909bb"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/10.5.1/mattermost-enterprise-10.5.1-linux-amd64.tar.gz"
-        amd64.sha256 = "95af0556d64525bbda4354eab91e36087026b751c3c895622d7e0dddd2cd7ee6"
-        arm64.url = "https://releases.mattermost.com/10.5.1/mattermost-enterprise-10.5.1-linux-arm64.tar.gz"
-        arm64.sha256 = "4077116ea325f1ee148b1aca1ec131665c9f5125fb215c61842a7e43c3dd6384"
+        amd64.url = "https://releases.mattermost.com/10.6.1/mattermost-enterprise-10.6.1-linux-amd64.tar.gz"
+        amd64.sha256 = "0a8b1d7d89f669857ed438fcf5827d9f739bff93056470a1b803a696e04389fd"
+        arm64.url = "https://releases.mattermost.com/10.6.1/mattermost-enterprise-10.6.1-linux-arm64.tar.gz"
+        arm64.sha256 = "30f70474a09083c89ee59b4b69705cd0f1be195799fce9686b08df3b41fb6438"
 
     [resources.system_user]
     allow_email = true
