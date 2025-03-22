@@ -45,7 +45,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 - Runtime profiling data and system monitoring reports
 
 
-**Versi terkirim:** 10.5.1~ynh1
+**Versi terkirim:** 10.6.1~ynh1
 
 ## Tangkapan Layar
 
