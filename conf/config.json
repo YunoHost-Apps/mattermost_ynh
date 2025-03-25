@@ -36,7 +36,6 @@
     "EnableDeveloper": false,
     "DeveloperFlags": "",
     "EnableClientPerformanceDebugging": false,
-    "EnableOpenTracing": false,
     "EnableSecurityFixAlert": true,
     "EnableInsecureOutgoingConnections": false,
     "AllowedUntrustedInternalConnections": "api.integrations.mattermost.com",
@@ -115,7 +114,8 @@
     "MaximumPayloadSizeBytes": 300000,
     "MaximumURLLength": 2048,
     "ScheduledPosts": true,
-    "EnableWebHubChannelIteration": false
+    "EnableWebHubChannelIteration": false,
+    "FrameAncestors": ""
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
