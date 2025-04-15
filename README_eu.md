@@ -64,7 +64,7 @@ Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/d
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/mattermost_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/mattermost_ynh/tree/testing --debug

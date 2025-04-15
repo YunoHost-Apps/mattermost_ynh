@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# Mattermost para Yunohost
+# Mattermost para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/mattermost)](https://ci-apps.yunohost.org/ci/apps/mattermost/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/mattermost)
