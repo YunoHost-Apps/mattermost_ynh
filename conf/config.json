@@ -386,6 +386,7 @@
     "BaseDN": "",
     "BindUsername": "",
     "BindPassword": "",
+    "MaximumLoginAttempts": 10,
     "UserFilter": "",
     "GroupFilter": "",
     "GuestFilter": "",
@@ -469,13 +470,17 @@
     "AppDownloadLink": "https://mattermost.com/pl/download-apps",
     "AndroidAppDownloadLink": "https://mattermost.com/pl/android-app/",
     "IosAppDownloadLink": "https://mattermost.com/pl/ios-app/",
-    "MobileExternalBrowser": false
+    "MobileExternalBrowser": false,
+    "MobileEnableBiometrics": false,
+    "MobilePreventScreenCapture": false,
+    "MobileJailbreakProtection": false
   },
   "CacheSettings": {
     "CacheType": "lru",
     "RedisAddress": "",
     "RedisPassword": "",
     "RedisDB": -1,
+    "RedisCachePrefix": "",
     "DisableClientCache": false
   },
   "ClusterSettings": {
@@ -496,7 +501,8 @@
     "BlockProfileRate": 0,
     "ListenAddress": ":8067",
     "EnableClientMetrics": true,
-    "EnableNotificationMetrics": true
+    "EnableNotificationMetrics": true,
+    "ClientSideUserIds": []
   },
   "ExperimentalSettings": {
     "ClientSideCertEnable": false,
@@ -664,7 +670,7 @@
     "WebSocketEventScope": true,
     "NotificationMonitoring": true,
     "ExperimentalAuditSettingsSystemConsoleUI": false,
-    "ExperimentalCrossTeamSearch": false,
+    "ExperimentalCrossTeamSearch": true,
     "CustomProfileAttributes": false
   },
   "ImportSettings": {
