@@ -66,6 +66,7 @@
     "EnableEmojiPicker": true,
     "PostEditTimeLimit": -1,
     "TimeBetweenUserTypingUpdatesMilliseconds": 5000,
+    "EnableCrossTeamSearch": true,
     "EnablePostSearch": true,
     "EnableFileSearch": true,
     "MinimumHashtagLength": 3,
@@ -539,6 +540,7 @@
     "AggregatePostsAfterDays": 365,
     "PostsAggregatorJobStartTime": "03:00",
     "IndexPrefix": "",
+    "GlobalSearchPrefix": "",
     "LiveIndexingBatchSize": 10,
     "BatchSize": 10000,
     "RequestTimeoutSeconds": 30,
@@ -670,7 +672,6 @@
     "WebSocketEventScope": true,
     "NotificationMonitoring": true,
     "ExperimentalAuditSettingsSystemConsoleUI": false,
-    "ExperimentalCrossTeamSearch": true,
     "CustomProfileAttributes": false
   },
   "ImportSettings": {
@@ -695,5 +696,9 @@
     "EnableRemoteClusterService": false,
     "DisableSharedChannelsStatusSync": false,
     "MaxPostsPerSync": 50
+  },
+  "AccessControlSettings": {
+    "EnableAttributeBasedAccessControl": false,
+    "EnableChannelScopeAccessControl": false
   }
 }
