@@ -36,7 +36,6 @@
     "EnableDeveloper": false,
     "DeveloperFlags": "",
     "EnableClientPerformanceDebugging": false,
-    "EnableOpenTracing": false,
     "EnableSecurityFixAlert": true,
     "EnableInsecureOutgoingConnections": false,
     "AllowedUntrustedInternalConnections": "api.integrations.mattermost.com",
@@ -67,6 +66,7 @@
     "EnableEmojiPicker": true,
     "PostEditTimeLimit": -1,
     "TimeBetweenUserTypingUpdatesMilliseconds": 5000,
+    "EnableCrossTeamSearch": true,
     "EnablePostSearch": true,
     "EnableFileSearch": true,
     "MinimumHashtagLength": 3,
@@ -114,7 +114,9 @@
     "RefreshPostStatsRunTime": "00:00",
     "MaximumPayloadSizeBytes": 300000,
     "MaximumURLLength": 2048,
-    "ScheduledPosts": true
+    "ScheduledPosts": true,
+    "EnableWebHubChannelIteration": false,
+    "FrameAncestors": ""
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -385,6 +387,7 @@
     "BaseDN": "",
     "BindUsername": "",
     "BindPassword": "",
+    "MaximumLoginAttempts": 10,
     "UserFilter": "",
     "GroupFilter": "",
     "GuestFilter": "",
@@ -468,13 +471,17 @@
     "AppDownloadLink": "https://mattermost.com/pl/download-apps",
     "AndroidAppDownloadLink": "https://mattermost.com/pl/android-app/",
     "IosAppDownloadLink": "https://mattermost.com/pl/ios-app/",
-    "MobileExternalBrowser": false
+    "MobileExternalBrowser": false,
+    "MobileEnableBiometrics": false,
+    "MobilePreventScreenCapture": false,
+    "MobileJailbreakProtection": false
   },
   "CacheSettings": {
     "CacheType": "lru",
     "RedisAddress": "",
     "RedisPassword": "",
     "RedisDB": -1,
+    "RedisCachePrefix": "",
     "DisableClientCache": false
   },
   "ClusterSettings": {
@@ -495,7 +502,8 @@
     "BlockProfileRate": 0,
     "ListenAddress": ":8067",
     "EnableClientMetrics": true,
-    "EnableNotificationMetrics": true
+    "EnableNotificationMetrics": true,
+    "ClientSideUserIds": []
   },
   "ExperimentalSettings": {
     "ClientSideCertEnable": false,
@@ -532,6 +540,7 @@
     "AggregatePostsAfterDays": 365,
     "PostsAggregatorJobStartTime": "03:00",
     "IndexPrefix": "",
+    "GlobalSearchPrefix": "",
     "LiveIndexingBatchSize": 10,
     "BatchSize": 10000,
     "RequestTimeoutSeconds": 30,
@@ -570,6 +579,8 @@
     "ExportFromTimestamp": 0,
     "BatchSize": 10000,
     "DownloadExportResults": false,
+    "ChannelBatchSize": 100,
+    "ChannelHistoryBatchSize": 10,
     "GlobalRelaySettings": {
       "CustomerType": "A9",
       "SMTPUsername": "",
@@ -661,7 +672,7 @@
     "WebSocketEventScope": true,
     "NotificationMonitoring": true,
     "ExperimentalAuditSettingsSystemConsoleUI": false,
-    "ExperimentalCrossTeamSearch": false
+    "CustomProfileAttributes": false
   },
   "ImportSettings": {
     "Directory": "./import",
@@ -685,5 +696,9 @@
     "EnableRemoteClusterService": false,
     "DisableSharedChannelsStatusSync": false,
     "MaxPostsPerSync": 50
+  },
+  "AccessControlSettings": {
+    "EnableAttributeBasedAccessControl": false,
+    "EnableChannelScopeAccessControl": false
   }
 }
