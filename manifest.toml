@@ -81,8 +81,8 @@ ram.runtime = "50M"
         amd64.sha256 = "9c45d2406a77ea805ac2aa70b82798f09fa3bdedef450f275adf839408239240"
         arm64.url = "https://releases.mattermost.com/10.9.1/mattermost-team-10.9.1-linux-arm64.tar.gz"
         arm64.sha256 = "14a41bb74c67dc561a2f3dcf5fecc9dd2286bb2008b7db93c8c5d892f7bb121a"
-        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v10.7.1/mattermost-v10.7.1-linux-arm.tar.gz"
-        armhf.sha256 = "1850cf10f7773106ae9f3029606dc1dade80e18cd318aa3fb2c2bd85fe8bb7cb"
+        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v10.8.0/mattermost-v10.8.0-linux-arm.tar.gz"
+        armhf.sha256 = "79b9fb94cce9153bed20c5894176d1992cc05f0272042248b2053eb3ac02016a"
 
         [resources.sources.enterprise]
         amd64.url = "https://releases.mattermost.com/10.9.1/mattermost-enterprise-10.9.1-linux-amd64.tar.gz"
