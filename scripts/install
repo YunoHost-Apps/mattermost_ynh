@@ -7,6 +7,7 @@ source /usr/share/yunohost/helpers
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 
+#smtp_user_pwd=$(ynh_string_random --length=24)
 email=$(ynh_user_get_info --username=$admin --key=mail)
 
 #=================================================
@@ -19,8 +20,6 @@ if [ "$version" = "Enterprise" ]; then
 elif [ "$version" = "Team" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="main"
 fi
-
-chown -R $app:www-data "$install_dir"
 
 #=================================================
 # MODIFY A CONFIG FILE
