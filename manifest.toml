@@ -72,6 +72,18 @@ ram.runtime = "50M"
     example = "Team"
     default = "Team"
 
+    [install.focalboards]
+    ask.en = "Install FocalBoards"
+    ask.fr = "Installer FocalBoards"
+    type = "boolean"
+    default = false
+
+    [install.agents]
+    ask.en = "Install AI Agents"
+    ask.fr = "Installer les Agents AI"
+    type = "boolean"
+    default = false
+
 [resources]
     [resources.sources]
 
@@ -101,6 +113,12 @@ ram.runtime = "50M"
 
     [resources.permissions]
     main.url = "/"
+    admin.url = "/admin_console"
+    admin.show_tile = true
+    admin.allowed = "admins"
+    boards.url = "/boards"
+    boards.show_tile = true
+    boards.allowed = "visitors"
 
     [resources.apt]
     packages = "postgresql, pgloader"

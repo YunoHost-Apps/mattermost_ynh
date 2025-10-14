@@ -71,6 +71,15 @@ ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": fals
 ynh_systemctl --service=$app --action=restart --log_path=systemd
 
 #=================================================
+# CREATE ADMIN AND FIRST TEAM
+#=================================================
+ynh_script_progression "Installing focalBoards..."
+
+if [ $focalboards -eq 1 ];then
+  install_focalboards
+fi
+
+#=================================================
 # END OF SCRIPT
 #=================================================
 
