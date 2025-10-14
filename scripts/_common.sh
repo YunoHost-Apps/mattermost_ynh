@@ -110,7 +110,3 @@ install_agents() {
     $command plugin add ../sources/mattermost-plugin-agents-v1.4.0.tar.gz
     $command plugin enable focalboards
 }
-
-install_matterbridge() {
-
-}
