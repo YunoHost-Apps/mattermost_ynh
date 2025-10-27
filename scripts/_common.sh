@@ -100,13 +100,17 @@ EOT
 install_focalboards() {
     command=$install_dir/bin/mmctl
     
-    $command plugin add ../sources/mattermost-plugin-boards-v9.1.6.tar.gz
-    $command plugin enable focalboards
+    if [[ -f $command ]];then
+        $command plugin add ../sources/mattermost-plugin-boards-v9.1.6.tar.gz
+        $command plugin enable focalboards
+    fi
 }
 
 install_agents() {
     command=$install_dir/bin/mmctl
     
-    $command plugin add ../sources/mattermost-plugin-agents-v1.4.0.tar.gz
-    $command plugin enable focalboards
+    if [[ -f $command ]];then
+        $command plugin add ../sources/mattermost-plugin-agents-v1.4.0.tar.gz
+        $command plugin enable focalboards
+    fi
 }
