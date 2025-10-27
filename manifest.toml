@@ -119,9 +119,9 @@ ram.runtime = "50M"
     boards.url = "/boards"
     boards.show_tile = true
     boards.allowed = "visitors"
-    boards.url = "/playbooks"
-    boards.show_tile = true
-    boards.allowed = "visitors"
+    playbooks.url = "/playbooks"
+    playbooks.show_tile = true
+    playbooks.allowed = "visitors"
 
     [resources.apt]
     packages = "postgresql, pgloader"
