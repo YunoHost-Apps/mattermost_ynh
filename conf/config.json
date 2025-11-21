@@ -116,7 +116,8 @@
     "MaximumURLLength": 2048,
     "ScheduledPosts": true,
     "EnableWebHubChannelIteration": false,
-    "FrameAncestors": ""
+    "FrameAncestors": "",
+    "DeleteAccountLink": ""
   },
   "TeamSettings": {
     "SiteName": "Mattermost",
@@ -190,7 +191,8 @@
     "FileMaxBackups": 0,
     "FileCompress": false,
     "FileMaxQueueSize": 1000,
-    "AdvancedLoggingJSON": {}
+    "AdvancedLoggingJSON": {},
+    "Certificate": ""
   },
   "NotificationLogSettings": {
     "EnableConsole": false,
@@ -307,6 +309,9 @@
     "AboutLink": "https://mattermost.com/pl/about-mattermost",
     "HelpLink": "https://mattermost.com/pl/help/",
     "ReportAProblemLink": "https://mattermost.com/pl/report-a-bug",
+    "ReportAProblemType": "default",
+    "ReportAProblemMail": "",
+    "AllowDownloadLogs": true,
     "ForgotPasswordLink": "",
     "SupportEmail": "",
     "CustomTermsOfServiceEnabled": false,
@@ -405,6 +410,7 @@
     "LoginIdAttribute": "",
     "PictureAttribute": "",
     "SyncIntervalMinutes": 60,
+    "ReAddRemovedMembers": false,
     "SkipCertificateVerification": false,
     "PublicCertificateFile": "",
     "PrivateKeyFile": "",
@@ -474,7 +480,9 @@
     "MobileExternalBrowser": false,
     "MobileEnableBiometrics": false,
     "MobilePreventScreenCapture": false,
-    "MobileJailbreakProtection": false
+    "MobileJailbreakProtection": false,
+    "MobileEnableSecureFilePreview": false,
+    "MobileAllowPdfLinkNavigation": false
   },
   "CacheSettings": {
     "CacheType": "lru",
@@ -493,7 +501,7 @@
     "AdvertiseAddress": "",
     "UseIPAddress": true,
     "EnableGossipCompression": true,
-    "EnableExperimentalGossipEncryption": false,
+    "EnableGossipEncryption": true,
     "ReadOnlyConfig": true,
     "GossipPort": 8074
   },
@@ -517,7 +525,8 @@
     "DelayChannelAutocomplete": false,
     "DisableWakeUpReconnectHandler": false,
     "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000,
-    "YoutubeReferrerPolicy": false
+    "YoutubeReferrerPolicy": false,
+    "ExperimentalChannelCategorySorting": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -570,7 +579,8 @@
     "DeletionJobStartTime": "02:00",
     "BatchSize": 3000,
     "TimeBetweenBatchesMilliseconds": 100,
-    "RetentionIdsBatchSize": 100
+    "RetentionIdsBatchSize": 100,
+    "PreservePinnedPosts": false
   },
   "MessageExportSettings": {
     "EnableExport": false,
@@ -655,6 +665,9 @@
     "TestBoolFeature": false,
     "EnableRemoteClusterService": false,
     "EnableSharedChannelsDMs": false,
+    "EnableSharedChannelsPlugins": true,
+    "EnableSharedChannelsMemberSync": false,
+    "EnableSyncAllUsersForRemoteCluster": false,
     "AppsEnabled": false,
     "PermalinkPreviews": false,
     "NormalizeLdapDNs": false,
@@ -671,8 +684,10 @@
     "ChannelBookmarks": true,
     "WebSocketEventScope": true,
     "NotificationMonitoring": true,
-    "ExperimentalAuditSettingsSystemConsoleUI": false,
-    "CustomProfileAttributes": false
+    "ExperimentalAuditSettingsSystemConsoleUI": true,
+    "CustomProfileAttributes": true,
+    "AttributeBasedAccessControl": true,
+    "ContentFlagging": false
   },
   "ImportSettings": {
     "Directory": "./import",
@@ -695,10 +710,55 @@
     "EnableSharedChannels": false,
     "EnableRemoteClusterService": false,
     "DisableSharedChannelsStatusSync": false,
-    "MaxPostsPerSync": 50
+    "SyncUsersOnConnectionOpen": false,
+    "GlobalUserSyncBatchSize": 25,
+    "MaxPostsPerSync": 50,
+    "MemberSyncBatchSize": 20
   },
   "AccessControlSettings": {
     "EnableAttributeBasedAccessControl": false,
-    "EnableChannelScopeAccessControl": false
+    "EnableChannelScopeAccessControl": false,
+    "EnableUserManagedAttributes": false
+  },
+  "ContentFlaggingSettings": {
+    "EnableContentFlagging": false,
+    "ReviewerSettings": {
+      "CommonReviewers": true,
+      "CommonReviewerIds": [],
+      "TeamReviewersSetting": {},
+      "SystemAdminsAsReviewers": false,
+      "TeamAdminsAsReviewers": true
+    },
+    "NotificationSettings": {
+      "EventTargetMapping": {
+        "assigned": [
+          "reviewers"
+        ],
+        "dismissed": [
+          "reviewers",
+          "reporter"
+        ],
+        "flagged": [
+          "reviewers"
+        ],
+        "removed": [
+          "reviewers",
+          "author",
+          "reporter"
+        ]
+      }
+    },
+    "AdditionalSettings": {
+      "Reasons": [
+        "Inappropriate content",
+        "Sensitive data",
+        "Security concern",
+        "Harassment or abuse",
+        "Spam or phishing"
+      ],
+      "ReporterCommentRequired": true,
+      "ReviewerCommentRequired": true,
+      "HideFlaggedContent": true
+    }
   }
 }
