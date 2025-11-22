@@ -31,9 +31,8 @@ ynh_script_progression "Restoring system configurations related to $app..."
 
 ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
-logs_path="/var/log/$app"
-mkdir -p $logs_path
-chown -R $app: $logs_path
+mkdir -p /var/log/$app
+chown -R $app: /var/log/$app
 
 ynh_restore "/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
