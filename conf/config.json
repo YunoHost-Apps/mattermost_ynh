@@ -175,7 +175,7 @@
     "EnableFile": true,
     "FileLevel": "INFO",
     "FileJson": true,
-    "FileLocation": "",
+    "FileLocation": "/var/log/__APP__",
     "EnableWebhookDebugging": true,
     "EnableDiagnostics": true,
     "EnableSentry": true,
