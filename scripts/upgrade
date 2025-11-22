@@ -59,13 +59,12 @@ cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
 # Remove the tmp directory securely
 ynh_safe_rm --file="$tmpdir"
 
-chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
-
 ynh_setup_source --dest_dir="$install_dir/bin" --source_id="mostlymatter"
 
 chmod +x "$install_dir/bin/mostlymatter"
-chown -R "$app:" "$install_dir/bin"
+#chown -R "$app:" "$install_dir/bin"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
