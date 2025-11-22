@@ -50,7 +50,7 @@ chmod +x "$install_dir/bin/mostlymatter"
 #=================================================
 ynh_script_progression "Updating $app's configuration files..."
 
-ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
+ynh_hide_warnings ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
