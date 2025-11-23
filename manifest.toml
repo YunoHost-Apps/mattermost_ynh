@@ -72,6 +72,14 @@ ram.runtime = "50M"
     example = "Team"
     default = "Team"
 
+    [install.mostlymatter]
+    ask.en = "Do you whant to replace Mattermost backend with Mostlymatter?"
+    ask.fr = "Voulez-vous remplacer le backend Mattermost par Mostlymatter ?"
+    help.en = "Mostlymatter is a fork of Mattermost meant to remove the users and messages limits."
+    help.fr = "Mostlymatter est un fork de Mattermost destiné à supprimer les limites d'utilisateurs et de messages."
+    type = "boolean"
+    default = true
+
 [resources]
     [resources.sources]
 
