@@ -53,7 +53,7 @@ fi
 #=================================================
 ynh_script_progression "Updating $app's configuration files..."
 
-ynh_hide_warnings ynh_hide_warnings ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
+ynh_hide_warnings ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
