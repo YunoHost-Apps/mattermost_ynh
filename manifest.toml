@@ -88,8 +88,8 @@ ram.runtime = "50M"
         amd64.sha256 = "2d10a9adf7d6bf50f3b276518112a17b295c8af06fe201cbfa18ab31fc1d814a"
         arm64.url = "https://releases.mattermost.com/11.1.1/mattermost-team-11.1.1-linux-arm64.tar.gz"
         arm64.sha256 = "7eba2a2732c543108822dcebb441725f7bb019278f7de8614ce7384c8c23cbc2"
-        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v11.0.2/mattermost-v11.0.2-linux-arm.tar.gz"
-        armhf.sha256 = "ba7cfeb7676cdfa22a9bb8d3baf24ed5a666e1cc9ad25aff4e557fe5a7fc49d1"
+        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v11.1.0/mattermost-v11.1.0-linux-arm.tar.gz"
+        armhf.sha256 = "50fad1dd82676e4b0b63006143b5479ddfcc40c4536c98b7884b2c162be19496"
 
         [resources.sources.enterprise]
         amd64.url = "https://releases.mattermost.com/11.1.1/mattermost-enterprise-11.1.1-linux-amd64.tar.gz"
