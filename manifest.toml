@@ -101,10 +101,10 @@ ram.runtime = "50M"
         in_subdir = false
         extract = false
         rename = "mostlymatter"
-        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.1.0"
-        amd64.sha256 = "cda1e15894943bf197e352aea89369cafe15c63f6a7dc6c5742eac927c2eb9ca"
-        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.1.0"
-        arm64.sha256 = "222466afed03a5b3d2f7969933739f2282e3b44c2da59dc1b7ffd223e3b443ee"
+        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.1.1"
+        amd64.sha256 = "3d1b9d2940319e50bff602e839e4772f644b8da999ad0ef30523c0df4aeb13df"
+        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.1.1"
+        arm64.sha256 = "953abdc548928bab13823f5a2a19765376c43c2499fe37974c5161f9bd517274"
 
     [resources.system_user]
     allow_email = true
