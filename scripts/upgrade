@@ -8,8 +8,8 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_app_setting_set_default --key=language --value="en"
-
 ynh_app_setting_set_default --key=version --value="Team"
+ynh_app_setting_set_default --key=mostlymatter --value=1
 
 #=================================================
 # MIGRATING DATABASE
@@ -42,7 +42,7 @@ elif [ "$version" = "Team" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="main" --full_replace --keep="config/config.json plugins"
 fi
 
-if [ $mostlymatter -eq 1 ]
+if [ "$mostlymatter" -eq 1 ]
 then
   ynh_setup_source --dest_dir="$install_dir/bin" --source_id="mostlymatter"
   chmod +x "$install_dir/bin/mostlymatter"
