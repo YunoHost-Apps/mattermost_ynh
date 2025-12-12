@@ -9,7 +9,7 @@ source /usr/share/yunohost/helpers
 
 ynh_app_setting_set_default --key=language --value="en"
 ynh_app_setting_set_default --key=version --value="Team"
-ynh_app_setting_set_default --key=mostlymatter --value=1
+ynh_app_setting_set_default --key=mostlymatter --value=0
 
 #=================================================
 # MIGRATING DATABASE
