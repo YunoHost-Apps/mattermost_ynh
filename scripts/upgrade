@@ -42,6 +42,20 @@ elif [ "$version" = "Team" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="main" --full_replace --keep="plugins config/config.json"
 fi
 
+# Copy the admin saved settings and plugins from tmp directory to final path
+cp -a "$tmpdir/config.json" "$install_dir/config/config.json" 
+cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
+
+# Remove the tmp directory securely
+ynh_safe_rm --file="$tmpdir"
+
+# Fix settings for Mattermost >= 11.1
+# See https://github.com/mattermost/mattermost/issues/34084
+ynh_write_var_in_file --file="$install_dir/config/config.json" --key="ExperimentalViewArchivedChannels" --value=true
+
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
+
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================

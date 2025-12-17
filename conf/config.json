@@ -21,6 +21,7 @@
     "MaximumLoginAttempts": 10,
     "GoroutineHealthThreshold": -1,
     "EnableOAuthServiceProvider": false,
+    "EnableDynamicClientRegistration": false,
     "EnableIncomingWebhooks": true,
     "EnableOutgoingWebhooks": true,
     "EnableOutgoingOAuthConnections": false,
@@ -672,7 +673,9 @@
     "InteractiveDialogAppsForm": true,
     "EnableMattermostEntry": true,
     "MobileSSOCodeExchange": true,
-    "AutoTranslation": false
+    "AutoTranslation": false,
+    "BurnOnRead": false,
+    "EnableAIPluginBridge": false
   },
   "ImportSettings": {
     "Directory": "./import",
