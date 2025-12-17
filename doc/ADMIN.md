@@ -1,1 +1,13 @@
-You can change the istalled edition (Team <-> Enterprise) by modifying the setting file `__INSTALL_DIR__/config/config.json` and replace the version to wich you want: Team or Enterprise. Update your apps and verify the *About* on your Mattermost
+You can change the installed edition (Team <-> Enterprise) with the command line.
+
+From Enterprise to Team
+
+`sudo yunohost app setting mattermost version --value "Team"`
+    
+From Team to Enterprise
+
+`sudo yunohost app setting mattermost version --value "Enterprise"`
+    
+Then upgrade the app (in command line or in the webapp).
+
+The edition should be visible in the Mattermost header. It can also be visible in System Console.
