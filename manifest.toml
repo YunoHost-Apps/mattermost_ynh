@@ -52,10 +52,10 @@ ram.runtime = "50M"
     [install.version]
     ask.en = "Choose the version you want to install"
     ask.fr = "Choisissez la version que vous souhaitez installer"
-    help.en = "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 and ARM64 support)"
-    help.fr = "Utilisez Team Edition pour la version open-source (prise en charge ARM, ARM64 et x86-64) ou Édition Enterprise si vous souhaitez utiliser une licence (prise en charge x86-64 et ARM64)"
+    help.en = "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 and ARM64 support). Mostlymatter is a fork of Mattermost meant to remove the users and messages limits."
+    help.fr = "Utilisez Team Edition pour la version open-source (prise en charge ARM, ARM64 et x86-64) ou Édition Enterprise si vous souhaitez utiliser une licence (prise en charge x86-64 et ARM64). Mostlymatter est un fork de Mattermost destiné à supprimer les limites d'utilisateurs et de messages."
     type = "select"
-    choices = ["Enterprise", "Team"]
+    choices = ["Enterprise", "Team", "Mostlymatter"]
     default = "Team"
 
     [install.language]
@@ -72,18 +72,10 @@ ram.runtime = "50M"
     example = "Team"
     default = "Team"
 
-    [install.mostlymatter]
-    ask.en = "Do you whant to replace Mattermost backend with Mostlymatter?"
-    ask.fr = "Voulez-vous remplacer le backend Mattermost par Mostlymatter ?"
-    help.en = "Mostlymatter is a fork of Mattermost meant to remove the users and messages limits."
-    help.fr = "Mostlymatter est un fork de Mattermost destiné à supprimer les limites d'utilisateurs et de messages."
-    type = "boolean"
-    default = true
-
 [resources]
     [resources.sources]
 
-        [resources.sources.main]
+        [resources.sources.team]
         amd64.url = "https://releases.mattermost.com/11.2.1/mattermost-team-11.2.1-linux-amd64.tar.gz"
         amd64.sha256 = "435ac0d3fceb066053de2c67b25e5fcb95fe2c49efcf8637a6388c6b26fad6cc"
         arm64.url = "https://releases.mattermost.com/11.2.1/mattermost-team-11.2.1-linux-arm64.tar.gz"

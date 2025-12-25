@@ -38,17 +38,15 @@ ynh_script_progression "Upgrading source files..."
 
 if [ "$version" = "Enterprise" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise" --full_replace --keep="config/config.json plugins"
+  binarie="mattermost"
 elif [ "$version" = "Team" ]; then
-  ynh_setup_source --dest_dir="$install_dir" --source_id="main" --full_replace --keep="config/config.json plugins"
-fi
-
-if [ "$mostlymatter" -eq 1 ]
-then
+  ynh_setup_source --dest_dir="$install_dir" --source_id="team" --full_replace --keep="config/config.json plugins"
+  binarie="mattermost"
+elif [ "$version" = "Mostlymatter" ]; then
+  ynh_setup_source --dest_dir="$install_dir" --source_id="team" --full_replace --keep="config/config.json plugins"
   ynh_setup_source --dest_dir="$install_dir/bin" --source_id="mostlymatter"
   chmod +x "$install_dir/bin/mostlymatter"
   binarie="mostlymatter"
-else
-  binarie="mattermost"
 fi
 
 #=================================================
