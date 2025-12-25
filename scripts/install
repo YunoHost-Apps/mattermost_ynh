@@ -73,7 +73,7 @@ ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" team user
 
 # Disable mmctl passwordless access
 ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": false' --file="$install_dir/config/config.json"
-ynh_systemctl --service=$app --action=restart --log_path=systemd
+ynh_systemctl --service=$app --action=restart
 
 #=================================================
 # END OF SCRIPT
