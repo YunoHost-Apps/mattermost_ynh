@@ -46,6 +46,9 @@ if [ "$mostlymatter" -eq 1 ]
 then
   ynh_setup_source --dest_dir="$install_dir/bin" --source_id="mostlymatter"
   chmod +x "$install_dir/bin/mostlymatter"
+  binarie="mostlymatter"
+else
+  binarie="mattermost"
 fi
 
 #=================================================
