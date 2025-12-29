@@ -8,7 +8,6 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_app_setting_set_default --key=language --value="en"
-
 ynh_app_setting_set_default --key=version --value="Team"
 
 #=================================================
@@ -29,35 +28,34 @@ fi
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service=$app --action=stop --log_path=systemd
+ynh_systemctl --service=$app --action=stop
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-# Create a temporary directory
-tmpdir="$(mktemp -d)"
-
-# Backup the config file and local plugins in the temp dir
-cp -a "$install_dir/config/config.json" "$tmpdir/config.json"
-cp -ar "$install_dir/plugins" "$tmpdir/plugins"
-
-# Remove the app directory securely
-ynh_safe_rm --file="$install_dir"
-
 if [ "$version" = "Enterprise" ]; then
-  ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
+  ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise" --full_replace --keep="config/config.json plugins"
+  binarie="mattermost"
 elif [ "$version" = "Team" ]; then
-  ynh_setup_source --dest_dir="$install_dir" --source_id="main"
+  ynh_setup_source --dest_dir="$install_dir" --source_id="team" --full_replace --keep="config/config.json plugins"
+  binarie="mattermost"
+elif [ "$version" = "Mostlymatter" ]; then
+  ynh_setup_source --dest_dir="$install_dir" --source_id="team" --full_replace --keep="config/config.json plugins"
+  ynh_setup_source --dest_dir="$install_dir/bin" --source_id="mostlymatter"
+  ynh_safe_rm "$install_dir/bin/mattermost"
+  chmod +x "$install_dir/bin/mostlymatter"
+  chown -R $app:$app "$install_dir/bin"
+  binarie="mostlymatter"
 fi
 
-# Copy the admin saved settings and plugins from tmp directory to final path
-cp -a "$tmpdir/config.json" "$install_dir/config/config.json" 
-cp -ar --no-clobber "$tmpdir/plugins" "$install_dir/"
+#=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression "Updating $app's configuration files..."
 
-# Remove the tmp directory securely
-ynh_safe_rm --file="$tmpdir"
+ynh_hide_warnings ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
 
 # Fix settings for Mattermost >= 11.1
 # See https://github.com/mattermost/mattermost/issues/34084
@@ -80,37 +78,11 @@ yunohost service add $app --description="Collaboration platform built for develo
 ynh_config_add_logrotate
 
 #=================================================
-# Fix old migrations
-#=================================================
-# Crazy fix for old unupgraded version
-# IMPORTANT: THIS fix should be done after setup new sources and running Mattermost
-if ynh_app_upgrading_from_version_before 5.37.1~ynh1
-then
-    read -r -d '' fix_old_version_sql << EOM
-ALTER TABLE ChannelMembers ALTER COLUMN mentioncountroot SET DEFAULT '0'::bigint;
-UPDATE ChannelMembers SET mentioncountroot=0 WHERE mentioncountroot IS NULL;
-ALTER TABLE ChannelMembers ALTER COLUMN msgcountroot SET DEFAULT '0'::bigint;
-UPDATE ChannelMembers SET msgcountroot=0 WHERE msgcountroot IS NULL;
-ALTER TABLE Channels ALTER COLUMN totalmsgcountroot SET DEFAULT '0'::bigint;
-UPDATE Channels SET totalmsgcountroot=0 WHERE totalmsgcountroot IS NULL;
-UPDATE SidebarCategories SET collapsed=False where collapsed IS NULL;
-UPDATE SidebarCategories SET muted=False where muted IS NULL;
-UPDATE SidebarCategories set sorting = 'manual' where sorting='';
-UPDATE SidebarCategories set sorting = 'manual' where sorting IS NULL;
-EOM
-
-    ynh_psql_db_shell <<< "$fix_old_version_sql"
-
-    # Note: it's possible that some instances need other fixes
-    # If nothing is displayed in the sidebar it may be needed to change the Id of SidebarCategories...
-fi
-
-#=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start --log_path=systemd
+ynh_systemctl --service=$app --action=start
 
 #=================================================
 # END OF SCRIPT

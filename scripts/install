@@ -16,11 +16,18 @@ ynh_script_progression "Setting up source files..."
 
 if [ "$version" = "Enterprise" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="enterprise"
+  binarie="mattermost"
 elif [ "$version" = "Team" ]; then
-  ynh_setup_source --dest_dir="$install_dir" --source_id="main"
+  ynh_setup_source --dest_dir="$install_dir" --source_id="team"
+  binarie="mattermost"
+elif [ "$version" = "Mostlymatter" ]; then
+  ynh_setup_source --dest_dir="$install_dir" --source_id="team"
+  ynh_setup_source --dest_dir="$install_dir/bin" --source_id="mostlymatter"
+  ynh_safe_rm "$install_dir/bin/mattermost"
+  chmod +x "$install_dir/bin/mostlymatter"
+  chown -R $app:$app "$install_dir/bin"
+  binarie="mostlymatter"
 fi
-
-chown -R $app:www-data "$install_dir"
 
 #=================================================
 # MODIFY A CONFIG FILE
@@ -41,7 +48,7 @@ ynh_config_add_systemd
 yunohost service add $app --description="Collaboration platform built for developers" --log="/var/log/$app/$app.log"
 
 mkdir -p /var/log/$app
-chown $app -R "/var/log/$app"
+chown $app: -R "/var/log/$app"
 
 ynh_config_add_logrotate
 
@@ -50,7 +57,7 @@ ynh_config_add_logrotate
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start --log_path=systemd
+ynh_systemctl --service=$app --action=start
 
 #=================================================
 # CREATE ADMIN AND FIRST TEAM
@@ -68,7 +75,7 @@ ynh_hide_warnings sudo --preserve-env -u $app "$install_dir/bin/mmctl" team user
 
 # Disable mmctl passwordless access
 ynh_replace --match='"EnableLocalMode": true' --replace='"EnableLocalMode": false' --file="$install_dir/config/config.json"
-ynh_systemctl --service=$app --action=restart --log_path=systemd
+ynh_systemctl --service=$app --action=restart
 
 #=================================================
 # END OF SCRIPT

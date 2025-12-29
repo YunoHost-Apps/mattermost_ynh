@@ -8,12 +8,14 @@ Type=notify
 User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
-ExecStart=__INSTALL_DIR__/bin/mattermost
+ExecStart=__INSTALL_DIR__/bin/__BINARIE__
 TimeoutStartSec=3600
 Restart=always
 RestartSec=10
 RuntimeDirectory=__APP__
 LimitNOFILE=49152
+StandardOutput=append:/var/log/__APP__/__APP__.log
+StandardError=inherit
 
 # Sandboxing options to harden security
 # Depending on specificities of your service/app, you may need to tweak these 
