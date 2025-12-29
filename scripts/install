@@ -23,7 +23,9 @@ elif [ "$version" = "Team" ]; then
 elif [ "$version" = "Mostlymatter" ]; then
   ynh_setup_source --dest_dir="$install_dir" --source_id="team"
   ynh_setup_source --dest_dir="$install_dir/bin" --source_id="mostlymatter"
+  ynh_safe_rm "$install_dir/bin/mattermost"
   chmod +x "$install_dir/bin/mostlymatter"
+  chown -R $app:$app "$install_dir/bin"
   binarie="mostlymatter"
 fi
 
