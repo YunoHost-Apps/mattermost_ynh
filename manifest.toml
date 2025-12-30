@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Collaboration platform built for developers"
 description.fr = "Plateforme de collaboration conçue pour les développeurs"
 
-version = "11.2.1~ynh1"
+version = "11.2.1~ynh2"
 
 maintainers = ["pmorinerie"]
 
@@ -17,7 +17,7 @@ userdoc = "https://docs.mattermost.com/guides/messaging.html"
 code = "https://github.com/mattermost/mattermost-server"
 
 [integration]
-yunohost = ">= 12.1.34"
+yunohost = ">= 12.1.35"
 helpers_version = "2.1"
 architectures = ["amd64", "armhf", "arm64"]
 multi_instance = true
@@ -52,10 +52,10 @@ ram.runtime = "50M"
     [install.version]
     ask.en = "Choose the version you want to install"
     ask.fr = "Choisissez la version que vous souhaitez installer"
-    help.en = "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 and ARM64 support)"
-    help.fr = "Utilisez Team Edition pour la version open-source (prise en charge ARM, ARM64 et x86-64) ou Édition Enterprise si vous souhaitez utiliser une licence (prise en charge x86-64 et ARM64)"
+    help.en = "Use Team Edition for the open source version (ARM, ARM64 and x86-64 support) or Enterprise Edition if you want to use a license (x86-64 and ARM64 support). Mostlymatter is a fork of Mattermost Team Edition that removes the limitations on users and messages count."
+    help.fr = "Utilisez Team Edition pour la version open-source (prise en charge ARM, ARM64 et x86-64) ou Édition Enterprise si vous souhaitez utiliser une licence (prise en charge x86-64 et ARM64). Mostlymatter est un fork de Mattermost qui retire les limitations du nombre d'utilisateurs et de messages."
     type = "select"
-    choices = ["Enterprise", "Team"]
+    choices = ["Enterprise", "Team", "Mostlymatter"]
     default = "Team"
 
     [install.language]
@@ -75,7 +75,7 @@ ram.runtime = "50M"
 [resources]
     [resources.sources]
 
-        [resources.sources.main]
+        [resources.sources.team]
         amd64.url = "https://releases.mattermost.com/11.2.1/mattermost-team-11.2.1-linux-amd64.tar.gz"
         amd64.sha256 = "435ac0d3fceb066053de2c67b25e5fcb95fe2c49efcf8637a6388c6b26fad6cc"
         arm64.url = "https://releases.mattermost.com/11.2.1/mattermost-team-11.2.1-linux-arm64.tar.gz"
@@ -89,12 +89,20 @@ ram.runtime = "50M"
         arm64.url = "https://releases.mattermost.com/11.2.1/mattermost-enterprise-11.2.1-linux-arm64.tar.gz"
         arm64.sha256 = "2f99f352f7bdb4cca632b7688f91150be9839a582a3dcde39278fd7bac209582"
 
+        [resources.sources.mostlymatter]
+        in_subdir = false
+        extract = false
+        rename = "mostlymatter"
+        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.2.1"
+        amd64.sha256 = "55dfc288936e990f1a7e3758cb06274c2870900806a9000dd9d0cd2c98247944"
+        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.2.1"
+        arm64.sha256 = "15354b03cb714ddfe3f092de923e86761854a75775fbf2d627ecd6f469631683"
+
     [resources.system_user]
     allow_email = true
 
     [resources.install_dir]
-    group = "www-data:r-x"
-    
+
     [resources.data_dir]
     
     [resources.ports]
