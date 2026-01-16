@@ -98,15 +98,6 @@ ram.runtime = "50M"
         arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.3.0"
         arm64.sha256 = "6e8b1b3cd51b6dc2f00d1e5b09751f5a7e7ea069b24ac617bbc59e1e4aa8672c"
 
-        [resources.sources.mostlymatter]
-        in_subdir = false
-        extract = false
-        rename = "mostlymatter"
-        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.2.1"
-        amd64.sha256 = "55dfc288936e990f1a7e3758cb06274c2870900806a9000dd9d0cd2c98247944"
-        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.2.1"
-        arm64.sha256 = "15354b03cb714ddfe3f092de923e86761854a75775fbf2d627ecd6f469631683"
-
     [resources.system_user]
     allow_email = true
 
