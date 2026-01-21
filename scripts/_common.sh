@@ -96,3 +96,21 @@ EOT
         # Remove the MariaDB database
         ynh_mysql_drop_db $db_name && ynh_mysql_drop_user $db_user
 }
+
+install_focalboards() {
+    command=$install_dir/bin/mmctl
+    
+    if [[ -f $command ]];then
+        $command plugin add ../sources/mattermost-plugin-boards-v9.1.6.tar.gz
+        $command plugin enable focalboards
+    fi
+}
+
+install_agents() {
+    command=$install_dir/bin/mmctl
+    
+    if [[ -f $command ]];then
+        $command plugin add ../sources/mattermost-plugin-agents-v1.4.0.tar.gz
+        $command plugin enable focalboards
+    fi
+}
