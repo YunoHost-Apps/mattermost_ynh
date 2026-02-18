@@ -687,8 +687,9 @@
     "EnableMattermostEntry": true,
     "MobileSSOCodeExchange": true,
     "AutoTranslation": false,
-    "BurnOnRead": false,
-    "EnableAIPluginBridge": false
+    "BurnOnRead": true,
+    "EnableAIPluginBridge": false,
+    "EnableAIRecaps": false
   },
   "ImportSettings": {
     "Directory": "./import",
