@@ -8,9 +8,11 @@ To explore the benefits of Mattermost’s enterprise features, you can replace t
 
 ## YunoHost specific features
 
-This package can install the [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) or the [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
+This package can install the [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) or the [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition) and [Mostlymatter](https://packages.framasoft.org/projects/mostlymatter/), a fork of Mattermost without users limit.
 
 Mattermost Mobile and Desktop Apps are available [here](https://mattermost.com/download/)
+
+
 
 ### Features
 
