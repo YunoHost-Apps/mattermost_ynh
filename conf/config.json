@@ -685,7 +685,7 @@
     "ContentFlagging": true,
     "InteractiveDialogAppsForm": true,
     "EnableMattermostEntry": true,
-    "MobileSSOCodeExchange": true,
+    "MobileSSOCodeExchange": false,
     "AutoTranslation": false,
     "BurnOnRead": true,
     "EnableAIPluginBridge": false,
