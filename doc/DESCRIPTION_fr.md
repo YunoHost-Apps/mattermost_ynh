@@ -8,7 +8,7 @@ Pour explorer les avantages des fonctionnalités d'entreprise de Mattermost, vou
 
 ## Caractéristiques spécifiques YunoHost
 
-Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) ou la version [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition).
+Ce paquet peut installer la version [*Entreprise Edition*](https://docs.mattermost.com/overview/product.html#mattermost-enterprise-edition) ou la version [*Team Edition*](https://docs.mattermost.com/overview/product.html#mattermost-team-edition) et [Mostlymatter](https://packages.framasoft.org/projects/mostlymatter/), un fork de Mattermost sans limite d'utilisateurs.
 
 
 ### Les fonctionnalités
