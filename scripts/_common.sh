@@ -58,8 +58,9 @@ mariadb-to-pg() {
 
         # Use pgloader to migrate database content from MariaDB to PostgreSQL
         tmpdir="$(mktemp -d)"
+        trap 'ynh_secure_remove "${tmpdir}"' EXIT
 
-        cat <<EOT > $tmpdir/commands.load
+        cat <<EOT > "$tmpdir/commands.load"
 LOAD DATABASE
      FROM mysql://$mysql_db_user:$mysqlpwd@127.0.0.1:3306/$db_name
      INTO postgresql://$db_user:$db_pwd@127.0.0.1:5432/$db_name
@@ -74,23 +75,22 @@ net_write_timeout = '180'
 
 $remove_focalboard_if_7_3_0
 
-ALTER SCHEMA '$db_name' RENAME TO 'public'
+ALTER SCHEMA "$db_name" RENAME TO public
 
 ;
 EOT
         pgloader $tmpdir/commands.load
 
-        # Rebuild INDEX
-        ynh_psql_db_shell <<< 'CREATE INDEX idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('\''english'\''::regconfig, content))'
+        # Rebuild INDEX (use IF NOT EXISTS to avoid failing if index already present)
+        ynh_psql_db_shell <<< "CREATE INDEX IF NOT EXISTS idx_fileinfo_content_txt ON public.fileinfo USING gin (to_tsvector('english'::regconfig, content));"
 
-        ynh_psql_db_shell <<< 'CREATE INDEX idx_posts_message_txt ON public.posts USING gin (to_tsvector('\''english'\''::regconfig, (message)::text));'
+        ynh_psql_db_shell <<< "CREATE INDEX IF NOT EXISTS idx_posts_message_txt ON public.posts USING gin (to_tsvector('english'::regconfig, (message)::text));"
 
         if ynh_app_upstream_version --comparison eq --version 7.3.0~ynh1
         then
             # There is a problem with version 7.3.0 and the database migration.
             # More information here: https://forum.mattermost.com/t/migrating-from-mariadb-to-postgresql-db/14194/6
             ynh_psql_db_shell <<< "DELETE FROM db_migrations WHERE version=92;"
-
         fi
 
         # Remove the MariaDB database

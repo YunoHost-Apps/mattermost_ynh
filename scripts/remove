@@ -22,9 +22,8 @@ ynh_config_remove_nginx
 # the 'remove' action will automatically remove the PostgreSQL database – but doesn't know
 # that a MariaDB database is still lying around.
 # In that case, remove the MariaDB database manually.
-if command -v mysqlshow 2>&1 >/dev/null
-then
-    if mysqlshow | grep -q "^| $db_name "; then
+if command -v mysqlshow >/dev/null 2>&1; then
+    if mysqlshow "$db_name" >/dev/null 2>&1; then
   	ynh_mysql_drop_db && ynh_mysql_drop_user --db_user=$db_user --db_name=$db_name
 	fi
 fi
