@@ -91,7 +91,6 @@ EOT
             # There is a problem with version 7.3.0 and the database migration.
             # More information here: https://forum.mattermost.com/t/migrating-from-mariadb-to-postgresql-db/14194/6
             ynh_psql_db_shell <<< "DELETE FROM db_migrations WHERE version=92;"
-
         fi
 
         # Remove the MariaDB database
