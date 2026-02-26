@@ -58,7 +58,7 @@ mariadb-to-pg() {
 
         # Use pgloader to migrate database content from MariaDB to PostgreSQL
         tmpdir="$(mktemp -d)"
-        trap 'rm -rf "${tmpdir}"' EXIT
+        trap 'ynh_secure_remove "${tmpdir}"' EXIT
 
         cat <<EOT > "$tmpdir/commands.load"
 LOAD DATABASE
