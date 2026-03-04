@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -8,6 +7,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 email=$(ynh_user_get_info --username=$admin --key=mail)
+main_domain=$(cat /etc/yunohost/current_host)
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
