@@ -10,18 +10,7 @@ source /usr/share/yunohost/helpers
 ynh_app_setting_set_default --key=language --value="en"
 ynh_app_setting_set_default --key=version --value="Team"
 
-#=================================================
-# MIGRATING DATABASE
-#=================================================
-
-# Check if using MariaDB
-# This migration should be done before the upgrade
-if mysqlshow | grep -q "^| $db_name "; then
-    # Mattermost recommands PostgreSQL over MySQL (and doesn't support MariaDB at all)
-    # Migrate the database from MySQL/MariaDB to PostgreSQL
-    remove_psql_in_case_of_error=1
-    mariadb-to-pg
-fi
+main_domain=$(cat /etc/yunohost/current_host)
 
 #=================================================
 # STOP SYSTEMD SERVICE
