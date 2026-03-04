@@ -111,7 +111,7 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "postgresql, pgloader"
+    packages = "postgresql"
 
     [resources.database]
     type = "postgresql"
