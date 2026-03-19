@@ -22,6 +22,7 @@
     "GoroutineHealthThreshold": -1,
     "EnableOAuthServiceProvider": false,
     "EnableDynamicClientRegistration": false,
+    "DCRRedirectURIAllowlist": [],
     "EnableIncomingWebhooks": true,
     "EnableOutgoingWebhooks": true,
     "EnableOutgoingOAuthConnections": false,
@@ -686,10 +687,11 @@
     "InteractiveDialogAppsForm": true,
     "EnableMattermostEntry": true,
     "MobileSSOCodeExchange": false,
-    "AutoTranslation": false,
+    "AutoTranslation": true,
     "BurnOnRead": true,
     "EnableAIPluginBridge": false,
-    "EnableAIRecaps": false
+    "EnableAIRecaps": false,
+    "CJKSearch": false
   },
   "ImportSettings": {
     "Directory": "./import",
@@ -763,15 +765,19 @@
   },
   "AutoTranslationSettings": {
     "Enable": false,
+    "RestrictDMAndGM": false,
     "Provider": "",
-    "TimeoutsMs": {
-      "NewPost": 800,
-      "Fetch": 2000,
-      "Notification": 300
-    },
+    "TargetLanguages": [
+      "en"
+    ],
+    "Workers": 6,
+    "TimeoutMs": 5000,
     "LibreTranslate": {
       "URL": "",
       "APIKey": ""
+    },
+    "Agents": {
+      "LLMServiceID": ""
     }
   }
 }
