@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Collaboration platform built for developers"
 description.fr = "Plateforme de collaboration conçue pour les développeurs"
 
-version = "11.4.1~ynh1"
+version = "11.5.1~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -76,27 +76,27 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.team]
-        amd64.url = "https://releases.mattermost.com/11.4.1/mattermost-team-11.4.1-linux-amd64.tar.gz"
-        amd64.sha256 = "5dcf8103e5389ea0ee178591bc29d16abd9467c484ce0392f3de2f7daa52ba3a"
-        arm64.url = "https://releases.mattermost.com/11.4.1/mattermost-team-11.4.1-linux-arm64.tar.gz"
-        arm64.sha256 = "c1264fd123e892e42113aa232bb4b498870636d2fcd8c0d0ed6ce507ad7380d6"
+        amd64.url = "https://releases.mattermost.com/11.5.1/mattermost-team-11.5.1-linux-amd64.tar.gz"
+        amd64.sha256 = "1af181d97270f196fb2792ee3d362fe0f10848dd130f186d3e05bc7277c7a94c"
+        arm64.url = "https://releases.mattermost.com/11.5.1/mattermost-team-11.5.1-linux-arm64.tar.gz"
+        arm64.sha256 = "5f200d44283fe98d32968f2b45d743ca6be43ef3eb9c02cd2b857c1c69b59a81"
         armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v11.3.0/mattermost-v11.3.0-linux-arm.tar.gz"
         armhf.sha256 = "264e21bab1d38d326b0422dfe1c134679faab454fcf0bbadc412e0a92f9800d8"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/11.4.1/mattermost-enterprise-11.4.1-linux-amd64.tar.gz"
-        amd64.sha256 = "2edfd6c2d7ca60eedda6c52491cc1c8a1b33369c23feed8867105b77d0af2f11"
-        arm64.url = "https://releases.mattermost.com/11.4.1/mattermost-enterprise-11.4.1-linux-arm64.tar.gz"
-        arm64.sha256 = "4ff1c41825b81b9ac541c4fd20e6bd5d166a3a62625dd85384e9e9c007a7b973"
+        amd64.url = "https://releases.mattermost.com/11.5.1/mattermost-enterprise-11.5.1-linux-amd64.tar.gz"
+        amd64.sha256 = "fd8f2831d5b907a71488c9dac6e8b7fa12724ebb2dcec15ed21e67b3fee6cb3c"
+        arm64.url = "https://releases.mattermost.com/11.5.1/mattermost-enterprise-11.5.1-linux-arm64.tar.gz"
+        arm64.sha256 = "0161314ed13a050e77094f9d8ca75ae1fb4803d6f4bad7d49084318c258729b6"
 
         [resources.sources.mostlymatter]
         in_subdir = false
         extract = false
         rename = "mostlymatter"
-        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.4.1"
-        amd64.sha256 = "7e55d4f0c4872d3f1cabf53773932891c63873e42b2ae9f7a5ae1be7dec9851f"
-        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.4.1"
-        arm64.sha256 = "509fc8f642b17d535e205d63e231d9efd3955784b538b945f632c06a30a11811"
+        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.5.1"
+        amd64.sha256 = "7f7cf3d97deb55c170436ea30909a8233a7d785e2522d7847163e17ceca06040"
+        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.5.1"
+        arm64.sha256 = "547a7d32107a2de96f868ae3369408f8957b6265523748fe222d77599e7fc28a"
 
     [resources.system_user]
     allow_email = true
@@ -111,7 +111,7 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "postgresql, pgloader"
+    packages = "postgresql"
 
     [resources.database]
     type = "postgresql"
