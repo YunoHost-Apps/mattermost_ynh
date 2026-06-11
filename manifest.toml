@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Collaboration platform built for developers"
 description.fr = "Plateforme de collaboration conçue pour les développeurs"
 
-version = "11.6.1~ynh1"
+version = "11.7.0~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -76,27 +76,27 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.team]
-        amd64.url = "https://releases.mattermost.com/11.6.1/mattermost-team-11.6.1-linux-amd64.tar.gz"
-        amd64.sha256 = "f988cc89d1885f3e9e6e1eeea92c9dbcc975ab53ffed70a01acd59b3fc657664"
-        arm64.url = "https://releases.mattermost.com/11.6.1/mattermost-team-11.6.1-linux-arm64.tar.gz"
-        arm64.sha256 = "32a67e7715a05b0b0694974626e097fc41a815c07764bdc8b946cb6ecb6c6a8d"
+        amd64.url = "https://releases.mattermost.com/11.7.0/mattermost-team-11.7.0-linux-amd64.tar.gz"
+        amd64.sha256 = "f7e7d6819af1a4b61f156eb2909e2f17c2e9cff26fb62ff3a78beb2aa7ca5e29"
+        arm64.url = "https://releases.mattermost.com/11.7.0/mattermost-team-11.7.0-linux-arm64.tar.gz"
+        arm64.sha256 = "4c7424a2aa426dfd8cdacd06945cf9ca6aaa486328cc713fb3c14a1131345e57"
         armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v11.3.0/mattermost-v11.3.0-linux-arm.tar.gz"
         armhf.sha256 = "264e21bab1d38d326b0422dfe1c134679faab454fcf0bbadc412e0a92f9800d8"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/11.6.1/mattermost-enterprise-11.6.1-linux-amd64.tar.gz"
-        amd64.sha256 = "8e95b90aaab80fa2c7e203a35aa1a9a0795b5daa3ef1e92360a54a0c614bdba9"
-        arm64.url = "https://releases.mattermost.com/11.6.1/mattermost-enterprise-11.6.1-linux-arm64.tar.gz"
-        arm64.sha256 = "c574459fe77c998688c25eb9f067d746410326c7a39001819feb99970a829260"
+        amd64.url = "https://releases.mattermost.com/11.7.0/mattermost-enterprise-11.7.0-linux-amd64.tar.gz"
+        amd64.sha256 = "9f543ced708e1e4a1e1afbed94140bd76608b8071081a171ef01899ea7369b4e"
+        arm64.url = "https://releases.mattermost.com/11.7.0/mattermost-enterprise-11.7.0-linux-arm64.tar.gz"
+        arm64.sha256 = "a4a9017dd7e93886b6eae9c79e6e4efb01e0047f521669d82b8ba81e35fca90a"
 
         [resources.sources.mostlymatter]
         in_subdir = false
         extract = false
         rename = "mostlymatter"
-        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.6.1"
-        amd64.sha256 = "80db30be0bb001507274750fc4acf864d3f277de7d8e6f7c612752e00b5e347c"
-        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.6.1"
-        arm64.sha256 = "52f1c01ff3310f50be3cd83085809f138fe6d686c0985dc7630fbb6c9037a72c"
+        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.7.0"
+        amd64.sha256 = "7505f173b604a7e137424b2490e82ca2adf4835328c2b7087e4f77b3a5917abd"
+        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.7.0"
+        arm64.sha256 = "5b7c3c18990ecc1692e3270fbf9306cd466c3e190ab367a6b0912b588fa80c90"
 
     [resources.system_user]
     allow_email = true

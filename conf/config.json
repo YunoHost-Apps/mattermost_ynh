@@ -170,6 +170,7 @@
     "Trace": false,
     "AtRestEncryptKey": "",
     "QueryTimeout": 30,
+    "AnalyticsQueryTimeout": 300,
     "DisableDatabaseSearch": false,
     "MigrationsStatementTimeoutSeconds": 100000,
     "ReplicaLagSettings": [],
@@ -528,7 +529,8 @@
     "DisableWakeUpReconnectHandler": false,
     "UsersStatusAndProfileFetchingPollIntervalMilliseconds": 3000,
     "YoutubeReferrerPolicy": false,
-    "ExperimentalChannelCategorySorting": false
+    "ExperimentalChannelCategorySorting": false,
+    "EnableWatermark": false
   },
   "AnalyticsSettings": {
     "MaxUsersForStatistics": 2500
@@ -686,6 +688,7 @@
     "ExperimentalAuditSettingsSystemConsoleUI": true,
     "CustomProfileAttributes": true,
     "AttributeBasedAccessControl": true,
+    "PermissionPolicies": false,
     "ContentFlagging": true,
     "InteractiveDialogAppsForm": true,
     "EnableMattermostEntry": true,
@@ -694,7 +697,9 @@
     "BurnOnRead": true,
     "EnableAIPluginBridge": false,
     "EnableAIRecaps": false,
-    "CJKSearch": false
+    "IntegratedBoards": false,
+    "CJKSearch": false,
+    "ManagedChannelCategories": false
   },
   "ImportSettings": {
     "Directory": "./import",
