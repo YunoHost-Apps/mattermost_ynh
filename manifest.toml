@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Collaboration platform built for developers"
 description.fr = "Plateforme de collaboration conçue pour les développeurs"
 
-version = "11.10.1~ynh1"
+version = "11.10.2~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -76,18 +76,18 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.team]
-        amd64.url = "https://releases.mattermost.com/11.10.1/mattermost-team-11.10.1-linux-amd64.tar.gz"
-        amd64.sha256 = "df0c8fe41c1dbae8110be71d0db40bccdba17120e3e30da20ab1dee8b9354503"
-        arm64.url = "https://releases.mattermost.com/11.10.1/mattermost-team-11.10.1-linux-arm64.tar.gz"
-        arm64.sha256 = "49aead6180ddeda9fd633c62eba238310600cda57831811f5fb4a1b5668f7668"
+        amd64.url = "https://releases.mattermost.com/11.10.2/mattermost-team-11.10.2-linux-amd64.tar.gz"
+        amd64.sha256 = "1260d35171bf6498097c5b7679bdbf9c7844ae051c1ab2a6cbadddcee1a52539"
+        arm64.url = "https://releases.mattermost.com/11.10.2/mattermost-team-11.10.2-linux-arm64.tar.gz"
+        arm64.sha256 = "d0f6259e84228d1e72004d2a6fe1b9063771b381cc985759419f1827a1e01324"
         armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v11.10.0/mattermost-v11.10.0-linux-arm.tar.gz"
         armhf.sha256 = "a9739e951a471494ee993b127e22e2cde54db15dd6dd4b2b68628ae944db129e"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/11.10.1/mattermost-enterprise-11.10.1-linux-amd64.tar.gz"
-        amd64.sha256 = "43259570cc109c674f18db5b4a2b9f5a0b5dcd0eead65ef6df62bf286333e8de"
-        arm64.url = "https://releases.mattermost.com/11.10.1/mattermost-enterprise-11.10.1-linux-arm64.tar.gz"
-        arm64.sha256 = "3ee439d3cc6b80fc2aa514f2d4aa53b92b32d15310ab76f0a8e8ffdbe388b674"
+        amd64.url = "https://releases.mattermost.com/11.10.2/mattermost-enterprise-11.10.2-linux-amd64.tar.gz"
+        amd64.sha256 = "60648e97b0f919fdd271db6e8f3b16bc91b0a1707530a3454e3ae95eefbed9e4"
+        arm64.url = "https://releases.mattermost.com/11.10.2/mattermost-enterprise-11.10.2-linux-arm64.tar.gz"
+        arm64.sha256 = "657b00c2b2a1db5bc5248e643ed1b9151b488d38f803fe30021a4f6270824041"
 
         [resources.sources.mostlymatter]
         in_subdir = false
