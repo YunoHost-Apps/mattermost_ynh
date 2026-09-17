@@ -1,6 +1,6 @@
 [Unit]
 Description=Mattermost: collaboration platform
-After=network.target
+After=syslog.target network.target postgresql.service
 Requires=postgresql.service
 
 [Service]

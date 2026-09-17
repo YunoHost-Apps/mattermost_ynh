@@ -45,10 +45,6 @@ ynh_script_progression "Updating $app's configuration files..."
 
 ynh_hide_warnings ynh_config_add --template="config.json" --destination="$install_dir/config/config.json"
 
-# Fix settings for Mattermost >= 11.1
-# See https://github.com/mattermost/mattermost/issues/34084
-ynh_write_var_in_file --file="$install_dir/config/config.json" --key="ExperimentalViewArchivedChannels" --value=true
-
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 
@@ -70,7 +66,7 @@ ynh_config_add_logrotate
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start
+ynh_systemctl --service=$app --action=start --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # END OF SCRIPT
