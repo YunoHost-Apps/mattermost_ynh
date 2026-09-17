@@ -7,7 +7,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service=$app --action=stop
+ynh_systemctl --service=$app --action=stop --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -32,7 +32,7 @@ ynh_store_file_checksum "$install_dir/config/config.json"
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action=start
+ynh_systemctl --service=$app --action=start --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # END OF SCRIPT
