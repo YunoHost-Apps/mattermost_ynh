@@ -88,6 +88,7 @@
     "EnableAPIPostDeletion": false,
     "EnableDesktopLandingPage": true,
     "MinimumDesktopAppVersion": "",
+    "EnableHardenedMode": false,
     "ExperimentalEnableHardenedMode": false,
     "ExperimentalStrictCSRFEnforcement": false,
     "EnableEmailInvitations": false,
@@ -148,7 +149,6 @@
     "MaxNotificationsPerChannel": 1000,
     "EnableConfirmNotificationsToChannel": true,
     "TeammateNameDisplay": "username",
-    "ExperimentalViewArchivedChannels": true,
     "ExperimentalEnableAutomaticReplies": false,
     "LockTeammateNameDisplay": false,
     "LockProfileFieldsForEmailUsers": "none",
@@ -171,7 +171,6 @@
     "ConnMaxIdleTimeMilliseconds": 300000,
     "MaxOpenConns": 100,
     "Trace": false,
-    "AtRestEncryptKey": "",
     "QueryTimeout": 30,
     "AnalyticsQueryTimeout": 300,
     "DisableDatabaseSearch": false,
@@ -300,10 +299,7 @@
     "EmailBatchingInterval": 30,
     "EnablePreviewModeBanner": true,
     "SkipServerCertificateVerification": false,
-    "EmailNotificationContentsType": "full",
-    "LoginButtonColor": "#0000",
-    "LoginButtonBorderColor": "#2389D7",
-    "LoginButtonTextColor": "#2389D7"
+    "EmailNotificationContentsType": "full"
   },
   "RateLimitSettings": {
     "Enable": false,
@@ -447,8 +443,7 @@
   "LocalizationSettings": {
     "DefaultServerLocale": "__LANGUAGE__",
     "DefaultClientLocale": "__LANGUAGE__",
-    "AvailableLocales": "",
-    "EnableExperimentalLocales": false
+    "AvailableLocales": ""
   },
   "SamlSettings": {
     "Enable": false,
@@ -496,8 +491,7 @@
     "MobilePreventScreenCapture": false,
     "MobileJailbreakProtection": false,
     "MobileEnableSecureFilePreview": false,
-    "MobileAllowPdfLinkNavigation": false,
-    "EnableIntuneMAM": false
+    "MobileAllowPdfLinkNavigation": false
   },
   "IntuneSettings": {
     "Enable": false,
@@ -535,7 +529,6 @@
     "ClientSideUserIds": []
   },
   "ExperimentalSettings": {
-    "ClientSideCertEnable": false,
     "LinkMetadataTimeoutMilliseconds": 5000,
     "RestrictSystemAdmin": false,
     "EnableSharedChannels": false,
@@ -585,12 +578,10 @@
   "DataRetentionSettings": {
     "EnableMessageDeletion": false,
     "EnableFileDeletion": false,
-    "EnableBoardsDeletion": false,
     "MessageRetentionDays": 365,
     "MessageRetentionHours": 0,
     "FileRetentionDays": 365,
     "FileRetentionHours": 0,
-    "BoardsRetentionDays": 365,
     "DeletionJobStartTime": "02:00",
     "BatchSize": 3000,
     "TimeBetweenBatchesMilliseconds": 100,
@@ -658,8 +649,7 @@
     "AutomaticPrepackagedPlugins": true,
     "RequirePluginSignature": false,
     "MarketplaceURL": "https://api.integrations.mattermost.com",
-    "SignaturePublicKeyFiles": [],
-    "ChimeraOAuthProxyURL": ""
+    "SignaturePublicKeyFiles": []
   },
   "DisplaySettings": {
     "CustomURLSchemes": [],
@@ -668,21 +658,17 @@
   "GuestAccountsSettings": {
     "Enable": false,
     "HideTags": false,
-    "AllowEmailAccounts": true,
     "EnforceMultifactorAuthentication": false,
     "RestrictCreationToDomains": "",
     "EnableGuestMagicLink": false
   },
   "ImageProxySettings": {
     "Enable": false,
-    "ImageProxyType": "local",
-    "RemoteImageProxyURL": "",
-    "RemoteImageProxyOptions": ""
+    "ImageProxyType": "local"
   },
   "CloudSettings": {
     "CWSURL": "https://portal.test.cloud.mattermost.com",
     "CWSAPIURL": "https://api.internal.test.cloud.mattermost.com",
-    "CWSMock": false,
     "Disable": false,
     "PreviewModalBucketURL": ""
   },
@@ -706,7 +692,6 @@
     "EnableShiftEscapeToMarkAllRead": false,
     "AutoTranslation": true,
     "ClassificationMarkings": true,
-    "GlobalAttributes": false,
     "BurnOnRead": true,
     "EnableAIPluginBridge": false,
     "EnableAIRecaps": false,
@@ -715,18 +700,22 @@
     "CJKSearch": true,
     "AggregatePluginMetrics": false,
     "ManagedChannelCategories": false,
-    "SessionAttributes": false,
+    "SessionAttributes": true,
     "PostAttributes": false,
     "DiscoverableChannels": false,
     "MobileEphemeralMode": false,
     "PropertyFieldRank": true,
+    "PropertyFieldGraph": true,
     "TeamMembershipAccessControl": true,
+    "ChannelAttributes": true,
+    "ChannelAttributesRequired": false,
+    "ResourceAttributesInPolicies": true,
     "MmBlocksEnabled": true,
     "ClusterGracefulDrain": true,
-    "ChannelBookmarks": true,
-    "EnableConcurrentReact": false,
     "EnableMFIPluginSignaturePublicKey": true,
-    "RecurringScheduledPosts": false
+    "RecurringScheduledPosts": false,
+    "PostDeliveryTracking": false,
+    "EnforceLogPathRoot": false
   },
   "ImportSettings": {
     "Directory": "./import",
@@ -804,6 +793,10 @@
       "SystemAdminsAsReviewers": false,
       "TeamAdminsAsReviewers": true
     }
+  },
+  "DeliveryTrackingSettings": {
+    "Enable": false,
+    "EnableForAllChannels": true
   },
   "AutoTranslationSettings": {
     "Enable": false,

@@ -5,7 +5,7 @@ name = "Mattermost"
 description.en = "Collaboration platform built for developers"
 description.fr = "Plateforme de collaboration conçue pour les développeurs"
 
-version = "11.11.1~ynh1"
+version = "12.0.1~ynh1"
 
 maintainers = ["pmorinerie"]
 
@@ -76,27 +76,27 @@ ram.runtime = "50M"
     [resources.sources]
 
         [resources.sources.team]
-        amd64.url = "https://releases.mattermost.com/11.11.1/mattermost-team-11.11.1-linux-amd64.tar.gz"
-        amd64.sha256 = "c9237b0b54dce805a63e053c0a0516511bc8a2e47e9a06dd11050c2a0d79f616"
-        arm64.url = "https://releases.mattermost.com/11.11.1/mattermost-team-11.11.1-linux-arm64.tar.gz"
-        arm64.sha256 = "e3228c8cc6b5aedce835f68ae21ac5626473850aaf4d63003094de4b1350166b"
-        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v11.11.0/mattermost-v11.11.0-linux-arm.tar.gz"
-        armhf.sha256 = "b26a23b7753644f380e83f11e27645e4d2b4ac5b5f0ff811186a516dc7cd379c"
+        amd64.url = "https://releases.mattermost.com/12.0.1/mattermost-team-12.0.1-linux-amd64.tar.gz"
+        amd64.sha256 = "1e7512f4782d4df552543f60ca17cc572a9ddc8faaebc3942dcc40b4f6a979d9"
+        arm64.url = "https://releases.mattermost.com/12.0.1/mattermost-team-12.0.1-linux-arm64.tar.gz"
+        arm64.sha256 = "6246ebcba8418606ac98e1e9ee5b0cd732e75190bb0c67c4d66a5503007aecf8"
+        armhf.url = "https://github.com/remiheens/mattermost-docker-arm/releases/download/v12.0.0/mattermost-v12.0.0-linux-arm.tar.gz"
+        armhf.sha256 = "5ea25a25ecc5f1f8682a848d1d5e5b13be3de8c3b7dfe3598104a805ba8162f1"
 
         [resources.sources.enterprise]
-        amd64.url = "https://releases.mattermost.com/11.11.1/mattermost-enterprise-11.11.1-linux-amd64.tar.gz"
-        amd64.sha256 = "f1eaaaa4848dbf96fa839cf8dd80fbbe825e241744a4dc839317895511bc84ae"
-        arm64.url = "https://releases.mattermost.com/11.11.1/mattermost-enterprise-11.11.1-linux-arm64.tar.gz"
-        arm64.sha256 = "bd3a138cda2e3d6894e326dbc86a45072847c87063d5ae73eef7d5701c89b4be"
+        amd64.url = "https://releases.mattermost.com/12.0.1/mattermost-enterprise-12.0.1-linux-amd64.tar.gz"
+        amd64.sha256 = "f74b26f3a245b336b5dc7978a71ac7cd17ba22601de2c68b223dd0114cb2676c"
+        arm64.url = "https://releases.mattermost.com/12.0.1/mattermost-enterprise-12.0.1-linux-arm64.tar.gz"
+        arm64.sha256 = "ba24c46927e67fb789d712be95c76045c9a8e0a3dfde472306b902b12f3efce7"
 
         [resources.sources.mostlymatter]
         in_subdir = false
         extract = false
         rename = "mostlymatter"
-        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v11.11.1"
-        amd64.sha256 = "70417e24db13212cae9382c3374eef46317da6d2058004f791bd37fb086d4f0e"
-        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v11.11.1"
-        arm64.sha256 = "4b87d7c55d551508f832f57b0880b84af2b1584ed5c6448598305c484e78381e"
+        amd64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-amd64-v12.0.1"
+        amd64.sha256 = "6f332edcd1904aebf1119b8b1de0d3ef37fedaf331dbb9a1e0e64879d64655b3"
+        arm64.url = "https://packages.framasoft.org/projects/mostlymatter/mostlymatter-arm64-v12.0.1"
+        arm64.sha256 = "fcfd9724f677e92296ab1331f8511e12d916c4f4662a173673b9d35371ae7070"
 
     [resources.system_user]
     allow_email = true
